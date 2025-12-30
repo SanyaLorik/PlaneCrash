@@ -715,7 +715,6 @@ GameObject:
   - component: {fileID: 806848659}
   - component: {fileID: 806848661}
   - component: {fileID: 806848660}
-  - component: {fileID: 806848662}
   m_Layer: 3
   m_Name: Cubo
   m_TagString: Untagged
@@ -795,27 +794,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 806848658}
   m_Mesh: {fileID: -1843689209865246678, guid: 474711d0d1196a94b9beabe2c835878a, type: 3}
---- !u!65 &806848662
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806848658}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.5463284, y: 1.5463518, z: 0}
-  m_Center: {x: 0, y: 0, z: -0.11581657}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,8 +1614,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.010101, y: 415.06842}
-  m_SizeDelta: {x: 1920, y: 249.8632}
+  m_AnchoredPosition: {x: -0.0001, y: 43.0416}
+  m_SizeDelta: {x: 544.333, y: 136.0833}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1506266160
 MonoBehaviour:
@@ -2040,8 +2018,8 @@ GameObject:
   - component: {fileID: 1824038463}
   - component: {fileID: 1824038468}
   - component: {fileID: 1824038470}
-  - component: {fileID: 1824038469}
   - component: {fileID: 1824038466}
+  - component: {fileID: 1824038469}
   - component: {fileID: 1824038471}
   m_Layer: 0
   m_Name: Player
