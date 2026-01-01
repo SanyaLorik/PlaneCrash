@@ -1,131 +1,103 @@
 using System;
 using System.Security.Cryptography;
+using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour {
-    [SerializeField] private float airControlForce = 10f;
-    
-    [SerializeField] private float _force = 10f;
+    [SerializeField] private float _speedForce = 10f;
     [SerializeField] private float _angle = 30f;
 
     [SerializeField] private Transform _skinTransform;
-    [SerializeField] private float _maxRotate = 30f;
-    [SerializeField] private float _rotateSpeed = 6f;
-
-    [SerializeField] private float _glideGravityFactor = 0.7f;
-    [SerializeField] float maxFallSpeed = 6f;
-    
-    [SerializeField] private float _constantSpeed; // скорость которую хочим
-    
     [SerializeField] LayerMask _groundMask;
+    [SerializeField] private GameObject _cruiserPrefab;
     
+    
+    [SerializeField] private AnimationCurve _fallCurve;
+    
+        
+    [SerializeField] private float _totalFallTime = 7f;
+    [SerializeField] private float maxFallSpeed = 2f;
+    [SerializeField] private float _rotateSpeed = 6f;
+    [SerializeField] private float _maxRotate = 20f;
     
     private Rigidbody _rb;
-    private Vector2 _moveInput;
     float currentRoll;
-    public bool grounded = false;
- 
+    private float _fallProgress;
+
+    private float startY;
+    private float endY = 0f;
     
-    
-    
-    private void Awake() {
-        _rb =  GetComponent<Rigidbody>();
-    }
-    
+    private Vector2 _moveInput;
+    public bool grounded;
+
     private void Start() {
-        FirstFlight();
-        // _rb.linearDamping = 0.1f;
-    }
-    
-
-    private void FixedUpdate() {
-        FlyingRotate();
-        GravityCompensation();
-        LimitationFallingSpeed();
-        NormalizeSpeed();
-        CheckGrounded();
+        _rb = GetComponent<Rigidbody>();
+        _rb.useGravity = false;
+        startY =  transform.position.y;
+        ContainFallTime();
+        Debug.Log(_totalFallTime);
+        SpawnCruiser();
     }
 
-    private void CheckGrounded() {
-        float groundedCheckDistance = 0.2f;
-        grounded = Physics.Raycast(
-            transform.position,
-            Vector3.down,
-            groundedCheckDistance,
-            _groundMask
-        );
-        Debug.DrawRay(transform.position, Vector3.down, Color.red);
-        if (grounded) {
-            Debug.Log("Вы разбились нахуй!");
-            _rb.linearDamping = 0.5f;
-        }
-    }
-    
+
     private void Update() {
+        Move();
         VisualRotate();
     }
-    
-    
-    private void OnTriggerEnter(Collider other) {
 
-        if (other.gameObject.TryGetComponent<IBoostObject>(out var boostObject)) {
-            Debug.Log(boostObject);
-            boostObject.ApplyBoost(this);
-        }
+    private enum VerticalState
+    {
+        Falling,
+        Boosting
     }
 
-    public void AddVerticalVelocity(float forceBoost) {
-        _rb.AddForce(Vector3.up *  forceBoost, ForceMode.VelocityChange);
-    }
-
-    
-    // Постоянная скорость
-    private void NormalizeSpeed() {
+    private VerticalState _verticalState = VerticalState.Falling;
+    private void Move() {
         if (grounded) {
             return;
         }
-        
-        // Чисто горизонтальное движение
-        Vector3 currentHorizontal = Vector3.ProjectOnPlane(_rb.linearVelocity, Vector3.up);
-        
-        Vector3 targetHorizontal = transform.forward * _constantSpeed;
+        Vector3 newPos =  transform.position;
+        newPos.z += _speedForce *  Time.deltaTime;
+        newPos.x += _moveInput.x * _rotateSpeed * Time.deltaTime;
 
-        Vector3 correction = targetHorizontal - currentHorizontal;
-        _rb.AddForce(correction, ForceMode.Acceleration);
-    }
-
-    private void GravityCompensation() {
-        // Добавление импульса при падении
-        if (_rb.linearVelocity.y < 0) {
-            Vector3 antigravity = - Physics.gravity * _rb.mass * _glideGravityFactor;
-            _rb.AddForce(antigravity, ForceMode.Force);
+        if (_verticalState == VerticalState.Falling) {
+            float currentY;
+            if (_fallProgress == 0) {
+                currentY = startY; // просто закрепляем текущую позицию
+            }
+            else {
+                currentY = Mathf.Lerp(startY, endY, _fallCurve.Evaluate(_fallProgress));
+            }
+            newPos.y = currentY;
+            _fallProgress += Time.deltaTime / _totalFallTime;
+            _fallProgress =  Mathf.Clamp01(_fallProgress);
         }
-    }
-
-    // Максимальная скорость падения, можно регулировать чтоб не так быстро разьебывался
-    private void LimitationFallingSpeed() {
-        if (_rb.linearVelocity.y < -maxFallSpeed) {
-            _rb.linearVelocity = new Vector3(
-                _rb.linearVelocity.x,
-                -maxFallSpeed,
-                _rb.linearVelocity.z);
+        
+        if (_fallProgress == 1) {
+            grounded  = true;
+            
         }
+        
+        // Rotate Change
+        transform.position = newPos;
     }
 
 
+    private GameObject _cruiser;
+    private void SpawnCruiser() {
+        float landingZ = transform.position.z + _speedForce * _totalFallTime;
+        Vector3 spawnCoord = new Vector3(transform.position.x, 0f, landingZ);
 
-
-    private Vector3 direction;
-    private float rad;
-    private void FirstFlight() {
-        rad = _angle * Mathf.Deg2Rad; 
-        direction = new Vector3(0, Mathf.Sin(rad), Mathf.Cos(rad));
-        _rb.linearVelocity = Vector3.Project(_rb.linearVelocity, direction);
-        _rb.AddForce(direction * _force, ForceMode.Impulse);
+        if (_cruiser != null) {
+            Destroy(_cruiser);
+        }
+        _cruiser = Instantiate(_cruiserPrefab, spawnCoord, _cruiserPrefab.transform.rotation);
     }
     
-    
+
+        
     private void VisualRotate() {
         float targetRoll = -_moveInput.x * _maxRotate;
         currentRoll = Mathf.Lerp(currentRoll, targetRoll, Time.deltaTime * _rotateSpeed);
@@ -135,27 +107,51 @@ public class PlayerMovement : MonoBehaviour {
         _skinTransform.localEulerAngles = euler;
     }
 
-
     public void OnMove(InputAction.CallbackContext context) {
         _moveInput =  context.ReadValue<Vector2>();
-        VisualRotate();
     }
 
     
-    private void FlyingRotate() {
-        float steer = _moveInput.x;
-
-        Vector3 right = transform.right;
-
-        _rb.AddForce(right * steer * airControlForce, ForceMode.Force);
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.TryGetComponent<IBoostObject>(out var boostObject)) {
+            Debug.Log(boostObject);
+            boostObject.ApplyBoost(this);
+        }
     }
 
-    
+
+    public void ApplyVerticalBoost(float extraHeight) {
+        _verticalState = VerticalState.Boosting;
+        transform.DOKill(); // ОЧЕНЬ ВАЖНО
+
+        transform.DOMoveY(
+                transform.position.y + extraHeight,
+                1f
+            )
+            .SetEase(Ease.OutCubic)
+            .OnComplete(() =>
+            {
+                startY = transform.position.y; // текущая высота после буста
+                ContainFallTime();
+
+                _fallProgress = 0f; // начинаем кривое падение с этой точки
+                SpawnCruiser();
+                _verticalState = VerticalState.Falling;
+            });
+
+    }
 
 
-    
+    private void ContainFallTime() {
+        float height = startY;
+        _totalFallTime =  height / _speedForce * 21;
+    }
+
+
+
+
 
     
     
-    
+
 }

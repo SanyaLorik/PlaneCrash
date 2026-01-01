@@ -6,7 +6,7 @@ public class HeightUnboost : MonoBehaviour, IBoostObject {
 
     
     public void ApplyBoost(PlayerMovement playerMovement) {
-        playerMovement.AddVerticalVelocity(_bustDown);
+        playerMovement.ApplyVerticalBoost(_bustDown);
         Destroy(gameObject);
     }
 }

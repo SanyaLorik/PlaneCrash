@@ -22,13 +22,13 @@ public class BoostSpawner : MonoBehaviour {
     
     
     private List<GameObject> _boostList = new ();
-    private float spawnAhead = 200f;
+    private float spawnAhead = 300f;
     private float spawnZ;
     
     private void Update() {
         while (spawnZ < _player.position.z + spawnAhead) {
             SpawnBoost(spawnZ);
-            spawnZ += 10f;
+            spawnZ += 20f;
         }
         DeleteOldBoosts();
     }
@@ -41,7 +41,7 @@ public class BoostSpawner : MonoBehaviour {
         // Эту нужно находить относительно высоты пользователя
         float y = Random.Range(Mathf.Max(_yMin, _player.position.y - 10f), Mathf.Min(_yMax, _player.position.y + 10f));
     
-        GameObject prefab = Random.value > 0.5f ? _boostPrefab : _unboostPrefab;
+        GameObject prefab = Random.value > 0.4f ? _boostPrefab : _unboostPrefab;
         
         GameObject newboost =  Instantiate(prefab, new Vector3(x, y, z), prefab.transform.rotation);
         _boostList.Add(newboost);
