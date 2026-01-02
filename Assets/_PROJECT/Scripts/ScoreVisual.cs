@@ -15,7 +15,7 @@ public class ScoreVisual : MonoBehaviour {
 
 
     private IEnumerator WriteTextRoutine() {
-        while (!_playerMovement.grounded) {
+        while (!_playerMovement.Grounded) {
             _scoreText.text = $"{transform.position.magnitude:F2} м.";
             yield return null; 
         }
