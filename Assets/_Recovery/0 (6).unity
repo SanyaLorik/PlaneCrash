@@ -1053,10 +1053,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BustSpawn
   _player: {fileID: 1824038463}
+  _boostPrefab: {fileID: 3725712591572169027, guid: 035a4f018a249d4478c01a1c0d1e6b6b, type: 3}
+  _unboostPrefab: {fileID: 2872955650149394591, guid: 6d34e7490d7a34340acda720c0fe2392, type: 3}
   _xRightMax: 8
   _xLeftMax: -12
-  "_\u0441urves": []
-  _boosts: []
+  _yMax: 20
+  _yMin: 3
+  _deleteDistance: 50
 --- !u!1 &943414847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,7 +1141,7 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Time: 100
+  m_Time: 5
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -1817,7 +1820,7 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Time: 100
+  m_Time: 5
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -2177,51 +2180,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5973336b637425a479f8e9c16756d207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  _speedForce: 20
+  _speedForce: 115.3
   _angle: 40
   _skinTransform: {fileID: 1824038463}
   _groundMask:
     serializedVersion: 2
     m_Bits: 8
   _cruiserPrefab: {fileID: 7916325293488353440, guid: b32b89fa7d6f45c4299cefc92b905272, type: 3}
-  _rotateSpeed: 6.8
-  _maxRotate: 31
-  _bustDuration: 1.26
-  boostCurve:
+  _fallCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.74419135
-      outSlope: 0.74419135
-      tangentMode: 34
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
-      time: 0.5174767
-      value: 0.38510168
-      inSlope: -0.026954144
-      outSlope: -0.026954144
-      tangentMode: 34
+      time: 0.3065158
+      value: 0.039565556
+      inSlope: 0.50975454
+      outSlope: 0.50975454
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: -0.79809964
-      outSlope: -0.79809964
-      tangentMode: 34
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  boostDuration: 1.21
-  _curveMultiplyer: 39.9
+  _totalFallTime: 100
+  _fallMultipluer: 31
+  maxFallSpeed: 10
+  _rotateSpeed: 6.8
+  _maxRotate: 31
+  _bustDuration: 1.26
+  _spawnCraiserProp: 1
 --- !u!114 &1824038469
 MonoBehaviour:
   m_ObjectHideFlags: 0

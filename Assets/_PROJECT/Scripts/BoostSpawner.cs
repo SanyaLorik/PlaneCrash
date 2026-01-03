@@ -5,61 +5,84 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
+
+
 public class BoostSpawner : MonoBehaviour {
     [SerializeField] private Transform _player;
-
-    [SerializeField] private GameObject _boostPrefab;
-    [SerializeField] private GameObject _unboostPrefab;
+    [SerializeField] private Transform _cruiser;
     
     [Header("Граница спауна")]
     [SerializeField] private float _xRightMax;
     [SerializeField] private float _xLeftMax;
+    [SerializeField] private Boost _bustPrefab;
     
-    [SerializeField] private float _yMax;
-    [SerializeField] private float _yMin;
+    
+    public AnimationCurve[] _сurves;
+    public List<Boost> _boosts;
+    
 
-    [SerializeField] private float _deleteDistance = 50f;
-    
-    
-    private List<GameObject> _boostList = new ();
-    private float spawnAhead = 300f;
-    private float spawnZ;
-    
-    private void Update() {
-        while (spawnZ < _player.position.z + spawnAhead) {
-            SpawnBoost(spawnZ);
-            spawnZ += 20f;
-        }
-        DeleteOldBoosts();
+    private void Start() {
+         // Spawn(_player.position,_player.position, 3);
+         SpawnRightWay(_player.transform.position, _cruiser.transform.position);
     }
 
-
+    // У нас спавнятся бусты от игрока до крейсера на определенном расстоянии
     
-    private void SpawnBoost(float z) {
-        float x = Random.Range(_xLeftMax, _xRightMax);
+    // Т.е у нас есть массив из этих бустов
+
+
+    private void SpawnRightWay(Vector3 playerPosition, Vector3 cruiserPosition) {
+        int countBusts = Random.Range(2, 6);
+        float startZ = playerPosition.z;
+        float endZ = cruiserPosition.z;
+    
+        // Создаем список позиций Z для равномерного распределения
+        List<float> spawnPoints = new List<float>();
+    
+        // Вычисляем базовый шаг
+        float segment = (endZ - startZ) / (countBusts + 1);
+    
+        for (int i = 1; i <= countBusts; i++) {
+            float baseZ = startZ + (segment * i);
+            // Добавляем случайность в пределах половины сегмента
+            float minZ = baseZ - (segment * 0.3f);
+            float maxZ = baseZ + (segment * 0.3f);
+            float randomZ = Random.Range(minZ, maxZ);
         
-        // Эту нужно находить относительно высоты пользователя
-        float y = Random.Range(Mathf.Max(_yMin, _player.position.y - 10f), Mathf.Min(_yMax, _player.position.y + 10f));
+            spawnPoints.Add(randomZ);
+        }
     
-        GameObject prefab = Random.value > 0.4f ? _boostPrefab : _unboostPrefab;
+        // Сортируем для гарантии порядка
+        spawnPoints.Sort();
+    
+        // Спавним бусты
+        foreach (float zPos in spawnPoints) {
+            Vector3 spawnPosition = new Vector3(
+                Random.Range(_xLeftMax, _xRightMax), 
+                20f,                  
+                zPos                  
+            );
         
-        GameObject newboost =  Instantiate(prefab, new Vector3(x, y, z), prefab.transform.rotation);
-        _boostList.Add(newboost);
-    }
-
-
-    private void DeleteOldBoosts() {
-        for (int i = _boostList.Count-1; i >= 0; i--) {
-            if (_boostList[i] != null) {
-                _boostList.RemoveAt(i);
-                return;
-            }
-            if (_boostList[i].transform.position.z < _player.position.z - _deleteDistance) {
-                Destroy(_boostList[i]);
-                _boostList.RemoveAt(i);
-            }
+            Instantiate(_bustPrefab, spawnPosition, Quaternion.identity);
         }
     }
 
-    
+
+    private IReadOnlyList<Boost> Spawn(Vector3 playerPosition, Vector3 cruiserPosition, int count) {
+        
+        List<Boost> boost = new List<Boost>();
+        for (int i = 0; i < count; i++) {
+            Boost _newBoost = new Boost {
+                randomTrajectory = _сurves[Random.Range(0, _сurves.Length-1)],
+                height = Random.Range(0, _сurves.Length - 1)
+            };
+            boost.Add(_newBoost);
+        }
+        
+
+
+
+        return boost;
+    }
 }

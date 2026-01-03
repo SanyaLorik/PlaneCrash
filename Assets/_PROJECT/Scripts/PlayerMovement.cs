@@ -1,7 +1,5 @@
 using System;
-using System.Security.Cryptography;
-using DG.Tweening;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -15,16 +13,10 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private GameObject _cruiserPrefab;
     
     
-    [SerializeField] private AnimationCurve _fallCurve;
-    
         
-    [SerializeField] private float _totalFallTime = 7f;
-    [SerializeField] private float _fallMultipluer;
-    [SerializeField] private float maxFallSpeed = 2f;
     [SerializeField] private float _rotateSpeed = 6f;
     [SerializeField] private float _maxRotate = 20f;
     [Range(0,3), SerializeField] private float _bustDuration;
-    [Range(0,1), SerializeField] private float _spawnCraiserProp;
     
     private Rigidbody _rb;
     private Vector2 _moveInput;
@@ -37,6 +29,7 @@ public class PlayerMovement : MonoBehaviour {
     
     public bool Grounded { get; private set; }
     
+
     private enum VerticalState {
         Falling,
         Boosting
@@ -45,13 +38,14 @@ public class PlayerMovement : MonoBehaviour {
     private VerticalState _verticalState = VerticalState.Falling;
     
 
+    
+ 
+
     private void Start() {
         _rb = GetComponent<Rigidbody>();
         _rb.useGravity = false;
         _startY =  transform.position.y;
-        ContainFallTime();
-        Debug.Log(_totalFallTime);
-        SpawnCruiser();
+        boostStartTime = Time.time;
     }
     
     private void Update() {
@@ -59,72 +53,61 @@ public class PlayerMovement : MonoBehaviour {
         VisualRotate();
     }
     
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.TryGetComponent<IBoostObject>(out var boostObject)) {
-            Debug.Log(boostObject);
-            boostObject.ApplyBoost(this);
-        }
-    }
+    // private void OnTriggerEnter(Collider other) {
+    //     if (other.gameObject.TryGetComponent<IBoostObject>(out var boostObject)) {
+    //         Debug.Log(boostObject);
+    //         boostObject.ApplyBoost(this);
+    //     }
+    // }
 
     public void OnMove(InputAction.CallbackContext context) {
         _moveInput =  context.ReadValue<Vector2>();
     }
     
+    
+    // Допустим 1 кривая условно на него сразу действует буст
+    [SerializeField] private AnimationCurve boostCurve;
+    [SerializeField] private  float boostDuration = 10f;
+    private bool isBusted = true;
+    private float boostStartTime;
+
+    [SerializeField] private float _curveMultiplyer;
+
     private void Move() {
-        if (Grounded) {
-            return;
-        }
+
         Vector3 newPos =  transform.position;
         newPos.z += _speedForce * Time.deltaTime;
         newPos.x += _moveInput.x * _rotateSpeed * Time.deltaTime;
 
-        // Падение
-        if (_verticalState == VerticalState.Falling) {
-            float currentY = Mathf.Lerp(_startY, _endY, _fallCurve.Evaluate(_fallProgress));
-            newPos.y = currentY;
-            _fallProgress += Time.deltaTime / _totalFallTime;
-            _fallProgress =  Mathf.Clamp01(_fallProgress);
+
+        // работа буста
+        if (isBusted) {
+            // Сколько времени прошло с начала буста
+            float elapsedTime = Time.time - boostStartTime;
+            float normalizedTime = elapsedTime / boostDuration;
+            Debug.Log(normalizedTime);
+            if (normalizedTime <= 1f) {
+                // Получаем значение кривой в этот момент времени
+                float curveValue = boostCurve.Evaluate(normalizedTime);
+                newPos.y = _startY + curveValue * _curveMultiplyer;
+                Debug.Log(newPos.y);
+            }
+            else {
+                isBusted = false;
+            }
+
+            
         }
         
-        if (_fallProgress == 1) {
-            Grounded  = true;
-        }
         
         transform.position = newPos;
     }
+    
+    
 
-    public void ApplyVerticalBoost(float extraHeight) {
-        _verticalState = VerticalState.Boosting;
-        transform.DOKill(); 
-
-        transform.DOMoveY(
-                transform.position.y + extraHeight,
-                _bustDuration
-            )
-            .SetEase(Ease.InCubic)
-            .OnComplete(() =>
-            {
-                _startY = transform.position.y; // текущая высота после буста
-                _fallProgress = 0f; // начинаем кривое падение с этой точки
-                
-                ContainFallTime();
-                SpawnCruiser();
-                
-                _verticalState = VerticalState.Falling;
-            });
-    }
 
     private void SpawnCruiser() {
-        if (Random.value < _spawnCraiserProp) {
-            return;
-        }
-        float landingZ = transform.position.z + _speedForce * _totalFallTime;
-        Vector3 spawnCoord = new Vector3(transform.position.x, 0f, landingZ);
-
-        if (_cruiser != null) {
-            Destroy(_cruiser);
-        }
-        _cruiser = Instantiate(_cruiserPrefab, spawnCoord, _cruiserPrefab.transform.rotation);
+        // _cruiser = Instantiate(_cruiserPrefab, spawnCoord, _cruiserPrefab.transform.rotation);
     }
     
 
@@ -140,10 +123,6 @@ public class PlayerMovement : MonoBehaviour {
 
 
 
-    private void ContainFallTime() {
-        float height = _startY;
-        _totalFallTime =  height / _speedForce * _fallMultipluer;
-    }
 
 
 }
