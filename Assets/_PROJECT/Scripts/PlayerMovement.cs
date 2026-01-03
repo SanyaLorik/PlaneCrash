@@ -1,117 +1,90 @@
 using System;
 using System.Collections;
+using SanyaBeerExtension;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 public class PlayerMovement : MonoBehaviour {
     [SerializeField] private float _speedForce = 10f;
-    [SerializeField] private float _angle = 30f;
-
+    [SerializeField] private float _fallingSpeed = 7f;
     [SerializeField] private Transform _skinTransform;
-    [SerializeField] LayerMask _groundMask;
-    [SerializeField] private GameObject _cruiserPrefab;
-    
-    
-        
     [SerializeField] private float _rotateSpeed = 6f;
     [SerializeField] private float _maxRotate = 20f;
-    [Range(0,3), SerializeField] private float _bustDuration;
+    [SerializeField] private GroundChecker _groundChecker;
+    
+    
     
     private Rigidbody _rb;
     private Vector2 _moveInput;
     float _currentRoll;
-    private float _fallProgress;
-
-    private float _startY;
-    private float _endY = 0f;
-    private GameObject _cruiser;
-    
-    public bool Grounded { get; private set; }
-    
-
-    private enum VerticalState {
-        Falling,
-        Boosting
-    }
-
-    private VerticalState _verticalState = VerticalState.Falling;
-    
 
     
- 
-
+    
     private void Start() {
         _rb = GetComponent<Rigidbody>();
         _rb.useGravity = false;
-        _startY =  transform.position.y;
-        boostStartTime = Time.time;
     }
     
     private void Update() {
         Move();
         VisualRotate();
     }
-    
-    // private void OnTriggerEnter(Collider other) {
-    //     if (other.gameObject.TryGetComponent<IBoostObject>(out var boostObject)) {
-    //         Debug.Log(boostObject);
-    //         boostObject.ApplyBoost(this);
-    //     }
-    // }
+
 
     public void OnMove(InputAction.CallbackContext context) {
         _moveInput =  context.ReadValue<Vector2>();
     }
     
     
-    // Допустим 1 кривая условно на него сразу действует буст
-    [SerializeField] private AnimationCurve boostCurve;
-    [SerializeField] private  float boostDuration = 10f;
-    private bool isBusted = true;
-    private float boostStartTime;
+    public AnimationCurve currentCurve;
 
-    [SerializeField] private float _curveMultiplyer;
 
+    private bool isBusted;
     private void Move() {
+        if (_groundChecker.Grounded) {
+            return;
+        }
 
         Vector3 newPos =  transform.position;
-        newPos.z += _speedForce * Time.deltaTime;
+        if (!isBusted) {
+            newPos.z += _speedForce * Time.deltaTime;
+            newPos.y -= _fallingSpeed * Time.deltaTime;
+        }
         newPos.x += _moveInput.x * _rotateSpeed * Time.deltaTime;
 
-
-        // работа буста
         if (isBusted) {
-            // Сколько времени прошло с начала буста
-            float elapsedTime = Time.time - boostStartTime;
-            float normalizedTime = elapsedTime / boostDuration;
-            Debug.Log(normalizedTime);
-            if (normalizedTime <= 1f) {
-                // Получаем значение кривой в этот момент времени
-                float curveValue = boostCurve.Evaluate(normalizedTime);
-                newPos.y = _startY + curveValue * _curveMultiplyer;
-                Debug.Log(newPos.y);
-            }
-            else {
+            float normalizedTime = expandedTime / segmentDuration;
+            
+            float height = currentCurve.Evaluate(normalizedTime) * _jumpHeight; // По высоте подымается
+            newPos.y = Mathf.Lerp(initial.y, target.y, normalizedTime) + height;
+            newPos.z = Mathf.Lerp(initial.z, target.z, normalizedTime);
+            expandedTime += Time.deltaTime;
+            if (expandedTime >= segmentDuration) {
                 isBusted = false;
             }
-
-            
         }
-        
-        
         transform.position = newPos;
     }
-    
-    
 
 
-    private void SpawnCruiser() {
-        // _cruiser = Instantiate(_cruiserPrefab, spawnCoord, _cruiserPrefab.transform.rotation);
+    [SerializeField] private float _jumpHeight;
+    private float segmentDuration;
+    private float expandedTime = 0;
+    private Vector3 initial;
+    private Vector3 target;
+    public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
+        currentCurve = curve;
+        expandedTime = 0f;
+        isBusted = true;
+        initial = transform.position;
+        target = nextBoost;
+        float distance = Vector3.Distance(initial, target);
+        segmentDuration = distance / _speedForce; 
     }
-    
 
-        
+    
+  
     private void VisualRotate() {
         float targetRoll = -_moveInput.x * _maxRotate;
         _currentRoll = Mathf.Lerp(_currentRoll, targetRoll, Time.deltaTime * _rotateSpeed);
@@ -120,9 +93,5 @@ public class PlayerMovement : MonoBehaviour {
         euler.z = _currentRoll;
         _skinTransform.localEulerAngles = euler;
     }
-
-
-
-
-
+    
 }

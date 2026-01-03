@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SanyaBeerExtension;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,13 +20,18 @@ public class BoostSpawner : MonoBehaviour {
     [SerializeField] private Boost _bustPrefab;
     
     
-    public AnimationCurve[] _сurves;
+    public AnimationCurve[] _curves;
     public List<Boost> _boosts;
-    
 
+    private PlayerMovement _playerMovement;
+    
+    
     private void Start() {
+        _playerMovement = _player.GetComponent<PlayerMovement>();
          // Spawn(_player.position,_player.position, 3);
          SpawnRightWay(_player.transform.position, _cruiser.transform.position);
+         SpawnRightWay(_player.transform.position, _cruiser.transform.position);
+         SpawnEntranceBoost();
     }
 
     // У нас спавнятся бусты от игрока до крейсера на определенном расстоянии
@@ -32,9 +39,14 @@ public class BoostSpawner : MonoBehaviour {
     // Т.е у нас есть массив из этих бустов
 
 
+    private void SpawnEntranceBoost() {
+        _playerMovement.SetBooster(_curves[0], _boosts[0].transform.position);
+    }
+    
+
     private void SpawnRightWay(Vector3 playerPosition, Vector3 cruiserPosition) {
-        int countBusts = Random.Range(2, 6);
-        float startZ = playerPosition.z;
+        int countBusts = Random.Range(6, 8);
+        float startZ = playerPosition.z+50f; // щоб успел сообразить
         float endZ = cruiserPosition.z;
     
         // Создаем список позиций Z для равномерного распределения
@@ -60,29 +72,38 @@ public class BoostSpawner : MonoBehaviour {
         foreach (float zPos in spawnPoints) {
             Vector3 spawnPosition = new Vector3(
                 Random.Range(_xLeftMax, _xRightMax), 
-                20f,                  
+                Random.Range(10,30),                  
                 zPos                  
             );
         
-            Instantiate(_bustPrefab, spawnPosition, Quaternion.identity);
+            _boosts.Add(Instantiate(_bustPrefab, spawnPosition, Quaternion.identity)); 
+        }
+
+        for (int i = 0; i < _boosts.Count; i++) {
+            if (i != _boosts.Count - 1) {
+                _boosts[i].nextBooster = _boosts[i + 1].transform.position;
+                _boosts[i].randomTrajectory = _curves[Random.Range(0, _curves.Length)];
+                Debug.Log("Следующий буст в " + _boosts[i].nextBooster.z);
+            }
+            else {
+                _boosts[i].nextBooster = cruiserPosition;
+                _boosts[i].randomTrajectory = _curves[1];
+                Debug.Log("Следующий буст в " + cruiserPosition.z);
+            }
         }
     }
 
 
-    private IReadOnlyList<Boost> Spawn(Vector3 playerPosition, Vector3 cruiserPosition, int count) {
-        
-        List<Boost> boost = new List<Boost>();
-        for (int i = 0; i < count; i++) {
-            Boost _newBoost = new Boost {
-                randomTrajectory = _сurves[Random.Range(0, _сurves.Length-1)],
-                height = Random.Range(0, _сurves.Length - 1)
-            };
-            boost.Add(_newBoost);
-        }
-        
-
-
-
-        return boost;
-    }
+    // private IReadOnlyList<Boost> Spawn(Vector3 playerPosition, Vector3 cruiserPosition, int count) {
+    //     
+    //     List<Boost> boost = new List<Boost>();
+    //     for (int i = 0; i < count; i++) {
+    //         Boost _newBoost = new Boost {
+    //             randomTrajectory = _сurves[Random.Range(0, _сurves.Length-1)],
+    //             height = Random.Range(0, _сurves.Length - 1)
+    //         };
+    //         boost.Add(_newBoost);
+    //     }
+    //     return boost;
+    // }
 }

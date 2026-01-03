@@ -6,16 +6,14 @@ using UnityEngine;
 
 public class ScoreVisual : MonoBehaviour {
     [SerializeField] private TMP_Text _scoreText;
-    private PlayerMovement _playerMovement;
+    [SerializeField] private GroundChecker _groundChecker;
 
     private void Start() {
-        _playerMovement = GetComponent<PlayerMovement>();
         StartCoroutine(WriteTextRoutine());
     }
 
-
     private IEnumerator WriteTextRoutine() {
-        while (!_playerMovement.Grounded) {
+        while (!_groundChecker.Grounded) {
             _scoreText.text = $"{transform.position.magnitude:F2} м.";
             yield return null; 
         }
