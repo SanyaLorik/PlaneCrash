@@ -94,16 +94,4 @@ public class BoostSpawner : MonoBehaviour {
     }
 
 
-    // private IReadOnlyList<Boost> Spawn(Vector3 playerPosition, Vector3 cruiserPosition, int count) {
-    //     
-    //     List<Boost> boost = new List<Boost>();
-    //     for (int i = 0; i < count; i++) {
-    //         Boost _newBoost = new Boost {
-    //             randomTrajectory = _сurves[Random.Range(0, _сurves.Length-1)],
-    //             height = Random.Range(0, _сurves.Length - 1)
-    //         };
-    //         boost.Add(_newBoost);
-    //     }
-    //     return boost;
-    // }
 }
