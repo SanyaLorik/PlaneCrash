@@ -15,69 +15,75 @@ public class BoostSpawner : MonoBehaviour {
     [SerializeField] private Transform _cruiser;
     
     [Header("Граница спауна")]
-    [SerializeField] private float _xRightMax;
-    [SerializeField] private float _xLeftMax;
-    [SerializeField] private Boost _bustPrefab;
+    [SerializeField] private Boost _boostPrefab;
+    [SerializeField] private Boost _falseBoostPrefab;
+
+    [SerializeField] private PairedValue<float> _xZone;
+    [SerializeField] private PairedValue<float> _yZone;
+    [SerializeField] private PairedValue<float> _distanceZone;
+    [SerializeField] private PairedValue<float> _falseWayLengthDivider;
+    [SerializeField] private float _lastDistanceMin;
+    
     
     
     public AnimationCurve[] _curves;
     public List<Boost> _boosts1;
     public List<Boost> _boosts2;
+    public List<Boost> _boosts3;
 
     private PlayerMovement _playerMovement;
     
     
     private void Start() {
         _playerMovement = _player.GetComponent<PlayerMovement>();
-         // Spawn(_player.position,_player.position, 3);
-         SpawnRightWay(_player.transform.position, _cruiser.transform.position, _boosts1);
-         SpawnRightWay(_player.transform.position, _cruiser.transform.position, _boosts2);
-         SpawnEntranceBoost();
+        SpawnBoostWays(true,_player.transform.position, _cruiser.transform.position, _boosts1);
+        SpawnBoostWays(true,_player.transform.position, _cruiser.transform.position, _boosts2);
+        SpawnBoostWays(false,_player.transform.position, _cruiser.transform.position, _boosts3);
+        SpawnBoostWays(false,_player.transform.position, _cruiser.transform.position, _boosts3);
+        SpawnEntranceBoost();
     }
-
-    // У нас спавнятся бусты от игрока до крейсера на определенном расстоянии
-    
-    // Т.е у нас есть массив из этих бустов
 
 
     private void SpawnEntranceBoost() {
-        _playerMovement.SetBooster(_curves[0], _boosts1[0].transform.position);
+        _playerMovement.SetBooster(_curves[0], _boosts1[0].transform.position); // действует на игрока сразу
     }
     
 
-    private void SpawnRightWay(Vector3 playerPosition, Vector3 cruiserPosition, List<Boost> _boosts) {
-        int countBusts = Random.Range(6, 8);
-        float startZ = playerPosition.z+50f; // щоб успел сообразить
-        float endZ = cruiserPosition.z;
     
-        // Создаем список позиций Z для равномерного распределения
+    
+    private void SpawnBoostWays(bool trueChain, Vector3 playerPosition, Vector3 cruiserPosition, List<Boost> _boosts) {
+    
         List<float> spawnPoints = new List<float>();
-    
-        // Вычисляем базовый шаг
-        float segment = (endZ - startZ) / (countBusts + 1);
-    
-        for (int i = 1; i <= countBusts; i++) {
-            float baseZ = startZ + (segment * i);
-            // Добавляем случайность в пределах половины сегмента
-            float minZ = baseZ - (segment * 0.3f);
-            float maxZ = baseZ + (segment * 0.3f);
-            float randomZ = Random.Range(minZ, maxZ);
-        
-            spawnPoints.Add(randomZ);
+        float currentPosition = 0f;
+        Vector3 endPosition = cruiserPosition;
+
+        Boost boostPrefab = _boostPrefab;
+        if (!trueChain) {
+            boostPrefab = _falseBoostPrefab;
+            endPosition /= Random.Range(_falseWayLengthDivider.From, _falseWayLengthDivider.To);
         }
+        
+        while (currentPosition < endPosition.z) {
+            float newSpawnPoint = Random.Range(_distanceZone.From, _distanceZone.To);
+            currentPosition += newSpawnPoint;
+            if (endPosition.z - currentPosition > newSpawnPoint) {
+                spawnPoints.Add(currentPosition);
+            }
+        }
+        
     
         // Сортируем для гарантии порядка
         spawnPoints.Sort();
     
-        // Спавним бусты
+        // Точки спауна
         foreach (float zPos in spawnPoints) {
             Vector3 spawnPosition = new Vector3(
-                Random.Range(_xLeftMax, _xRightMax), 
-                Random.Range(10,30),                  
+                Random.Range(_xZone.From,_xZone.To), 
+                Random.Range(_yZone.From,_yZone.To),                  
                 zPos                  
             );
         
-            _boosts.Add(Instantiate(_bustPrefab, spawnPosition, Quaternion.identity)); 
+            _boosts.Add(Instantiate(boostPrefab, spawnPosition, Quaternion.identity)); 
         }
 
         for (int i = 0; i < _boosts.Count; i++) {
@@ -87,12 +93,12 @@ public class BoostSpawner : MonoBehaviour {
                 // Debug.Log("Следующий буст в " + _boosts[i].nextBooster.z);
             }
             else {
-                _boosts[i].nextBooster = cruiserPosition;
+                _boosts[i].nextBooster = endPosition;
                 _boosts[i].randomTrajectory = _curves[1];
-                // Debug.Log("Следующий буст в " + cruiserPosition.z);
+                Debug.Log("Конечный буст в  " + endPosition.z);
             }
         }
     }
-
+    
 
 }

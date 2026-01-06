@@ -16,6 +16,7 @@ public class ScoreVisual : MonoBehaviour {
     [SerializeField] private Transform _cruiser;
     
     [SerializeField] private RectTransform _pointer;
+    [SerializeField] private PlayerMovement _playerMovement;
     
     
 
@@ -25,20 +26,35 @@ public class ScoreVisual : MonoBehaviour {
     private RectTransform _visualProgressRt;
     [SerializeField] private float _startProgressX;
     [SerializeField] private float _endProgressX;
-    private void Start() {
-        _visualProgressRt = _visualProgress.gameObject.GetComponent<RectTransform>();
-        StartFlight();
+
+    private void Awake() {
+        _playerMovement.OnStateChange += PlayerMovementOnStateChange;
     }
 
-    public void StartFlight() {
+    private void PlayerMovementOnStateChange(PlayerMovement.PlayerState state) {
+        if (state == PlayerMovement.PlayerState.Flight) {
+            FlightScoreLogic();
+        }
+        else if(_flightRoutine != null) {
+            StopCoroutine(_flightRoutine);
+        }
+    }
+
+
+    private void Start() {
+        _visualProgressRt = _visualProgress.gameObject.GetComponent<RectTransform>();
+    }
+
+    
+    private Coroutine _flightRoutine;
+    public void FlightScoreLogic() {
         _totalDistanceText.text = _cruiser.position.z + "m";
-        
         
         _startPointZ = _player.position.z;
         _totalDistance = _cruiser.position.z;
         Debug.Log("Границы прогресса: " + _startProgressX + " " + _endProgressX);
         
-        StartCoroutine(ShowDistanceRoutine());
+        _flightRoutine = StartCoroutine(ShowDistanceRoutine());
     }
 
     private IEnumerator ShowDistanceRoutine() {

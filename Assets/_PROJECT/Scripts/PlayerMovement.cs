@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour {
     
     private void Start() {
         _rb = GetComponent<Rigidbody>();
-        _rb.useGravity = false;
+        _rb.useGravity = true;
         _playerCTS = new CancellationTokenSource();
         ChangeState(PlayerState.Walking);
     }
@@ -65,6 +65,7 @@ public class PlayerMovement : MonoBehaviour {
 
         if (transform.position.z > -10 && !_playerIsFlight) {
             _playerIsFlight =  true;
+            _rb.useGravity = false;
             ChangeState(PlayerState.Flight);
         }
     }
@@ -84,7 +85,6 @@ public class PlayerMovement : MonoBehaviour {
     private async UniTask PlayerRotateLocalX(float targetAngleX, PlayerState playerState) {
         float duration = 1f;
     
-        // Работаем с локальными углами (относительно родителя)
         Vector3 currentLocalEuler = transform.localEulerAngles;
         Vector3 targetLocalEuler;
         if (playerState == PlayerState.Walking) {
@@ -135,8 +135,6 @@ public class PlayerMovement : MonoBehaviour {
 
         transform.position += move * _walkSpeed * Time.deltaTime;
         
-        
-        
         if (move.sqrMagnitude > 0.0001f) {
             float targetY = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
 
@@ -145,11 +143,11 @@ public class PlayerMovement : MonoBehaviour {
                 targetY,
                 _rotateSpeed * Time.deltaTime
             );
-
+            // Крутится только Y
             transform.rotation = Quaternion.Euler(
-                transform.eulerAngles.x, // X НЕ ТРОГАЕМ
-                y,                        // крутится только Y
-                transform.eulerAngles.z  // Z НЕ ТРОГАЕМ
+                transform.eulerAngles.x, 
+                y,                        
+                transform.eulerAngles.z  
             );
         }
 

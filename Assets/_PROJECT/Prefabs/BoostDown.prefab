@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4076499618673494760}
   - component: {fileID: 3534353945343098169}
   - component: {fileID: 7694305567137652851}
-  - component: {fileID: 6390800538257061746}
+  - component: {fileID: 3685434286454365345}
   m_Layer: 0
   m_Name: BoostDown
   m_TagString: Untagged
@@ -113,7 +113,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.64785266, y: 0.6462471, z: 0.23070335}
   m_Center: {x: 0, y: 0.0457018, z: 0}
---- !u!114 &6390800538257061746
+--- !u!114 &3685434286454365345
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,8 +122,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2872955650149394591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d32030c7e4ff5d40b8e86c9f5db200d, type: 3}
+  m_Script: {fileID: 11500000, guid: 447a0cffbb4c62e49b7703948aef8531, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HeightUnboost
-  _boostPrefab: {fileID: 2872955650149394591}
-  _bustDown: -4
+  m_EditorClassIdentifier: Assembly-CSharp::Boost
+  randomTrajectory:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  nextBooster: {x: 0, y: 0, z: 0}
