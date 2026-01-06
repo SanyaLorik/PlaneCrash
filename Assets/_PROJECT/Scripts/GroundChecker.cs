@@ -16,6 +16,7 @@ public class GroundChecker : MonoBehaviour {
         Vector3 origin = transform.position;
         if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit,  _distanceCheck, _groundMask)) {
             OnGrounded?.Invoke();
+            Debug.Log("Упали");
             Grounded = true;
         }
     }

@@ -21,7 +21,8 @@ public class BoostSpawner : MonoBehaviour {
     
     
     public AnimationCurve[] _curves;
-    public List<Boost> _boosts;
+    public List<Boost> _boosts1;
+    public List<Boost> _boosts2;
 
     private PlayerMovement _playerMovement;
     
@@ -29,8 +30,8 @@ public class BoostSpawner : MonoBehaviour {
     private void Start() {
         _playerMovement = _player.GetComponent<PlayerMovement>();
          // Spawn(_player.position,_player.position, 3);
-         SpawnRightWay(_player.transform.position, _cruiser.transform.position);
-         SpawnRightWay(_player.transform.position, _cruiser.transform.position);
+         SpawnRightWay(_player.transform.position, _cruiser.transform.position, _boosts1);
+         SpawnRightWay(_player.transform.position, _cruiser.transform.position, _boosts2);
          SpawnEntranceBoost();
     }
 
@@ -40,11 +41,11 @@ public class BoostSpawner : MonoBehaviour {
 
 
     private void SpawnEntranceBoost() {
-        _playerMovement.SetBooster(_curves[0], _boosts[0].transform.position);
+        _playerMovement.SetBooster(_curves[0], _boosts1[0].transform.position);
     }
     
 
-    private void SpawnRightWay(Vector3 playerPosition, Vector3 cruiserPosition) {
+    private void SpawnRightWay(Vector3 playerPosition, Vector3 cruiserPosition, List<Boost> _boosts) {
         int countBusts = Random.Range(6, 8);
         float startZ = playerPosition.z+50f; // щоб успел сообразить
         float endZ = cruiserPosition.z;
@@ -83,12 +84,12 @@ public class BoostSpawner : MonoBehaviour {
             if (i != _boosts.Count - 1) {
                 _boosts[i].nextBooster = _boosts[i + 1].transform.position;
                 _boosts[i].randomTrajectory = _curves[Random.Range(0, _curves.Length)];
-                Debug.Log("Следующий буст в " + _boosts[i].nextBooster.z);
+                // Debug.Log("Следующий буст в " + _boosts[i].nextBooster.z);
             }
             else {
                 _boosts[i].nextBooster = cruiserPosition;
                 _boosts[i].randomTrajectory = _curves[1];
-                Debug.Log("Следующий буст в " + cruiserPosition.z);
+                // Debug.Log("Следующий буст в " + cruiserPosition.z);
             }
         }
     }

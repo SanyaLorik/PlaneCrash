@@ -10,6 +10,10 @@ public class FollowTrajectory_TEST : MonoBehaviour
     public float _height;
     public float _duration;
 
+
+    
+    
+
     private void Start()
     {
         Follow();
