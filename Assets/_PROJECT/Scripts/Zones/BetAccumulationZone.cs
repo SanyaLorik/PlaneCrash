@@ -10,22 +10,11 @@ public class BetAccumulation : MonoBehaviour  {
     [SerializeField] private AnimationCurve _moneyCurve;
     [SerializeField] private float _accumulateDuration;
 
-    public float CurrentMoneyAccum { get; private set; }
+    private float _elapsedTime;
     private CancellationTokenSource _accumulateCTS;
-    private float _elapsedTime = 0f;
-    
-    public void ResetBet() { 
-        CurrentMoneyAccum = 0;
-        _elapsedTime = 0f;
-        BetVisual.Instantiate.PlayerBetVisual.text = "Ставка: 0";
-        BetVisual.Instantiate.RewardVisual.text = "";
-        BetVisual.Instantiate.XMultiplyVisual.text = "";
-        StopAccumulate();
-    }
     
     public void StopAccumulate() {
         if (_accumulateCTS == null) return;
-
         _accumulateCTS.Cancel();
         _accumulateCTS.Dispose();
         _accumulateCTS = null;
@@ -55,20 +44,23 @@ public class BetAccumulation : MonoBehaviour  {
     
     
     private async UniTaskVoid AccumulateBet(CancellationToken token, PlayerBank bank) {
-
         float playerMoney = bank.PlayerCapital;
-        while (!token.IsCancellationRequested && _elapsedTime < _accumulateDuration && CurrentMoneyAccum != playerMoney) {
+        float currentBet = ZoneManager.Instance.CurrentBet;
+        if (currentBet == 0) {
+            _elapsedTime = 0f;
+        }
+        while (!token.IsCancellationRequested && _elapsedTime < _accumulateDuration && currentBet != playerMoney) {
             float t = _elapsedTime / _accumulateDuration;
-            CurrentMoneyAccum =  _moneyCurve.Evaluate(t) * playerMoney;
+            currentBet = _moneyCurve.Evaluate(t) * playerMoney;
             _elapsedTime += Time.deltaTime;
-            BetVisual.Instantiate.PlayerBetVisual.text = "Ставка: " + CurrentMoneyAccum.ToString("F2");
-            Debug.Log(CurrentMoneyAccum.ToString("F2"));
+            ZoneManager.Instance.ChangeBet(currentBet);
             await UniTask.Yield(token);
         }
 
+        // Если время кончилось
         if (!token.IsCancellationRequested && _elapsedTime >= _accumulateDuration) {
-            CurrentMoneyAccum = playerMoney;
-            BetVisual.Instantiate.PlayerBetVisual.text = "Ставка: " + CurrentMoneyAccum.ToString("F2");
+            currentBet = playerMoney;
+            ZoneManager.Instance.ChangeBet(currentBet);
         }
     }
 

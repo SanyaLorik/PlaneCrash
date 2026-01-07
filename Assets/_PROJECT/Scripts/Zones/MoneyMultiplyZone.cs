@@ -14,11 +14,10 @@ public class MoneyMultiplyZone : MonoBehaviour {
         _xMultiplySignText.text = "x" + _xMultiplyValue;
     }
 
+
     private void OnTriggerEnter(Collider collider) {
-        if (collider.gameObject.TryGetComponent(out PlayerBank bank)) {
-            _accumulationZone.StopAccumulate();
-            BetVisual.Instantiate.XMultiplyVisual.text = "Множитель: x" + _xMultiplyValue;
-            BetVisual.Instantiate.RewardVisual.text = "Выигрышь: " + (_accumulationZone.CurrentMoneyAccum * _xMultiplyValue).ToString("F2");
+        if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
+            ZoneManager.Instance.ChangeMultiplyer(_xMultiplyValue);
         }    
     }
 

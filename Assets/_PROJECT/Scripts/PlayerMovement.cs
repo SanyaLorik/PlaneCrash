@@ -1,13 +1,8 @@
-using System;
-using System.Collections;
 using System.Threading;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using SanyaBeerExtension;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 
 public class PlayerMovement : MonoBehaviour {
     [SerializeField] private float _speedForce = 10f;
@@ -16,9 +11,11 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private Transform _skinTransform;
     [SerializeField] private float _rotateSpeed = 6f;
     [SerializeField] private float _maxRotate = 20f;
-    [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private float _jumpHeight;
+    [SerializeField] private PairedValue<float> _xMovement;
+    [SerializeField] private Vector3 _playerSpawnPosition;
     public AnimationCurve currentCurve;
+    
     
     private float segmentDuration;
     private float expandedTime = 0;
@@ -32,53 +29,51 @@ public class PlayerMovement : MonoBehaviour {
     private float _currentRoll;
 
     private CancellationTokenSource _playerCTS;
-    public event Action<PlayerState> OnStateChange;
-    
-    public enum PlayerState {
-        Flight,
-        Walking
-    }
-    public PlayerState _playerState;
+    private PlayerStateManager _stateManager;
     
     private void Start() {
-        _rb = GetComponent<Rigidbody>();
-        _rb.useGravity = true;
         _playerCTS = new CancellationTokenSource();
-        ChangeState(PlayerState.Walking);
+        ChangeSpaceRotation(PlayerState.Walking);
+        TpPlayerInSpawn();
+    }
+
+    public void TpPlayerInSpawn() {
+        transform.position = _playerSpawnPosition;
     }
     
+    
+    private void Awake() {
+        _rb = GetComponent<Rigidbody>();
+        _stateManager = GetComponent<PlayerStateManager>();
+        _rb.useGravity = true;
+        _stateManager.OnChangeState += ChangeSpaceRotation;
+    }
+
+
     private void OnDestroy() {
         _playerCTS?.Cancel();
         _playerCTS?.Dispose();
     }
     
-    
-    
     private void Update() {
-        if (_playerState == PlayerState.Walking) {
+        if (_stateManager.CurrentState == PlayerState.Walking) {
             Walk();
         }
-        else {
+        else if(_stateManager.CurrentState == PlayerState.Flight) {
             FlightLogic();
             VisualRotate();
         }
-
-        if (transform.position.z > -10 && !_playerIsFlight) {
-            _playerIsFlight =  true;
-            _rb.useGravity = false;
-            ChangeState(PlayerState.Flight);
-        }
     }
-
-    private bool _playerIsFlight;
-    private void ChangeState(PlayerState playerState) {
-        _playerState = playerState;
-        OnStateChange?.Invoke(playerState);
+    
+    
+    private void ChangeSpaceRotation(PlayerState playerState) {
         if (playerState == PlayerState.Flight) {
             PlayerRotateLocalX(-25, playerState);
+            _rb.useGravity = false;
         }
         else {
             PlayerRotateLocalX(-80, playerState);
+            _rb.useGravity = true;
         }
     }
 
@@ -116,9 +111,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Walk() {
-        
         Transform cam = Camera.main.transform;
-
         Vector3 camForward = cam.forward;
         Vector3 camRight   = cam.right;
 
@@ -155,13 +148,10 @@ public class PlayerMovement : MonoBehaviour {
     
     
     private void FlightLogic() {
-        if (_groundChecker.Grounded) {
-            return;
-        }
-
         Vector3 newPos =  transform.position;
         newPos.x += _moveInput.x * _rotateSpeed * Time.deltaTime;
-
+        
+        newPos.x = Mathf.Clamp(newPos.x, _xMovement.From, _xMovement.To);
         if (!_isBusted) {
             newPos.z += _speedForce * Time.deltaTime;
             newPos.y -= _fallingSpeed * Time.deltaTime;

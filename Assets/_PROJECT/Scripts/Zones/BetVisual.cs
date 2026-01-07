@@ -3,23 +3,59 @@ using TMPro;
 using UnityEngine;
 
 public class BetVisual : MonoBehaviour {
-    public TMP_Text CapitalVisual;
-    public TMP_Text PlayerBetVisual;
-    public TMP_Text XMultiplyVisual;
-    public TMP_Text RewardVisual;
+    [SerializeField] private TMP_Text _playerBank;
+    [SerializeField] private TMP_Text _playerBetVisual;
+    [SerializeField] private TMP_Text _xMultiplyVisual;
+    [SerializeField] private TMP_Text _rewardVisual;
+    [SerializeField] private TMP_Text _distanceVisual;
+    [SerializeField] private PlayerStateManager _playerStateManager;
+    // Пока банк тут
+    [SerializeField] private PlayerBank _bank;
     
     
-    public static BetVisual Instantiate { get; private set; }
 
-    private void Awake() {
-        if (Instantiate != null) {
-            Debug.Log("There is already an instance of BetVisual at " + gameObject.name);
-            return;
+    private void Start() {
+        ZoneManager.Instance.OnChooseBet += ShowBet;
+        ZoneManager.Instance.OnChooseMultiplyer += ShowMultiplyer;
+        _bank.OnBankChanged += ChangeBank;
+        _playerStateManager.OnChangeState += OnChangeState;
+    }
+
+    private void OnChangeState(PlayerState state) {
+        if (state == PlayerState.Flight) {
+            _playerBetVisual.text = "";
+            _xMultiplyVisual.text = "";
+            _rewardVisual.text = "";
+            _distanceVisual.text = "";
         }
-        Instantiate = this;
+    }
+
+
+
+
+    private void OnDisable() {
+        ZoneManager.Instance.OnChooseBet -= ShowBet;
+        ZoneManager.Instance.OnChooseMultiplyer -= ShowMultiplyer;
+        _bank.OnBankChanged -= ChangeBank;
+        _playerStateManager.OnChangeState -= OnChangeState;
+    }
+
+    private void ChangeBank(float capital) {
+        _playerBank.text = $"Баланс: {capital:F2}";
+    }
+
+    private void ShowBet(float bet) {
+        _playerBetVisual.text = $"Ставка: {bet:F2}";
+        _xMultiplyVisual.text = "";
+        _rewardVisual.text = "";
+        _distanceVisual.text = "";
+
     }
     
-    
-    
-    
+    private void ShowMultiplyer(float multiplyer) {
+        _xMultiplyVisual.text = $"Множитель: x{multiplyer}";
+        _rewardVisual.text = $"Выигрышь: {ZoneManager.Instance.CurrentBet *  multiplyer:F2}";
+        _distanceVisual.text = $"До финиша: {ZoneManager.Instance.CruiserDistance}м.";
+    }
+
 }

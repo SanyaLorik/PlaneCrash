@@ -5,7 +5,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
-    [SerializeField] private PlayerMovement _player;
+    [SerializeField] private PlayerStateManager _playerStateManager;
     [SerializeField] private CinemachineCamera _camera;
     [SerializeField] private Vector3 _walkingOffset;
     [SerializeField] private Vector3 _flightOffset;
@@ -14,9 +14,9 @@ public class CameraFollow : MonoBehaviour {
     
     private CinemachineFollow _cinemachineFollow;
     private CancellationTokenSource _cameraCTS;
-    private void Awake() {
+    private void Start() {
         _cameraCTS = new CancellationTokenSource();
-        // _player.OnStateChange += OnStateChange;
+        _playerStateManager.OnChangeState += OnStateChange;
         _cinemachineFollow = _camera.GetComponent<CinemachineFollow>();
     }
 
@@ -27,14 +27,14 @@ public class CameraFollow : MonoBehaviour {
         _cameraCTS?.Dispose();
     }
 
-    private void OnStateChange(PlayerMovement.PlayerState state) {
+    private void OnStateChange(PlayerState state) {
         _cameraCTS?.Cancel();
         _cameraCTS?.Dispose();
         _cameraCTS = new CancellationTokenSource();
-        if (state == PlayerMovement.PlayerState.Flight) {
+        if (state == PlayerState.Flight) {
             ChangeCameraOffset(_flightOffset);
         }
-        else if (state == PlayerMovement.PlayerState.Walking) {
+        else if (state == PlayerState.Walking) {
             ChangeCameraOffset(_walkingOffset);
         }
     }
