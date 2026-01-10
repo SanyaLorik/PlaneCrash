@@ -22,20 +22,18 @@ public class BetVisual : MonoBehaviour {
     }
 
     private void OnChangeState(PlayerState state) {
-        if (state == PlayerState.Flight) {
-            _playerBetVisual.text = "";
-            _xMultiplyVisual.text = "";
-            _rewardVisual.text = "";
-            _distanceVisual.text = "";
-        }
+        _playerBetVisual.text = "";
+        _xMultiplyVisual.text = "";
+        _rewardVisual.text = "";
+        _distanceVisual.text = "";
     }
 
 
-
-
     private void OnDisable() {
-        ZoneManager.Instance.OnChooseBet -= ShowBet;
-        ZoneManager.Instance.OnChooseMultiplyer -= ShowMultiplyer;
+        if (ZoneManager.Instance != null) {
+            ZoneManager.Instance.OnChooseBet -= ShowBet;
+            ZoneManager.Instance.OnChooseMultiplyer -= ShowMultiplyer;
+        }
         _bank.OnBankChanged -= ChangeBank;
         _playerStateManager.OnChangeState -= OnChangeState;
     }

@@ -1,10 +1,14 @@
 using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RewardManager : MonoBehaviour {
     [SerializeField] private GameObject _canvas;
+    [SerializeField] private CanvasGroup _canvasAlphaGroup;
+    [SerializeField] private RectTransform _canvasBody;
+    
     [SerializeField] private TMP_Text _distanceText;
     [SerializeField] private TMP_Text _bet;
     [SerializeField] private TMP_Text _multiplier;
@@ -17,11 +21,20 @@ public class RewardManager : MonoBehaviour {
     
     [SerializeField] private Button _backButton;
     [SerializeField] private Transform _cruiser;
+
+
+    private Vector2 _startCavasPosition; 
+    private Vector2 _finalCavasPosition; 
+
+    private bool _inAnimation => _animation != null && _animation.active;
+    private Sequence _animation;
     
     
     private void Start() {
         _backButton.onClick.AddListener(RewardLogic);
         _playerStateManager.OnChangeState += StateChange;
+        _finalCavasPosition = _canvasBody.anchoredPosition;
+        _startCavasPosition = new Vector2(_finalCavasPosition.x, -Screen.height/2);
     }
 
     private void StateChange(PlayerState state) {
@@ -34,7 +47,7 @@ public class RewardManager : MonoBehaviour {
     }
 
     public void ShowCruiserReward() {
-        _canvas.SetActive(true);
+        ShowReward();
         _distanceText.text = $"Дистанция: {_cruiser.position.z:F2}";
         _multiplier.text = $"Множитель: x{ZoneManager.Instance.CurrentMultiplyer}";
         _bet.text = $"Ставка: {ZoneManager.Instance.CurrentBet:F2}";
@@ -46,7 +59,7 @@ public class RewardManager : MonoBehaviour {
     }
     
     public void ShowDistanceReward() {
-        _canvas.SetActive(true);
+        ShowReward();
         float distance = _playerStateManager.CurrentPlayerDistance;
         float reward = distance / _distanceRewardDivide;
         PlayerBank.Instance.GiveMeYourFuckingMoneyNigga(ZoneManager.Instance.CurrentBet);
@@ -57,10 +70,41 @@ public class RewardManager : MonoBehaviour {
     }
     
     private void RewardLogic() {
-        _canvas.SetActive(false);
+        Sequence buttonPop =  DOTween.Sequence();
+        buttonPop
+            .Append(_backButton.transform.DOScale(1.2f, 0.2f).From(1f).SetEase(Ease.OutBounce))
+            .Append(_backButton.transform.DOScale(1f, 0.2f).From(1.2f).SetEase(Ease.OutBounce));
+        
+        
+        HideReward();
         _playerStateManager.ChangePlayerState(PlayerState.Walking);
         _playerMovement.TpPlayerInSpawn();
     }
 
+    private void ShowReward() {
+        _animation =  DOTween.Sequence();
+        _animation
+            .Append(_canvasAlphaGroup.DOFade(1, 1f).From(0))
+            .Join(_canvasBody.DOAnchorPos(_finalCavasPosition, 0.6f).From(_startCavasPosition))
+            .Append(_backButton.transform.DOScale(1, 0.5f).From(0).SetEase(Ease.OutBounce));
+    }
 
+    
+    private void HideReward() {
+        Sequence animation =  DOTween.Sequence();
+
+        animation
+            .Append(_canvasAlphaGroup.DOFade(0, 0.6f).From(1))
+            .Join(_canvasBody.DOAnchorPos(_startCavasPosition, 0.6f).From(_finalCavasPosition));
+    }
+
+    private void OnDestroy() {
+        KillAnimation();
+    }
+
+    private void KillAnimation() {
+        if (_inAnimation) {
+            _animation.Kill();
+        }
+    }
 }

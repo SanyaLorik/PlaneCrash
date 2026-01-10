@@ -31,10 +31,17 @@ public class ScoreVisual : MonoBehaviour {
             _canvas.SetActive(true);
             FlightScoreLogic();
         }
-        else if (state == PlayerState.Grounded ||  state == PlayerState.Cruisered) {
+        else if (state == PlayerState.Grounded) {
             if (_flightRoutine != null) {
                 StopCoroutine(_flightRoutine);
             }
+        }
+        else if (state == PlayerState.Cruisered) {
+            if (_flightRoutine != null) {
+                StopCoroutine(_flightRoutine);
+            }
+
+            SetMaxProgress();
         }
         else if(state == PlayerState.Walking) {
             SetDefault();
@@ -74,6 +81,15 @@ public class ScoreVisual : MonoBehaviour {
         // Или можно убывает типо 
         _visualProgress.fillAmount = 0;
         _canvas.SetActive(false);
+    }
+
+    private void SetMaxProgress() {
+        _visualProgress.fillAmount = 1f;
+        float newX = _endProgressX;
+        Vector3 newPosition = _pointer.anchoredPosition;
+        newPosition.x = newX;
+        _pointer.anchoredPosition = newPosition;
+        _currentDistanceText.text = $"{Math.Round(_cruiser.position.z)}m";
     }
 
 

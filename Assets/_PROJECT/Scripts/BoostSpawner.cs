@@ -115,11 +115,9 @@ public class BoostSpawner : MonoBehaviour {
             else {
                 boost[i].nextBooster = endPosition;
                 boost[i].randomTrajectory = _curves[1];
-                Debug.Log("Конечный буст в  " + endPosition.z);
+                // Debug.Log("Конечный буст в  " + endPosition.z);
             }
         }
-
-        Debug.Log(boost.Count);
         return boost;
     }
     
