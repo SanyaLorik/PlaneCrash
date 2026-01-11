@@ -22,8 +22,11 @@ public class MoneyCube : MonoBehaviour
     
     private void Start() {
         _recalculateBtn.onClick.AddListener(() => SetMoneyAmount(_amount));
+    }
+
+    private void Update() {
         SetMoneyAmount(_amount);
-        
+
     }
 
     private void UpdateTiling() {
