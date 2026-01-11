@@ -17,6 +17,12 @@ public class PlayerBank : MonoBehaviour {
         }
         Instance = this;
     }
+    
+    private void Start() {
+        OnBankChanged?.Invoke(_playerCapital);
+    }
+
+    
 
     public float PlayerCapital { get => _playerCapital; }
 
@@ -35,8 +41,5 @@ public class PlayerBank : MonoBehaviour {
         OnBankChanged?.Invoke(_playerCapital);
     }
     
-    private void Start() {
-        OnBankChanged?.Invoke(_playerCapital);
-    }
-    
+
 }

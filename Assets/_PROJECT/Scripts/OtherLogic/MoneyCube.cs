@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MoneyCube : MonoBehaviour
 {
+    [SerializeField] private PlayerBank _bank;
     [SerializeField] private Renderer rend;
 
     [SerializeField] private float tileWorldSize = 1f;
@@ -18,16 +19,16 @@ public class MoneyCube : MonoBehaviour
     [SerializeField] float _maxSide = 5f; 
     [SerializeField] float _baseSide = 1f;
     [SerializeField] float _baseAmount = 1000f;
-    
-    
-    private void Start() {
-        _recalculateBtn.onClick.AddListener(() => SetMoneyAmount(_amount));
+    private MoneyRadiusSpawn _moneyRadiusSpawn;
+
+
+    private void Awake() {
+        _bank.OnBankChanged += SetMoneyAmount;
+        _recalculateBtn.onClick.AddListener(() => _bank.AddMoney(0));
+        _moneyRadiusSpawn = GetComponent<MoneyRadiusSpawn>();
     }
 
-    private void Update() {
-        SetMoneyAmount(_amount);
 
-    }
 
     private void UpdateTiling() {
         Vector3 size = transform.localScale;
@@ -71,14 +72,12 @@ public class MoneyCube : MonoBehaviour
 
         transform.localScale = new Vector3(side, height, side);
 
-        // фиксируем дно на anchorPoint через bounds
-        if (anchorPoint != null)
-        {
+        if (anchorPoint != null) {
             Bounds b = rend.bounds;
             float deltaY = anchorPoint.position.y - b.min.y;
             transform.position += new Vector3(0, deltaY, 0);
         }
-
+        _moneyRadiusSpawn.SpawnMoney();
         UpdateTiling();
     }
 

@@ -49,7 +49,8 @@ public class PlayerStateManager : MonoBehaviour {
         if (Physics.Raycast(origin, Vector3.down,  _distanceCheck, _cruiserMask)) {
             Debug.Log("Попали!");
             ChangePlayerState(PlayerState.Cruisered);
-        }
+        }  
+        
     }
 
 
