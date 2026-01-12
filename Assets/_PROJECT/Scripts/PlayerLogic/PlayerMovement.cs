@@ -66,10 +66,7 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    private void OnDestroy() {
-        _playerCTS?.Cancel();
-        _playerCTS?.Dispose();
-    }
+
     
     
     public void TpPlayerInSpawn() {
@@ -229,6 +226,12 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 euler = _skinTransform.localEulerAngles;
         euler.z = _currentRoll;
         _skinTransform.localEulerAngles = euler;
+    }
+    
+    
+    private void OnDestroy() {
+        _playerCTS?.Cancel();
+        _playerCTS?.Dispose();
     }
     
 }

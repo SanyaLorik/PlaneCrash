@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -6,19 +9,22 @@ public class PlayerBank : MonoBehaviour {
     
     [SerializeField] private float _playerCapital;
     [SerializeField] private TMP_Text _playerCapitalVisual;
-    public static PlayerBank Instance { get; private set; }
+    [SerializeField] private MoneyCube _cube;
     public event Action<float> OnBankChanged;
 
-    private void Awake() {
-        if (Instance != null) {
-            Debug.LogWarning("PlayerBank Instance already exists, destroying object");
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
     
     private void Start() {
+        OnBankChanged += BankChanged;
+        LoadPlayerMoney().Forget();
+    }
+
+    private void BankChanged(float obj) {
+        _cube.SetMoneyAmount(_playerCapital);
+    }
+
+    private async UniTaskVoid LoadPlayerMoney() {
+        // Имитация задержки перед загрузкой денег
+        await UniTask.Delay(1000);
         OnBankChanged?.Invoke(_playerCapital);
     }
 

@@ -1,34 +1,30 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 
 public class MoneyCube : MonoBehaviour
 {
-    [SerializeField] private PlayerBank _bank;
     [SerializeField] private Renderer rend;
 
     [SerializeField] private float tileWorldSize = 1f;
     [SerializeField] private Vector2 tilingRatio = new Vector2(5f, 11f); // форма пачек
     [SerializeField] private int[] moneyMaterialSlots = {0, 1}; // какие материалы — деньги
 
-    [SerializeField] private float _amount = 1000;
 
     [SerializeField] private Transform anchorPoint; // точка, на которой должен стоять низ куба
     [SerializeField] private Button _recalculateBtn;
-    [SerializeField] float _maxSide = 5f; 
-    [SerializeField] float _baseSide = 1f;
-    [SerializeField] float _baseAmount = 1000f;
+    [SerializeField] private float _maxSide = 5f; 
+    [SerializeField] private float _baseSide = 1f;
+    [SerializeField] private TMP_Text _textCount;
     private MoneyRadiusSpawn _moneyRadiusSpawn;
+    private float _baseAmount = 10000f;
 
 
     private void Awake() {
-        _bank.OnBankChanged += SetMoneyAmount;
-        _recalculateBtn.onClick.AddListener(() => _bank.AddMoney(0));
         _moneyRadiusSpawn = GetComponent<MoneyRadiusSpawn>();
     }
-
-
 
     private void UpdateTiling() {
         Vector3 size = transform.localScale;
@@ -49,9 +45,8 @@ public class MoneyCube : MonoBehaviour
         rend.materials = mats;
     }
 
-    private void SetMoneyAmount(float amount) {
-        _amount = amount;
-
+    public void SetMoneyAmount(float amount, bool updateMiniMoney = true) {
+        _textCount.text = amount.ToString("N0"); // шо за NO 
         float linearSide = _baseSide * (amount / _baseAmount);
 
         float side;
@@ -77,8 +72,16 @@ public class MoneyCube : MonoBehaviour
             float deltaY = anchorPoint.position.y - b.min.y;
             transform.position += new Vector3(0, deltaY, 0);
         }
-        _moneyRadiusSpawn.SpawnMoney();
+
+        if (updateMiniMoney) {
+            UpdateSpawnRadius();
+        }
         UpdateTiling();
+    }
+
+    // Прокину здесь чтоб не создавать еще ссылок
+    public void UpdateSpawnRadius() {
+        _moneyRadiusSpawn.SpawnMoney();
     }
 
 }

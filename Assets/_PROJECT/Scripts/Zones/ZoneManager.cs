@@ -8,6 +8,7 @@ public class ZoneManager : MonoBehaviour {
     [SerializeField] private float _cruiserBaseSpawnDistance; // условно 500 или 1к за 1х
     [SerializeField] private PairedValue<float> _cruiserSpawnDistanceX;
     [SerializeField] private BoostSpawner _boostSpawner;
+    [SerializeField] private MoneyCube _moneyCube;
     
     
     
@@ -29,10 +30,15 @@ public class ZoneManager : MonoBehaviour {
         Instance = this;
     }
 
+    private void Start() {
+        _moneyCube.SetMoneyAmount(0);
+    }
+
 
     public void ChangeBet(float newBet) {
         CurrentBet = newBet;
         OnChooseBet?.Invoke(CurrentBet);
+        _moneyCube.SetMoneyAmount(CurrentBet,false);
     }
 
 
@@ -55,6 +61,7 @@ public class ZoneManager : MonoBehaviour {
         
         _cruiser.position = newCruiserSpawnPos;
         
+        _moneyCube.SetMoneyAmount(CurrentBet*CurrentMultiplyer);
         _boostSpawner.SpawnBoosts(newCruiserSpawnPos);
         OnChooseMultiplyer?.Invoke(CurrentMultiplyer);
     }

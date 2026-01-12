@@ -16,7 +16,7 @@ public class Lift : MonoBehaviour {
     private Vector3 _moneyEndPos;
     private CancellationTokenSource _tokenSource;
     private Rigidbody _liftRb;
-    private bool _inLift;
+    public bool _inLift;
     
 
     private void Awake() {
@@ -33,10 +33,10 @@ public class Lift : MonoBehaviour {
     private Coroutine _liftDownRoutine;
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
+            _inLift = true;
             ResetPlayerVelocity();
             ReadyLiftWork();
             
-            _inLift = true;
             
             if (_liftDownRoutine != null) {
                 StopCoroutine(_liftDownRoutine);
@@ -63,6 +63,7 @@ public class Lift : MonoBehaviour {
     private IEnumerator WaitChangeStateRoutine() {
         yield return new WaitForSeconds(1.5f);
         if (!_inLift ) {
+            
             ReadyLiftWork();
             LiftDown(_tokenSource.Token).Forget();
         }

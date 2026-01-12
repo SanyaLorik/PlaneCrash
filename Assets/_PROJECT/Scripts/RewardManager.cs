@@ -8,6 +8,7 @@ public class RewardManager : MonoBehaviour {
     [SerializeField] private GameObject _canvas;
     [SerializeField] private CanvasGroup _canvasAlphaGroup;
     [SerializeField] private RectTransform _canvasBody;
+    [SerializeField] private PlayerBank _playerBank;
     
     [SerializeField] private TMP_Text _distanceText;
     [SerializeField] private TMP_Text _bet;
@@ -54,7 +55,7 @@ public class RewardManager : MonoBehaviour {
         
         float reward = ZoneManager.Instance.CurrentBet * ZoneManager.Instance.CurrentMultiplyer; 
         _rewardText.text = $"Выигрышь: {reward:F2}";
-        PlayerBank.Instance.AddMoney(reward);
+        _playerBank.AddMoney(reward);
         // _rewardText.text = money.ToString();
     }
     
@@ -62,8 +63,8 @@ public class RewardManager : MonoBehaviour {
         ShowReward();
         float distance = _playerStateManager.CurrentPlayerDistance;
         float reward = distance / _distanceRewardDivide;
-        PlayerBank.Instance.GiveMeYourFuckingMoneyNigga(ZoneManager.Instance.CurrentBet);
-        PlayerBank.Instance.AddMoney(reward);
+        _playerBank.GiveMeYourFuckingMoneyNigga(ZoneManager.Instance.CurrentBet);
+        _playerBank.AddMoney(reward);
         
         _distanceText.text = $"Дистанция: {_playerStateManager.CurrentPlayerDistance:F2}";
         _rewardText.text = $"Выигрышь: {reward:F2}";
