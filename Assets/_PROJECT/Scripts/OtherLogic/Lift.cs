@@ -1,85 +1,134 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Lift : MonoBehaviour {
     [SerializeField] private Renderer _rend;
     [SerializeField] private Renderer _transformRend;
-    [SerializeField] private Transform _newPlayerParent;
+    [SerializeField] private GameObject _liftPhysical;
+    [SerializeField] private Rigidbody _playerRb;
+    [SerializeField]  private float _speedUp = 10f; 
     
-    private Vector3 _startPos;
-    private Vector3 _endPos;
+    private Vector3 _liftDownPosition; 
+    private Vector3 _moneyEndPos;
     private CancellationTokenSource _tokenSource;
+    private Rigidbody _liftRb;
+    private bool _inLift;
+    
+
+    private void Awake() {
+        _liftRb = _liftPhysical.GetComponent<Rigidbody>();
+        _transformRend = transform.GetComponent<Renderer>();
+        _liftDownPosition = transform.position;
+        
+    }
 
     private void Start() {
-        _newPlayerParent.localPosition = Vector3.zero;
-        _startPos =  _newPlayerParent.position;
-        _transformRend = transform.GetComponent<Renderer>();
+        CalculateMoneyDistance();
     }
-    
-    
 
-    
     private void OnTriggerEnter(Collider collider) {
-        if (collider.gameObject.TryGetComponent(out PlayerMovement playerMovement)) {
-            collider.transform.SetParent(_newPlayerParent, true);
-            playerMovement.gameObject.GetComponent<Rigidbody>().useGravity = false;
-            float targetTop = _rend.bounds.max.y + 5f;           // куда хотим приехать
-            
-            float liftBottom = _transformRend.bounds.min.y;  // где сейчас низ лифта
-            float delta = targetTop - liftBottom;          // сколько реально надо ехать вверх
-
-            _endPos = _startPos + Vector3.up * delta;
+        if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
+            _inLift = true;
             
             ReadyLiftWork();
             LiftUp(_tokenSource.Token).Forget();
         }    
     }
 
+    
+    private void OnTriggerExit(Collider collider) {
+        if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
+            _inLift = false;
+            ReadyLiftWork();
+            LiftDown(_tokenSource.Token).Forget();
+        }    
+    }
+
+
+    private void CalculateMoneyDistance() {
+        StartCoroutine(LoadRoutine());
+    }
+
+    private IEnumerator LoadRoutine() {
+        yield return new WaitForSeconds(2f);
+        // проверить что если едем то ниче не делать
+        float targetTop = _rend.bounds.max.y + 5f;           // куда хотим приехать
+        float liftBottom = _transformRend.bounds.min.y;  // где сейчас низ лифта
+        float delta = targetTop - liftBottom;          // сколько реально надо ехать вверх
+        _moneyEndPos = _liftDownPosition + Vector3.up * delta;
+    } 
+    
     private void ReadyLiftWork() {
         _tokenSource?.Cancel();
         _tokenSource?.Dispose();
         _tokenSource = new CancellationTokenSource();
     }
     
-    
-    private void OnTriggerExit(Collider collider) {
-        if (collider.gameObject.TryGetComponent(out PlayerMovement playerMovement)) {
-            playerMovement.gameObject.GetComponent<Rigidbody>().useGravity = true;
-            collider.transform.SetParent(null);
-            ReadyLiftWork();
-            LiftDown(_tokenSource.Token).Forget();
-            Debug.Log(_startPos);
-            
-        }    
-    }
-
-    
 
     private async UniTask LiftUp(CancellationToken token) {
-        await UniTask.Delay(700, cancellationToken: token);
-        
-        float duration = 2f;
-        float elapsedTime = 0f;
-        while (elapsedTime < duration) {
-            _newPlayerParent.position = Vector3.Lerp(_startPos, _endPos, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            await UniTask.Yield(token);
+        await UniTask.Delay(1000, cancellationToken: token);
+        Debug.Log(transform.position.y);
+        Debug.Log(_moneyEndPos.y);
+        if (Mathf.Approximately(transform.position.y, _moneyEndPos.y) || !_inLift) {
+            return;
         }
+        
+        Vector3 _startPos = transform.position;
+        Vector3 _endPosition = _moneyEndPos;
+       
+        float duration = Math.Abs(_startPos.y - _endPosition.y) / _speedUp;
+        float elapsedTime = 0f;
+        
+        Debug.Log("LiftUp duration" + duration);
+        Debug.Log("LiftUp _endPosition" + _endPosition.y);
+        
+        
+        while (elapsedTime < duration) {
+            float t = elapsedTime / duration;
+            t = Mathf.SmoothStep(0, 1, t);
+            Vector3 newPos = Vector3.Lerp(_startPos, _endPosition, t);
+            _liftRb.MovePosition(newPos);
+            elapsedTime += Time.fixedDeltaTime;
+            await UniTask.WaitForFixedUpdate(token);
+        }
+        _liftRb.MovePosition(_endPosition);
+        _playerRb.linearVelocity = new Vector3(_playerRb.linearVelocity.x, 0f, _playerRb.linearVelocity.z);
+        _tokenSource = null;
     }
     
     private async UniTask LiftDown(CancellationToken token) {
-        
-        float duration = 2f;
-        float elapsedTime = 0f;
-        _endPos = _newPlayerParent.position;
-        while (elapsedTime < duration) {
-            _newPlayerParent.position = Vector3.Lerp(_endPos, _startPos, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            await UniTask.Yield(token);
+        await UniTask.Delay(1000, cancellationToken: token);
+        Debug.Log(transform.position.y);
+        Debug.Log(_liftDownPosition.y);
+        if (Mathf.Approximately(transform.position.y, _liftDownPosition.y) || _inLift) {
+            return;
         }
+        
+        Vector3 _startPos = transform.position;
+        Vector3 _endPosition = _liftDownPosition;
+
+        float duration = Math.Abs(_startPos.y - _endPosition.y) / _speedUp;
+
+        float elapsedTime = 0f;
+        Debug.Log("LiftDown duration" + duration);
+        Debug.Log("LiftDown _endPosition" + _endPosition.y);
+        
+        while (elapsedTime < duration) {
+            float t = elapsedTime / duration;
+            t = Mathf.SmoothStep(0, 1, t);
+            
+            Vector3 newPos = Vector3.Lerp(_startPos, _endPosition, t);
+            _liftRb.MovePosition(newPos);
+            
+            elapsedTime += Time.fixedDeltaTime;
+            await UniTask.WaitForFixedUpdate(token);
+        }
+        _liftRb.MovePosition(_endPosition);
+        _playerRb.linearVelocity = new Vector3(_playerRb.linearVelocity.x, 0f, _playerRb.linearVelocity.z);
     }
     
     

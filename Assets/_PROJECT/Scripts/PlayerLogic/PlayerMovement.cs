@@ -6,20 +6,29 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour {
+    [Header("Flight data")]
     [SerializeField] private float _speedForce = 10f;
     [SerializeField] private float _walkSpeed = 10f;
     [SerializeField] private float _fallingSpeed = 7f;
-    [SerializeField] private Transform _skinTransform;
-    [SerializeField] private float _rotateSpeed = 6f;
-    [SerializeField] private float _maxRotate = 20f;
     [SerializeField] private float _jumpHeight;
+    [SerializeField] private float _maxRotate = 20f;
     [SerializeField] private PairedValue<float> _xMovement;
+    
+    [Header("Rotate data")]
+    [SerializeField] private float _rotateSpeed = 6f;
+    [SerializeField] private Transform _skinTransform;
+   
+    [Header("Rotate data")]
     [SerializeField] private Vector3 _playerSpawnPosition;
+    
+    [Header("Jump/Collider data")]
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _wallOffset;
-    public AnimationCurve currentCurve;
+    [SerializeField] LayerMask _floorMask;
+    [SerializeField] private float _gravityScale = 2f;
     
     
+    private AnimationCurve currentCurve;
     private float segmentDuration;
     private float expandedTime = 0;
     private Vector3 initial;
@@ -39,11 +48,6 @@ public class PlayerMovement : MonoBehaviour {
         ChangeSpaceRotation(PlayerState.Walking);
         TpPlayerInSpawn();
     }
-
-    public void TpPlayerInSpawn() {
-        transform.position = _playerSpawnPosition;
-    }
-    
     
     private void Awake() {
         _rb = GetComponent<Rigidbody>();
@@ -51,14 +55,6 @@ public class PlayerMovement : MonoBehaviour {
         _rb.useGravity = true;
         _stateManager.OnChangeState += ChangeSpaceRotation;
     }
-
-
-    private void OnDestroy() {
-        _playerCTS?.Cancel();
-        _playerCTS?.Dispose();
-    }
-    
-
 
     private void FixedUpdate() {
         if (_stateManager.CurrentState == PlayerState.Walking) {
@@ -68,6 +64,16 @@ public class PlayerMovement : MonoBehaviour {
             FlightLogic();
             VisualRotate();
         }
+    }
+
+    private void OnDestroy() {
+        _playerCTS?.Cancel();
+        _playerCTS?.Dispose();
+    }
+    
+    
+    public void TpPlayerInSpawn() {
+        transform.position = _playerSpawnPosition;
     }
 
 
@@ -115,22 +121,20 @@ public class PlayerMovement : MonoBehaviour {
         _moveInput = context.ReadValue<Vector2>();
     }
     
-    [SerializeField] LayerMask _floorMask;
-    [SerializeField] private float _fallMultiplier = 2f;
+
     public void OnJump(InputAction.CallbackContext context) {
         if (!context.performed || _stateManager.CurrentState != PlayerState.Walking) return;     // реагируем только на нажатие
         
         Vector3 origin = transform.position;
         
         if (Physics.Raycast(origin, Vector3.down,  0.1f, _floorMask)) {
-            Debug.Log("Прыгнули!");
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
     }
 
     private void Walk() {
         // Сильнее гравитация работает
-        _rb.AddForce(Physics.gravity * (_fallMultiplier - 1) * _rb.mass);
+        _rb.AddForce(Physics.gravity * (_gravityScale - 1) * _rb.mass);
         Transform cam = Camera.main.transform;
         Vector3 camForward = cam.forward;
         Vector3 camRight   = cam.right;
@@ -158,9 +162,11 @@ public class PlayerMovement : MonoBehaviour {
         }
         
         _rb.MovePosition(_rb.position + moveStep);
-        
-        
-        
+        WalkRotate(move);
+
+    }
+
+    private void WalkRotate(Vector3 move) {
         if (move.sqrMagnitude > 0.0001f) {
             float targetY = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
 
@@ -176,10 +182,9 @@ public class PlayerMovement : MonoBehaviour {
                 transform.eulerAngles.z  
             );
         }
-
     }
-    
-    
+
+
     private void FlightLogic() {
         Vector3 newPos =  transform.position;
         newPos.x += _moveInput.x * _rotateSpeed * Time.fixedDeltaTime;
