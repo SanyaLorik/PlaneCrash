@@ -30,11 +30,18 @@ public class Lift : MonoBehaviour {
         CalculateMoneyDistance();
     }
 
+    private Coroutine _liftDownRoutine;
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
+            ResetPlayerVelocity();
+            ReadyLiftWork();
+            
             _inLift = true;
             
-            ReadyLiftWork();
+            if (_liftDownRoutine != null) {
+                StopCoroutine(_liftDownRoutine);
+            }
+            
             LiftUp(_tokenSource.Token).Forget();
         }    
     }
@@ -43,17 +50,30 @@ public class Lift : MonoBehaviour {
     private void OnTriggerExit(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
             _inLift = false;
+
+            if (_liftDownRoutine != null) {
+                StopCoroutine(_liftDownRoutine);
+            }
+
+            _liftDownRoutine = StartCoroutine(WaitChangeStateRoutine());
+
+        }    
+    }
+
+    private IEnumerator WaitChangeStateRoutine() {
+        yield return new WaitForSeconds(1.5f);
+        if (!_inLift ) {
             ReadyLiftWork();
             LiftDown(_tokenSource.Token).Forget();
-        }    
+        }
     }
 
 
     private void CalculateMoneyDistance() {
-        StartCoroutine(LoadRoutine());
+        StartCoroutine(LoadHeightRoutine());
     }
 
-    private IEnumerator LoadRoutine() {
+    private IEnumerator LoadHeightRoutine() {
         yield return new WaitForSeconds(2f);
         // проверить что если едем то ниче не делать
         float targetTop = _rend.bounds.max.y + 5f;           // куда хотим приехать
@@ -70,9 +90,7 @@ public class Lift : MonoBehaviour {
     
 
     private async UniTask LiftUp(CancellationToken token) {
-        await UniTask.Delay(1000, cancellationToken: token);
-        Debug.Log(transform.position.y);
-        Debug.Log(_moneyEndPos.y);
+        await UniTask.Delay(700, cancellationToken: token);
         if (Mathf.Approximately(transform.position.y, _moneyEndPos.y) || !_inLift) {
             return;
         }
@@ -101,7 +119,6 @@ public class Lift : MonoBehaviour {
     }
     
     private async UniTask LiftDown(CancellationToken token) {
-        await UniTask.Delay(1000, cancellationToken: token);
         Debug.Log(transform.position.y);
         Debug.Log(_liftDownPosition.y);
         if (Mathf.Approximately(transform.position.y, _liftDownPosition.y) || _inLift) {
@@ -128,6 +145,10 @@ public class Lift : MonoBehaviour {
             await UniTask.WaitForFixedUpdate(token);
         }
         _liftRb.MovePosition(_endPosition);
+        ResetPlayerVelocity();
+    }
+
+    private void ResetPlayerVelocity() {
         _playerRb.linearVelocity = new Vector3(_playerRb.linearVelocity.x, 0f, _playerRb.linearVelocity.z);
     }
     
