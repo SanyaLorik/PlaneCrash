@@ -142,10 +142,11 @@ public class BoostSpawner : MonoBehaviour {
         
         while (currentPosition < endPosition.z) {
             float newSpawnPoint = Random.Range(_boostDistance.From, _boostDistance.To);
-            // if (firstBoost && beforeZone) {
-            //     firstBoost = false;
-            //     newSpawnPoint = _boostDistance.To;
-            // }
+            // Первый буст дольше обычного чтоб игрок сдюжил
+            if (firstBoost && beforeZone) {
+                firstBoost = false;
+                newSpawnPoint = _boostDistance.To;
+            }
             currentPosition += newSpawnPoint;
             // Прям если в нужной точке буст то хуйня
             if (endPosition.z - currentPosition > _boostDistance.From) {
@@ -169,12 +170,6 @@ public class BoostSpawner : MonoBehaviour {
             float deltaY = Random.Range(_yDelta.From, _yDelta.To);
             currentY += deltaY;
             currentY = Mathf.Clamp(currentY, _yZone.From, _yZone.To);
-
-            // Типо чтоб высоко был
-            // if (firstBoost) {
-            //     currentY = _yZone.To - Random.Range(3f, 10f);
-            //     firstBoost = false;
-            // }
             
             Vector3 spawnPosition = new Vector3(
                 Random.Range(_xZone.From,_xZone.To), 
