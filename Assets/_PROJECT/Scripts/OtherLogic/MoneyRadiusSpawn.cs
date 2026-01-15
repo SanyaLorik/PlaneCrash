@@ -17,11 +17,12 @@ public class MoneyRadiusSpawn : MonoBehaviour {
 
     private Vector3 _spawnPoint;
     private List<GameObject> _spawnList = new();
-    
-    private void Start() {
+
+    private void Awake() {
         _spawnPoint = transform.position;
+
     }
-    
+
 
     private void DeleteOldObjects() {
         foreach (var obj in _spawnList) {
@@ -34,7 +35,6 @@ public class MoneyRadiusSpawn : MonoBehaviour {
         DeleteOldObjects();
         
         _minDistance = Mathf.Max(transform.localScale.x, transform.localScale.z);
-        Debug.Log(_spawnPoint + " у куба");
         for (int i = 0; i < _spawnCount; i++) {
             float minDist = Mathf.Min(_minDistance, _spawnRadius * 0.99f); // чтобы не выйти за предел
             float distance = Random.Range(minDist, _spawnRadius);

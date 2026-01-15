@@ -24,7 +24,7 @@ public class PlayerBank : MonoBehaviour {
 
     private async UniTaskVoid LoadPlayerMoney() {
         // Имитация задержки перед загрузкой денег
-        await UniTask.Delay(1000);
+        await UniTask.Delay(500);
         OnBankChanged?.Invoke(_playerCapital);
     }
 

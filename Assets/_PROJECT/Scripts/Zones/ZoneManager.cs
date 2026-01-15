@@ -32,6 +32,7 @@ public class ZoneManager : MonoBehaviour {
 
     private void Start() {
         _moneyCube.SetMoneyAmount(0);
+        Debug.LogWarning("_moneyCube.SetMoneyAmount(0)");
     }
 
 
@@ -60,6 +61,7 @@ public class ZoneManager : MonoBehaviour {
             CruiserDistance);
         
         _cruiser.position = newCruiserSpawnPos;
+        Debug.Log($"Крейсер на {CruiserDistance}м");
         
         _moneyCube.SetMoneyAmount(CurrentBet*CurrentMultiplyer);
         _boostSpawner.SpawnBoosts(newCruiserSpawnPos);

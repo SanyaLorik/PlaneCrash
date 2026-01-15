@@ -80,7 +80,7 @@ public class MoneyCube : MonoBehaviour
     }
 
     // Прокину здесь чтоб не создавать еще ссылок
-    public void UpdateSpawnRadius() {
+    private void UpdateSpawnRadius() {
         _moneyRadiusSpawn.SpawnMoney();
     }
 

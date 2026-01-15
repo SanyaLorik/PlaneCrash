@@ -1,5 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using SanyaBeerExtension;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FollowTrajectory_TEST : MonoBehaviour
@@ -10,12 +14,10 @@ public class FollowTrajectory_TEST : MonoBehaviour
     public float _height;
     public float _duration;
 
-
     
     
 
-    private void Start()
-    {
+    private void Start() {
         Follow();
     }
 

@@ -5,13 +5,15 @@ using SanyaBeerExtension;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.iOS;
+using UnityEngine.UIElements;
+using Zenject;
 using Random = UnityEngine.Random;
 
 
 
 
 public class BoostSpawner : MonoBehaviour {
-    [SerializeField] private Transform _player;
     
     [Header("Граница спауна")]
     [SerializeField] private Boost _boostPrefab;
@@ -19,43 +21,92 @@ public class BoostSpawner : MonoBehaviour {
 
     [SerializeField] private PairedValue<float> _xZone;
     [SerializeField] private PairedValue<float> _yZone;
-    [SerializeField] private PairedValue<float> _distanceZone;
-    [SerializeField] private PairedValue<float> _falseWayLengthDivider;
-    [SerializeField] private float _lastDistanceMin;
+    [SerializeField] private PairedValue<float> _yDelta;
+    [SerializeField] private PairedValue<float> _boostDistance;
     [SerializeField] private AnimationCurve[] _curves;
+    
+    [SerializeField] private float _minimumFlightTime;
 
-    private List<List<Boost>> _rightWays = new();
+    private List<List<Boost>> _trueWays = new();
     private List<List<Boost>> _falseWays = new();
+    
+    [Header("До и после зоны кол-во бустов, From > To")]
+    [SerializeField] private PairedValue<int> _countTrueWays;
+    [SerializeField] private int _countFalseWays;
+    [SerializeField] private Transform _zoneSpawn;
+    
     
 
     private PlayerMovement _playerMovement;
+    [SerializeField] private float _startFlightZ = 0f;
+    
+    
 
-    private void Start() {
-        _playerMovement = _player.GetComponent<PlayerMovement>();
+    [Inject]
+    public void Init(PlayerMovement playerMovement) {
+        _playerMovement = playerMovement;
     }
 
 
-    public void SpawnBoosts(Vector3 cruiserPosition) {
+    private float _minDistance;
+    public void SpawnBoosts(Vector3 curiserPosition) {
         ClearAllBoosts();
         
-        _rightWays.Add(SpawnBoostWays(true, _player.transform.position, cruiserPosition));
-        _rightWays.Add(SpawnBoostWays(true, _player.transform.position, cruiserPosition));
-        _falseWays.Add(SpawnBoostWays(false, _player.transform.position, cruiserPosition));
-        _falseWays.Add(SpawnBoostWays(false, _player.transform.position, cruiserPosition));
-        Debug.Log(_rightWays[0].Count);
-        Debug.Log(_rightWays[1].Count);
-        Debug.Log(_falseWays[0].Count);
-        Debug.Log(_falseWays[1].Count);
+        /* Акт в 5 этюдах:
+        1. Самое легкое фейк бусты - каждый раз мы спавним просто цепочки до (minDist, cruiser-someValue) 
+        2. Спавн в зоне выхода n2 правильных входов в бусты + некст до крейсера
+        3. Спавн в начальной зоне n1 бустов, где n1>n2
+        4. Соединение выхода из первой зоны с выходом во вторую зону
+        */
+        _minDistance = CalculateFalseTargetDistance();
+        MoveVisualZone();
+        for (int i = 0; i < _countFalseWays; i++) {
+            // Тут тоже подумать до куда он может лететь, 
+            Vector3 newFalsePosition = CalculateMinEndPosition();
+            newFalsePosition.z = Random.Range(newFalsePosition.z, curiserPosition.z+100f);
+            _falseWays.Add(SpawnBoostWays(_startFlightZ, newFalsePosition, _falseBoostPrefab, false));
+        }
+
+        // 2. После зоны
+        if (curiserPosition.z - _minDistance < _boostDistance.To + _boostDistance.From) {
+            Debug.Log("Задано большое значение _minimumFlightTime: " + _minimumFlightTime);
+            return;
+        }
+        
+        
+        // float _newStartFlightZ = CalculateAfterZoneFirstPosition();
+        // Debug.Log(_minDistance);
+        // Debug.Log(_newStartFlightZ);
+        for (int i = 0; i < _countTrueWays.To; i++) {
+            _trueWays.Add(SpawnBoostWays(_minDistance, curiserPosition, _boostPrefab, false));
+        }
+
+        foreach (var way in _trueWays) {
+            Debug.Log("Кол-во бустов в пути: " +  way.Count);
+        }
+        
+        Debug.Log("Количество путей: " + _trueWays.Count);
+
+        // До зоны
+        for (int i = 0; i < _countTrueWays.From; i++) {
+            Vector3 endPosition = _trueWays[Random.Range(0, _countTrueWays.To-1)][0].transform.position;
+            _trueWays.Add(SpawnBoostWays(_startFlightZ, endPosition, _boostPrefab, true));
+        }
+        
+        // _trueWays.Add(SpawnBoostWays(true, targetPosition));
+        
         SpawnEntranceBoost();
     }
 
-
-    private void SpawnEntranceBoost() {
-        _playerMovement.SetBooster(_curves[0], _rightWays[0][0].transform.position); // действует на игрока первым
+    private void MoveVisualZone() {
+        Vector3 zonePos =  _zoneSpawn.position;
+        zonePos.z = _minDistance;
+        _zoneSpawn.position = zonePos;
     }
 
+
     private void ClearAllBoosts() {
-        foreach (var chain in _rightWays) {
+        foreach (var chain in _trueWays) {
             foreach (var item in chain) {
                 Destroy(item.gameObject);
             }
@@ -65,28 +116,39 @@ public class BoostSpawner : MonoBehaviour {
                 Destroy(item.gameObject);
             }
         }
-        _rightWays.Clear();
+        _trueWays.Clear();
         _falseWays.Clear();
     }
 
     
     
-    private List<Boost> SpawnBoostWays(bool trueWay, Vector3 playerPosition, Vector3 cruiserPosition) {
-    
-        List<float> spawnPoints = new List<float>();
-        float currentPosition = 0f;
-        Vector3 endPosition = cruiserPosition;
-
-        Boost boostPrefab = _boostPrefab;
-        if (!trueWay) {
-            boostPrefab = _falseBoostPrefab;
-            endPosition /= Random.Range(_falseWayLengthDivider.From, _falseWayLengthDivider.To);
+    private List<Boost> SpawnBoostWays(float initZ, Vector3 targetPosition, Boost boostPrefab, bool beforeZone) {
+        if (targetPosition.z < initZ) {
+            Debug.Log("Ебать ты крутой");
+            throw new Exception();
         }
         
+            
+        
+        List<float> spawnPoints = new List<float>();
+        float currentPosition = initZ;
+        Vector3 endPosition = targetPosition;
+
+
+        bool firstBoost = true;
+        
+        Debug.Log(currentPosition);
+        Debug.Log(endPosition.z);
+        
         while (currentPosition < endPosition.z) {
-            float newSpawnPoint = Random.Range(_distanceZone.From, _distanceZone.To);
+            float newSpawnPoint = Random.Range(_boostDistance.From, _boostDistance.To);
+            // if (firstBoost && beforeZone) {
+            //     firstBoost = false;
+            //     newSpawnPoint = _boostDistance.To;
+            // }
             currentPosition += newSpawnPoint;
-            if (endPosition.z - currentPosition > newSpawnPoint) {
+            // Прям если в нужной точке буст то хуйня
+            if (endPosition.z - currentPosition > _boostDistance.From) {
                 spawnPoints.Add(currentPosition);
             }
         }
@@ -95,12 +157,28 @@ public class BoostSpawner : MonoBehaviour {
         // Сортируем для гарантии порядка
         spawnPoints.Sort();
         List<Boost> boost = new ();
+        if (spawnPoints.Count == 0) {
+            Debug.LogError("У тя 0 spawnPoints");
+            throw new Exception();
+        }
         
         // Точки спауна
+        // firstBoost = true;
+        float currentY = Random.Range(_yZone.To/2, _yZone.To);
         foreach (float zPos in spawnPoints) {
+            float deltaY = Random.Range(_yDelta.From, _yDelta.To);
+            currentY += deltaY;
+            currentY = Mathf.Clamp(currentY, _yZone.From, _yZone.To);
+
+            // Типо чтоб высоко был
+            // if (firstBoost) {
+            //     currentY = _yZone.To - Random.Range(3f, 10f);
+            //     firstBoost = false;
+            // }
+            
             Vector3 spawnPosition = new Vector3(
                 Random.Range(_xZone.From,_xZone.To), 
-                Random.Range(_yZone.From,_yZone.To),                  
+                currentY,                  
                 zPos                  
             );
         
@@ -118,8 +196,35 @@ public class BoostSpawner : MonoBehaviour {
                 // Debug.Log("Конечный буст в  " + endPosition.z);
             }
         }
+
         return boost;
     }
+
+    
+    
+    private void SpawnEntranceBoost() {
+        _playerMovement.SetBooster(_curves[0], _trueWays[^1][0].transform.position); // действует на игрока первым
+    }
+
+
+    private float CalculateFalseTargetDistance() {
+        float speed = _playerMovement.PlayerSpeed;
+        float z = speed * _minimumFlightTime;
+        Debug.Log($"Минимальная точка падения {z}м. ");
+        return z;
+    }
+    
+    private Vector3 CalculateMinEndPosition() {
+        float x = Random.Range(_xZone.From, _xZone.To);
+        return new Vector3(x, 0f, _minDistance);
+    }
+
+    
+    // После зоны входной буст
+    private float CalculateAfterZoneFirstPosition() =>
+        _minDistance + Random.Range(_boostDistance.From, _boostDistance.To);
+
+
     
 
 }

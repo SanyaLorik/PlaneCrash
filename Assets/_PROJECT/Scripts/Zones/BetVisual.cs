@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 public class BetVisual : MonoBehaviour {
     [SerializeField] private TMP_Text _playerBank;
@@ -9,15 +10,19 @@ public class BetVisual : MonoBehaviour {
     [SerializeField] private TMP_Text _rewardVisual;
     [SerializeField] private TMP_Text _distanceVisual;
     [SerializeField] private PlayerStateManager _playerStateManager;
-    // Пока банк тут
-    [SerializeField] private PlayerBank _bank;
+   
+    private PlayerBank _bank;
     
+    [Inject]
+    public void Init(PlayerBank bank) {
+        _bank = bank;
+        _bank.OnBankChanged += ChangeBank;
+    }
     
 
     private void Start() {
         ZoneManager.Instance.OnChooseBet += ShowBet;
         ZoneManager.Instance.OnChooseMultiplyer += ShowMultiplyer;
-        _bank.OnBankChanged += ChangeBank;
         _playerStateManager.OnChangeState += OnChangeState;
     }
 

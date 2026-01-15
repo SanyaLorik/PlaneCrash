@@ -15,6 +15,7 @@ public class ScoreVisual : MonoBehaviour {
     [SerializeField] private Transform _cruiser;
     
     [SerializeField] private RectTransform _pointer;
+    [SerializeField] private TMP_Text _flightTime;
 
 
     private RectTransform _visualProgressRt;
@@ -59,6 +60,7 @@ public class ScoreVisual : MonoBehaviour {
     }
 
     private IEnumerator ShowDistanceRoutine() {
+        float timer = 0f;
         while (_stateManager.CurrentState == PlayerState.Flight) {
             float progress = _stateManager.CurrentPlayerDistance / _cruiser.position.z;
             _visualProgress.fillAmount = progress;
@@ -70,6 +72,9 @@ public class ScoreVisual : MonoBehaviour {
             _pointer.anchoredPosition = newPosition;
             
             _currentDistanceText.text = $"{_stateManager.CurrentPlayerDistance:F2}m";
+            _flightTime.text = $"Время полёта: {timer:F2}c";
+            
+            timer += Time.deltaTime;
             yield return null; 
         }
     }

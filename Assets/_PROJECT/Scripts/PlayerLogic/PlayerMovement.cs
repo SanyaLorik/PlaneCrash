@@ -1,32 +1,16 @@
-using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using SanyaBeerExtension;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class PlayerMovement : MonoBehaviour {
-    [Header("Flight data")]
-    [SerializeField] private float _speedForce = 10f;
-    [SerializeField] private float _walkSpeed = 10f;
-    [SerializeField] private float _fallingSpeed = 7f;
-    [SerializeField] private float _jumpHeight;
-    [SerializeField] private float _maxRotate = 20f;
-    [SerializeField] private PairedValue<float> _xMovement;
-    
-    [Header("Rotate data")]
-    [SerializeField] private float _rotateSpeed = 6f;
-    [SerializeField] private Transform _skinTransform;
-   
-    [Header("Rotate data")]
-    [SerializeField] private Vector3 _playerSpawnPosition;
-    
-    [Header("Jump/Collider data")]
-    [SerializeField] private float _jumpForce;
-    [SerializeField] private float _wallOffset;
-    [SerializeField] LayerMask _floorMask;
-    [SerializeField] private float _gravityScale = 2f;
-    
+    private PlayerConfig _config;
+
+    [Inject]
+    public void Init(PlayerConfig config) {
+        _config = config;
+    }
     
     private AnimationCurve currentCurve;
     private float segmentDuration;
@@ -42,18 +26,20 @@ public class PlayerMovement : MonoBehaviour {
 
     private CancellationTokenSource _playerCTS;
     private PlayerStateManager _stateManager;
-    
-    private void Start() {
-        _playerCTS = new CancellationTokenSource();
-        ChangeSpaceRotation(PlayerState.Walking);
-        TpPlayerInSpawn();
-    }
+
+    public float PlayerSpeed => _config.SpeedForce;
     
     private void Awake() {
         _rb = GetComponent<Rigidbody>();
         _stateManager = GetComponent<PlayerStateManager>();
         _rb.useGravity = true;
         _stateManager.OnChangeState += ChangeSpaceRotation;
+    }
+    
+    private void Start() {
+        _playerCTS = new CancellationTokenSource();
+        ChangeSpaceRotation(PlayerState.Walking);
+        TpPlayerInSpawn();
     }
 
     private void FixedUpdate() {
@@ -70,7 +56,7 @@ public class PlayerMovement : MonoBehaviour {
     
     
     public void TpPlayerInSpawn() {
-        transform.position = _playerSpawnPosition;
+        transform.position = _config.PlayerSpawnPosition;
     }
 
 
@@ -119,19 +105,27 @@ public class PlayerMovement : MonoBehaviour {
     }
     
 
+    private bool _secondJumpAllowed = true;
     public void OnJump(InputAction.CallbackContext context) {
         if (!context.performed || _stateManager.CurrentState != PlayerState.Walking) return;     // реагируем только на нажатие
         
         Vector3 origin = transform.position;
         
-        if (Physics.Raycast(origin, Vector3.down,  0.1f, _floorMask)) {
-            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+        if (Physics.Raycast(origin, Vector3.down,  0.1f, _config.FloorMask)) {
+            _rb.AddForce(Vector3.up * _config.JumpForce, ForceMode.Impulse);
+            _secondJumpAllowed = true;
+        }
+        else if (_secondJumpAllowed) {
+            _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
+            _rb.AddForce(Vector3.up * _config.JumpForce, ForceMode.Impulse);
+            _secondJumpAllowed = false;
         }
     }
 
     private void Walk() {
         // Сильнее гравитация работает
-        _rb.AddForce(Physics.gravity * (_gravityScale - 1) * _rb.mass);
+        _rb.AddForce(Physics.gravity * (_config.GravityScale - 1) * _rb.mass);
+        
         Transform cam = Camera.main.transform;
         Vector3 camForward = cam.forward;
         Vector3 camRight   = cam.right;
@@ -148,14 +142,14 @@ public class PlayerMovement : MonoBehaviour {
             camForward * _moveInput.y;
 
         
-        Vector3 moveStep = move * _walkSpeed * Time.fixedDeltaTime;
+        Vector3 moveStep = move * _config.WalkSpeed * Time.fixedDeltaTime;
         if (Physics.Raycast(
                 _rb.position,
                 moveStep.normalized,
                 out RaycastHit hit,
-                moveStep.magnitude + _wallOffset,
-                _floorMask)) {
-            moveStep = moveStep.normalized * (hit.distance - _wallOffset);
+                moveStep.magnitude + _config.WallOffset,
+                _config.FloorMask)) {
+            moveStep = moveStep.normalized * (hit.distance - _config.WallOffset);
         }
         
         _rb.MovePosition(_rb.position + moveStep);
@@ -170,7 +164,7 @@ public class PlayerMovement : MonoBehaviour {
             float y = Mathf.LerpAngle(
                 transform.eulerAngles.y,
                 targetY,
-                _rotateSpeed * Time.fixedDeltaTime
+                _config.RotateSpeed * Time.fixedDeltaTime
             );
             // Крутится только Y
             transform.rotation = Quaternion.Euler(
@@ -184,17 +178,17 @@ public class PlayerMovement : MonoBehaviour {
 
     private void FlightLogic() {
         Vector3 newPos =  transform.position;
-        newPos.x += _moveInput.x * _rotateSpeed * Time.fixedDeltaTime;
+        newPos.x += _moveInput.x * _config.RotateSpeed * Time.fixedDeltaTime;
         
-        newPos.x = Mathf.Clamp(newPos.x, _xMovement.From, _xMovement.To);
+        newPos.x = Mathf.Clamp(newPos.x, _config.XMovement.From, _config.XMovement.To);
         if (!_isBusted) {
-            newPos.z += _speedForce * Time.fixedDeltaTime;
-            newPos.y -= _fallingSpeed * Time.fixedDeltaTime;
+            newPos.z += _config.SpeedForce * Time.fixedDeltaTime;
+            newPos.y -= _config.FallingSpeed * Time.fixedDeltaTime;
         }
         else {
             float normalizedTime = expandedTime / segmentDuration;
             
-            float height = currentCurve.Evaluate(normalizedTime) * _jumpHeight; // По высоте подымается
+            float height = currentCurve.Evaluate(normalizedTime) * _config.JumpHeight; // По высоте подымается
             newPos.y = Mathf.Lerp(initial.y, target.y, normalizedTime) + height;
             newPos.z = Mathf.Lerp(initial.z, target.z, normalizedTime);
             expandedTime += Time.fixedDeltaTime;
@@ -214,18 +208,18 @@ public class PlayerMovement : MonoBehaviour {
         initial = transform.position;
         target = nextBoost;
         float distance = Vector3.Distance(initial, target);
-        segmentDuration = distance / _speedForce; 
-    }
+        segmentDuration = distance / _config.SpeedForce; 
+    } 
 
     
   
     private void VisualRotate() {
-        float targetRoll = -_moveInput.x * _maxRotate;
-        _currentRoll = Mathf.Lerp(_currentRoll, targetRoll, Time.fixedDeltaTime * _rotateSpeed);
+        float targetRoll = -_moveInput.x * _config.MaxRotate;
+        _currentRoll = Mathf.Lerp(_currentRoll, targetRoll, Time.fixedDeltaTime * _config.RotateSpeed);
 
-        Vector3 euler = _skinTransform.localEulerAngles;
+        Vector3 euler = transform.localEulerAngles;
         euler.z = _currentRoll;
-        _skinTransform.localEulerAngles = euler;
+        transform.localEulerAngles = euler;
     }
     
     
