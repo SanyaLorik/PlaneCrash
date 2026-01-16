@@ -6,7 +6,7 @@ public class PlayerStateManager : MonoBehaviour {
     [SerializeField] LayerMask _cruiserMask;
     [SerializeField] private float _distanceCheck = 0.1f;
 
-    public event Action<PlayerState> OnChangeState;
+    public event Action<PlayerState> ChangeState;
 
     public float CurrentPlayerDistance
         => CurrentState == PlayerState.Walking ? 0f : transform.position.z;
@@ -33,7 +33,7 @@ public class PlayerStateManager : MonoBehaviour {
             Debug.Log("EndFlightPosition " + transform.position.z);
         }
         
-        OnChangeState?.Invoke(CurrentState);
+        ChangeState?.Invoke(CurrentState);
         
     }
 

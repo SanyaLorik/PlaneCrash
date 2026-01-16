@@ -1,5 +1,7 @@
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using ModestTree.Util;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -7,16 +9,13 @@ using Zenject;
 public class PlayerMovement : MonoBehaviour {
     private PlayerConfig _config;
 
-    [Inject]
-    public void Init(PlayerConfig config) {
-        _config = config;
-    }
+
     
-    private AnimationCurve currentCurve;
-    private float segmentDuration;
-    private float expandedTime = 0;
-    private Vector3 initial;
-    private Vector3 target;
+    private AnimationCurve _currentCurve;
+    private float _segmentDuration;
+    private float _expandedTime = 0;
+    private Vector3 _initialPos;
+    private Vector3 _targetPos;
     private bool _isBusted;
     
     
@@ -28,17 +27,26 @@ public class PlayerMovement : MonoBehaviour {
     private PlayerStateManager _stateManager;
 
     public float PlayerSpeed => _config.SpeedForce;
+    public event Action OnPlayerFlight; 
+    
+    [Inject]
+    public void Init(PlayerConfig config, PlayerStateManager stateManager) {
+        _stateManager =  stateManager;
+        _config = config;
+        
+        _stateManager.ChangeState += OnChangeSpaceRotation;
+    }
+    
+    
     
     private void Awake() {
         _rb = GetComponent<Rigidbody>();
-        _stateManager = GetComponent<PlayerStateManager>();
         _rb.useGravity = true;
-        _stateManager.OnChangeState += ChangeSpaceRotation;
     }
     
     private void Start() {
         _playerCTS = new CancellationTokenSource();
-        ChangeSpaceRotation(PlayerState.Walking);
+        OnChangeSpaceRotation(PlayerState.Walking);
         TpPlayerInSpawn();
     }
 
@@ -52,15 +60,13 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-
-    
     
     public void TpPlayerInSpawn() {
         transform.position = _config.PlayerSpawnPosition;
     }
 
 
-    private void ChangeSpaceRotation(PlayerState playerState) {
+    private void OnChangeSpaceRotation(PlayerState playerState) {
         if (playerState == PlayerState.Flight) {
             PlayerRotateLocalX(-25, playerState);
             _rb.useGravity = false;
@@ -71,20 +77,20 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    private async UniTask PlayerRotateLocalX(float targetAngleX, PlayerState playerState) {
+    private async UniTask PlayerRotateLocalX(float _targetPosAngleX, PlayerState playerState) {
         float duration = 1f;
     
         Vector3 currentLocalEuler = transform.localEulerAngles;
-        Vector3 targetLocalEuler;
+        Vector3 _targetPosLocalEuler;
         if (playerState == PlayerState.Walking) {
-            targetLocalEuler = new Vector3(targetAngleX, currentLocalEuler.y, currentLocalEuler.z);
+            _targetPosLocalEuler = new Vector3(_targetPosAngleX, currentLocalEuler.y, currentLocalEuler.z);
         }
         else {
-            targetLocalEuler = new Vector3(targetAngleX, 0f, 0f);
+            _targetPosLocalEuler = new Vector3(_targetPosAngleX, 0f, 0f);
         }
     
         Quaternion startRot = transform.localRotation;
-        Quaternion targetRot = Quaternion.Euler(targetLocalEuler);
+        Quaternion _targetPosRot = Quaternion.Euler(_targetPosLocalEuler);
     
         float elapsedTime = 0;
     
@@ -92,12 +98,12 @@ public class PlayerMovement : MonoBehaviour {
             elapsedTime += Time.fixedDeltaTime;
             float t = elapsedTime / duration;
         
-            transform.localRotation = Quaternion.Slerp(startRot, targetRot, t);
+            transform.localRotation = Quaternion.Slerp(startRot, _targetPosRot, t);
         
             await UniTask.Yield(_playerCTS.Token);
         }
     
-        transform.localRotation = targetRot;
+        transform.localRotation = _targetPosRot;
     }
 
     public void OnMove(InputAction.CallbackContext context) {
@@ -159,11 +165,11 @@ public class PlayerMovement : MonoBehaviour {
 
     private void WalkRotate(Vector3 move) {
         if (move.sqrMagnitude > 0.0001f) {
-            float targetY = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
+            float _targetPosY = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
 
             float y = Mathf.LerpAngle(
                 transform.eulerAngles.y,
-                targetY,
+                _targetPosY,
                 _config.RotateSpeed * Time.fixedDeltaTime
             );
             // Крутится только Y
@@ -186,13 +192,13 @@ public class PlayerMovement : MonoBehaviour {
             newPos.y -= _config.FallingSpeed * Time.fixedDeltaTime;
         }
         else {
-            float normalizedTime = expandedTime / segmentDuration;
+            float normalizedTime = _expandedTime / _segmentDuration;
             
-            float height = currentCurve.Evaluate(normalizedTime) * _config.JumpHeight; // По высоте подымается
-            newPos.y = Mathf.Lerp(initial.y, target.y, normalizedTime) + height;
-            newPos.z = Mathf.Lerp(initial.z, target.z, normalizedTime);
-            expandedTime += Time.fixedDeltaTime;
-            if (expandedTime >= segmentDuration) {
+            float height = _currentCurve.Evaluate(normalizedTime) * _config.JumpHeight; // По высоте подымается
+            newPos.y = Mathf.Lerp(_initialPos.y, _targetPos.y, normalizedTime) + height;
+            newPos.z = Mathf.Lerp(_initialPos.z, _targetPos.z, normalizedTime);
+            _expandedTime += Time.fixedDeltaTime;
+            if (_expandedTime >= _segmentDuration) {
                 _isBusted = false;
             }
         }
@@ -202,20 +208,20 @@ public class PlayerMovement : MonoBehaviour {
 
     
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
-        currentCurve = curve;
-        expandedTime = 0f;
+        _currentCurve = curve;
+        _expandedTime = 0f;
         _isBusted = true;
-        initial = transform.position;
-        target = nextBoost;
-        float distance = Vector3.Distance(initial, target);
-        segmentDuration = distance / _config.SpeedForce; 
+        _initialPos = transform.position;
+        _targetPos = nextBoost;
+        float distance = Vector3.Distance(_initialPos, _targetPos);
+        _segmentDuration = distance / _config.SpeedForce; 
     } 
 
     
   
     private void VisualRotate() {
-        float targetRoll = -_moveInput.x * _config.MaxRotate;
-        _currentRoll = Mathf.Lerp(_currentRoll, targetRoll, Time.fixedDeltaTime * _config.RotateSpeed);
+        float _targetPosRoll = -_moveInput.x * _config.MaxRotate;
+        _currentRoll = Mathf.Lerp(_currentRoll, _targetPosRoll, Time.fixedDeltaTime * _config.RotateSpeed);
 
         Vector3 euler = transform.localEulerAngles;
         euler.z = _currentRoll;

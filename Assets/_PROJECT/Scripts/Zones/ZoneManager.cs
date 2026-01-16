@@ -1,13 +1,13 @@
 using System;
 using SanyaBeerExtension;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 public class ZoneManager : MonoBehaviour {
     [SerializeField] private Transform _cruiser;
     [SerializeField] private float _cruiserBaseSpawnDistance; // условно 500 или 1к за 1х
     [SerializeField] private PairedValue<float> _cruiserSpawnDistanceX;
-    [SerializeField] private BoostSpawner _boostSpawner;
     [SerializeField] private MoneyCube _moneyCube;
     
     
@@ -20,6 +20,16 @@ public class ZoneManager : MonoBehaviour {
     
     public static ZoneManager Instance { get; private set; }
     public float CruiserDistance { get; private set; }
+    
+    
+        
+    private BoostSpawner _boostSpawner;
+
+    [Inject]
+    public void Init(BoostSpawner boostSpawner) {
+        _boostSpawner = boostSpawner;
+    }
+    
     
     private void Awake() {
         if (Instance != null) {

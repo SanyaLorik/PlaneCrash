@@ -6,9 +6,13 @@ public class Boost : MonoBehaviour {
     public Vector3 nextBooster;
 
     private void OnTriggerEnter(Collider collider) {
-        if (collider.gameObject.TryGetComponent(out PlayerMovement playerMovement)) {
-            playerMovement.SetBooster(randomTrajectory, nextBooster);
+        if (collider.gameObject.TryGetComponent(out PlayerMovement player)) {
+            player.SetBooster(randomTrajectory, nextBooster);
             gameObject.SetActive(false);
+        }
+        else if (collider.gameObject.TryGetComponent(out BotFlightLogic bot)) {
+            bot.SetBooster(randomTrajectory, nextBooster);
+            Debug.Log("Бот налетел на буст");
         }
     }
 }

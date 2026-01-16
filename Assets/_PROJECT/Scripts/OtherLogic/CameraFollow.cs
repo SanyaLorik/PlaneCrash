@@ -3,9 +3,9 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Unity.Cinemachine;
 using UnityEngine;
+using Zenject;
 
 public class CameraFollow : MonoBehaviour {
-    [SerializeField] private PlayerStateManager _playerStateManager;
     [SerializeField] private CinemachineCamera _camera;
     [SerializeField] private Vector3 _walkingOffset;
     [SerializeField] private Vector3 _flightOffset;
@@ -14,9 +14,20 @@ public class CameraFollow : MonoBehaviour {
     
     private CinemachineFollow _cinemachineFollow;
     private CancellationTokenSource _cameraCTS;
+    
+    
+    private PlayerStateManager _playerStateManager;
+    private PlayerBank _bank;
+    
+    [Inject]
+    public void Init(PlayerStateManager playerStateManager) {
+        _playerStateManager = playerStateManager;
+        _playerStateManager.ChangeState += OnStateChange;
+    }
+    
+    
     private void Start() {
         _cameraCTS = new CancellationTokenSource();
-        _playerStateManager.OnChangeState += OnStateChange;
         _cinemachineFollow = _camera.GetComponent<CinemachineFollow>();
     }
 

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class ScoreVisual : MonoBehaviour {
-    [SerializeField] private PlayerStateManager _stateManager;
     [SerializeField] private GameObject _canvas;
     
     [SerializeField] private TMP_Text _totalDistanceText;
@@ -18,12 +18,20 @@ public class ScoreVisual : MonoBehaviour {
     [SerializeField] private TMP_Text _flightTime;
 
 
-    private RectTransform _visualProgressRt;
     [SerializeField] private float _startProgressX;
     [SerializeField] private float _endProgressX;
+    
+    private RectTransform _visualProgressRt;
+    private PlayerStateManager _playerStateManager;
+    
+    [Inject]
+    public void Init(PlayerStateManager playerStateManager) {
+        _playerStateManager = playerStateManager;
+        _playerStateManager.ChangeState += OnPlayerStateChange;
+    }
+    
 
     private void Start() {
-        _stateManager.OnChangeState += OnPlayerStateChange;
         _visualProgressRt = _visualProgress.gameObject.GetComponent<RectTransform>();
     }
 
@@ -61,8 +69,8 @@ public class ScoreVisual : MonoBehaviour {
 
     private IEnumerator ShowDistanceRoutine() {
         float timer = 0f;
-        while (_stateManager.CurrentState == PlayerState.Flight) {
-            float progress = _stateManager.CurrentPlayerDistance / _cruiser.position.z;
+        while (_playerStateManager.CurrentState == PlayerState.Flight) {
+            float progress = _playerStateManager.CurrentPlayerDistance / _cruiser.position.z;
             _visualProgress.fillAmount = progress;
 
             // Visual
@@ -71,7 +79,7 @@ public class ScoreVisual : MonoBehaviour {
             newPosition.x = newX;
             _pointer.anchoredPosition = newPosition;
             
-            _currentDistanceText.text = $"{_stateManager.CurrentPlayerDistance:F2}m";
+            _currentDistanceText.text = $"{_playerStateManager.CurrentPlayerDistance:F2}m";
             _flightTime.text = $"Время полёта: {timer:F2}c";
             
             timer += Time.deltaTime;

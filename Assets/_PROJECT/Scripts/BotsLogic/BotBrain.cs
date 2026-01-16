@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using SanyaBeerExtension;
 using UnityEngine;
@@ -7,7 +8,7 @@ using Zenject;
 using Random = UnityEngine.Random;
 
 public class BotBrain : MonoBehaviour {
-    [SerializeField] private bool _followPlayer = true;
+    [SerializeField] private bool _eblaning = true;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private PairedValue<float> _nextTimeChangeTarget;
     
@@ -22,45 +23,65 @@ public class BotBrain : MonoBehaviour {
     private float wanderRadius = 10f;
     
     private PlayerMovement _playerMovement;
-    
+    private CancellationTokenSource _botTokenSource;
 
     [Inject]
     public void Init(PlayerMovement playerMovement) {
         _playerMovement = playerMovement;
     }
-    
+
+    public void StopBotEblaning() {
+        _botTokenSource?.Cancel();
+        _botTokenSource?.Dispose();
+        _botTokenSource =  null;
+        agent.SafeStop();
+        
+        _eblaning = false;
+        Debug.Log("StopBotEblaning");
+    }
+
+    public void StartBotEblaning() {
+        StopBotEblaning();
+        _botTokenSource = new CancellationTokenSource();
+        _eblaning = true;
+        LifeCycle(_botTokenSource.Token).Forget();
+    }
 
     private void Start() {
         agent = GetComponent<NavMeshAgent>();
-        
-        LifeCycle().Forget();
+        StartBotEblaning(); 
     }
 
-    private async UniTask LifeCycle() {
-        while (_followPlayer) {
+    private async UniTask LifeCycle(CancellationToken token) {
+        while (_eblaning && !token.IsCancellationRequested) {
             if (Random.value > 0.6) {
-                GoToPlayer();
-                await UniTask.Delay((int)(1000 * Random.Range(_nextTimeChangeTarget.From, _nextTimeChangeTarget.To)));
-                await RotateTowards(_playerMovement.transform, _rotationSpeed);
+                GoToPlayer(token);
+                await UniTask.Delay(
+                    (int)(1000 * Random.Range(_nextTimeChangeTarget.From, _nextTimeChangeTarget.To)),
+                    cancellationToken: token
+                );
+                await RotateTowards(_playerMovement.transform, _rotationSpeed, token);
                 
             }
-
-            GoToCube();
-            await UniTask.Delay((int)(1000 * Random.Range(_nextTimeChangeTarget.From, _nextTimeChangeTarget.To)));
-            await RotateTowards(chooseCube, _rotationSpeed);
+    
+            GoToCube(token);
+            await UniTask.Delay(
+                (int)(1000 * Random.Range(_nextTimeChangeTarget.From, _nextTimeChangeTarget.To)),
+                cancellationToken: token
+            );
+            await RotateTowards(chooseCube, _rotationSpeed, token);
             
         }
     }
 
-    private void GoToPlayer() {
+    private void GoToPlayer(CancellationToken token) {
         Debug.Log("Идем за игроком");
-        RotateTowards(_playerMovement.transform, _rotationSpeed);
-        agent.SetDestination(_playerMovement.transform.position);
+        agent.SetDestinationSafety(_playerMovement.transform.position, token);
     }
 
 
     private Transform chooseCube;
-    private void GoToCube() {
+    private void GoToCube(CancellationToken token) {
         Debug.Log("Идем к кубу");
         chooseCube = Random.value > 0.5 ?  _moneyCube : _betZoneCube;
         Vector3 cubePosition = chooseCube.position;
@@ -72,11 +93,11 @@ public class BotBrain : MonoBehaviour {
         direction.y = 0; 
         Vector3 newCubeSpawn = cubePosition + direction.normalized * distance;
         
-        agent.SetDestination(newCubeSpawn);
+        agent.SetDestinationSafety(newCubeSpawn, token);
     }
     
     
-    private async UniTask RotateTowards(Transform target, float rotationSpeed = 5f) {
+    private async UniTask RotateTowards(Transform target, float rotationSpeed, CancellationToken token) {
         Vector3 direction = (target.position - transform.position).normalized;
         direction.y = 0; // Игнорируем разницу по высоте
     
@@ -86,13 +107,12 @@ public class BotBrain : MonoBehaviour {
     
         // Плавный поворот
         while (Quaternion.Angle(transform.rotation, targetRotation) > 0.5f) {
-            Debug.Log("Поворот: " + transform.rotation);
             transform.rotation = Quaternion.Slerp(
                 transform.rotation, 
                 targetRotation, 
                 rotationSpeed * Time.deltaTime
             );
-            await UniTask.Yield();
+            await UniTask.Yield(token);
         }
     }
     

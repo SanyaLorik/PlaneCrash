@@ -3,6 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class RewardManager : MonoBehaviour {
     [SerializeField] private GameObject _canvas;
@@ -16,8 +17,6 @@ public class RewardManager : MonoBehaviour {
     [SerializeField] private TMP_Text _rewardText;
     
     
-    [SerializeField] private PlayerStateManager _playerStateManager;
-    [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private float _distanceRewardDivide = 2f;
     
     [SerializeField] private Button _backButton;
@@ -30,15 +29,25 @@ public class RewardManager : MonoBehaviour {
     private bool _inAnimation => _animation != null && _animation.active;
     private Sequence _animation;
     
+    private PlayerStateManager _playerStateManager;
+    private PlayerMovement _playerMovement;
+    
+    
+    [Inject]
+    public void Init(PlayerStateManager playerStateManager, PlayerMovement playerMovement) {
+        _playerStateManager = playerStateManager;
+        _playerStateManager.ChangeState += OnStateChange;
+        _playerMovement =  playerMovement;
+    }
+    
     
     private void Start() {
         _backButton.onClick.AddListener(RewardLogic);
-        _playerStateManager.OnChangeState += StateChange;
         _finalCavasPosition = _canvasBody.anchoredPosition;
         _startCavasPosition = new Vector2(_finalCavasPosition.x, -Screen.height/2);
     }
 
-    private void StateChange(PlayerState state) {
+    private void OnStateChange(PlayerState state) {
         if (state == PlayerState.Cruisered) {
             ShowCruiserReward();
         }
@@ -47,7 +56,7 @@ public class RewardManager : MonoBehaviour {
         }
     }
 
-    public void ShowCruiserReward() {
+    private void ShowCruiserReward() {
         ShowReward();
         _distanceText.text = $"Дистанция: {_cruiser.position.z:F2}";
         _multiplier.text = $"Множитель: x{ZoneManager.Instance.CurrentMultiplyer}";
@@ -59,7 +68,7 @@ public class RewardManager : MonoBehaviour {
         // _rewardText.text = money.ToString();
     }
     
-    public void ShowDistanceReward() {
+    private void ShowDistanceReward() {
         ShowReward();
         float distance = _playerStateManager.CurrentPlayerDistance;
         float reward = distance / _distanceRewardDivide;

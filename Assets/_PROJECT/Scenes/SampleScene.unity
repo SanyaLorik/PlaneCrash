@@ -510,13 +510,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28040858}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.41180053, z: -0, w: 0.911274}
-  m_LocalPosition: {x: 20.68, y: 20.2, z: -76.7195}
-  m_LocalScale: {x: 359.82373, y: 20.6675, z: 16.39502}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 13.8, y: 25.83, z: -62.02}
+  m_LocalScale: {x: 988.333, y: 34.709, z: 16.39502}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 699255799}
-  m_LocalEulerAnglesHint: {x: 0, y: -48.636, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 180}
 --- !u!212 &28040860
 SpriteRenderer:
   serializedVersion: 2
@@ -567,7 +567,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 610432f7b16573c439c58c275acef6e3, type: 3}
-  m_Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  m_Color: {r: 1, g: 0.78112847, b: 0.015686274, a: 0.48235294}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6021,7 +6021,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7294ae5ed22b7ab4b8faeaf13c9f499c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreVisual
-  _stateManager: {fileID: 1824038473}
   _canvas: {fileID: 561454347}
   _totalDistanceText: {fileID: 1506266160}
   _currentDistanceText: {fileID: 1660896112}
@@ -6272,7 +6271,6 @@ MonoBehaviour:
   _xMultiplyVisual: {fileID: 305707019}
   _rewardVisual: {fileID: 1213428702}
   _distanceVisual: {fileID: 1535740516}
-  _playerStateManager: {fileID: 1824038473}
 --- !u!114 &727722059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6290,7 +6288,6 @@ MonoBehaviour:
   _cruiserSpawnDistanceX:
     <From>k__BackingField: -5
     <To>k__BackingField: 5
-  _boostSpawner: {fileID: 873727988}
   _moneyCube: {fileID: 1357427436}
 --- !u!4 &744440607 stripped
 Transform:
@@ -10468,8 +10465,6 @@ MonoBehaviour:
   _bet: {fileID: 641678327}
   _multiplier: {fileID: 1610450367}
   _rewardText: {fileID: 1475111465}
-  _playerStateManager: {fileID: 1824038473}
-  _playerMovement: {fileID: 1824038466}
   _distanceRewardDivide: 2
   _backButton: {fileID: 1518942717}
   _cruiser: {fileID: 220604356}
@@ -10804,6 +10799,8 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: 20fe88944595e774da5339d743d98ad6, type: 2}
   _bank: {fileID: 1824038474}
   _movement: {fileID: 1824038466}
+  _stateManager: {fileID: 1824038473}
+  _boostSpawner: {fileID: 0}
 --- !u!1 &1292426949
 GameObject:
   m_ObjectHideFlags: 0
@@ -11680,7 +11677,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18c23cb6d881694c88172e06e2b41a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
-  _playerStateManager: {fileID: 0}
   _camera: {fileID: 1430309830}
   _walkingOffset: {x: 0, y: 3.9, z: -15.65}
   _flightOffset: {x: 0, y: 1.45, z: -5.17}
@@ -12955,7 +12951,7 @@ Transform:
   m_GameObject: {fileID: 1668428520}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0804, y: 24.9425, z: -111.5}
+  m_LocalPosition: {x: -0.0804, y: 24.9425, z: 2444}
   m_LocalScale: {x: 6579.474, y: 50.74699, z: 12.346859}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13011,7 +13007,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 610432f7b16573c439c58c275acef6e3, type: 3}
-  m_Color: {r: 1, g: 0.36367115, b: 0.015686274, a: 1}
+  m_Color: {r: 1, g: 0.35593873, b: 0.015686274, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -13557,7 +13553,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18c23cb6d881694c88172e06e2b41a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
-  _playerStateManager: {fileID: 0}
   _camera: {fileID: 1695576374}
   _walkingOffset: {x: 0, y: 3.9, z: -15.65}
   _flightOffset: {x: 0, y: 1.45, z: -5.17}
@@ -15433,7 +15428,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 610432f7b16573c439c58c275acef6e3, type: 3}
-  m_Color: {r: 0.015880119, g: 1, b: 0.015686274, a: 1}
+  m_Color: {r: 0.015880119, g: 1, b: 0.015686274, a: 0.67058825}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

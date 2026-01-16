@@ -27,19 +27,20 @@ public class BoostSpawner : MonoBehaviour {
     
     [SerializeField] private float _minimumFlightTime;
 
-    private List<List<Boost>> _trueWays = new();
-    private List<List<Boost>> _falseWays = new();
     
     [Header("До и после зоны кол-во бустов, From > To")]
     [SerializeField] private PairedValue<int> _countTrueWays;
     [SerializeField] private int _countFalseWays;
     [SerializeField] private Transform _zoneSpawn;
     
+    [SerializeField] private float _startFlightZ = 0f;
     
 
     private PlayerMovement _playerMovement;
-    [SerializeField] private float _startFlightZ = 0f;
+    private float _minDistance;
     
+    private List<List<Boost>> _trueWays = new();
+    private List<List<Boost>> _falseWays = new();
     
 
     [Inject]
@@ -48,7 +49,12 @@ public class BoostSpawner : MonoBehaviour {
     }
 
 
-    private float _minDistance;
+    public List<Boost> GetRandomWay(float trueChance) {
+        return Random.value <= trueChance ? _trueWays[Random.Range(0, _trueWays.Count)] 
+            : _falseWays[Random.Range(0, _falseWays.Count)];
+    }
+    
+    
     public void SpawnBoosts(Vector3 curiserPosition) {
         ClearAllBoosts();
         
@@ -81,11 +87,11 @@ public class BoostSpawner : MonoBehaviour {
             _trueWays.Add(SpawnBoostWays(_minDistance, curiserPosition, _boostPrefab, false));
         }
 
-        foreach (var way in _trueWays) {
-            Debug.Log("Кол-во бустов в пути: " +  way.Count);
-        }
-        
-        Debug.Log("Количество путей: " + _trueWays.Count);
+        // foreach (var way in _trueWays) {
+        //     Debug.Log("Кол-во бустов в пути: " +  way.Count);
+        // }
+        //
+        // Debug.Log("Количество путей: " + _trueWays.Count);
 
         // До зоны
         for (int i = 0; i < _countTrueWays.From; i++) {
@@ -136,9 +142,6 @@ public class BoostSpawner : MonoBehaviour {
 
 
         bool firstBoost = true;
-        
-        Debug.Log(currentPosition);
-        Debug.Log(endPosition.z);
         
         while (currentPosition < endPosition.z) {
             float newSpawnPoint = Random.Range(_boostDistance.From, _boostDistance.To);
