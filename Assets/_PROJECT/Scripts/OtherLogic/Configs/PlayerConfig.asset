@@ -15,7 +15,7 @@ MonoBehaviour:
   <SpeedForce>k__BackingField: 70
   <WalkSpeed>k__BackingField: 15
   <FallingSpeed>k__BackingField: 6
-  <JumpHeight>k__BackingField: 6
+  <JumpHeight>k__BackingField: 4
   <MaxRotate>k__BackingField: 18
   <XMovement>k__BackingField:
     <From>k__BackingField: -8
@@ -23,7 +23,7 @@ MonoBehaviour:
   <RotateSpeed>k__BackingField: 14
   <PlayerSpawnPosition>k__BackingField: {x: -0.5, y: 11.4, z: -35.2}
   <JumpForce>k__BackingField: 15
-  <SecondJumpForce>k__BackingField: 30
+  <SecondJumpForce>k__BackingField: 22
   <WallOffset>k__BackingField: 1
   <FloorMask>k__BackingField:
     serializedVersion: 2

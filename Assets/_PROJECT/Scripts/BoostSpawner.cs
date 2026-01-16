@@ -34,6 +34,7 @@ public class BoostSpawner : MonoBehaviour {
     [SerializeField] private Transform _zoneSpawn;
     
     [SerializeField] private float _startFlightZ = 0f;
+    [SerializeField] private bool _setPlayerFalseWay;
     
 
     private PlayerMovement _playerMovement;
@@ -85,31 +86,22 @@ public class BoostSpawner : MonoBehaviour {
             return;
         }
         
-        
-        // float _newStartFlightZ = CalculateAfterZoneFirstPosition();
-        // Debug.Log(_minDistance);
-        // Debug.Log(_newStartFlightZ);
         for (int i = 0; i < _countTrueWays.To; i++) {
             _trueWaysAfterZone.Add(SpawnBoostWays(_minDistance, curiserPosition, _boostPrefab, false));
         }
-
-        // foreach (var way in _trueWays) {
-        //     Debug.Log("Кол-во бустов в пути: " +  way.Count);
-        // }
-        //
-        // Debug.Log("Количество путей: " + _trueWays.Count);
 
         // До зоны
         for (int i = 0; i < _countTrueWays.From; i++) {
             Vector3 endPosition = _trueWaysAfterZone[Random.Range(0, _trueWaysAfterZone.Count)][0].transform.position;
             _trueWaysBeforeZone.Add(SpawnBoostWays(_startFlightZ, endPosition, _boostPrefab, true));
         }
-        
-        // _trueWays.Add(SpawnBoostWays(true, targetPosition));
-        
     }
 
     public void SpawnEntranceBoost() {
+        if (_setPlayerFalseWay) {
+            _playerMovement.SetBooster(_curves[0], _falseWays[0][0].transform.position); // действует на игрока первым
+            return;
+        }
         _playerMovement.SetBooster(_curves[0], _trueWaysBeforeZone[0][0].transform.position); // действует на игрока первым
     }
     
@@ -146,8 +138,6 @@ public class BoostSpawner : MonoBehaviour {
             throw new Exception();
         }
         
-            
-        
         List<float> spawnPoints = new List<float>();
         float currentPosition = initZ;
         Vector3 endPosition = targetPosition;
@@ -179,7 +169,6 @@ public class BoostSpawner : MonoBehaviour {
         }
         
         // Точки спауна
-        // firstBoost = true;
         float currentY = Random.Range(_yZone.To/2, _yZone.To);
         foreach (float zPos in spawnPoints) {
             float deltaY = Random.Range(_yDelta.From, _yDelta.To);
@@ -210,10 +199,6 @@ public class BoostSpawner : MonoBehaviour {
         return boost;
     }
 
-    
-    
-
-
 
     private float CalculateFalseTargetDistance() {
         float speed = _playerMovement.PlayerSpeed;
@@ -227,12 +212,5 @@ public class BoostSpawner : MonoBehaviour {
         return new Vector3(x, 0f, _minDistance);
     }
 
-    
-    // После зоны входной буст
-    private float CalculateAfterZoneFirstPosition() =>
-        _minDistance + Random.Range(_boostDistance.From, _boostDistance.To);
-
-
-    
 
 }

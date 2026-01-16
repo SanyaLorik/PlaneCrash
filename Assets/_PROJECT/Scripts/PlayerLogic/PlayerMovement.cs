@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour {
     private float _segmentDuration;
     private float _expandedTime = 0;
     private Vector3 _initialPos;
-    private Vector3 _targetPos;
+    public Vector3 TargetPos { get;private set; }
     private bool _isBusted;
     
     
@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour {
     private PlayerStateManager _stateManager;
 
     public float PlayerSpeed => _config.SpeedForce;
-    public event Action OnPlayerFlight; 
+    public event Action SetBoost;
     
     [Inject]
     public void Init(PlayerConfig config, PlayerStateManager stateManager) {
@@ -75,20 +75,20 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    private async UniTask PlayerRotateLocalX(float _targetPosAngleX, PlayerState playerState) {
+    private async UniTask PlayerRotateLocalX(float TargetPosAngleX, PlayerState playerState) {
         float duration = 1f;
     
         Vector3 currentLocalEuler = transform.localEulerAngles;
-        Vector3 _targetPosLocalEuler;
+        Vector3 TargetPosLocalEuler;
         if (playerState == PlayerState.Walking) {
-            _targetPosLocalEuler = new Vector3(_targetPosAngleX, currentLocalEuler.y, currentLocalEuler.z);
+            TargetPosLocalEuler = new Vector3(TargetPosAngleX, currentLocalEuler.y, currentLocalEuler.z);
         }
         else {
-            _targetPosLocalEuler = new Vector3(_targetPosAngleX, 0f, 0f);
+            TargetPosLocalEuler = new Vector3(TargetPosAngleX, 0f, 0f);
         }
     
         Quaternion startRot = transform.localRotation;
-        Quaternion _targetPosRot = Quaternion.Euler(_targetPosLocalEuler);
+        Quaternion TargetPosRot = Quaternion.Euler(TargetPosLocalEuler);
     
         float elapsedTime = 0;
     
@@ -96,12 +96,12 @@ public class PlayerMovement : MonoBehaviour {
             elapsedTime += Time.fixedDeltaTime;
             float t = elapsedTime / duration;
         
-            transform.localRotation = Quaternion.Slerp(startRot, _targetPosRot, t);
+            transform.localRotation = Quaternion.Slerp(startRot, TargetPosRot, t);
         
             await UniTask.Yield(_playerCTS.Token);
         }
     
-        transform.localRotation = _targetPosRot;
+        transform.localRotation = TargetPosRot;
     }
 
     public void OnMove(InputAction.CallbackContext context) {
@@ -163,11 +163,11 @@ public class PlayerMovement : MonoBehaviour {
 
     private void WalkRotate(Vector3 move) {
         if (move.sqrMagnitude > 0.0001f) {
-            float _targetPosY = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
+            float TargetPosY = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
 
             float y = Mathf.LerpAngle(
                 transform.eulerAngles.y,
-                _targetPosY,
+                TargetPosY,
                 _config.RotateSpeed * Time.fixedDeltaTime
             );
             // Крутится только Y
@@ -193,8 +193,8 @@ public class PlayerMovement : MonoBehaviour {
             float normalizedTime = _expandedTime / _segmentDuration;
             
             float height = _currentCurve.Evaluate(normalizedTime) * _config.JumpHeight; // По высоте подымается
-            newPos.y = Mathf.Lerp(_initialPos.y, _targetPos.y, normalizedTime) + height;
-            newPos.z = Mathf.Lerp(_initialPos.z, _targetPos.z, normalizedTime);
+            newPos.y = Mathf.Lerp(_initialPos.y, TargetPos.y, normalizedTime) + height;
+            newPos.z = Mathf.Lerp(_initialPos.z, TargetPos.z, normalizedTime);
             _expandedTime += Time.fixedDeltaTime;
             if (_expandedTime >= _segmentDuration) {
                 _isBusted = false;
@@ -204,22 +204,22 @@ public class PlayerMovement : MonoBehaviour {
     }
 
 
-    
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
         _currentCurve = curve;
         _expandedTime = 0f;
         _isBusted = true;
         _initialPos = transform.position;
-        _targetPos = nextBoost;
-        float distance = Vector3.Distance(_initialPos, _targetPos);
+        TargetPos = nextBoost;
+        float distance = Vector3.Distance(_initialPos, TargetPos);
         _segmentDuration = distance / _config.SpeedForce; 
+        SetBoost?.Invoke();
     } 
 
     
   
     private void VisualRotate() {
-        float _targetPosRoll = -_moveInput.x * _config.MaxRotate;
-        _currentRoll = Mathf.Lerp(_currentRoll, _targetPosRoll, Time.fixedDeltaTime * _config.RotateSpeed);
+        float TargetPosRoll = -_moveInput.x * _config.MaxRotate;
+        _currentRoll = Mathf.Lerp(_currentRoll, TargetPosRoll, Time.fixedDeltaTime * _config.RotateSpeed);
 
         Vector3 euler = transform.localEulerAngles;
         euler.z = _currentRoll;

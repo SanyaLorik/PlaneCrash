@@ -33,6 +33,8 @@ public class ScoreVisual : MonoBehaviour {
 
     private void Start() {
         _visualProgressRt = _visualProgress.gameObject.GetComponent<RectTransform>();
+        SetDefault();
+        
     }
 
     private void OnPlayerStateChange(PlayerState state) {

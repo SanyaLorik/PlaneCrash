@@ -7,6 +7,7 @@ public class PlayerInstaller : MonoInstaller {
     [SerializeField] private PlayerMovement _movement;
     [SerializeField] private PlayerStateManager _stateManager;
     [SerializeField] private BoostSpawner _boostSpawner;
+    [SerializeField] private LineToBoosts _lineToBoosts;
     
     
     public override void InstallBindings() {
@@ -19,6 +20,7 @@ public class PlayerInstaller : MonoInstaller {
         Container.Bind<PlayerBank>().FromInstance(_bank).AsSingle().NonLazy();
         Container.Bind<PlayerMovement>().FromInstance(_movement).AsSingle().NonLazy();
         Container.Bind<PlayerStateManager>().FromInstance(_stateManager).AsSingle().NonLazy();
+        Container.Bind<LineToBoosts>().FromInstance(_lineToBoosts).AsSingle().NonLazy();
     }
     
     private void SpawnBoost() {

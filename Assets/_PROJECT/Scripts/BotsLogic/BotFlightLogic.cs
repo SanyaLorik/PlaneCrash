@@ -43,9 +43,9 @@ public class BotFlightLogic : MonoBehaviour {
     private void OnChangeState(PlayerState state) {
         if (state == PlayerState.Flight) {
             _botBrain.StopBotEblaning();
+            PlayerRotateLocalX(-25);
             TpBotNearPlayer();
             // Сбросить кол-во бустов надо
-            PlayerRotateLocalX(-25);
             ResetCountBoosts();
             Debug.Log("Вызов GetRandomWay");
             _boostWay = _boostSpawner.GetRandomWay(_trueWayChance);
@@ -60,16 +60,19 @@ public class BotFlightLogic : MonoBehaviour {
     }
 
 
+    [SerializeField] private float _fallingTime;
     private async UniTask BotFlightCycle() {
         Debug.Log(_boostWay.Count);
-        while (_countGetBoosts <= _boostWay.Count) {
+        float currentY = 20f;
+        
+        while (_countGetBoosts <= _boostWay.Count || currentY > 0.2f) {
             FlightLogic();
+            currentY = transform.position.y;
             await UniTask.WaitForFixedUpdate();
         }
-        Debug.Log("Выход из цикла, transform.position.y: " + transform.position.y);
         // Чутка подождать пока полежит
         PlayerRotateLocalX(-80);
-        await UniTask.Delay(2000);
+        await UniTask.Delay(700);
         ResetEblaningLogic();
     }
     
@@ -126,6 +129,7 @@ public class BotFlightLogic : MonoBehaviour {
     
     
     private async UniTask PlayerRotateLocalX(float _targetPosAngleX) {
+        transform.localRotation = Quaternion.Euler(Vector3.zero);
         float duration = 1f;
     
         Vector3 _targetPosLocalEuler;
@@ -147,8 +151,8 @@ public class BotFlightLogic : MonoBehaviour {
         }
     
         _botModelForRotate.localRotation = _targetPosRot;
-        transform.localRotation = Quaternion.Euler(Vector3.zero);
         Debug.Log("Поворот игрока: " + transform.localRotation);
     }
+    
 
 }
