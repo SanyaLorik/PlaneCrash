@@ -35,13 +35,14 @@ public class BotBrain : MonoBehaviour {
         _botTokenSource?.Dispose();
         _botTokenSource =  null;
         agent.SafeStop();
-        
+        agent.enabled = false;
         _eblaning = false;
         Debug.Log("StopBotEblaning");
     }
 
     public void StartBotEblaning() {
         StopBotEblaning();
+        agent.enabled = true;
         _botTokenSource = new CancellationTokenSource();
         _eblaning = true;
         LifeCycle(_botTokenSource.Token).Forget();
@@ -61,16 +62,15 @@ public class BotBrain : MonoBehaviour {
                     cancellationToken: token
                 );
                 await RotateTowards(_playerMovement.transform, _rotationSpeed, token);
-                
             }
-    
-            GoToCube(token);
-            await UniTask.Delay(
-                (int)(1000 * Random.Range(_nextTimeChangeTarget.From, _nextTimeChangeTarget.To)),
-                cancellationToken: token
-            );
-            await RotateTowards(chooseCube, _rotationSpeed, token);
-            
+            else {
+                GoToCube(token);
+                await UniTask.Delay(
+                    (int)(1000 * Random.Range(_nextTimeChangeTarget.From, _nextTimeChangeTarget.To)),
+                    cancellationToken: token
+                );
+                await RotateTowards(chooseCube, _rotationSpeed, token);
+            }
         }
     }
 
@@ -106,7 +106,7 @@ public class BotBrain : MonoBehaviour {
         Quaternion targetRotation = Quaternion.LookRotation(direction);
     
         // Плавный поворот
-        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.5f) {
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.5f && !token.IsCancellationRequested) {
             transform.rotation = Quaternion.Slerp(
                 transform.rotation, 
                 targetRotation, 
@@ -114,6 +114,11 @@ public class BotBrain : MonoBehaviour {
             );
             await UniTask.Yield(token);
         }
+    }
+    
+    private void OnDestroy() {
+        _botTokenSource?.Cancel();
+        _botTokenSource?.Dispose();
     }
     
 }

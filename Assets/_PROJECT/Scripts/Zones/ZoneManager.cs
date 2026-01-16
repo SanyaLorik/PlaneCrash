@@ -42,7 +42,6 @@ public class ZoneManager : MonoBehaviour {
 
     private void Start() {
         _moneyCube.SetMoneyAmount(0);
-        Debug.LogWarning("_moneyCube.SetMoneyAmount(0)");
     }
 
 
@@ -77,6 +76,6 @@ public class ZoneManager : MonoBehaviour {
         _boostSpawner.SpawnBoosts(newCruiserSpawnPos);
         OnChooseMultiplyer?.Invoke(CurrentMultiplyer);
     }
-    
-    
+
+
 }

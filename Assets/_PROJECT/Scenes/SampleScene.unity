@@ -3417,7 +3417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f5eb0b135e20f947ad6619117f21bc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BotBrain
-  _followPlayer: 1
+  _eblaning: 1
   _rotationSpeed: 5
   _nextTimeChangeTarget:
     <From>k__BackingField: 5
@@ -3902,7 +3902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f5eb0b135e20f947ad6619117f21bc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BotBrain
-  _followPlayer: 1
+  _eblaning: 1
   _rotationSpeed: 5
   _nextTimeChangeTarget:
     <From>k__BackingField: 5
@@ -5226,11 +5226,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cb9e41b3de535f74fa54d6478256eb84, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.06
+      value: 0.46
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cb9e41b3de535f74fa54d6478256eb84, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.35
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cb9e41b3de535f74fa54d6478256eb84, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5242,15 +5242,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cb9e41b3de535f74fa54d6478256eb84, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.6427876
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cb9e41b3de535f74fa54d6478256eb84, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1
+      value: 0.7660445
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cb9e41b3de535f74fa54d6478256eb84, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cb9e41b3de535f74fa54d6478256eb84, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -6284,7 +6284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoneManager
   _cruiser: {fileID: 220604356}
-  _cruiserBaseSpawnDistance: 800
+  _cruiserBaseSpawnDistance: 400
   _cruiserSpawnDistanceX:
     <From>k__BackingField: -5
     <To>k__BackingField: 5
@@ -7122,7 +7122,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 852315745}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.70059794, y: 0, z: 0, w: 0.71355623}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7130,7 +7130,7 @@ Transform:
   - {fileID: 868210208}
   - {fileID: 357550404}
   m_Father: {fileID: 2097017813}
-  m_LocalEulerAnglesHint: {x: -88.95, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &852315747
 TrailRenderer:
   serializedVersion: 4
@@ -7612,11 +7612,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   _minimumFlightTime: 5
   _countTrueWays:
-    <From>k__BackingField: 5
+    <From>k__BackingField: 1
     <To>k__BackingField: 1
-  _countFalseWays: 2
+  _countFalseWays: 1
   _zoneSpawn: {fileID: 1668428521}
-  _startFlightZ: 0
+  _startFlightZ: 2
 --- !u!1 &880229775
 GameObject:
   m_ObjectHideFlags: 0
@@ -10800,7 +10800,7 @@ MonoBehaviour:
   _bank: {fileID: 1824038474}
   _movement: {fileID: 1824038466}
   _stateManager: {fileID: 1824038473}
-  _boostSpawner: {fileID: 0}
+  _boostSpawner: {fileID: 873727988}
 --- !u!1 &1292426949
 GameObject:
   m_ObjectHideFlags: 0
@@ -11677,9 +11677,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18c23cb6d881694c88172e06e2b41a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
-  _camera: {fileID: 1430309830}
-  _walkingOffset: {x: 0, y: 3.9, z: -15.65}
-  _flightOffset: {x: 0, y: 1.45, z: -5.17}
 --- !u!114 &1430309834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13553,9 +13550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18c23cb6d881694c88172e06e2b41a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
-  _camera: {fileID: 1695576374}
-  _walkingOffset: {x: 0, y: 3.9, z: -15.65}
-  _flightOffset: {x: 0, y: 1.45, z: -5.17}
 --- !u!114 &1695576369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17579,8 +17573,10 @@ GameObject:
   - component: {fileID: 2097017815}
   - component: {fileID: 2097017814}
   - component: {fileID: 2097017816}
+  - component: {fileID: 2097017817}
+  - component: {fileID: 2097017818}
   m_Layer: 0
-  m_Name: Bot1
+  m_Name: Bot1-FlightGay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17595,7 +17591,7 @@ Transform:
   m_GameObject: {fileID: 2097017812}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.95, y: 10.275, z: -59.05}
+  m_LocalPosition: {x: -11.95, y: 10.51, z: -59.05}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -17646,7 +17642,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -17663,13 +17659,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f5eb0b135e20f947ad6619117f21bc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BotBrain
-  _followPlayer: 1
+  _eblaning: 1
   _rotationSpeed: 5
   _nextTimeChangeTarget:
     <From>k__BackingField: 5
     <To>k__BackingField: 8
   _moneyCube: {fileID: 2108755023}
   _betZoneCube: {fileID: 1357427434}
+--- !u!114 &2097017817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097017812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dfdaf35b5031d146a7db0f121b490f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BotFlightLogic
+  _countBoostEquilizeSpeed: 5
+  _botSpeedCorrect: 10
+  _flightPosition: {x: -2.078169, y: 10.221079, z: -5.649}
+  _botModelForRotate: {fileID: 357550404}
+--- !u!65 &2097017818
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097017812}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.019947, y: 3.9947166, z: 1.3827591}
+  m_Center: {x: -0.006368637, y: 1.4973583, z: 0.19137955}
 --- !u!1 &2103805098
 GameObject:
   m_ObjectHideFlags: 0

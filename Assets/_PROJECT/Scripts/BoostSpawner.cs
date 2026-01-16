@@ -39,7 +39,8 @@ public class BoostSpawner : MonoBehaviour {
     private PlayerMovement _playerMovement;
     private float _minDistance;
     
-    private List<List<Boost>> _trueWays = new();
+    private List<List<Boost>> _trueWaysAfterZone = new();
+    private List<List<Boost>> _trueWaysBeforeZone = new();
     private List<List<Boost>> _falseWays = new();
     
 
@@ -50,12 +51,17 @@ public class BoostSpawner : MonoBehaviour {
 
 
     public List<Boost> GetRandomWay(float trueChance) {
-        return Random.value <= trueChance ? _trueWays[Random.Range(0, _trueWays.Count)] 
-            : _falseWays[Random.Range(0, _falseWays.Count)];
+        if (Random.value > trueChance) {
+            return _falseWays[Random.Range(0, _falseWays.Count)];
+        }
+        List<Boost> trueList = _trueWaysBeforeZone[Random.Range(0, _trueWaysBeforeZone.Count)];
+        trueList.AddRange(_trueWaysAfterZone[0]);
+        return trueList;
     }
     
     
     public void SpawnBoosts(Vector3 curiserPosition) {
+        Debug.Log("Генерация бустов");
         ClearAllBoosts();
         
         /* Акт в 5 этюдах:
@@ -84,7 +90,7 @@ public class BoostSpawner : MonoBehaviour {
         // Debug.Log(_minDistance);
         // Debug.Log(_newStartFlightZ);
         for (int i = 0; i < _countTrueWays.To; i++) {
-            _trueWays.Add(SpawnBoostWays(_minDistance, curiserPosition, _boostPrefab, false));
+            _trueWaysAfterZone.Add(SpawnBoostWays(_minDistance, curiserPosition, _boostPrefab, false));
         }
 
         // foreach (var way in _trueWays) {
@@ -95,15 +101,20 @@ public class BoostSpawner : MonoBehaviour {
 
         // До зоны
         for (int i = 0; i < _countTrueWays.From; i++) {
-            Vector3 endPosition = _trueWays[Random.Range(0, _countTrueWays.To-1)][0].transform.position;
-            _trueWays.Add(SpawnBoostWays(_startFlightZ, endPosition, _boostPrefab, true));
+            Vector3 endPosition = _trueWaysAfterZone[Random.Range(0, _trueWaysAfterZone.Count)][0].transform.position;
+            _trueWaysBeforeZone.Add(SpawnBoostWays(_startFlightZ, endPosition, _boostPrefab, true));
         }
         
         // _trueWays.Add(SpawnBoostWays(true, targetPosition));
         
-        SpawnEntranceBoost();
     }
 
+    public void SpawnEntranceBoost() {
+        _playerMovement.SetBooster(_curves[0], _trueWaysBeforeZone[0][0].transform.position); // действует на игрока первым
+    }
+    
+    
+    
     private void MoveVisualZone() {
         Vector3 zonePos =  _zoneSpawn.position;
         zonePos.z = _minDistance;
@@ -112,17 +123,18 @@ public class BoostSpawner : MonoBehaviour {
 
 
     private void ClearAllBoosts() {
-        foreach (var chain in _trueWays) {
+        List<List<Boost>> boosts = new ();
+        boosts.AddRange(_trueWaysAfterZone);
+        boosts.AddRange(_trueWaysBeforeZone);
+        boosts.AddRange(_falseWays);
+        foreach (var chain in boosts) {
             foreach (var item in chain) {
                 Destroy(item.gameObject);
             }
         }
-        foreach (var chain in _falseWays) {
-            foreach (var item in chain) {
-                Destroy(item.gameObject);
-            }
-        }
-        _trueWays.Clear();
+
+        _trueWaysAfterZone.Clear();
+        _trueWaysBeforeZone.Clear();
         _falseWays.Clear();
     }
 
@@ -200,9 +212,7 @@ public class BoostSpawner : MonoBehaviour {
 
     
     
-    private void SpawnEntranceBoost() {
-        _playerMovement.SetBooster(_curves[0], _trueWays[^1][0].transform.position); // действует на игрока первым
-    }
+
 
 
     private float CalculateFalseTargetDistance() {

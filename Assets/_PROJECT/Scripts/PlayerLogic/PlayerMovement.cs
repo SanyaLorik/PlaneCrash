@@ -9,8 +9,6 @@ using Zenject;
 public class PlayerMovement : MonoBehaviour {
     private PlayerConfig _config;
 
-
-    
     private AnimationCurve _currentCurve;
     private float _segmentDuration;
     private float _expandedTime = 0;
@@ -123,7 +121,7 @@ public class PlayerMovement : MonoBehaviour {
         }
         else if (_secondJumpAllowed) {
             _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
-            _rb.AddForce(Vector3.up * _config.JumpForce, ForceMode.Impulse);
+            _rb.AddForce(Vector3.up * _config.SecondJumpForce, ForceMode.Impulse);
             _secondJumpAllowed = false;
         }
     }

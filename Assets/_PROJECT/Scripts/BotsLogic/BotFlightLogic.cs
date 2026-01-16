@@ -9,13 +9,14 @@ public class BotFlightLogic : MonoBehaviour {
     [SerializeField] private int _countBoostEquilizeSpeed;
     [SerializeField] private float _botSpeedCorrect;
     [SerializeField] private Vector3 _flightPosition;
+    [SerializeField] private Transform _botModelForRotate;
+    [Range(0,1), SerializeField] private float _trueWayChance;
     private PlayerStateManager _stateManager;
     private PlayerConfig _playerConfig;
     private BoostSpawner _boostSpawner;
     private List<Boost> _boostWay;
    
     
-    // ЗЯВТРЯ
     private AnimationCurve _currentCurve;
     private float _segmentDuration;
     private float _expandedTime = 0;
@@ -36,6 +37,7 @@ public class BotFlightLogic : MonoBehaviour {
     private void Awake() {
         _botBrain = GetComponent<BotBrain>();
     }
+    
 
 
     private void OnChangeState(PlayerState state) {
@@ -45,22 +47,26 @@ public class BotFlightLogic : MonoBehaviour {
             // Сбросить кол-во бустов надо
             PlayerRotateLocalX(-25);
             ResetCountBoosts();
-            _boostWay = _boostSpawner.GetRandomWay(1f);
+            Debug.Log("Вызов GetRandomWay");
+            _boostWay = _boostSpawner.GetRandomWay(_trueWayChance);
             if (_boostWay.Count == 0) {
                 Debug.LogError("Цепочка бустов пустая!");
                 return;
             }
-            SetBooster(_boostWay[0].randomTrajectory, _boostWay[0].nextBooster);
+            Debug.Log("Кол-во бустов у бота: " + _boostWay.Count);
+            SetBooster(_boostWay[0].randomTrajectory, _boostWay[0].transform.position);
             BotFlightCycle();
         }
     }
 
 
     private async UniTask BotFlightCycle() {
-        while (_countGetBoosts < _boostWay.Count) {
+        Debug.Log(_boostWay.Count);
+        while (_countGetBoosts <= _boostWay.Count) {
             FlightLogic();
             await UniTask.WaitForFixedUpdate();
         }
+        Debug.Log("Выход из цикла, transform.position.y: " + transform.position.y);
         // Чутка подождать пока полежит
         PlayerRotateLocalX(-80);
         await UniTask.Delay(2000);
@@ -85,7 +91,7 @@ public class BotFlightLogic : MonoBehaviour {
     
     
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
-        Debug.Log("Следующий бост бота: " + nextBoost);
+        Debug.Log("Следующий буст бота: " + nextBoost);
         _currentCurve = curve;
         _expandedTime = 0f;
         _initialPos = transform.position;
@@ -106,17 +112,15 @@ public class BotFlightLogic : MonoBehaviour {
     private void FlightLogic() {
         Vector3 newPos =  transform.position;
         
-        newPos.x = Mathf.Clamp(newPos.x, _playerConfig.XMovement.From, _playerConfig.XMovement.To);
 
         float normalizedTime = _expandedTime / _segmentDuration;
             
         float height = _currentCurve.Evaluate(normalizedTime) * _playerConfig.JumpHeight; // По высоте подымается
         newPos.y = Mathf.Lerp(_initialPos.y, _targetPos.y, normalizedTime) + height;
         newPos.z = Mathf.Lerp(_initialPos.z, _targetPos.z, normalizedTime);
-        
         newPos.x = Mathf.Lerp(_initialPos.x, _targetPos.x, normalizedTime);
         _expandedTime += Time.fixedDeltaTime;
-        
+
         transform.position = newPos;
     }
     
@@ -125,10 +129,10 @@ public class BotFlightLogic : MonoBehaviour {
         float duration = 1f;
     
         Vector3 _targetPosLocalEuler;
-        _targetPosLocalEuler = new Vector3(_targetPosAngleX, 0f, 0f);
+        _targetPosLocalEuler = new Vector3(_targetPosAngleX, 0f, 180f);
         
     
-        Quaternion startRot = transform.localRotation;
+        Quaternion startRot = _botModelForRotate.localRotation;
         Quaternion _targetPosRot = Quaternion.Euler(_targetPosLocalEuler);
     
         float elapsedTime = 0;
@@ -137,12 +141,14 @@ public class BotFlightLogic : MonoBehaviour {
             elapsedTime += Time.fixedDeltaTime;
             float t = elapsedTime / duration;
         
-            transform.localRotation = Quaternion.Slerp(startRot, _targetPosRot, t);
+            _botModelForRotate.localRotation = Quaternion.Slerp(startRot, _targetPosRot, t);
         
             await UniTask.Yield();
         }
     
-        transform.localRotation = _targetPosRot;
+        _botModelForRotate.localRotation = _targetPosRot;
+        transform.localRotation = Quaternion.Euler(Vector3.zero);
+        Debug.Log("Поворот игрока: " + transform.localRotation);
     }
 
 }
