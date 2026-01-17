@@ -7,15 +7,13 @@ using UnityEngine.AI;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class BotBrain : MonoBehaviour {
+public class BotWander : MonoBehaviour, IBotBehaviour {
     [SerializeField] private bool _eblaning = true;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private PairedValue<float> _nextTimeChangeTarget;
     
-    
     [SerializeField] private Transform _moneyCube;
     [SerializeField] private Transform _betZoneCube;
-    
     
     
     private NavMeshAgent agent;
@@ -23,39 +21,51 @@ public class BotBrain : MonoBehaviour {
     private float wanderRadius = 10f;
     
     private PlayerMovement _playerMovement;
+    private PlayerStateManager _playerStateManager;
     private CancellationTokenSource _botTokenSource;
+    private Transform chooseCube;
 
-    [Inject]
-    public void Init(PlayerMovement playerMovement) {
+    [Inject] 
+    public void Init(PlayerMovement playerMovement, PlayerStateManager playerStateManager) {
         _playerMovement = playerMovement;
+        _playerStateManager = playerStateManager;
+    }
+    
+    
+    private void Awake() {
+        agent = GetComponent<NavMeshAgent>();
+        Debug.Log("GetComponent<NavMeshAgent>();");
     }
 
-    public void StopBotEblaning() {
-        _botTokenSource?.Cancel();
-        _botTokenSource?.Dispose();
-        _botTokenSource =  null;
-        agent.SafeStop();
-        agent.enabled = false;
-        _eblaning = false;
-        Debug.Log("StopBotEblaning");
+    private void Start() {
+        Enter();
     }
 
-    public void StartBotEblaning() {
-        StopBotEblaning();
+
+    public void Enter() {
+        Exit();
         agent.enabled = true;
         _botTokenSource = new CancellationTokenSource();
         _eblaning = true;
         LifeCycle(_botTokenSource.Token).Forget();
     }
-
-    private void Start() {
-        agent = GetComponent<NavMeshAgent>();
-        StartBotEblaning(); 
+    
+    public void Exit() {
+        _botTokenSource?.Cancel();
+        _botTokenSource?.Dispose();
+        _botTokenSource =  null;
+        agent.SafeStop();
+        Debug.Log("agent.enabled = false");
+        agent.enabled = false;
+        _eblaning = false;
+        Debug.Log("Exit BotWander");
     }
+
+
 
     private async UniTask LifeCycle(CancellationToken token) {
         while (_eblaning && !token.IsCancellationRequested) {
-            if (Random.value > 0.6) {
+            if (Random.value > 0.6 && _playerStateManager.CurrentState != PlayerState.Flight) {
                 GoToPlayer(token);
                 await UniTask.Delay(
                     (int)(1000 * Random.Range(_nextTimeChangeTarget.From, _nextTimeChangeTarget.To)),
@@ -80,7 +90,6 @@ public class BotBrain : MonoBehaviour {
     }
 
 
-    private Transform chooseCube;
     private void GoToCube(CancellationToken token) {
         Debug.Log("Идем к кубу");
         chooseCube = Random.value > 0.5 ?  _moneyCube : _betZoneCube;

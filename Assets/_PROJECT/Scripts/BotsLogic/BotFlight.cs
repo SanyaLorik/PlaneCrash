@@ -5,13 +5,14 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class BotFlightLogic : MonoBehaviour {
+public class BotFlight : MonoBehaviour, IBotBehaviour {
     [SerializeField] private int _countBoostEquilizeSpeed;
     [SerializeField] private float _botSpeedCorrect;
     [SerializeField] private Vector3 _flightPosition;
     [SerializeField] private Transform _botModelForRotate;
     [Range(0,1), SerializeField] private float _trueWayChance;
-    private PlayerStateManager _stateManager;
+    [SerializeField] private float _fallingTime;
+    
     private PlayerConfig _playerConfig;
     private BoostSpawner _boostSpawner;
     private List<Boost> _boostWay;
@@ -23,74 +24,35 @@ public class BotFlightLogic : MonoBehaviour {
     private Vector3 _initialPos;
     private Vector3 _targetPos;
     private int _countGetBoosts;
-    private BotBrain _botBrain;
+
+
+    public event Action EndFlight;
     
     [Inject]
-    public void Init(PlayerStateManager stateManager, BoostSpawner boostSpawner, PlayerConfig playerConfig) {
-        
-        _stateManager = stateManager;
-        _stateManager.ChangeState += OnChangeState;
+    public void Init(BoostSpawner boostSpawner, PlayerConfig playerConfig) {
         _boostSpawner = boostSpawner;
         _playerConfig = playerConfig;
     }
 
-    private void Awake() {
-        _botBrain = GetComponent<BotBrain>();
-    }
-    
 
-
-    private void OnChangeState(PlayerState state) {
-        if (state == PlayerState.Flight) {
-            _botBrain.StopBotEblaning();
-            PlayerRotateLocalX(-25);
-            TpBotNearPlayer();
-            // Сбросить кол-во бустов надо
-            ResetCountBoosts();
-            Debug.Log("Вызов GetRandomWay");
-            _boostWay = _boostSpawner.GetRandomWay(_trueWayChance);
-            if (_boostWay.Count == 0) {
-                Debug.LogError("Цепочка бустов пустая!");
-                return;
-            }
-            Debug.Log("Кол-во бустов у бота: " + _boostWay.Count);
-            SetBooster(_boostWay[0].randomTrajectory, _boostWay[0].transform.position);
-            BotFlightCycle();
-        }
-    }
-
-
-    [SerializeField] private float _fallingTime;
-    private async UniTask BotFlightCycle() {
-        Debug.Log(_boostWay.Count);
-        float currentY = 20f;
+    public void Enter() {
+        Debug.Log("Enter");
         
-        while (_countGetBoosts <= _boostWay.Count || currentY > 0.2f) {
-            FlightLogic();
-            currentY = transform.position.y;
-            await UniTask.WaitForFixedUpdate();
+        PlayerRotateLocalX(-25);
+        TpBotNearPlayer();
+        // Сбросить кол-во бустов надо
+        ResetCountBoosts();
+        _boostWay = _boostSpawner.GetRandomWay(_trueWayChance);
+        if (_boostWay.Count == 0) {
+            Debug.LogError("Цепочка бустов пустая!");
+            return;
         }
-        // Чутка подождать пока полежит
-        PlayerRotateLocalX(-80);
-        await UniTask.Delay(700);
-        ResetEblaningLogic();
-    }
-    
-    private void ResetEblaningLogic() {
-        transform.position = _playerConfig.PlayerSpawnPosition;
-        _botBrain.StartBotEblaning();
-            
+        Debug.Log("Кол-во бустов у бота: " + _boostWay.Count);
+        SetBooster(_boostWay[0].randomTrajectory, _boostWay[0].transform.position);
+        BotFlightCycle();
     }
 
-    private void TpBotNearPlayer() {
-        Vector3 flightPosition = _flightPosition;
-        flightPosition.x += Random.Range(-7, 7);
-        transform.position = flightPosition;
-    }
 
-    private void ResetCountBoosts() {
-        _countGetBoosts = 0;
-    }
     
     
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
@@ -110,12 +72,41 @@ public class BotFlightLogic : MonoBehaviour {
             _segmentDuration = distance / _playerConfig.SpeedForce;
         }
     } 
+    private async UniTask BotFlightCycle() {
+        Debug.Log(_boostWay.Count);
+        float currentY = 20f;
+        
+        while (_countGetBoosts <= _boostWay.Count || currentY > 0.2f) {
+            FlightLogic();
+            currentY = transform.position.y;
+            await UniTask.WaitForFixedUpdate();
+        }
+        // Чутка подождать пока полежит
+        PlayerRotateLocalX(-80);
+        await UniTask.Delay(700);
+        EndFlight?.Invoke();
+    }
+    
+    public void Exit() {
+        transform.position = _playerConfig.PlayerSpawnPosition;
+    }
+    
+    
+
+    private void TpBotNearPlayer() {
+        Vector3 flightPosition = _flightPosition;
+        flightPosition.x += Random.Range(-7, 7);
+        transform.position = flightPosition;
+    }
+
+    private void ResetCountBoosts() {
+        _countGetBoosts = 0;
+    }
+    
     
     
     private void FlightLogic() {
         Vector3 newPos =  transform.position;
-        
-
         float normalizedTime = _expandedTime / _segmentDuration;
             
         float height = _currentCurve.Evaluate(normalizedTime) * _playerConfig.JumpHeight; // По высоте подымается

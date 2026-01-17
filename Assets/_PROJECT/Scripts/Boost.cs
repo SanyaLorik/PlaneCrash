@@ -10,7 +10,7 @@ public class Boost : MonoBehaviour {
             player.SetBooster(randomTrajectory, nextBooster);
             gameObject.SetActive(false);
         }
-        else if (collider.gameObject.TryGetComponent(out BotFlightLogic bot)) {
+        else if (collider.gameObject.TryGetComponent(out BotFlight bot)) {
             bot.SetBooster(randomTrajectory, nextBooster);
             Debug.Log("Бот налетел на буст");
         }
