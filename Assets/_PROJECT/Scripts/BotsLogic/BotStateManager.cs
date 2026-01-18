@@ -17,7 +17,6 @@ public class BotStateManager : MonoBehaviour {
     public BotState State { get; private set; }
     
     
-    
     private void Awake() {
         _botFlight = GetComponent<BotFlight>();
         _botWander = GetComponent<BotWander>();
@@ -39,11 +38,14 @@ public class BotStateManager : MonoBehaviour {
 
         Debug.Log(_currentBotBehaviour);
         _currentBotBehaviour?.Enter();
-        
     }
     
     private void BotFlightOnEndFlight() {
         ChangeBotState(BotState.Wandering);
+    }
+
+    public void PlayerInSpawn() {
+        _botFlight.GoToFall();
     }
     
 }

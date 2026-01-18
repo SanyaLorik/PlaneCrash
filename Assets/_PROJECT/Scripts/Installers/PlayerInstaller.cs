@@ -16,7 +16,7 @@ public class PlayerInstaller : MonoInstaller {
     }
 
     private void BindPlayer() {
-        Container.Bind<PlayerConfig>().FromInstance(_config).AsSingle();;
+        Container.Bind<PlayerConfig>().FromInstance(_config).AsSingle();
         Container.Bind<PlayerBank>().FromInstance(_bank).AsSingle().NonLazy();
         Container.Bind<PlayerMovement>().FromInstance(_movement).AsSingle().NonLazy();
         Container.Bind<PlayerStateManager>().FromInstance(_stateManager).AsSingle().NonLazy();

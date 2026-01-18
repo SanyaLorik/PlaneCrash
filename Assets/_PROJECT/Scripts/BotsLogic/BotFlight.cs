@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using Cysharp.Threading.Tasks;
+using UnityEditor.Rendering;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class BotFlight : MonoBehaviour, IBotBehaviour {
+public class BotFlight : FlightObject, IBotBehaviour {
     [SerializeField] private int _countBoostEquilizeSpeed;
     [SerializeField] private float _botSpeedCorrect;
     [SerializeField] private Vector3 _flightPosition;
@@ -16,17 +19,12 @@ public class BotFlight : MonoBehaviour, IBotBehaviour {
     private PlayerConfig _playerConfig;
     private BoostSpawner _boostSpawner;
     private List<Boost> _boostWay;
-   
-    
-    private AnimationCurve _currentCurve;
-    private float _segmentDuration;
-    private float _expandedTime = 0;
-    private Vector3 _initialPos;
-    private Vector3 _targetPos;
+
     private int _countGetBoosts;
 
-
+    
     public event Action EndFlight;
+    
     
     [Inject]
     public void Init(BoostSpawner boostSpawner, PlayerConfig playerConfig) {
@@ -35,33 +33,21 @@ public class BotFlight : MonoBehaviour, IBotBehaviour {
     }
 
 
-    public void Enter() {
-        Debug.Log("Enter");
-        
-        PlayerRotateLocalX(-25);
-        TpBotNearPlayer();
-        // Сбросить кол-во бустов надо
-        ResetCountBoosts();
-        _boostWay = _boostSpawner.GetRandomWay(_trueWayChance);
-        if (_boostWay.Count == 0) {
-            Debug.LogError("Цепочка бустов пустая!");
-            return;
-        }
-        Debug.Log("Кол-во бустов у бота: " + _boostWay.Count);
-        SetBooster(_boostWay[0].randomTrajectory, _boostWay[0].transform.position);
-        BotFlightCycle();
+    public void GoToFall() {
+        // Логика падения
+        BotFallAsync(CreateNewToken()).Forget();
     }
 
 
-    
+
     
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
         Debug.Log("Следующий буст бота: " + nextBoost);
         _currentCurve = curve;
         _expandedTime = 0f;
         _initialPos = transform.position;
-        _targetPos = nextBoost;
-        float distance = Vector3.Distance(_initialPos, _targetPos);
+        TargetPos = nextBoost;
+        float distance = Vector3.Distance(_initialPos, TargetPos);
         _countGetBoosts++;
         if (_countGetBoosts < _countBoostEquilizeSpeed) {
             // Чуть бырее
@@ -71,29 +57,86 @@ public class BotFlight : MonoBehaviour, IBotBehaviour {
             // Уравниваем скорость
             _segmentDuration = distance / _playerConfig.SpeedForce;
         }
-    } 
-    private async UniTask BotFlightCycle() {
+    }
+    
+    public void Exit() {
+        TpToSpawn();
+    }
+
+
+    public void Enter() {
+        Debug.Log("Enter");
+        
+        RotateLocalXAsync(-25).Forget();
+        TpNearPlayer();
+        // Сбросить кол-во бустов надо
+        ResetCountBoosts();
+        _boostWay = _boostSpawner.GetRandomWay(_trueWayChance);
+        if (_boostWay.Count == 0) {
+            Debug.LogError("Цепочка бустов пустая!");
+            return;
+        }
+        Debug.Log("Кол-во бустов у бота: " + _boostWay.Count);
+        SetBooster(_boostWay[0].randomTrajectory, _boostWay[0].transform.position);
+        StartFlightCycle();
+    }
+
+    private void StartFlightCycle() {
+        BotFlightCycle(CreateNewToken()).Forget();
+    }
+    
+    private async UniTaskVoid BotFlightCycle(CancellationToken token) {
         Debug.Log(_boostWay.Count);
         float currentY = 20f;
         
-        while (_countGetBoosts <= _boostWay.Count || currentY > 0.2f) {
+        while (_countGetBoosts <= _boostWay.Count && currentY > 0.2f && !token.IsCancellationRequested) {
             FlightLogic();
             currentY = transform.position.y;
             await UniTask.WaitForFixedUpdate();
         }
+        Debug.Log("Выход из цикла BotFlightCycle");
         // Чутка подождать пока полежит
-        PlayerRotateLocalX(-80);
-        await UniTask.Delay(700);
-        EndFlight?.Invoke();
+        await BotIsFalledAsync(token);
     }
-    
-    public void Exit() {
-        transform.position = _playerConfig.PlayerSpawnPosition;
-    }
-    
     
 
-    private void TpBotNearPlayer() {
+
+    private async UniTaskVoid BotFallAsync(CancellationToken token) {
+        Debug.Log("Игрок упал раньше бота, бот свободно летит уныз");
+        _initialPos = transform.position;
+        TargetPos = new Vector3(
+            Random.Range(_playerConfig.XMovement.From, _playerConfig.XMovement.To),
+            0.3f,
+            _initialPos.z + Random.Range(100f,300f)
+        );
+        float timeToFall = 5f;
+        _expandedTime = 0f;
+        while (_expandedTime < timeToFall) {
+            float progress = _expandedTime / timeToFall;
+            
+            Vector3 newPos =  transform.position;
+            newPos.x = Mathf.Lerp(_initialPos.x, TargetPos.x, progress);
+            newPos.y = Mathf.Lerp(_initialPos.y, TargetPos.y, progress);
+            newPos.z = Mathf.Lerp(_initialPos.z, TargetPos.z, progress);
+            
+            transform.position = newPos;
+            
+            _expandedTime += Time.fixedDeltaTime;
+            await UniTask.WaitForFixedUpdate(token);
+        }
+
+        await BotIsFalledAsync(token);
+    }
+
+
+    private async UniTask BotIsFalledAsync(CancellationToken token) {
+        RotateLocalXAsync(-80).Forget();
+        await UniTask.Delay(2000, cancellationToken: token);
+        EndFlight?.Invoke();
+    } 
+
+
+    private void TpNearPlayer() {
         Vector3 flightPosition = _flightPosition;
         flightPosition.x += Random.Range(-7, 7);
         transform.position = flightPosition;
@@ -110,25 +153,25 @@ public class BotFlight : MonoBehaviour, IBotBehaviour {
         float normalizedTime = _expandedTime / _segmentDuration;
             
         float height = _currentCurve.Evaluate(normalizedTime) * _playerConfig.JumpHeight; // По высоте подымается
-        newPos.y = Mathf.Lerp(_initialPos.y, _targetPos.y, normalizedTime) + height;
-        newPos.z = Mathf.Lerp(_initialPos.z, _targetPos.z, normalizedTime);
-        newPos.x = Mathf.Lerp(_initialPos.x, _targetPos.x, normalizedTime);
+        newPos.y = Mathf.Lerp(_initialPos.y, TargetPos.y, normalizedTime) + height;
+        newPos.z = Mathf.Lerp(_initialPos.z, TargetPos.z, normalizedTime);
+        newPos.x = Mathf.Lerp(_initialPos.x, TargetPos.x, normalizedTime);
         _expandedTime += Time.fixedDeltaTime;
 
         transform.position = newPos;
     }
     
     
-    private async UniTask PlayerRotateLocalX(float _targetPosAngleX) {
+    private async UniTask RotateLocalXAsync(float TargetPosAngleX) {
         transform.localRotation = Quaternion.Euler(Vector3.zero);
         float duration = 1f;
     
-        Vector3 _targetPosLocalEuler;
-        _targetPosLocalEuler = new Vector3(_targetPosAngleX, 0f, 180f);
+        Vector3 TargetPosLocalEuler;
+        TargetPosLocalEuler = new Vector3(TargetPosAngleX, 0f, 180f);
         
     
         Quaternion startRot = _botModelForRotate.localRotation;
-        Quaternion _targetPosRot = Quaternion.Euler(_targetPosLocalEuler);
+        Quaternion targetPosRot = Quaternion.Euler(TargetPosLocalEuler);
     
         float elapsedTime = 0;
     
@@ -136,14 +179,20 @@ public class BotFlight : MonoBehaviour, IBotBehaviour {
             elapsedTime += Time.fixedDeltaTime;
             float t = elapsedTime / duration;
         
-            _botModelForRotate.localRotation = Quaternion.Slerp(startRot, _targetPosRot, t);
+            _botModelForRotate.localRotation = Quaternion.Slerp(startRot, targetPosRot, t);
         
             await UniTask.Yield();
         }
     
-        _botModelForRotate.localRotation = _targetPosRot;
-        Debug.Log("Поворот игрока: " + transform.localRotation);
+        _botModelForRotate.localRotation = targetPosRot;
     }
     
+    
+    private void TpToSpawn() {
+        transform.position = _playerConfig.PlayerSpawnPosition;
+    }
+    
+    
+
 
 }

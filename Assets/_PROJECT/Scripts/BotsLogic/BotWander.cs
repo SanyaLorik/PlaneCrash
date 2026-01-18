@@ -47,7 +47,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         agent.enabled = true;
         _botTokenSource = new CancellationTokenSource();
         _eblaning = true;
-        LifeCycle(_botTokenSource.Token).Forget();
+        LifeCycleAsync(_botTokenSource.Token).Forget();
     }
     
     public void Exit() {
@@ -55,15 +55,13 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         _botTokenSource?.Dispose();
         _botTokenSource =  null;
         agent.SafeStop();
-        Debug.Log("agent.enabled = false");
         agent.enabled = false;
         _eblaning = false;
-        Debug.Log("Exit BotWander");
     }
 
 
 
-    private async UniTask LifeCycle(CancellationToken token) {
+    private async UniTask LifeCycleAsync(CancellationToken token) {
         while (_eblaning && !token.IsCancellationRequested) {
             if (Random.value > 0.6 && _playerStateManager.CurrentState != PlayerState.Flight) {
                 GoToPlayer(token);
@@ -71,7 +69,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
                     (int)(1000 * Random.Range(_nextTimeChangeTarget.From, _nextTimeChangeTarget.To)),
                     cancellationToken: token
                 );
-                await RotateTowards(_playerMovement.transform, _rotationSpeed, token);
+                await RotateTowardsAsync(_playerMovement.transform, _rotationSpeed, token);
             }
             else {
                 GoToCube(token);
@@ -79,7 +77,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
                     (int)(1000 * Random.Range(_nextTimeChangeTarget.From, _nextTimeChangeTarget.To)),
                     cancellationToken: token
                 );
-                await RotateTowards(chooseCube, _rotationSpeed, token);
+                await RotateTowardsAsync(chooseCube, _rotationSpeed, token);
             }
         }
     }
@@ -106,7 +104,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
     }
     
     
-    private async UniTask RotateTowards(Transform target, float rotationSpeed, CancellationToken token) {
+    private async UniTask RotateTowardsAsync(Transform target, float rotationSpeed, CancellationToken token) {
         Vector3 direction = (target.position - transform.position).normalized;
         direction.y = 0; // Игнорируем разницу по высоте
     

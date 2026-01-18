@@ -1,27 +1,20 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using ModestTree.Util;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : FlightObject {
     private PlayerConfig _config;
 
-    private AnimationCurve _currentCurve;
-    private float _segmentDuration;
-    private float _expandedTime = 0;
-    private Vector3 _initialPos;
-    public Vector3 TargetPos { get;private set; }
     private bool _isBusted;
-    
+
     
     private Rigidbody _rb;
     private Vector2 _moveInput;
     private float _currentRoll;
 
-    private CancellationTokenSource _playerCTS;
     private PlayerStateManager _stateManager;
 
     public float PlayerSpeed => _config.SpeedForce;
@@ -43,7 +36,6 @@ public class PlayerMovement : MonoBehaviour {
     }
     
     private void Start() {
-        _playerCTS = new CancellationTokenSource();
         OnChangeSpaceRotation(PlayerState.Walking);
         TpPlayerInSpawn();
     }
@@ -66,16 +58,16 @@ public class PlayerMovement : MonoBehaviour {
 
     private void OnChangeSpaceRotation(PlayerState playerState) {
         if (playerState == PlayerState.Flight) {
-            PlayerRotateLocalX(-25, playerState);
+            RotateLocalXAsync(-25, playerState, CreateNewToken()).Forget();
             _rb.useGravity = false;
         }
         else {
-            PlayerRotateLocalX(-80, playerState);
+            RotateLocalXAsync(-80, playerState, CreateNewToken()).Forget();
             _rb.useGravity = true;
         }
     }
 
-    private async UniTask PlayerRotateLocalX(float TargetPosAngleX, PlayerState playerState) {
+    private async UniTask RotateLocalXAsync(float TargetPosAngleX, PlayerState playerState, CancellationToken token) {
         float duration = 1f;
     
         Vector3 currentLocalEuler = transform.localEulerAngles;
@@ -98,7 +90,7 @@ public class PlayerMovement : MonoBehaviour {
         
             transform.localRotation = Quaternion.Slerp(startRot, TargetPosRot, t);
         
-            await UniTask.Yield(_playerCTS.Token);
+            await UniTask.Yield(token);
         }
     
         transform.localRotation = TargetPosRot;
@@ -226,10 +218,6 @@ public class PlayerMovement : MonoBehaviour {
         transform.localEulerAngles = euler;
     }
     
-    
-    private void OnDestroy() {
-        _playerCTS?.Cancel();
-        _playerCTS?.Dispose();
-    }
+
     
 }

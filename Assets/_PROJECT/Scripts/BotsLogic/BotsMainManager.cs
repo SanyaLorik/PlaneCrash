@@ -4,8 +4,8 @@ using Zenject;
 
 public class BotsMainManager {
     private readonly List<BotStateManager> _bots;
-    private PlayerStateManager _player;
-    
+    private readonly PlayerStateManager _player;
+
 
     [Inject]
     public BotsMainManager(List<BotStateManager> bots, PlayerStateManager player) {
@@ -19,6 +19,10 @@ public class BotsMainManager {
         if (state == PlayerState.Flight) {
             SetFlightRandomBot();
         }
+
+        if (state == PlayerState.Walking) {
+            CheckFloatingBots();
+        }
     }
 
     private void SetFlightRandomBot() {
@@ -30,5 +34,13 @@ public class BotsMainManager {
 
     private int GetRandomBot() {
         return Random.Range(0, _bots.Count);
+    }
+
+    private void CheckFloatingBots() {
+        foreach (var bot in _bots) {
+            if (bot.State == BotState.Flight) {
+                bot.PlayerInSpawn();
+            }
+        }
     }
 }
