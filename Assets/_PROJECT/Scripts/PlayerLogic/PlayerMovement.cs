@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -57,12 +58,13 @@ public class PlayerMovement : FlightObject {
 
 
     private void OnChangeSpaceRotation(PlayerState playerState) {
+        _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
         if (playerState == PlayerState.Flight) {
-            RotateLocalXAsync(-25, playerState, CreateNewToken()).Forget();
+            RotateLocalXAsync(-25, playerState, _token).Forget();
             _rb.useGravity = false;
         }
         else {
-            RotateLocalXAsync(-80, playerState, CreateNewToken()).Forget();
+            RotateLocalXAsync(-80, playerState, _token).Forget();
             _rb.useGravity = true;
         }
     }

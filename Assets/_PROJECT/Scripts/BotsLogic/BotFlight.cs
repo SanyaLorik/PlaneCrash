@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -24,6 +25,7 @@ public class BotFlight : FlightObject, IBotBehaviour {
 
     
     public event Action EndFlight;
+    private Collider _collider;
     
     
     [Inject]
@@ -32,17 +34,20 @@ public class BotFlight : FlightObject, IBotBehaviour {
         _playerConfig = playerConfig;
     }
 
+    private void Awake() {
+        _collider =  GetComponent<Collider>();
+    }
 
     public void GoToFall() {
         // Логика падения
-        BotFallAsync(CreateNewToken()).Forget();
+        _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
+        BotFallAsync(_token).Forget();
     }
 
 
 
     
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
-        Debug.Log("Следующий буст бота: " + nextBoost);
         _currentCurve = curve;
         _expandedTime = 0f;
         _initialPos = transform.position;
@@ -60,12 +65,13 @@ public class BotFlight : FlightObject, IBotBehaviour {
     }
     
     public void Exit() {
+        _collider.enabled = false;
         TpToSpawn();
     }
 
 
     public void Enter() {
-        Debug.Log("Enter");
+        _collider.enabled = true;
         
         RotateLocalXAsync(-25).Forget();
         TpNearPlayer();
@@ -76,25 +82,23 @@ public class BotFlight : FlightObject, IBotBehaviour {
             Debug.LogError("Цепочка бустов пустая!");
             return;
         }
-        Debug.Log("Кол-во бустов у бота: " + _boostWay.Count);
         SetBooster(_boostWay[0].randomTrajectory, _boostWay[0].transform.position);
         StartFlightCycle();
     }
 
     private void StartFlightCycle() {
-        BotFlightCycle(CreateNewToken()).Forget();
+        _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
+        BotFlightCycleAsync(_token).Forget();
     }
     
-    private async UniTaskVoid BotFlightCycle(CancellationToken token) {
-        Debug.Log(_boostWay.Count);
+    private async UniTaskVoid BotFlightCycleAsync(CancellationToken token) {
         float currentY = 20f;
         
-        while (_countGetBoosts <= _boostWay.Count && currentY > 0.2f && !token.IsCancellationRequested) {
+        while (_countGetBoosts <= _boostWay.Count && currentY > 0.6f && !token.IsCancellationRequested) {
             FlightLogic();
             currentY = transform.position.y;
             await UniTask.WaitForFixedUpdate();
         }
-        Debug.Log("Выход из цикла BotFlightCycle");
         // Чутка подождать пока полежит
         await BotIsFalledAsync(token);
     }
@@ -102,7 +106,6 @@ public class BotFlight : FlightObject, IBotBehaviour {
 
 
     private async UniTaskVoid BotFallAsync(CancellationToken token) {
-        Debug.Log("Игрок упал раньше бота, бот свободно летит уныз");
         _initialPos = transform.position;
         TargetPos = new Vector3(
             Random.Range(_playerConfig.XMovement.From, _playerConfig.XMovement.To),

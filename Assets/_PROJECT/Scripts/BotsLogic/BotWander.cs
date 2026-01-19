@@ -10,31 +10,31 @@ using Random = UnityEngine.Random;
 public class BotWander : MonoBehaviour, IBotBehaviour {
     [SerializeField] private bool _eblaning = true;
     [SerializeField] private float _rotationSpeed;
-    [SerializeField] private PairedValue<float> _nextTimeChangeTarget;
+    [SerializeField] private PairedValue<float> _timeToStay;
     
     [SerializeField] private Transform _moneyCube;
     [SerializeField] private Transform _betZoneCube;
     
     
-    private NavMeshAgent agent;
-    private Vector3 spawnAreaCenter;
-    private float wanderRadius = 10f;
+    private NavMeshAgent _agent;
     
     private PlayerMovement _playerMovement;
     private PlayerStateManager _playerStateManager;
     private CancellationTokenSource _botTokenSource;
-    private Transform chooseCube;
+    private Transform _chooseCube;
 
+    
+    
     [Inject] 
     public void Init(PlayerMovement playerMovement, PlayerStateManager playerStateManager) {
         _playerMovement = playerMovement;
         _playerStateManager = playerStateManager;
     }
-    
-    
+
+
+
     private void Awake() {
-        agent = GetComponent<NavMeshAgent>();
-        Debug.Log("GetComponent<NavMeshAgent>();");
+        _agent = GetComponent<NavMeshAgent>();
     }
 
     private void Start() {
@@ -44,7 +44,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
 
     public void Enter() {
         Exit();
-        agent.enabled = true;
+        _agent.enabled = true;
         _botTokenSource = new CancellationTokenSource();
         _eblaning = true;
         LifeCycleAsync(_botTokenSource.Token).Forget();
@@ -54,58 +54,57 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         _botTokenSource?.Cancel();
         _botTokenSource?.Dispose();
         _botTokenSource =  null;
-        agent.SafeStop();
-        agent.enabled = false;
+        _agent.SafeStop();
+        _agent.enabled = false;
         _eblaning = false;
     }
 
 
 
     private async UniTask LifeCycleAsync(CancellationToken token) {
-        while (_eblaning && !token.IsCancellationRequested) {
-            if (Random.value > 0.6 && _playerStateManager.CurrentState != PlayerState.Flight) {
-                GoToPlayer(token);
-                await UniTask.Delay(
-                    (int)(1000 * Random.Range(_nextTimeChangeTarget.From, _nextTimeChangeTarget.To)),
-                    cancellationToken: token
-                );
-                await RotateTowardsAsync(_playerMovement.transform, _rotationSpeed, token);
-            }
-            else {
-                GoToCube(token);
-                await UniTask.Delay(
-                    (int)(1000 * Random.Range(_nextTimeChangeTarget.From, _nextTimeChangeTarget.To)),
-                    cancellationToken: token
-                );
-                await RotateTowardsAsync(chooseCube, _rotationSpeed, token);
-            }
+        while (!token.IsCancellationRequested) {
+            Vector3 target = ChooseNextTarget();
+
+            _agent.SetDestination(target);
+
+            await UniTask.WaitUntil(() => !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance,
+                cancellationToken: token);
+            await RotateTowardsAsync(target, _rotationSpeed, token);
+
+            float waitTime = Random.Range(_timeToStay.From, _timeToStay.To);
+            await UniTask.Delay(TimeSpan.FromSeconds(waitTime), cancellationToken: token);
         }
     }
 
-    private void GoToPlayer(CancellationToken token) {
-        Debug.Log("Идем за игроком");
-        agent.SetDestinationSafety(_playerMovement.transform.position, token);
-    }
+    
+    private Vector3 ChooseNextTarget() {
+        if (_playerStateManager.CurrentState == PlayerState.Walking && Random.value > 0.6f)
+            return _playerMovement.transform.position;
 
-
-    private void GoToCube(CancellationToken token) {
-        Debug.Log("Идем к кубу");
-        chooseCube = Random.value > 0.5 ?  _moneyCube : _betZoneCube;
-        Vector3 cubePosition = chooseCube.position;
-       
-        float _minFigureDistance = Mathf.Max(chooseCube.localScale.x, chooseCube.localScale.z);
-        float distance = _minFigureDistance;
-
-        Vector3 direction = Random.onUnitSphere; // случайное направление
-        direction.y = 0; 
-        Vector3 newCubeSpawn = cubePosition + direction.normalized * distance;
-        
-        agent.SetDestinationSafety(newCubeSpawn, token);
+        // Иначе выбираем случайный куб
+        return Random.value > 0.5f ? GetTargetPointNearCube(_moneyCube) : GetTargetPointNearCube(_betZoneCube);
     }
     
+    private Vector3 GetTargetPointNearCube(Transform cube) {
+        Vector3 size = cube.localScale;
+
+        float offsetX = Random.Range(-size.x/2f - 2f, size.x/2f + 2f);
+        float offsetZ = Random.Range(-size.z/2f - 2f, size.z/2f + 2f);
+
+        Vector3 target = cube.position + new Vector3(offsetX, 0f, offsetZ);
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(target, out hit, 1f, NavMesh.AllAreas)) {
+            return hit.position;
+        }
+
+        // Если не нашли на навмеш, просто центр куба
+        return cube.position;
+    }
+
     
-    private async UniTask RotateTowardsAsync(Transform target, float rotationSpeed, CancellationToken token) {
-        Vector3 direction = (target.position - transform.position).normalized;
+    private async UniTask RotateTowardsAsync(Vector3 target, float rotationSpeed, CancellationToken token) {
+        Vector3 direction = (target - transform.position).normalized;
         direction.y = 0; // Игнорируем разницу по высоте
     
         if (direction == Vector3.zero) return;

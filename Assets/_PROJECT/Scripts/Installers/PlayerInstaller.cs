@@ -16,11 +16,11 @@ public class PlayerInstaller : MonoInstaller {
     }
 
     private void BindPlayer() {
-        Container.Bind<PlayerConfig>().FromInstance(_config).AsSingle();
-        Container.Bind<PlayerBank>().FromInstance(_bank).AsSingle().NonLazy();
-        Container.Bind<PlayerMovement>().FromInstance(_movement).AsSingle().NonLazy();
-        Container.Bind<PlayerStateManager>().FromInstance(_stateManager).AsSingle().NonLazy();
-        Container.Bind<LineToBoosts>().FromInstance(_lineToBoosts).AsSingle().NonLazy();
+        Container.Bind<PlayerConfig>().FromInstance(_config).AsSingle().NonLazy();
+        Container.Bind<PlayerBank>().FromComponentInHierarchy().AsSingle().NonLazy();
+        Container.Bind<PlayerMovement>().FromComponentInHierarchy().AsSingle().NonLazy();
+        Container.Bind<PlayerStateManager>().FromComponentInHierarchy().AsSingle().NonLazy();
+        Container.Bind<LineToBoosts>().FromComponentInHierarchy().AsSingle().NonLazy();
     }
     
     private void SpawnBoost() {

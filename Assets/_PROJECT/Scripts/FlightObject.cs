@@ -8,15 +8,9 @@ public class FlightObject : MonoBehaviour {
     protected float _expandedTime = 0;
     protected Vector3 _initialPos;
     protected CancellationTokenSource _tokenSource;
+    protected CancellationToken _token;
     
     public Vector3 TargetPos { get; protected set; }
-
-    protected CancellationToken CreateNewToken() {
-        _tokenSource?.Cancel();
-        _tokenSource?.Dispose();
-        _tokenSource =  new CancellationTokenSource();
-        return _tokenSource.Token;
-    }
     
         
     private void OnDestroy() {
