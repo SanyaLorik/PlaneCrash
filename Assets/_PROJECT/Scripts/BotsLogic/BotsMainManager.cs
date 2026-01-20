@@ -27,12 +27,11 @@ public class BotsMainManager : IInitializable, IDisposable {
         _config = config;
         _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += PlayerOnChangeState;
-        Debug.Log("Bot count: " + _bots.Count);
+        // Debug.Log("Bot count: " + _bots.Count);
     }
 
     
     public void Initialize() {
-        Debug.Log("Initialize first entrance ");
         _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
         BotSpeakCycleAsync(_token).Forget();
     }
@@ -41,7 +40,7 @@ public class BotsMainManager : IInitializable, IDisposable {
         await UniTask.Delay(1000, cancellationToken: token);
         while (!_stopBotSpeaking) {
             float timeToSpeak = Random.Range(_config.TimeToSpeak.From,  _config.TimeToSpeak.To);
-            Debug.Log("Speaking time" + timeToSpeak);
+            // Debug.Log("Speaking time" + timeToSpeak);
             await BotSpeakTimerAsync(timeToSpeak, token);
         }
     } 
@@ -58,7 +57,7 @@ public class BotsMainManager : IInitializable, IDisposable {
 
     private void SetBotsSpeak() {
         int countSpeakBots = GetCountSpeakingBots();
-        Debug.Log("Говорящих ботов: " + countSpeakBots);
+        // Debug.Log("Говорящих ботов: " + countSpeakBots);
         List<int> speakingBotsNumbers = BotsNumbers(countSpeakBots);
         foreach (var bot in speakingBotsNumbers) {
             _speakingBots.Add(_bots[bot]);
@@ -87,11 +86,11 @@ public class BotsMainManager : IInitializable, IDisposable {
             int nextNumber = Random.Range(0, _bots.Count);
             if (!numbers.Contains(nextNumber)) {
                 numbers.Add(nextNumber);
-                Debug.Log("Номер выбранного бота: " + nextNumber);
+                // Debug.Log("Номер выбранного бота: " + nextNumber);
             }
             iterations++;
         }
-        Debug.Log(iterations);
+        // Debug.Log(iterations);
         return numbers;
     }
     
@@ -113,7 +112,7 @@ public class BotsMainManager : IInitializable, IDisposable {
 
     private void SetFlightRandomBot() {
         int randomBot = GetRandomBot();
-        Debug.Log("Выбран бот: " + randomBot);
+        // Debug.Log("Выбран бот: " + randomBot);
         _bots[randomBot].ChangeBotState(BotState.Flight);
     }
     

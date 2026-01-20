@@ -20,21 +20,25 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
     
     private PlayerMovement _playerMovement;
     private PlayerStateManager _playerStateManager;
+    private PlayerConfig _playerConfig;
     private CancellationTokenSource _botTokenSource;
     private Transform _chooseCube;
+    private Rigidbody _rb;
 
     
     
     [Inject] 
-    public void Init(PlayerMovement playerMovement, PlayerStateManager playerStateManager) {
+    public void Init(PlayerMovement playerMovement, PlayerStateManager playerStateManager, PlayerConfig playerConfig) {
         _playerMovement = playerMovement;
         _playerStateManager = playerStateManager;
+        _playerConfig = playerConfig;
     }
 
 
 
     private void Awake() {
         _agent = GetComponent<NavMeshAgent>();
+        _rb =  GetComponent<Rigidbody>();
     }
 
     private void Start() {
@@ -66,6 +70,8 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
             Vector3 target = ChooseNextTarget();
 
             _agent.SetDestination(target);
+            
+            Jump(token).Forget();
 
             await UniTask.WaitUntil(() => !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance,
                 cancellationToken: token);
@@ -76,9 +82,54 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         }
     }
 
+    private async UniTask Jump(CancellationToken token) {
+        await UniTask.WaitUntil(() => !_agent.pathPending && _agent.hasPath, cancellationToken: token);
+            
+        float startPathLength = _agent.remainingDistance;
+        float jumpLength = startPathLength / Random.Range(1.2f, 3f);
+
+        await UniTask.WaitUntil(() => 
+                !_agent.pathPending &&
+                _agent.remainingDistance <= jumpLength &&
+                _agent.remainingDistance > _agent.stoppingDistance, 
+            cancellationToken: token);
+            
+        _agent.updatePosition = false;
+        _agent.updateRotation = false;
+
+        FakeJump(token);
+        Debug.Log("Прыжок");
+        
+        await UniTask.Delay(200, cancellationToken: token);
+
+        _agent.updatePosition = true;
+        _agent.updateRotation = true;
+    }
     
+    [SerializeField] private float _jumpDuration;
+    private async UniTask FakeJump(CancellationToken token) {
+        float height = _playerConfig.JumpHeight/1.5f;
+
+        float t = 0f;
+        Vector3 basePos;
+
+        while (t < _jumpDuration) {
+            t += Time.deltaTime;
+            float normalized = t / _jumpDuration;
+
+            float yOffset = Mathf.Sin(normalized * Mathf.PI) * height;
+
+            basePos = _agent.nextPosition;
+            transform.position = new Vector3(basePos.x, basePos.y + yOffset, basePos.z);
+
+            await UniTask.Yield(PlayerLoopTiming.Update, token);
+        }
+    }
+
+
     private Vector3 ChooseNextTarget() {
-        if (_playerStateManager.CurrentState == PlayerState.Walking && Random.value > 0.6f)
+        float rv = Random.value;
+        if (_playerStateManager.CurrentState == PlayerState.Walking &&  rv > 0.7f)
             return _playerMovement.transform.position;
 
         // Иначе выбираем случайный куб

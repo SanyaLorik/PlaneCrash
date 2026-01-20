@@ -8,21 +8,22 @@ using Zenject;
 
 public class ScoreVisual : MonoBehaviour {
     [SerializeField] private GameObject _canvas;
-    
-    [SerializeField] private TMP_Text _totalDistanceText;
-    [SerializeField] private TMP_Text _currentDistanceText;
-    [SerializeField] private Image _visualProgress;
     [SerializeField] private Transform _cruiser;
-    
-    [SerializeField] private RectTransform _pointer;
     [SerializeField] private TMP_Text _flightTime;
-
-
-    [SerializeField] private float _startProgressX;
-    [SerializeField] private float _endProgressX;
+    [SerializeField] private TMP_Text _totalDistanceText;
     
-    private RectTransform _visualProgressRt;
+    [SerializeField] private TMP_Text _currentDistanceText;
+    
+    [SerializeField] private Image _progressBar;
+    [SerializeField] private RectTransform _pointer;
+    
+    private RectTransform _progressBarRt;
     private PlayerStateManager _playerStateManager;
+    
+    private float _startProgressX;
+    private float _endProgressX;
+    private float _pointY;
+    
     
     [Inject]
     public void Init(PlayerStateManager playerStateManager) {
@@ -32,10 +33,22 @@ public class ScoreVisual : MonoBehaviour {
     
 
     private void Start() {
-        _visualProgressRt = _visualProgress.gameObject.GetComponent<RectTransform>();
+        _progressBarRt = _progressBar.gameObject.GetComponent<RectTransform>();
         SetDefault();
-        
+        CalculateBounds();
+        _pointer.anchoredPosition = new Vector2(_startProgressX, _pointY);
     }
+
+    private void CalculateBounds() {
+        float barWidth = _progressBarRt.rect.width;
+        float barHeight = _progressBarRt.rect.height;
+        float pointerHeight = _pointer.rect.height;
+        
+        _startProgressX = -barWidth * 0.5f;
+        _endProgressX = barWidth * 0.5f;
+        _pointY = (-barHeight-pointerHeight) * 0.5f;
+    }
+    
 
     private void OnPlayerStateChange(PlayerState state) {
         if (state == PlayerState.Flight) {
@@ -63,9 +76,6 @@ public class ScoreVisual : MonoBehaviour {
     private Coroutine _flightRoutine;
     public void FlightScoreLogic() {
         _totalDistanceText.text = _cruiser.position.z + "m";
-        
-        Debug.Log("Границы прогресса: " + _startProgressX + " " + _endProgressX);
-        
         _flightRoutine = StartCoroutine(ShowDistanceRoutine());
     }
 
@@ -73,7 +83,7 @@ public class ScoreVisual : MonoBehaviour {
         float timer = 0f;
         while (_playerStateManager.CurrentState == PlayerState.Flight) {
             float progress = _playerStateManager.CurrentPlayerDistance / _cruiser.position.z;
-            _visualProgress.fillAmount = progress;
+            _progressBar.fillAmount = progress;
 
             // Visual
             float newX = Mathf.Lerp(_startProgressX, _endProgressX, progress);
@@ -94,12 +104,12 @@ public class ScoreVisual : MonoBehaviour {
         Vector3 newPosition = _pointer.anchoredPosition;
         newPosition.x = newX;
         // Или можно убывает типо 
-        _visualProgress.fillAmount = 0;
+        _progressBar.fillAmount = 0;
         _canvas.SetActive(false);
     }
 
     private void SetMaxProgress() {
-        _visualProgress.fillAmount = 1f;
+        _progressBar.fillAmount = 1f;
         float newX = _endProgressX;
         Vector3 newPosition = _pointer.anchoredPosition;
         newPosition.x = newX;

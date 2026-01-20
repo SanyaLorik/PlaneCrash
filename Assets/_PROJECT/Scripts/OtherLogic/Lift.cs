@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 public class Lift : MonoBehaviour {
     [SerializeField] private Renderer _rend;
@@ -17,32 +18,43 @@ public class Lift : MonoBehaviour {
     private CancellationTokenSource _tokenSource;
     private Rigidbody _liftRb;
     public bool _inLift;
-    
+    private Coroutine _liftDownRoutine;
+
+
+
+    [Inject]
+    public void Init(PlayerBank bank) {
+        bank.BankChanged += BankOnBankChanged;
+    }
+
+    private void BankOnBankChanged(float amount) {
+        Debug.Log("BankOnBankChanged в лифте");
+        CalculateMoneyDistance();
+        
+    }
 
     private void Awake() {
         _liftRb = _liftPhysical.GetComponent<Rigidbody>();
         _transformRend = transform.GetComponent<Renderer>();
         _liftDownPosition = transform.position;
-        
     }
 
     private void Start() {
         CalculateMoneyDistance();
     }
 
-    private Coroutine _liftDownRoutine;
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
             _inLift = true;
-            ResetPlayerVelocity();
-            ReadyLiftWork();
-            
             
             if (_liftDownRoutine != null) {
                 StopCoroutine(_liftDownRoutine);
             }
-            
-            LiftUp(_tokenSource.Token).Forget();
+
+            if (_tokenSource == null) {
+                ReadyLiftWork();
+                LiftUp(_tokenSource.Token).Forget();
+            }
         }    
     }
 
@@ -71,17 +83,17 @@ public class Lift : MonoBehaviour {
 
 
     private void CalculateMoneyDistance() {
-        StartCoroutine(LoadHeightRoutine());
+        StartCoroutine(CalculateMoneyHeightRoutine());
     }
 
-    private IEnumerator LoadHeightRoutine() {
-        yield return new WaitForSeconds(2f);
-        // проверить что если едем то ниче не делать
+    private IEnumerator CalculateMoneyHeightRoutine() {
+        yield return new WaitForSeconds(1f);
         float targetTop = _rend.bounds.max.y + 5f;           // куда хотим приехать
         float liftBottom = _transformRend.bounds.min.y;  // где сейчас низ лифта
         float delta = targetTop - liftBottom;          // сколько реально надо ехать вверх
         _moneyEndPos = _liftDownPosition + Vector3.up * delta;
-    } 
+    }
+
     
     private void ReadyLiftWork() {
         _tokenSource?.Cancel();
@@ -132,8 +144,6 @@ public class Lift : MonoBehaviour {
         float duration = Math.Abs(_startPos.y - _endPosition.y) / _speedUp;
 
         float elapsedTime = 0f;
-        Debug.Log("LiftDown duration" + duration);
-        Debug.Log("LiftDown _endPosition" + _endPosition.y);
         
         while (elapsedTime < duration) {
             float t = elapsedTime / duration;
@@ -147,6 +157,7 @@ public class Lift : MonoBehaviour {
         }
         _liftRb.MovePosition(_endPosition);
         ResetPlayerVelocity();
+        _tokenSource = null;
     }
 
     private void ResetPlayerVelocity() {

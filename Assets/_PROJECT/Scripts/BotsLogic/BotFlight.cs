@@ -72,8 +72,8 @@ public class BotFlight : FlightObject, IBotBehaviour {
 
     public void Enter() {
         _collider.enabled = true;
-        
-        RotateLocalXAsync(-25).Forget();
+        _token =  UniTaskHelper.CreateNewToken(ref _tokenSource);
+        RotateLocalXAsync(-25, _token).Forget();
         TpNearPlayer();
         // Сбросить кол-во бустов надо
         ResetCountBoosts();
@@ -133,7 +133,7 @@ public class BotFlight : FlightObject, IBotBehaviour {
 
 
     private async UniTask BotIsFalledAsync(CancellationToken token) {
-        RotateLocalXAsync(-80).Forget();
+        RotateLocalXAsync(-80, token).Forget();
         await UniTask.Delay(2000, cancellationToken: token);
         EndFlight?.Invoke();
     } 
@@ -165,7 +165,8 @@ public class BotFlight : FlightObject, IBotBehaviour {
     }
     
     
-    private async UniTask RotateLocalXAsync(float TargetPosAngleX) {
+    private async UniTask RotateLocalXAsync(float TargetPosAngleX, CancellationToken token) {
+        if (token.IsCancellationRequested) { return; } // Исправить выглядит как гавно
         transform.localRotation = Quaternion.Euler(Vector3.zero);
         float duration = 1f;
     
@@ -178,7 +179,7 @@ public class BotFlight : FlightObject, IBotBehaviour {
     
         float elapsedTime = 0;
     
-        while (elapsedTime < duration) {
+        while (elapsedTime < duration &&  !token.IsCancellationRequested) {
             elapsedTime += Time.fixedDeltaTime;
             float t = elapsedTime / duration;
         
@@ -194,8 +195,6 @@ public class BotFlight : FlightObject, IBotBehaviour {
     private void TpToSpawn() {
         transform.position = _playerConfig.PlayerSpawnPosition;
     }
-    
-    
 
 
 }

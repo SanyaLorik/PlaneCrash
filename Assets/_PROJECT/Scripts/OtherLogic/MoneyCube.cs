@@ -19,7 +19,7 @@ public class MoneyCube : MonoBehaviour
     [SerializeField] private float _baseSide = 1f;
     [SerializeField] private TMP_Text _textCount;
     private MoneyRadiusSpawn _moneyRadiusSpawn;
-    private float _baseAmount = 10000f;
+    [SerializeField] private float _baseAmount = 10000f;
 
 
     private void Awake() {

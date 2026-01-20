@@ -10,32 +10,42 @@ public class PlayerBank : MonoBehaviour {
     [SerializeField] private float _playerCapital;
     [SerializeField] private TMP_Text _playerCapitalVisual;
     [SerializeField] private MoneyCube _cube;
-    public event Action<float> OnBankChanged;
+    public event Action<float> BankChanged;
+    public float PlayerCapital { get => _playerCapital; }
 
     
     private void Start() {
-        OnBankChanged += BankChanged;
+        BankChanged += OnBankChanged;
         LoadPlayerMoney().Forget();
     }
 
-    private void BankChanged(float obj) {
+    [Header("Для теста")]
+    [SerializeField] private bool _updateMoney = false;
+    // Сугубо для теста 
+    private void Update() {
+        if (_updateMoney) {
+            BankChanged?.Invoke(_playerCapital);
+            _updateMoney = false;
+        }
+    }
+
+    private void OnBankChanged(float obj) {
         _cube.SetMoneyAmount(_playerCapital);
     }
 
     private async UniTaskVoid LoadPlayerMoney() {
         // Имитация задержки перед загрузкой денег
         await UniTask.Delay(500);
-        OnBankChanged?.Invoke(_playerCapital);
+        BankChanged?.Invoke(_playerCapital);
     }
 
     
 
-    public float PlayerCapital { get => _playerCapital; }
 
     public void AddMoney(float amount) {
         if (amount < 0) return;
         _playerCapital += amount;
-        OnBankChanged?.Invoke(_playerCapital);
+        BankChanged?.Invoke(_playerCapital);
     }
     
     public void GiveMeYourFuckingMoneyNigga(float amount) {
@@ -44,7 +54,7 @@ public class PlayerBank : MonoBehaviour {
             _playerCapital = 0;
         }
         _playerCapital -= amount;
-        OnBankChanged?.Invoke(_playerCapital);
+        BankChanged?.Invoke(_playerCapital);
     }
     
 

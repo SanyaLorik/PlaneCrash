@@ -15,7 +15,7 @@ public class BetVisual : MonoBehaviour {
     [Inject]
     public void Init(PlayerBank bank, PlayerStateManager playerStateManager) {
         _bank = bank;
-        _bank.OnBankChanged += ChangeBank;
+        _bank.BankChanged += OnChangeBank;
         _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += OnChangeState;
     }
@@ -41,11 +41,11 @@ public class BetVisual : MonoBehaviour {
             ZoneManager.Instance.OnChooseBet -= ShowBet;
             ZoneManager.Instance.OnChooseMultiplyer -= ShowMultiplyer;
         }
-        _bank.OnBankChanged -= ChangeBank;
+        _bank.BankChanged -= OnChangeBank;
         _playerStateManager.ChangeState -= OnChangeState;
     }
 
-    private void ChangeBank(float capital) {
+    private void OnChangeBank(float capital) {
         _playerBank.text = $"Баланс: {capital:F2}";
     }
 
