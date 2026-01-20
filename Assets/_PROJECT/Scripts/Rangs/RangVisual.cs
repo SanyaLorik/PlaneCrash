@@ -12,7 +12,9 @@ public class RangVisual : MonoBehaviour {
     [SerializeField] private RangUnit _rangPrefab;
 
     [SerializeField] private float _planeZ;
+    [SerializeField] private float _planeX;
     [SerializeField] private GameObject _planePrefab;
+    [SerializeField] private Transform _planesParent;
 
     
     [Header("Рекорд игрока")]
@@ -50,9 +52,11 @@ public class RangVisual : MonoBehaviour {
 
     private void SetPlanes() {
         foreach (var rang in _config.Rangs) {
-            float yPlane = _moneyCube.GetCubeHeight(rang.Money);
-            Vector3 position = new Vector3();
-            Instantiate(_planePrefab, position, Quaternion.identity);
+            float planeY = _moneyCube.GetCubeHeight(rang.Money) - _planesParent.transform.position.y;
+            Vector3 position = new Vector3(_planeX, planeY, _planeZ);
+            Debug.Log($"Для ранга: {rang.Name} высота будет: {planeY}");
+            GameObject plane = Instantiate(_planePrefab, _planesParent);
+            plane.transform.localPosition = position;
         }
         
     }
@@ -71,7 +75,6 @@ public class RangVisual : MonoBehaviour {
             RectTransform rt = rangInstance.GetComponent<RectTransform>();
             rt.anchoredPosition = new Vector2(rangXPos, 0f);
             
-            Debug.Log(rt.position);
             rangInstance.SetData(rang.Name, rang.Sprite);
         }
     }
@@ -99,10 +102,6 @@ public class RangVisual : MonoBehaviour {
         float barWidth = _barWidth.rect.width;
         _xStart = -barWidth * 0.5f;
         _xMax = barWidth * 0.5f;
-        
-        
-        Debug.Log(_xStart);
-        Debug.Log(_xMax);
     }
 
 

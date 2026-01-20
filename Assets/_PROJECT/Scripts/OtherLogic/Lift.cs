@@ -28,7 +28,6 @@ public class Lift : MonoBehaviour {
     }
 
     private void BankOnBankChanged(float amount) {
-        Debug.Log("BankOnBankChanged в лифте");
         CalculateMoneyDistance();
         
     }
@@ -88,10 +87,11 @@ public class Lift : MonoBehaviour {
 
     private IEnumerator CalculateMoneyHeightRoutine() {
         yield return new WaitForSeconds(1f);
-        float targetTop = _rend.bounds.max.y + 5f;           // куда хотим приехать
+        float targetTop = _rend.bounds.max.y;           // куда хотим приехать
         float liftBottom = _transformRend.bounds.min.y;  // где сейчас низ лифта
         float delta = targetTop - liftBottom;          // сколько реально надо ехать вверх
         _moneyEndPos = _liftDownPosition + Vector3.up * delta;
+        Debug.Log("Высота куба для лифта: " + (_moneyEndPos.y));
     }
 
     

@@ -43,10 +43,20 @@ public class MoneyCube : MonoBehaviour {
     }
 
     public float GetCubeHeight(float amount) {
-        float heiht = NewScale(amount).y + _bottomPoint.position.y;
+        Transform realTransform = transform; // сохраним временно
         
-        Debug.Log(heiht + " - высота для суммы: " + amount);
-        return heiht;
+        Vector3 newScale = NewScale(amount);
+        transform.localScale = newScale;
+
+        if (_bottomPoint != null) {
+            Bounds b = rend.bounds;
+            float deltaY = _bottomPoint.position.y - b.min.y;
+            transform.position += new Vector3(0, deltaY, 0);
+        }
+        float height = rend.bounds.max.y;
+        transform.position = realTransform.position;
+        transform.localScale = realTransform.localScale;
+        return height;
     }
     
     public void SetMoneyAmount(float amount, bool updateMiniMoney = true) {
