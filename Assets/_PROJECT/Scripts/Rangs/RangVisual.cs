@@ -11,6 +11,9 @@ public class RangVisual : MonoBehaviour {
     [SerializeField] private RectTransform _playerIcon;
     [SerializeField] private RangUnit _rangPrefab;
 
+    [SerializeField] private float _planeZ;
+    [SerializeField] private GameObject _planePrefab;
+
     
     [Header("Рекорд игрока")]
     [SerializeField] private float _record;
@@ -18,6 +21,8 @@ public class RangVisual : MonoBehaviour {
     
     private RangConfig _config;
     private PlayerBank _playerBank;
+    private MoneyCube _moneyCube;
+    
     private float _maxMoney;
     private float _xStart;
     private float _xMax;
@@ -26,10 +31,13 @@ public class RangVisual : MonoBehaviour {
 
 
     [Inject]
-    public void Init(RangConfig config, PlayerBank playerBank) {
+    public void Init(RangConfig config, PlayerBank playerBank, MoneyCube  moneyCube) {
         _config = config;
+        _moneyCube =  moneyCube;
         _playerBank = playerBank;
         _playerBank.BankChanged += PlayerBankOnBankChanged;
+
+        SetPlanes();
     }
     
     private void Start() {
@@ -37,14 +45,24 @@ public class RangVisual : MonoBehaviour {
         CalculateX();
 
         InstanceRangs();
-
+        
     }
+
+    private void SetPlanes() {
+        foreach (var rang in _config.Rangs) {
+            float yPlane = _moneyCube.GetCubeHeight(rang.Money);
+            Vector3 position = new Vector3();
+            Instantiate(_planePrefab, position, Quaternion.identity);
+        }
+        
+    }
+    
+    
 
 
     private void InstanceRangs() {
         foreach (var rang in _config.Rangs) {
             float rangPercent = rang.Money / _maxMoney;
-            Debug.Log(rang.Name + " - "+ rangPercent);
             
             float rangXPos = Mathf.Lerp(_xStart, _xMax, rangPercent);
             

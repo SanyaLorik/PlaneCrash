@@ -98,7 +98,6 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         _agent.updateRotation = false;
 
         FakeJump(token);
-        Debug.Log("Прыжок");
         
         await UniTask.Delay(200, cancellationToken: token);
 

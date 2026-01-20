@@ -32,6 +32,7 @@ public class MoneyRadiusSpawn : MonoBehaviour {
     }
 
     public void SpawnMoney() {
+        Debug.Log("SpawnMoney");
         DeleteOldObjects();
         
         _minDistance = Mathf.Max(transform.localScale.x, transform.localScale.z);
