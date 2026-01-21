@@ -92,7 +92,6 @@ public class Lift : MonoBehaviour {
         float liftBottom = _transformRend.bounds.min.y;  // где сейчас низ лифта
         float delta = targetTop - liftBottom;          // сколько реально надо ехать вверх
         _moneyEndPos = _liftDownPosition + Vector3.up * delta;
-        Debug.Log("Высота куба для лифта: " + (_moneyEndPos.y));
         
         _liftRb.MovePosition(_liftDownPosition);
         _liftPhysical.transform.position = _liftDownPosition;

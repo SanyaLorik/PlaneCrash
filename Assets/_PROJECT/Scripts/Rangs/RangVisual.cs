@@ -54,7 +54,7 @@ public class RangVisual : MonoBehaviour {
         foreach (var rang in _config.Rangs) {
             float planeY = _moneyCube.GetCubeHeight(rang.Money) - _planesParent.transform.position.y;
             Vector3 position = new Vector3(_planeX, planeY, _planeZ);
-            Debug.Log($"Для ранга: {rang.Name} высота будет: {planeY}");
+            // Debug.Log($"Для ранга: {rang.Name} высота будет: {planeY}");
             GameObject plane = Instantiate(_planePrefab, _planesParent);
             plane.transform.localPosition = position;
         }

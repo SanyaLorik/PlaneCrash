@@ -24,6 +24,7 @@ public class UpgradeItemVisual : MonoBehaviour {
 
 
     public void UpdateData(int level, float xCurrent, float xNext, float price) {
+        Debug.Log($"level {level} xCurrent {xCurrent} xNext {xNext} price {price}");
         _levelVisual.text = level.ToString();
         _xCurrentVisual.text = xCurrent.ToString();
         _xNextVisual.text = xNext.ToString();
@@ -34,14 +35,14 @@ public class UpgradeItemVisual : MonoBehaviour {
         _triggerObjectMat.color = Color.red;
         Color emission = Color.red * _brightnessMultiply; // множитель яркости
         _triggerObjectMat.SetColor(EmissionColor, emission);
-        Debug.Log("Установка красным");
+        // Debug.Log("Установка красным");
     }
     
     public void SetGreen() {
         _triggerObjectMat.color = Color.green;
         Color emission = Color.green * _brightnessMultiply; // множитель яркости
         _triggerObjectMat.SetColor(EmissionColor, emission);
-        Debug.Log("Установка зеленым");
+        // Debug.Log("Установка зеленым");
     }
 
 }

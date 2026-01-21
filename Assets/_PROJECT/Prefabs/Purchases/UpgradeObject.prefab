@@ -704,7 +704,6 @@ GameObject:
   - component: {fileID: 8809949055493319897}
   - component: {fileID: 2884591406662477315}
   - component: {fileID: 517253870588809983}
-  - component: {fileID: 2053057504276555993}
   - component: {fileID: 3157814582456561670}
   m_Layer: 0
   m_Name: PlaceTrigger
@@ -804,23 +803,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.1056931, z: 0.9999998}
-  m_Center: {x: 0, y: 0.05284612, z: 0}
---- !u!114 &2053057504276555993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6337863765394426253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68911ae3cb2d9254d97227d9f7243fb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::XMultiplyUpgrade
-  _k: 1.5
-  _priceMultiply: 2
-  _startPrice: 500
+  m_Size: {x: 1, y: 1.4173251, z: 0.9999998}
+  m_Center: {x: 0, y: 0.20866095, z: 0}
 --- !u!114 &3157814582456561670
 MonoBehaviour:
   m_ObjectHideFlags: 0
