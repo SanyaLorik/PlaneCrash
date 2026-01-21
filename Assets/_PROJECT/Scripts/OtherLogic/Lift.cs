@@ -50,7 +50,8 @@ public class Lift : MonoBehaviour {
                 StopCoroutine(_liftDownRoutine);
             }
 
-            if (_tokenSource == null) {
+            if (_tokenSource == null && _liftGoingDown) {
+                _liftGoingDown = false;
                 ReadyLiftWork();
                 LiftUp(_tokenSource.Token).Forget();
             }
@@ -61,13 +62,12 @@ public class Lift : MonoBehaviour {
     private void OnTriggerExit(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
             _inLift = false;
-
+            
             if (_liftDownRoutine != null) {
                 StopCoroutine(_liftDownRoutine);
             }
 
             _liftDownRoutine = StartCoroutine(WaitChangeStateRoutine());
-
         }    
     }
 
@@ -78,6 +78,7 @@ public class Lift : MonoBehaviour {
             ReadyLiftWork();
             LiftDown(_tokenSource.Token).Forget();
         }
+        _liftDownRoutine =  null;
     }
 
 
@@ -92,6 +93,10 @@ public class Lift : MonoBehaviour {
         float delta = targetTop - liftBottom;          // сколько реально надо ехать вверх
         _moneyEndPos = _liftDownPosition + Vector3.up * delta;
         Debug.Log("Высота куба для лифта: " + (_moneyEndPos.y));
+        
+        _liftRb.MovePosition(_liftDownPosition);
+        _liftPhysical.transform.position = _liftDownPosition;
+        _tokenSource = null;
     }
 
     
@@ -108,16 +113,20 @@ public class Lift : MonoBehaviour {
             return;
         }
         
+        
+        
         Vector3 _startPos = transform.position;
         Vector3 _endPosition = _moneyEndPos;
+        
+        
+        Debug.Log($"Подьем лифта из {_startPos.y} в {_endPosition.y}");
        
         float duration = Math.Abs(_startPos.y - _endPosition.y) / _speedUp;
         float elapsedTime = 0f;
         
         Debug.Log("LiftUp duration" + duration);
         Debug.Log("LiftUp _endPosition" + _endPosition.y);
-        
-        
+
         while (elapsedTime < duration) {
             float t = elapsedTime / duration;
             t = Mathf.SmoothStep(0, 1, t);
@@ -126,29 +135,33 @@ public class Lift : MonoBehaviour {
             elapsedTime += Time.fixedDeltaTime;
             await UniTask.WaitForFixedUpdate(token);
         }
+        ResetPlayerVelocity();
         _liftRb.MovePosition(_endPosition);
-        _playerRb.linearVelocity = new Vector3(_playerRb.linearVelocity.x, 0f, _playerRb.linearVelocity.z);
         _tokenSource = null;
     }
-    
+
+    private bool _liftGoingDown = true;
     private async UniTask LiftDown(CancellationToken token) {
-        Debug.Log(transform.position.y);
-        Debug.Log(_liftDownPosition.y);
         if (Mathf.Approximately(transform.position.y, _liftDownPosition.y) || _inLift) {
             return;
         }
-        
+
+        _liftGoingDown = true;
         Vector3 _startPos = transform.position;
         Vector3 _endPosition = _liftDownPosition;
 
+        
+        Debug.Log($"Опуск лифта из {_startPos.y} в {_endPosition.y}");
+        
+        
         float duration = Math.Abs(_startPos.y - _endPosition.y) / _speedUp;
 
         float elapsedTime = 0f;
-        
-        while (elapsedTime < duration) {
-            float t = elapsedTime / duration;
+        float durationForDown = duration / 1.5f;
+
+        while (elapsedTime < durationForDown) {
+            float t = elapsedTime / durationForDown;
             t = Mathf.SmoothStep(0, 1, t);
-            
             Vector3 newPos = Vector3.Lerp(_startPos, _endPosition, t);
             _liftRb.MovePosition(newPos);
             
@@ -156,7 +169,8 @@ public class Lift : MonoBehaviour {
             await UniTask.WaitForFixedUpdate(token);
         }
         _liftRb.MovePosition(_endPosition);
-        ResetPlayerVelocity();
+        _liftPhysical.transform.position = _liftDownPosition;
+        Debug.Log("Лифт опустился");
         _tokenSource = null;
     }
 
