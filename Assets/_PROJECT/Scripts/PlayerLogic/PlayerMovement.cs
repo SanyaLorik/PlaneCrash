@@ -121,14 +121,13 @@ public class PlayerMovement : FlightObject {
     }
 
     private void Walk() {
-        // Сильнее гравитация работает
+        // усиленная гравитация
         _rb.AddForce(Physics.gravity * (_config.GravityScale - 1) * _rb.mass);
-        
+
         Transform cam = Camera.main.transform;
         Vector3 camForward = cam.forward;
         Vector3 camRight   = cam.right;
 
-        // убираем вертикаль
         camForward.y = 0f;
         camRight.y   = 0f;
 
@@ -139,21 +138,46 @@ public class PlayerMovement : FlightObject {
             camRight   * _moveInput.x +
             camForward * _moveInput.y;
 
-        
-        Vector3 moveStep = move * _config.WalkSpeed * Time.fixedDeltaTime;
-        if (Physics.Raycast(
-                _rb.position,
-                moveStep.normalized,
-                out RaycastHit hit,
-                moveStep.magnitude + _config.WallOffset,
-                _config.FloorMask)) {
-            moveStep = moveStep.normalized * (hit.distance - _config.WallOffset);
-        }
-        
-        _rb.MovePosition(_rb.position + moveStep);
-        WalkRotate(move);
+        if (move.sqrMagnitude < 0.001f)
+            return;
 
+        Vector3 moveDir  = move.normalized;
+        Vector3 moveStep = moveDir * _config.WalkSpeed * Time.fixedDeltaTime;
+
+        float checkDist = moveStep.magnitude + _config.WallOffset;
+
+        // === STEP LOGIC ===
+        Vector3 lowOrigin  = _rb.position + Vector3.up * 0.05f;
+        Vector3 highOrigin = _rb.position + Vector3.up * _config.StepHeight;
+
+        bool hitLow = Physics.Raycast(
+            lowOrigin,
+            moveDir,
+            out RaycastHit lowHit,
+            checkDist,
+            _config.FloorMask
+        );
+
+        bool hitHigh = Physics.Raycast(
+            highOrigin,
+            moveDir,
+            checkDist,
+            _config.FloorMask
+        );
+
+        if (hitLow && !hitHigh) {
+            // это ступенька — шагаем вверх
+            Vector3 stepUp = Vector3.up * _config.StepHeight;
+            _rb.MovePosition(_rb.position + stepUp + moveStep);
+        }
+        else if (!hitLow) {
+            // обычное движение
+            _rb.MovePosition(_rb.position + moveStep);
+        }
+        // если hitLow && hitHigh - это стена, никуда не идём
+        WalkRotate(move);
     }
+
 
     private void WalkRotate(Vector3 move) {
         if (move.sqrMagnitude > 0.0001f) {

@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using SanyaBeerExtension;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +14,8 @@ public class RewardManager : MonoBehaviour {
     
     [SerializeField] private TMP_Text _distanceText;
     [SerializeField] private TMP_Text _bet;
-    [SerializeField] private TMP_Text _multiplier;
+    [SerializeField] private TMP_Text _betMultiplier;
+    [SerializeField] private TMP_Text _distanceMultiplier;
     [SerializeField] private TMP_Text _rewardText;
     
     
@@ -31,13 +33,18 @@ public class RewardManager : MonoBehaviour {
     
     private PlayerStateManager _playerStateManager;
     private PlayerMovement _playerMovement;
+    private ZoneManager _zoneManager;
+    private IPlayerStatsReadOnly _playerStats;
     
     
     [Inject]
-    public void Init(PlayerStateManager playerStateManager, PlayerMovement playerMovement) {
+    public void Init(PlayerStateManager playerStateManager, PlayerMovement playerMovement, IPlayerStatsReadOnly playerStats, ZoneManager zoneManager) {
+        _zoneManager = zoneManager;
         _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += OnStateChange;
         _playerMovement =  playerMovement;
+
+        _playerStats = playerStats;
     }
     
     
@@ -57,26 +64,34 @@ public class RewardManager : MonoBehaviour {
     }
 
     private void ShowCruiserReward() {
-        ShowReward();
-        _distanceText.text = $"Дистанция: {_cruiser.position.z:F2}";
-        _multiplier.text = $"Множитель: x{ZoneManager.Instance.CurrentMultiplyer}";
-        _bet.text = $"Ставка: {ZoneManager.Instance.CurrentBet:F2}";
+        ShowRewardWindow();
+        _betMultiplier.ActiveSelf();
+        _bet.ActiveSelf();
         
-        float reward = ZoneManager.Instance.CurrentBet * ZoneManager.Instance.CurrentMultiplyer; 
-        _rewardText.text = $"Выигрышь: {reward:F2}";
+        float reward = _playerStats.XMultiplier * (_zoneManager.CurrentBet * _zoneManager.CurrentMultiplyer) + _zoneManager.CruiserDistance; 
+        _distanceText.text = $"Дистанция: {_zoneManager.CruiserDistance:F2}";
+        _betMultiplier.text = $"Множитель ставки: x{_zoneManager.CurrentMultiplyer}";
+        _bet.text = $"Ставка: {_zoneManager.CurrentBet:F2}$";
+        _rewardText.text = $"Выигрышь: {reward:F2}$";
+        _distanceMultiplier.text = $"Множитель: x{_playerStats.XMultiplier:F2}";
+        
         _playerBank.AddMoney(reward);
         // _rewardText.text = money.ToString();
     }
     
     private void ShowDistanceReward() {
-        ShowReward();
+        ShowRewardWindow();
         float distance = _playerStateManager.CurrentPlayerDistance;
-        float reward = distance / _distanceRewardDivide;
-        _playerBank.GiveMeYourFuckingMoneyNigga(ZoneManager.Instance.CurrentBet);
+        float reward = distance * _playerStats.XMultiplier;
+        _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.CurrentBet);
         _playerBank.AddMoney(reward);
         
         _distanceText.text = $"Дистанция: {_playerStateManager.CurrentPlayerDistance:F2}";
         _rewardText.text = $"Выигрышь: {reward:F2}";
+        _distanceMultiplier.text = $"Множитель: x{_playerStats.XMultiplier:F2}";
+
+        _betMultiplier.DisactiveSelf();
+        _bet.DisactiveSelf();
     }
     
     private void RewardLogic() {
@@ -91,7 +106,7 @@ public class RewardManager : MonoBehaviour {
         _playerMovement.TpPlayerInSpawn();
     }
 
-    private void ShowReward() {
+    private void ShowRewardWindow() {
         _animation =  DOTween.Sequence();
         _animation
             .Append(_canvasAlphaGroup.DOFade(1, 1f).From(0))

@@ -48,6 +48,16 @@ public class PlayerBank : MonoBehaviour {
         BankChanged?.Invoke(_playerCapital);
     }
     
+    public void Buy(float amount) {
+        if (amount > _playerCapital) return;
+        _playerCapital -= amount;
+        BankChanged?.Invoke(_playerCapital);
+    }
+
+
+    public bool CanBuy(float amount) =>
+        _playerCapital >= amount;
+    
     public void GiveMeYourFuckingMoneyNigga(float amount) {
         if (amount > _playerCapital) {
             Debug.LogWarning("Как ты сука поставил денег больше чем у тебя было");

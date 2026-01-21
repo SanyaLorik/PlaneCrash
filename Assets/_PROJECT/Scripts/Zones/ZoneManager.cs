@@ -18,9 +18,7 @@ public class ZoneManager : MonoBehaviour {
     public float CurrentMultiplyer { get; private set; }
     public float CurrentBet { get; private set; }
     
-    public static ZoneManager Instance { get; private set; }
     public float CruiserDistance { get; private set; }
-    
     
         
     private BoostSpawner _boostSpawner;
@@ -30,15 +28,7 @@ public class ZoneManager : MonoBehaviour {
         _boostSpawner = boostSpawner;
     }
     
-    
-    private void Awake() {
-        if (Instance != null) {
-            Debug.LogWarning("2 Zone Manager");
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
+
 
     private void Start() {
         _moneyCube.SetMoneyAmount(0);
