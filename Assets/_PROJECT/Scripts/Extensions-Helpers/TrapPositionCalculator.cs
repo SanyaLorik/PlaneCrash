@@ -30,11 +30,25 @@ public class TrapPositionCalculator : MonoBehaviour {
         position = _levelBounds.ClampPosition(position);
         return position;
     }
+    
+    public Vector3 GetInBoostPosition(Vector3 boost) {
+        Vector3 position = new Vector3(
+            boost.x + GetRandomOffset(_distanceX), // чуть лэва права похуй
+            boost.y, 
+            boost.z - GetPositiveOffset(_distanceZ)  // перед бустом)))
+        );
+        position = _levelBounds.ClampPosition(position);
+        return position;
+    }
 
     private float GetRandomOffset(PairedValue<float> offset) {
         float resultOffset = Random.Range(offset.From, offset.To);
         return Random.value > 0.5f ? resultOffset : - resultOffset;
     }
+    
+    private float GetPositiveOffset(PairedValue<float> offset) 
+        => Random.Range(offset.From, offset.To);
+
     
     
     

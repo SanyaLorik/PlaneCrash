@@ -46,7 +46,6 @@ public class BotStateManager : MonoBehaviour {
     }
     
     public void PlayerInSpawn() {
-        
         _botFlight.GoToFall();
     }
 

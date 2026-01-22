@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 
 public class LevelBounds : MonoBehaviour {
+    
+    // Потом наверное лучше добавить Collider вместо Renderer
     [SerializeField] private Renderer _floor;
     [SerializeField] private Renderer _leftWall;
     [SerializeField] private Renderer _rightWall;

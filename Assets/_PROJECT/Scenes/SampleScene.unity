@@ -10977,13 +10977,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrapsManager
   _zonesInfo:
-  - PercentageStart: 0.2
-    PercentageEnd: 0.5
-    ChunksCount: 4
+  - ZoneName: "\u041F\u041E\u041A\u0410\u0417\u0423\u0428\u041D\u0410\u042F"
+    PercentageStart: 0.15
+    PercentageEnd: 0.3
+    ChunksCount: 0
+    EnemiesPerChunk:
+      <From>k__BackingField: 0
+      <To>k__BackingField: 0
+  - ZoneName: 1
+    PercentageStart: 0.3
+    PercentageEnd: 1
+    ChunksCount: 3
     EnemiesPerChunk:
       <From>k__BackingField: 2
       <To>k__BackingField: 4
-  _fakeZoneTrapsCount: 0
+  - ZoneName: 2
+    PercentageStart: 0.5
+    PercentageEnd: 0.7
+    ChunksCount: 3
+    EnemiesPerChunk:
+      <From>k__BackingField: 4
+      <To>k__BackingField: 8
+  - ZoneName: 2
+    PercentageStart: 0.7
+    PercentageEnd: 1
+    ChunksCount: 3
+    EnemiesPerChunk:
+      <From>k__BackingField: 8
+      <To>k__BackingField: 12
   _trapObject: {fileID: 3033438512773766713, guid: 6333736fda853f847a7a70c812acefa9, type: 3}
 --- !u!114 &738633778
 MonoBehaviour:
@@ -16803,15 +16824,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cb9e41b3de535f74fa54d6478256eb84, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: -0.00000003348487
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cb9e41b3de535f74fa54d6478256eb84, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.000000028097139
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cb9e41b3de535f74fa54d6478256eb84, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6427876
+      value: 0.64278764
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cb9e41b3de535f74fa54d6478256eb84, type: 3}
       propertyPath: m_LocalRotation.z
@@ -33028,6 +33049,14 @@ PrefabInstance:
       propertyPath: _betZoneCube
       value: 
       objectReference: {fileID: 1022780975}
+    - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
+      propertyPath: _botSpeedCorrect
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
+      propertyPath: _countBoostEquilizeSpeed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

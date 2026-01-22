@@ -58,6 +58,7 @@ public class PlayerMovement : FlightObject {
     
     public void TpPlayerInSpawn() {
         transform.position = _config.PlayerSpawnPosition;
+        _rb.linearVelocity = Vector3.zero;
     }
 
 
