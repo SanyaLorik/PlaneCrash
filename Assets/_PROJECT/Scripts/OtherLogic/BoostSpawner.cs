@@ -82,7 +82,7 @@ public class BoostSpawner : MonoBehaviour {
         for (int i = 0; i < _countFalseWays; i++) {
             // Тут тоже подумать до куда он может лететь, 
             Vector3 newFalsePosition = CalculateMinEndPosition();
-            newFalsePosition.z = Random.Range(newFalsePosition.z, newFalsePosition.z + 500f);
+            newFalsePosition.z = Random.Range(newFalsePosition.z, curiserPosition.z+100f);
             _falseWays.Add(SpawnBoostWays(_startFlightZ, newFalsePosition, _falseBoostPrefab, false));
         }
 

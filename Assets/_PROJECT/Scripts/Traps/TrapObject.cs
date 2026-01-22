@@ -1,0 +1,42 @@
+using System;
+using SanyaBeerExtension;
+using UnityEngine;
+using Zenject;
+
+public class TrapObject : MonoBehaviour {
+    [Header("Explosion settings")]
+    [SerializeField] private float _radius = 6f;
+    [SerializeField] private float _force = 800f;
+    [SerializeField] private float _upwardModifier = 1.5f;
+    [SerializeField] private ParticleSystem _particleSystem;
+
+    private PlayerMovement _movement;
+    private Rigidbody _playerRb;
+
+    [Inject]
+    public void Init(PlayerMovement movement) {
+        _movement = movement;
+        _playerRb = _movement.GetComponent<Rigidbody>();
+    }
+    
+    
+    private void OnTriggerEnter(Collider collider) {
+        Debug.Log("OnTriggerEnter!");
+        _particleSystem.Play();
+        Explode(_playerRb);
+        // gameObject.DisactiveSelf();
+        
+    }
+    
+    
+    private void Explode(Rigidbody rb) {
+        rb.linearVelocity = Vector3.zero;
+        rb.AddExplosionForce(
+            _force,
+            transform.position,
+            _radius,
+            _upwardModifier,
+            ForceMode.Impulse
+        );
+    }
+}
