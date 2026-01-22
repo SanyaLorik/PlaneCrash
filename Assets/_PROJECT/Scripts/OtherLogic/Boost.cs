@@ -7,6 +7,9 @@ public class Boost : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement player)) {
+            if (player.IsBombed) {
+                return;
+            }
             player.SetBooster(randomTrajectory, nextBooster);
             gameObject.SetActive(false);
         }

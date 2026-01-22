@@ -26,10 +26,12 @@ public class BotFlight : FlightObject, IBotBehaviour {
     
     public event Action EndFlight;
     private Collider _collider;
+    private LevelBounds _levelBounds;
     
     
     [Inject]
-    public void Init(BoostSpawner boostSpawner, PlayerConfig playerConfig) {
+    public void Init(BoostSpawner boostSpawner, PlayerConfig playerConfig,  LevelBounds levelBounds) {
+        _levelBounds = levelBounds;
         _boostSpawner = boostSpawner;
         _playerConfig = playerConfig;
     }
@@ -108,7 +110,7 @@ public class BotFlight : FlightObject, IBotBehaviour {
     private async UniTaskVoid BotFallAsync(CancellationToken token) {
         _initialPos = transform.position;
         TargetPos = new Vector3(
-            Random.Range(_playerConfig.XMovement.From, _playerConfig.XMovement.To),
+            Random.Range(_levelBounds.LeftX, _levelBounds.RightX),
             0.3f,
             _initialPos.z + Random.Range(100f,300f)
         );

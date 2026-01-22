@@ -10,7 +10,6 @@ public class PlayerConfig : ScriptableObject {
     [field: SerializeField] public float FallingSpeed { get; private set; } = 7f;
     [field: SerializeField] public float JumpHeight { get; private set; }
     [field: SerializeField] public float MaxRotate { get; private set; } = 20f;
-    [field: SerializeField] public PairedValue<float> XMovement { get; private set; }
     
     [Header("Rotate data")]
     [field: SerializeField] public float RotateSpeed { get; private set; } = 6f;

@@ -8,7 +8,7 @@ public class HelpInstaller: MonoInstaller {
         BindCube();
         SpawnBoost();
         ZonesBind();
-
+        LevelBoundsBind();
     }
 
     private void BindCube() {
@@ -21,5 +21,9 @@ public class HelpInstaller: MonoInstaller {
     
     private void ZonesBind() {
         Container.Bind<ZoneManager>().FromComponentInHierarchy().AsSingle().NonLazy();;
+    }
+    
+    private void LevelBoundsBind() {
+        Container.Bind<LevelBounds>().FromComponentInHierarchy().AsSingle().NonLazy();;
     }
 }

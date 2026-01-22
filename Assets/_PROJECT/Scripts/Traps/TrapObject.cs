@@ -10,22 +10,20 @@ public class TrapObject : MonoBehaviour {
     [SerializeField] private float _upwardModifier = 1.5f;
     [SerializeField] private ParticleSystem _particleSystem;
 
-    private PlayerMovement _movement;
     private Rigidbody _playerRb;
 
-    [Inject]
-    public void Init(PlayerMovement movement) {
-        _movement = movement;
-        _playerRb = _movement.GetComponent<Rigidbody>();
-    }
     
     
     private void OnTriggerEnter(Collider collider) {
         Debug.Log("OnTriggerEnter!");
-        _particleSystem.Play();
-        Explode(_playerRb);
+        if (collider.TryGetComponent(out PlayerMovement movement)) {
+            movement.SetPlayerIsBombed();
+        }
+        if (collider.TryGetComponent(out Rigidbody rb)) {
+            _particleSystem.Play();
+            Explode(collider.GetComponent<Rigidbody>());
+        }
         // gameObject.DisactiveSelf();
-        
     }
     
     
@@ -39,4 +37,6 @@ public class TrapObject : MonoBehaviour {
             ForceMode.Impulse
         );
     }
+
+
 }

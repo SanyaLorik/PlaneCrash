@@ -19,13 +19,13 @@ public class BoostSpawner : MonoBehaviour {
     [Header("Граница спауна")]
     [SerializeField] private Boost _boostPrefab;
     [SerializeField] private Boost _falseBoostPrefab;
-
-    [SerializeField] private PairedValue<float> _xZone;
+    
     [SerializeField] private PairedValue<float> _yZone;
     [SerializeField] private PairedValue<float> _yDelta;
     [SerializeField] private PairedValue<float> _boostDistance;
     [SerializeField] private AnimationCurve[] _curves;
     
+    [SerializeField] private float _xOffset;
     [SerializeField] private float _minimumFlightTimeDefault;
 
     private float MinimumFlightTime => _minimumFlightTimeDefault * _playerStats.LuckyMultiplier;
@@ -41,6 +41,7 @@ public class BoostSpawner : MonoBehaviour {
 
     private PlayerMovement _playerMovement;
     private IPlayerStatsReadOnly _playerStats;
+    private LevelBounds _levelBounds;
     private float _minDistance;
     
     private List<List<Boost>> _trueWaysAfterZone = new();
@@ -49,9 +50,10 @@ public class BoostSpawner : MonoBehaviour {
     
 
     [Inject]
-    public void Init(PlayerMovement playerMovement, IPlayerStatsReadOnly playerStats) {
+    public void Init(PlayerMovement playerMovement, IPlayerStatsReadOnly playerStats, LevelBounds levelBounds) {
         _playerMovement = playerMovement;
         _playerStats =  playerStats;
+        _levelBounds = levelBounds;
     }
 
 
@@ -169,7 +171,7 @@ public class BoostSpawner : MonoBehaviour {
             currentY = Mathf.Clamp(currentY, _yZone.From, _yZone.To);
             
             Vector3 spawnPosition = new Vector3(
-                Random.Range(_xZone.From,_xZone.To), 
+                Random.Range(_levelBounds.LeftX + _xOffset,_levelBounds.RightX - _xOffset), 
                 currentY,                  
                 zPos                  
             );
@@ -230,7 +232,7 @@ public class BoostSpawner : MonoBehaviour {
     }
     
     private Vector3 CalculateMinEndPosition() {
-        float x = Random.Range(_xZone.From, _xZone.To);
+        float x = Random.Range(_levelBounds.LeftX, _levelBounds.RightX);
         return new Vector3(x, 0f, _minDistance);
     }
 

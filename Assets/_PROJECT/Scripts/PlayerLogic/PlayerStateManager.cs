@@ -1,13 +1,27 @@
 using System;
 using UnityEngine;
+using UnityEngine.Scripting;
+using Zenject;
 
 public class PlayerStateManager : MonoBehaviour {
     [SerializeField] LayerMask _groundMask;
     [SerializeField] LayerMask _cruiserMask;
     [SerializeField] private float _distanceCheck = 0.1f;
+    [SerializeField] private Renderer _floor;
 
+
+    private LevelBounds _levelBounds;
+    
     public event Action<PlayerState> ChangeState;
+    public float StartFlightPosition { get; private set; }
 
+
+    [Inject]
+    public void Init(LevelBounds  levelBounds) {
+        _levelBounds = levelBounds;
+    }
+    
+    
     public float CurrentPlayerDistance
         => CurrentState == PlayerState.Walking ? 0f : transform.position.z;
     
@@ -18,7 +32,9 @@ public class PlayerStateManager : MonoBehaviour {
         CheckGround();
     }
 
-    public float StartFlightPosition { get; private set; }
+    
+    
+
 
 
     public void ChangePlayerState(PlayerState newState) {
@@ -42,7 +58,11 @@ public class PlayerStateManager : MonoBehaviour {
             return;
         }
         Vector3 origin = transform.position;
-        if (Physics.Raycast(origin, Vector3.down,  _distanceCheck, _groundMask)) {
+        // if (Physics.Raycast(origin, Vector3.down,  _distanceCheck, _groundMask)) {
+        //     Debug.Log("Упали");
+        //     ChangePlayerState(PlayerState.Grounded);
+        // }
+        if (transform.position.y <= _levelBounds.MinimumY) {
             Debug.Log("Упали");
             ChangePlayerState(PlayerState.Grounded);
         }

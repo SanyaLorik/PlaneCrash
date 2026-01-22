@@ -17,17 +17,21 @@ public class PlayerMovement : FlightObject {
     private float _currentRoll;
 
     private PlayerStateManager _stateManager;
+    private LevelBounds _levelBounds;
 
     public float PlayerSpeed => _config.SpeedForce;
     public event Action SetBoost;
     
     [Inject]
-    public void Init(PlayerConfig config, PlayerStateManager stateManager) {
+    public void Init(PlayerConfig config, PlayerStateManager stateManager, LevelBounds levelBounds) {
         _stateManager =  stateManager;
         _config = config;
+        _levelBounds = levelBounds;
         
         _stateManager.ChangeState += OnChangeSpaceRotation;
     }
+    
+    
     
     
     
@@ -57,9 +61,18 @@ public class PlayerMovement : FlightObject {
     }
 
 
+    public bool IsBombed;
+    public void SetPlayerIsBombed() {
+        _isBusted = false;
+        IsBombed = true;
+        // _rb.useGravity = true;
+    }
+
+
     private void OnChangeSpaceRotation(PlayerState playerState) {
         _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
         if (playerState == PlayerState.Flight) {
+            IsBombed = false;
             RotateLocalXAsync(-25, playerState, _token).Forget();
             _rb.useGravity = false;
         }
@@ -200,9 +213,15 @@ public class PlayerMovement : FlightObject {
 
     private void FlightLogic() {
         Vector3 newPos =  transform.position;
+        if (IsBombed) {
+            newPos.y -= _config.FallingSpeed * 10 * Time.fixedDeltaTime;
+            transform.position = newPos;
+            return;
+        }
+        
         newPos.x += _moveInput.x * _config.RotateSpeed * Time.fixedDeltaTime;
         
-        newPos.x = Mathf.Clamp(newPos.x, _config.XMovement.From, _config.XMovement.To);
+        newPos.x = Mathf.Clamp(newPos.x, _levelBounds.LeftX, _levelBounds.RightX);
         if (!_isBusted) {
             newPos.z += _config.SpeedForce * Time.fixedDeltaTime;
             newPos.y -= _config.FallingSpeed * Time.fixedDeltaTime;
