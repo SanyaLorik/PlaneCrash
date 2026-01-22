@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using SanyaBeerExtension;
 using Unity.Collections;
 using Unity.VisualScripting;
@@ -59,8 +60,17 @@ public class BoostSpawner : MonoBehaviour {
             return _falseWays[Random.Range(0, _falseWays.Count)];
         }
         List<Boost> trueList = _trueWaysBeforeZone[Random.Range(0, _trueWaysBeforeZone.Count)];
-        trueList.AddRange(_trueWaysAfterZone[0]);
+        trueList.AddRange(_trueWaysAfterZone[Random.Range(0, _trueWaysAfterZone.Count)]);
         return trueList;
+    }   
+    
+    public List<Vector3> GetAllBoosts() {
+        return _trueWaysAfterZone
+            .Concat(_trueWaysBeforeZone)
+            .Concat(_falseWays)
+            .SelectMany(list=>list)
+            .Select(boost => boost.transform.position)
+            .ToList();
     }
 
 
@@ -142,44 +152,17 @@ public class BoostSpawner : MonoBehaviour {
 
     
     
-    private List<Boost> SpawnBoostWays(float initZ, Vector3 targetPosition, Boost boostPrefab, bool beforeZone) {
-        if (targetPosition.z < initZ) {
-            Debug.Log("Ебать ты крутой");
+    private List<Boost> SpawnBoostWays(float initZPos, Vector3 targetPosition, Boost boostPrefab, bool isBeforeZone) {
+        if (targetPosition.z < initZPos) {
+            Debug.Log("Ебать ты крутой: targetPosition.z < initZPos");
             throw new Exception();
         }
         
-        List<float> spawnPoints = new List<float>();
-        float currentPosition = initZ;
-        Vector3 endPosition = targetPosition;
-
-
-        bool firstBoost = true;
-        
-        while (currentPosition < endPosition.z) {
-            float newSpawnPoint = Random.Range(_boostDistance.From, _boostDistance.To);
-            // Первый буст дольше обычного чтоб игрок сдюжил
-            if (firstBoost && beforeZone) {
-                firstBoost = false;
-                newSpawnPoint = _boostDistance.To;
-            }
-            currentPosition += newSpawnPoint;
-            // Прям если в нужной точке буст то хуйня
-            if (endPosition.z - currentPosition > _boostDistance.From) {
-                spawnPoints.Add(currentPosition);
-            }
-        }
-        
-    
-        // Сортируем для гарантии порядка
-        spawnPoints.Sort();
+        List<float> spawnPoints = BoostsZPoints(initZPos, targetPosition, isBeforeZone);
         List<Boost> boost = new ();
-        if (spawnPoints.Count == 0) {
-            Debug.LogError("У тя 0 spawnPoints");
-            throw new Exception();
-        }
         
-        // Точки спауна
-        float currentY = Random.Range(_yZone.To/2, _yZone.To);
+        // Начальная высота буста
+        float currentY = Random.Range(_yZone.To/1.5f, _yZone.To);
         foreach (float zPos in spawnPoints) {
             float deltaY = Random.Range(_yDelta.From, _yDelta.To);
             currentY += deltaY;
@@ -200,13 +183,41 @@ public class BoostSpawner : MonoBehaviour {
                 // Debug.Log("Следующий буст в " + boost[i].nextBooster.z);
             }
             else {
-                boost[i].nextBooster = endPosition;
+                boost[i].nextBooster = targetPosition;
                 boost[i].randomTrajectory = _curves[1];
-                // Debug.Log("Конечный буст в  " + endPosition.z);
+                // Debug.Log("Конечный буст в  " + targetPosition.z);
             }
         }
-
         return boost;
+    }
+
+    private List<float> BoostsZPoints(float initZPos, Vector3 targetPosition, bool isBeforeZone) {
+        List<float> spawnPoints = new List<float>();
+        bool firstBoost = true;
+        
+        while (initZPos < targetPosition.z) {
+            float newSpawnPoint = Random.Range(_boostDistance.From, _boostDistance.To);
+            // Первый буст дольше обычного чтоб игрок сдюжил
+            if (firstBoost && isBeforeZone) {
+                firstBoost = false;
+                newSpawnPoint = _boostDistance.From + Random.Range(_boostDistance.From, _boostDistance.To);
+            }
+            initZPos += newSpawnPoint;
+            // Прям если в нужной точке буст то хуйня
+            if (targetPosition.z - initZPos > _boostDistance.From) {
+                spawnPoints.Add(initZPos);
+            }
+        }
+        
+    
+        // Сортируем для гарантии порядка
+        spawnPoints.Sort();
+        if (spawnPoints.Count == 0) {
+            Debug.LogError("У тя 0 spawnPoints");
+            throw new Exception();
+        }
+
+        return spawnPoints;
     }
 
 

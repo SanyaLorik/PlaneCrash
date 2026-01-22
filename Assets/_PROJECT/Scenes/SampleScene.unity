@@ -10949,6 +10949,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eab733dae8688d41ba74d7bfd339237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrapsManager
+  _zonesInfo:
+  - Percentage: 0.2
+    ChunksCount: 4
+    EnemiesPerChunk:
+      <From>k__BackingField: 2
+      <To>k__BackingField: 4
+  _fakeZoneTrapsCount: 0
 --- !u!4 &743157438 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3a55333a8618fbb4db687c902bfac9cf, type: 3}
@@ -13356,7 +13363,7 @@ MonoBehaviour:
   _countFalseWays: 1
   _zoneSpawn: {fileID: 1668428521}
   _startFlightZ: 2
-  _setPlayerFalseWay: 1
+  _setPlayerFalseWay: 0
 --- !u!4 &874371611 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b77a159c0960f2848a649ba19ead7ae3, type: 3}
