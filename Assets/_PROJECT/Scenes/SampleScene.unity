@@ -2921,6 +2921,11 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!4 &314009040 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+  m_PrefabInstance: {fileID: 1247028357}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -5884,6 +5889,7 @@ Transform:
   - {fileID: 28040859}
   - {fileID: 1774187989}
   - {fileID: 205032296}
+  - {fileID: 314009040}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &702040264
@@ -7617,6 +7623,7 @@ MonoBehaviour:
   _countFalseWays: 1
   _zoneSpawn: {fileID: 1668428521}
   _startFlightZ: 2
+  _setPlayerFalseWay: 0
 --- !u!1 &880229775
 GameObject:
   m_ObjectHideFlags: 0
@@ -10377,6 +10384,75 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!1001 &1247028357
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 699255799}
+    m_Modifications:
+    - target: {fileID: 354796418147912682, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_Name
+      value: Money_Stack_Animated
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3977
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3977
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.3977
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -16.550476
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -19.954489
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
 --- !u!1 &1252200505
 GameObject:
   m_ObjectHideFlags: 0
@@ -10801,6 +10877,7 @@ MonoBehaviour:
   _movement: {fileID: 1824038466}
   _stateManager: {fileID: 1824038473}
   _boostSpawner: {fileID: 873727988}
+  _lineToBoosts: {fileID: 0}
 --- !u!1 &1292426949
 GameObject:
   m_ObjectHideFlags: 0
@@ -17682,6 +17759,8 @@ MonoBehaviour:
   _botSpeedCorrect: 10
   _flightPosition: {x: -2.078169, y: 10.221079, z: -5.649}
   _botModelForRotate: {fileID: 357550404}
+  _trueWayChance: 0
+  _fallingTime: 0
 --- !u!65 &2097017818
 BoxCollider:
   m_ObjectHideFlags: 0
