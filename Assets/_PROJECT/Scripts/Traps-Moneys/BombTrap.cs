@@ -60,7 +60,7 @@ public class BombTrap : MonoBehaviour {
     
     
     private void OnTriggerEnter(Collider collider) {
-        Debug.Log("OnTriggerEnter!");
+        // Debug.Log("OnTriggerEnter!");
         if (collider.TryGetComponent(out PlayerMovement movement)) {
             _particleSystem.Play();
             Explode(collider.GetComponent<Rigidbody>());
@@ -113,16 +113,13 @@ public class BombTrap : MonoBehaviour {
             else SetLeftRightTrajectory();
             return;
         }
-        // Из стены или попий
-        if (Random.value < 0.5f) {
-            // Floor or Wall
-            if (Random.value < 0.5) SetFloorUpTrajectory();
-            else SetWallTrajectory();
-        }
+        // Floor or Wall
+        if (Random.value < 0.5) SetFloorUpTrajectory();
+        else SetWallTrajectory();
     }
 
     private void SetUpDownTrajectory() {
-        Debug.Log("SetUpDownTrajectory");
+        // Debug.Log("SetUpDownTrajectory");
         float duration1 = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
         float duration2 = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
         
@@ -145,7 +142,7 @@ public class BombTrap : MonoBehaviour {
     }
     
     private void SetLeftRightTrajectory() {
-        Debug.Log("SetLeftRightTrajectory");
+        // Debug.Log("SetLeftRightTrajectory");
         float duration1 = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
         float duration2 = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
 
@@ -168,7 +165,7 @@ public class BombTrap : MonoBehaviour {
     
     private void SetWallTrajectory() {
         SetYellow();
-        Debug.Log("SetLeftRightTrajectory");
+        // Debug.Log("SetLeftRightTrajectory");
         float duration = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
         float x = _levelBounds.LeftX;
         if(Random.value < 0.5f) x =  _levelBounds.RightX;
@@ -189,7 +186,7 @@ public class BombTrap : MonoBehaviour {
     
     private void SetFloorUpTrajectory() {
         SetBlue();
-        Debug.Log("SetUpDownTrajectory");
+        // Debug.Log("SetUpDownTrajectory");
         float duration1 = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
         float duration2 = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
         

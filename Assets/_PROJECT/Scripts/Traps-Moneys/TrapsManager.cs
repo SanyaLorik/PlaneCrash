@@ -12,7 +12,7 @@ public struct ZoneInfo {
     [Range(0,1), SerializeField] public float PercentageStart;
     [Range(0,1), SerializeField] public float PercentageEnd;
     public int ChunksCount;
-    public PairedValue EnemiesPerChunk;
+    public PairedValue<int> EnemiesPerChunk;
 }
 
 public class ChunkDistance {
@@ -31,12 +31,12 @@ public class TrapsManager : MonoBehaviour {
     
     
     private PlayerStateManager _playerStateManager;
-    private BoostSpawner _boostSpawner;
+    private BoostSpawner _boostsSpawner;
     private ZoneManager _zoneManager;
     private TrapPositionCalculator _trapPositionCalculator;
     
     
-    private List<Vector3> _boostPositions;
+    private List<Boost> _boosts;
     private List<BombTrap> _traps = new();
     private LevelBounds _levelBounds;
     
@@ -44,7 +44,7 @@ public class TrapsManager : MonoBehaviour {
     public void Init(PlayerStateManager playerStateManager, BoostSpawner boostSpawner, ZoneManager zoneManager, LevelBounds levelBounds) {
         _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
-        _boostSpawner = boostSpawner;
+        _boostsSpawner = boostSpawner;
         
         _zoneManager = zoneManager;
         _levelBounds = levelBounds;
@@ -61,11 +61,13 @@ public class TrapsManager : MonoBehaviour {
         ClearTraps();
         
         // Нам нужны все бусты
-        GetAllBoostPositions();
+        GetAllBoost();
         // Начиная с зоны _zonesInfo[0] 
         SpawnFakeTraps();
         // Дальше 1-3 зоны
         SpawnMoveTraps(_zonesInfo[1]);
+        SpawnMoveTraps(_zonesInfo[2]);
+        SpawnMoveTraps(_zonesInfo[3]);
 
     }
 
@@ -75,11 +77,14 @@ public class TrapsManager : MonoBehaviour {
         float endZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageEnd);
         Debug.Log($"Спавн фейк трапа будет в диапазоне: ({startZCoord}:{endZCoord})");
 
-        foreach (var boost in _boostPositions) {
+        foreach (var boost in _boosts) {
             if(Random.value > 0.6f) continue;
-            if (boost.z > endZCoord) continue;
-            
-            Vector3 _trapPosition = _trapPositionCalculator.GetNearBoostPosition(boost);
+            if (boost.transform.position.z > endZCoord) continue;
+            if (boost.hasTrap) continue;
+
+
+            boost.hasTrap = true;
+            Vector3 _trapPosition = _trapPositionCalculator.GetNearBoostPosition(boost.transform.position);
             BombTrap _trap = Instantiate(_trapObject, _trapPosition, Quaternion.identity);
             
             Debug.Log("Спавн фейк трапа в :" + _trapPosition);
@@ -104,13 +109,22 @@ public class TrapsManager : MonoBehaviour {
         
         // В каждой зоне zone.EnemiesPerChunk ловушэк
         
+        
         foreach (var diapasone in chunksDiapasone) {
-            foreach (var boost in _boostPositions) {
-                if(Random.value > 0.65f) continue;
-                if (boost.z < diapasone.Z1) continue;
-                if (boost.z > diapasone.Z2) continue;
+            int enemiesCount = Random.Range(zone.EnemiesPerChunk.From, zone.EnemiesPerChunk.To);
+            float distance = diapasone.Z2 - diapasone.Z1;
+            Debug.Log("Дистанция зоны: " + distance);
+            Debug.Log("Кол-во ловушек: " + enemiesCount);
+            
+            for (int i = 0; i < enemiesCount; i++) {
+                float x = Random.Range(_levelBounds.LeftX, _levelBounds.RightX); // пока просто где-то
+                float y = Random.Range(_levelBounds.MinimumY+5f, 40f); // пока просто где-то
+                float z = diapasone.Z1 + (distance * (i) / enemiesCount);  
                 
-                Vector3 _trapPosition = _trapPositionCalculator.GetInBoostPosition(boost);
+                Vector3 _trapPosition = new Vector3(x, y, z);
+                Debug.Log("Спавн в " + _trapPosition);
+                    
+                    
                 BombTrap _trap = Instantiate(_trapObject, _trapPosition, Quaternion.identity);
                 _trap.Init(_levelBounds);
                 _trap.SetMovable();
@@ -134,7 +148,7 @@ public class TrapsManager : MonoBehaviour {
             };
             
             chunksDiapasone.Add(chunkDistance);
-            Debug.Log($"{i+1}ый чанк, Дистанция: ({chunksDiapasone[i].Z1}:{chunksDiapasone[i].Z2})");
+            Debug.Log($"{i+1}ый чанк, Дистанция: ({chunksDiapasone[i].Z1:F1} - {chunksDiapasone[i].Z2:F1})");
         }
         return chunksDiapasone;
     }
@@ -148,25 +162,22 @@ public class TrapsManager : MonoBehaviour {
     }
     
 
-    private void GetAllBoostPositions() {
-        _boostPositions = _boostSpawner.GetAllBoosts();
-        Debug.Log("Кол-во бустов: " + _boostPositions.Count);
+    private void GetAllBoost() {
+        _boosts = _boostsSpawner.GetAllBoosts();
+        // Debug.Log("Кол-во бустов: " + _boosts.Count);
     }
 
     
     private void CheckPercentCorrect() {
-        float sum = 0f;
-        foreach (var info in _zonesInfo) {
-            sum += info.PercentageStart;
-        }
-        if (sum > 1f) {
-            Debug.Log("Сумма процентов > 100");
-        }
-        Debug.Log(sum);
+        // float sum = 0f;
+        // foreach (var info in _zonesInfo) {
+        //     sum += info.PercentageStart;
+        // }
+        // if (sum > 1f) {
+        //     Debug.LogWarning("Сумма процентов > 100");
+        // }
+        // Debug.Log(sum);
     }
     
-    
-    
-
     
 }

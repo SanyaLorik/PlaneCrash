@@ -62,7 +62,7 @@ public class PlayerStateManager : MonoBehaviour {
         //     Debug.Log("Упали");
         //     ChangePlayerState(PlayerState.Grounded);
         // }
-        if (transform.position.y <= _levelBounds.MinimumY) {
+        if (transform.position.y <= _levelBounds.MinimumY + _distanceCheck) {
             Debug.Log("Упали");
             ChangePlayerState(PlayerState.Grounded);
         }

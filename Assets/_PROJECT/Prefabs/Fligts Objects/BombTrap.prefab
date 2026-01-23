@@ -214,16 +214,16 @@ MonoBehaviour:
   _upwardModifier: 1.4
   _particleSystem: {fileID: 5484021630471331090}
   _yMovePoints:
-    <From>k__BackingField: 10
-    <To>k__BackingField: -10
+    <From>k__BackingField: 8
+    <To>k__BackingField: 13
   _xMovePoints:
-    <From>k__BackingField: 10
-    <To>k__BackingField: -10
+    <From>k__BackingField: 8
+    <To>k__BackingField: 13
   _durationDiapasone:
-    <From>k__BackingField: 0.7
+    <From>k__BackingField: 0.5
     <To>k__BackingField: 1
   _bombRenderer: {fileID: 7264857251732335989}
-  _brightnessMultiply: 0.05
+  _brightnessMultiply: 0.1
   _moveInfos: []
 --- !u!65 &6694014442115287327
 BoxCollider:

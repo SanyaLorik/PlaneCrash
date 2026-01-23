@@ -62,16 +62,17 @@ public class BoostSpawner : MonoBehaviour {
             return _falseWays[Random.Range(0, _falseWays.Count)];
         }
         List<Boost> trueList = _trueWaysBeforeZone[Random.Range(0, _trueWaysBeforeZone.Count)];
-        trueList.AddRange(_trueWaysAfterZone[Random.Range(0, _trueWaysAfterZone.Count)]);
+        if (_trueWaysAfterZone.Count > 0) {
+            trueList.AddRange(_trueWaysAfterZone[Random.Range(0, _trueWaysAfterZone.Count)]);
+        }
         return trueList;
     }   
     
-    public List<Vector3> GetAllBoosts() {
+    public List<Boost> GetAllBoosts() {
         return _trueWaysAfterZone
             .Concat(_trueWaysBeforeZone)
             .Concat(_falseWays)
             .SelectMany(list=>list)
-            .Select(boost => boost.transform.position)
             .ToList();
     }
 

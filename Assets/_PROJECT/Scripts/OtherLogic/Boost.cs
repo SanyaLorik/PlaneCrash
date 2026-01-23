@@ -4,6 +4,7 @@ using UnityEngine;
 public class Boost : MonoBehaviour {
     public AnimationCurve randomTrajectory;
     public Vector3 nextBooster;
+    public bool hasTrap;
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement player)) {
@@ -15,7 +16,7 @@ public class Boost : MonoBehaviour {
         }
         else if (collider.gameObject.TryGetComponent(out BotFlight bot)) {
             bot.SetBooster(randomTrajectory, nextBooster);
-            Debug.Log("Бот налетел на буст");
+            // Debug.Log("Бот налетел на буст");
         }
     }
 }

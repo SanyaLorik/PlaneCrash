@@ -41,7 +41,7 @@ public class BotStateManager : MonoBehaviour {
             _ => _currentBotBehaviour
         };
 
-        Debug.Log(_currentBotBehaviour);
+        // Debug.Log(_currentBotBehaviour);
         _currentBotBehaviour?.Enter();
     }
     
