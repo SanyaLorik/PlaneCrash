@@ -9,7 +9,6 @@ public class LookAtCamera : MonoBehaviour {
         LookAtInvert,
         CameraForward,
         CameraBackward,
-        LookAtPlate
     }
 
     private void LateUpdate() { 
@@ -29,12 +28,6 @@ public class LookAtCamera : MonoBehaviour {
 
         case Mode.CameraBackward:
             transform.forward = -Camera.main.transform.forward;
-            break;
-        case Mode.LookAtPlate:
-            transform.LookAt(Camera.main.transform);
-            Vector3 euler = transform.eulerAngles;
-            euler.y = -180f;
-            transform.eulerAngles = euler;
             break;
      }
    }

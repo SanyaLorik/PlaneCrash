@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 
 public class BetAccumulation : MonoBehaviour  {
@@ -11,6 +12,14 @@ public class BetAccumulation : MonoBehaviour  {
 
     private float _elapsedTime;
     private CancellationTokenSource _accumulateCTS;
+    
+    private ZoneManager _zoneManager;
+        
+    [Inject]
+    public void Init(ZoneManager zoneManager) {
+        _zoneManager = zoneManager;
+    }
+    
     
     public void StopAccumulate() {
         if (_accumulateCTS == null) return;
@@ -44,7 +53,7 @@ public class BetAccumulation : MonoBehaviour  {
     
     private async UniTaskVoid AccumulateBet(CancellationToken token, PlayerBank bank) {
         float playerMoney = bank.PlayerCapital;
-        float currentBet = ZoneManager.Instance.CurrentBet;
+        float currentBet = _zoneManager.CurrentBet;
         if (currentBet == 0) {
             _elapsedTime = 0f;
         }
@@ -52,14 +61,14 @@ public class BetAccumulation : MonoBehaviour  {
             float t = _elapsedTime / _accumulateDuration;
             currentBet = _moneyCurve.Evaluate(t) * playerMoney;
             _elapsedTime += Time.deltaTime;
-            ZoneManager.Instance.ChangeBet(currentBet);
+            _zoneManager.ChangeBet(currentBet);
             await UniTask.Yield(token);
         }
 
         // Если время кончилось
         if (!token.IsCancellationRequested && _elapsedTime >= _accumulateDuration) {
             currentBet = playerMoney;
-            ZoneManager.Instance.ChangeBet(currentBet);
+            _zoneManager.ChangeBet(currentBet);
         }
     }
 

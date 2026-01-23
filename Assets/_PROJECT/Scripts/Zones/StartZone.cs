@@ -17,7 +17,6 @@ public class StartZone : MonoBehaviour {
         if (collider.gameObject.TryGetComponent(out PlayerStateManager stateManager)) {
             _boostSpawner.SpawnEntranceBoost();
             stateManager.ChangePlayerState(PlayerState.Flight);
-            
         }    
     }
 }

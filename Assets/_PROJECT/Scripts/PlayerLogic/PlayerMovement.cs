@@ -1,39 +1,37 @@
 using System;
 using System.Threading;
+using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
-using ModestTree.Util;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : FlightObject {
     private PlayerConfig _config;
 
-    private AnimationCurve _currentCurve;
-    private float _segmentDuration;
-    private float _expandedTime = 0;
-    private Vector3 _initialPos;
-    public Vector3 TargetPos { get;private set; }
     private bool _isBusted;
-    
+
     
     private Rigidbody _rb;
     private Vector2 _moveInput;
     private float _currentRoll;
 
-    private CancellationTokenSource _playerCTS;
     private PlayerStateManager _stateManager;
+    private LevelBounds _levelBounds;
 
     public float PlayerSpeed => _config.SpeedForce;
     public event Action SetBoost;
     
     [Inject]
-    public void Init(PlayerConfig config, PlayerStateManager stateManager) {
+    public void Init(PlayerConfig config, PlayerStateManager stateManager, LevelBounds levelBounds) {
         _stateManager =  stateManager;
         _config = config;
+        _levelBounds = levelBounds;
         
         _stateManager.ChangeState += OnChangeSpaceRotation;
     }
+    
+    
     
     
     
@@ -43,7 +41,6 @@ public class PlayerMovement : MonoBehaviour {
     }
     
     private void Start() {
-        _playerCTS = new CancellationTokenSource();
         OnChangeSpaceRotation(PlayerState.Walking);
         TpPlayerInSpawn();
     }
@@ -61,21 +58,32 @@ public class PlayerMovement : MonoBehaviour {
     
     public void TpPlayerInSpawn() {
         transform.position = _config.PlayerSpawnPosition;
+        _rb.linearVelocity = Vector3.zero;
+    }
+
+
+    public bool IsBombed;
+    public void SetPlayerIsBombed() {
+        _isBusted = false;
+        IsBombed = true;
+        // _rb.useGravity = true;
     }
 
 
     private void OnChangeSpaceRotation(PlayerState playerState) {
+        _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
         if (playerState == PlayerState.Flight) {
-            PlayerRotateLocalX(-25, playerState);
+            IsBombed = false;
+            RotateLocalXAsync(-25, playerState, _token).Forget();
             _rb.useGravity = false;
         }
         else {
-            PlayerRotateLocalX(-80, playerState);
+            RotateLocalXAsync(-80, playerState, _token).Forget();
             _rb.useGravity = true;
         }
     }
 
-    private async UniTask PlayerRotateLocalX(float TargetPosAngleX, PlayerState playerState) {
+    private async UniTask RotateLocalXAsync(float TargetPosAngleX, PlayerState playerState, CancellationToken token) {
         float duration = 1f;
     
         Vector3 currentLocalEuler = transform.localEulerAngles;
@@ -98,7 +106,7 @@ public class PlayerMovement : MonoBehaviour {
         
             transform.localRotation = Quaternion.Slerp(startRot, TargetPosRot, t);
         
-            await UniTask.Yield(_playerCTS.Token);
+            await UniTask.Yield(token);
         }
     
         transform.localRotation = TargetPosRot;
@@ -127,14 +135,13 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Walk() {
-        // Сильнее гравитация работает
+        // усиленная гравитация
         _rb.AddForce(Physics.gravity * (_config.GravityScale - 1) * _rb.mass);
-        
+
         Transform cam = Camera.main.transform;
         Vector3 camForward = cam.forward;
         Vector3 camRight   = cam.right;
 
-        // убираем вертикаль
         camForward.y = 0f;
         camRight.y   = 0f;
 
@@ -145,21 +152,46 @@ public class PlayerMovement : MonoBehaviour {
             camRight   * _moveInput.x +
             camForward * _moveInput.y;
 
-        
-        Vector3 moveStep = move * _config.WalkSpeed * Time.fixedDeltaTime;
-        if (Physics.Raycast(
-                _rb.position,
-                moveStep.normalized,
-                out RaycastHit hit,
-                moveStep.magnitude + _config.WallOffset,
-                _config.FloorMask)) {
-            moveStep = moveStep.normalized * (hit.distance - _config.WallOffset);
-        }
-        
-        _rb.MovePosition(_rb.position + moveStep);
-        WalkRotate(move);
+        if (move.sqrMagnitude < 0.001f)
+            return;
 
+        Vector3 moveDir  = move.normalized;
+        Vector3 moveStep = moveDir * _config.WalkSpeed * Time.fixedDeltaTime;
+
+        float checkDist = moveStep.magnitude + _config.WallOffset;
+
+        // === STEP LOGIC ===
+        Vector3 lowOrigin  = _rb.position + Vector3.up * 0.05f;
+        Vector3 highOrigin = _rb.position + Vector3.up * _config.StepHeight;
+
+        bool hitLow = Physics.Raycast(
+            lowOrigin,
+            moveDir,
+            out RaycastHit lowHit,
+            checkDist,
+            _config.FloorMask
+        );
+
+        bool hitHigh = Physics.Raycast(
+            highOrigin,
+            moveDir,
+            checkDist,
+            _config.FloorMask
+        );
+
+        if (hitLow && !hitHigh) {
+            // это ступенька — шагаем вверх
+            Vector3 stepUp = Vector3.up * _config.StepHeight;
+            _rb.MovePosition(_rb.position + stepUp + moveStep);
+        }
+        else if (!hitLow) {
+            // обычное движение
+            _rb.MovePosition(_rb.position + moveStep);
+        }
+        // если hitLow && hitHigh - это стена, никуда не идём
+        WalkRotate(move);
     }
+
 
     private void WalkRotate(Vector3 move) {
         if (move.sqrMagnitude > 0.0001f) {
@@ -182,9 +214,15 @@ public class PlayerMovement : MonoBehaviour {
 
     private void FlightLogic() {
         Vector3 newPos =  transform.position;
+        if (IsBombed) {
+            newPos.y -= _config.FallingSpeed * 10 * Time.fixedDeltaTime;
+            transform.position = newPos;
+            return;
+        }
+        
         newPos.x += _moveInput.x * _config.RotateSpeed * Time.fixedDeltaTime;
         
-        newPos.x = Mathf.Clamp(newPos.x, _config.XMovement.From, _config.XMovement.To);
+        newPos.x = Mathf.Clamp(newPos.x, _levelBounds.LeftX, _levelBounds.RightX);
         if (!_isBusted) {
             newPos.z += _config.SpeedForce * Time.fixedDeltaTime;
             newPos.y -= _config.FallingSpeed * Time.fixedDeltaTime;
@@ -226,10 +264,6 @@ public class PlayerMovement : MonoBehaviour {
         transform.localEulerAngles = euler;
     }
     
-    
-    private void OnDestroy() {
-        _playerCTS?.Cancel();
-        _playerCTS?.Dispose();
-    }
+
     
 }

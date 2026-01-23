@@ -9,23 +9,34 @@ public class BetVisual : MonoBehaviour {
     [SerializeField] private TMP_Text _rewardVisual;
     [SerializeField] private TMP_Text _distanceVisual;
     
+    [Header("Player Stats")]
+    [SerializeField] private TMP_Text _playerXMultiplyer;
+    
     private PlayerStateManager _playerStateManager;
     private PlayerBank _bank;
+    private ZoneManager _zoneManager;
+    private IPlayerStatsReadOnly _playerStats;
     
     [Inject]
-    public void Init(PlayerBank bank, PlayerStateManager playerStateManager) {
+    public void Init(PlayerBank bank, PlayerStateManager playerStateManager, IPlayerStatsReadOnly playerStats, ZoneManager zoneManager) {
+        _zoneManager = zoneManager;
+        
         _bank = bank;
-        _bank.OnBankChanged += ChangeBank;
+        _bank.BankChanged += OnChangeBank;
         _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += OnChangeState;
+        _playerStats = playerStats;
+        _playerStats.ChangeStats += PlayerStatsOnChangeStats;
     }
-    
-    
-    
+
+    private void PlayerStatsOnChangeStats() {
+        _playerXMultiplyer.text = $"Множитель метров: {_playerStats.XMultiplier:F2}";
+    }
 
     private void Start() {
-        ZoneManager.Instance.OnChooseBet += ShowBet;
-        ZoneManager.Instance.OnChooseMultiplyer += ShowMultiplyer;
+        _zoneManager.OnChooseBet += ShowBet;
+        _zoneManager.OnChooseMultiplyer += ShowMultiplyer;
+        PlayerStatsOnChangeStats();
     }
 
     private void OnChangeState(PlayerState state) {
@@ -37,15 +48,15 @@ public class BetVisual : MonoBehaviour {
 
 
     private void OnDisable() {
-        if (ZoneManager.Instance != null) {
-            ZoneManager.Instance.OnChooseBet -= ShowBet;
-            ZoneManager.Instance.OnChooseMultiplyer -= ShowMultiplyer;
+        if (_zoneManager != null) {
+            _zoneManager.OnChooseBet -= ShowBet;
+            _zoneManager.OnChooseMultiplyer -= ShowMultiplyer;
         }
-        _bank.OnBankChanged -= ChangeBank;
+        _bank.BankChanged -= OnChangeBank;
         _playerStateManager.ChangeState -= OnChangeState;
     }
 
-    private void ChangeBank(float capital) {
+    private void OnChangeBank(float capital) {
         _playerBank.text = $"Баланс: {capital:F2}";
     }
 
@@ -59,8 +70,8 @@ public class BetVisual : MonoBehaviour {
     
     private void ShowMultiplyer(float multiplyer) {
         _xMultiplyVisual.text = $"Множитель: x{multiplyer}";
-        _rewardVisual.text = $"Выигрышь: {ZoneManager.Instance.CurrentBet *  multiplyer:F2}";
-        _distanceVisual.text = $"До финиша: {ZoneManager.Instance.CruiserDistance}м.";
+        _rewardVisual.text = $"Выигрышь: {_zoneManager.CurrentBet *  multiplyer:F2}";
+        _distanceVisual.text = $"До финиша: {_zoneManager.CruiserDistance}м.";
     }
 
 }

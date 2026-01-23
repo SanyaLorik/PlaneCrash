@@ -1,0 +1,120 @@
+using System;
+using Unity.Mathematics;
+using UnityEngine;
+using UnityEngine.UI;
+using Zenject;
+
+public class RangVisual : MonoBehaviour {
+    [SerializeField] private Image _currentLevel;
+    [SerializeField] private Image _recordLevel;
+    [SerializeField] private RectTransform _barWidth;
+    [SerializeField] private RectTransform _playerIcon;
+    [SerializeField] private RangUnit _rangPrefab;
+
+    [SerializeField] private float _planeZ;
+    [SerializeField] private float _planeX;
+    [SerializeField] private GameObject _planePrefab;
+    [SerializeField] private Transform _planesParent;
+
+    
+    [Header("Рекорд игрока")]
+    [SerializeField] private float _record;
+
+    
+    private RangConfig _config;
+    private PlayerBank _playerBank;
+    private MoneyCube _moneyCube;
+    
+    private float _maxMoney;
+    private float _xStart;
+    private float _xMax;
+    private float _yPos;
+    
+
+
+    [Inject]
+    public void Init(RangConfig config, PlayerBank playerBank, MoneyCube  moneyCube) {
+        _config = config;
+        _moneyCube =  moneyCube;
+        _playerBank = playerBank;
+        _playerBank.BankChanged += PlayerBankOnBankChanged;
+
+        SetPlanes();
+    }
+    
+    private void Start() {
+        CalculateMaxMoney();
+        CalculateX();
+
+        InstanceRangs();
+        
+    }
+
+    private void SetPlanes() {
+        foreach (var rang in _config.Rangs) {
+            float planeY = _moneyCube.GetCubeHeight(rang.Money) - _planesParent.transform.position.y;
+            Vector3 position = new Vector3(_planeX, planeY, _planeZ);
+            // Debug.Log($"Для ранга: {rang.Name} высота будет: {planeY}");
+            GameObject plane = Instantiate(_planePrefab, _planesParent);
+            plane.transform.localPosition = position;
+        }
+        
+    }
+    
+    
+
+
+    private void InstanceRangs() {
+        foreach (var rang in _config.Rangs) {
+            float rangPercent = rang.Money / _maxMoney;
+            
+            float rangXPos = Mathf.Lerp(_xStart, _xMax, rangPercent);
+            
+            
+            RangUnit rangInstance = Instantiate(_rangPrefab, _barWidth);
+            RectTransform rt = rangInstance.GetComponent<RectTransform>();
+            rt.anchoredPosition = new Vector2(rangXPos, 0f);
+            
+            rangInstance.SetData(rang.Name, rang.Sprite);
+        }
+    }
+    
+    
+    private void PlayerBankOnBankChanged(float amount) {
+        if (amount > _record) {
+            _record =  amount;
+            _recordLevel.fillAmount = GetFillAmount(_record);
+        }
+
+        float percent = GetFillAmount(amount);
+        _currentLevel.fillAmount = percent;
+        float rangXPos = Mathf.Lerp(_xStart, _xMax, percent);
+        _playerIcon.anchoredPosition = new Vector2(rangXPos, _playerIcon.anchoredPosition.y);
+
+        // А еще игрока сдвигать относительно продвижения зеленого fillAmount
+    }
+
+
+#region Helpers
+    private float GetFillAmount(float money) => Mathf.Clamp01(money / _maxMoney);
+
+    private void CalculateX() {
+        float barWidth = _barWidth.rect.width;
+        _xStart = -barWidth * 0.5f;
+        _xMax = barWidth * 0.5f;
+    }
+
+
+    private void CalculateMaxMoney() {
+        _maxMoney = _config.Rangs[^1].Money;
+        foreach (var rang in _config.Rangs) {
+            if (_maxMoney < rang.Money) {
+                _maxMoney = rang.Money;
+            }
+        }
+    }
+    
+    
+    
+#endregion
+}

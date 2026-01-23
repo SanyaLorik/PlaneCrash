@@ -308,7 +308,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 53253a6906bd64b43a091fce6effc347, type: 2}
+  - {fileID: 2100000, guid: 5431ce401707cfe45aa75e6d2c328edb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -365,6 +365,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2750dd2896188647a10e6c8b4d5e067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  _accumulationZone: {fileID: 0}
   _xMultiplySignText: {fileID: 5731056764334500034}
   _xMultiplyValue: 0

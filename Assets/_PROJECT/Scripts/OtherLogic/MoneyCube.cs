@@ -1,11 +1,9 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 
-public class MoneyCube : MonoBehaviour
-{
+public class MoneyCube : MonoBehaviour {
     [SerializeField] private Renderer rend;
 
     [SerializeField] private float tileWorldSize = 1f;
@@ -13,14 +11,13 @@ public class MoneyCube : MonoBehaviour
     [SerializeField] private int[] moneyMaterialSlots = {0, 1}; // какие материалы — деньги
 
 
-    [SerializeField] private Transform anchorPoint; // точка, на которой должен стоять низ куба
-    [SerializeField] private Button _recalculateBtn;
-    [SerializeField] private float _maxSide = 5f; 
+    [SerializeField] private Transform _bottomPoint; // точка, на которой должен стоять низ куба
+    [SerializeField] private float _maxSide = 7f; 
     [SerializeField] private float _baseSide = 1f;
     [SerializeField] private TMP_Text _textCount;
-    private MoneyRadiusSpawn _moneyRadiusSpawn;
-    private float _baseAmount = 10000f;
+    [SerializeField] private float _baseAmount = 10000f;
 
+    private MoneyRadiusSpawn _moneyRadiusSpawn;
 
     private void Awake() {
         _moneyRadiusSpawn = GetComponent<MoneyRadiusSpawn>();
@@ -45,8 +42,43 @@ public class MoneyCube : MonoBehaviour
         rend.materials = mats;
     }
 
+    public float GetCubeHeight(float amount) {
+        Transform realTransform = transform; // сохраним временно
+        
+        Vector3 newScale = NewScale(amount);
+        transform.localScale = newScale;
+
+        if (_bottomPoint != null) {
+            Bounds b = rend.bounds;
+            float deltaY = _bottomPoint.position.y - b.min.y;
+            transform.position += new Vector3(0, deltaY, 0);
+        }
+        float height = rend.bounds.max.y;
+        transform.position = realTransform.position;
+        transform.localScale = realTransform.localScale;
+        return height;
+    }
+    
     public void SetMoneyAmount(float amount, bool updateMiniMoney = true) {
         _textCount.text = amount.ToString("N0"); // шо за NO 
+        
+        
+        Vector3 newScale = NewScale(amount);
+        transform.localScale = newScale;
+
+        if (_bottomPoint != null) {
+            Bounds b = rend.bounds;
+            float deltaY = _bottomPoint.position.y - b.min.y;
+            transform.position += new Vector3(0, deltaY, 0);
+        }
+
+        if (updateMiniMoney) {
+            UpdateSpawnRadius();
+        }
+        UpdateTiling();
+    }
+
+    private Vector3 NewScale(float amount) {
         float linearSide = _baseSide * (amount / _baseAmount);
 
         float side;
@@ -65,19 +97,10 @@ public class MoneyCube : MonoBehaviour
             height = (_maxSide * 0.5f) * extra;
         }
 
-        transform.localScale = new Vector3(side, height, side);
-
-        if (anchorPoint != null) {
-            Bounds b = rend.bounds;
-            float deltaY = anchorPoint.position.y - b.min.y;
-            transform.position += new Vector3(0, deltaY, 0);
-        }
-
-        if (updateMiniMoney) {
-            UpdateSpawnRadius();
-        }
-        UpdateTiling();
+        Vector3 newScale = new Vector3(side, height, side);
+        return newScale;
     }
+
 
     // Прокину здесь чтоб не создавать еще ссылок
     private void UpdateSpawnRadius() {

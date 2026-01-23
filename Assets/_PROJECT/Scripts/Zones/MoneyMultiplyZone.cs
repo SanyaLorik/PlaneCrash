@@ -2,13 +2,19 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 public class MoneyMultiplyZone : MonoBehaviour {
     
-    [SerializeField] private BetAccumulation _accumulationZone;
     [SerializeField] private TMP_Text _xMultiplySignText; // на самой табличке
     [SerializeField] private float _xMultiplyValue;
-
+    
+    private ZoneManager _zoneManager;
+        
+    [Inject]
+    public void Init(ZoneManager zoneManager) {
+        _zoneManager = zoneManager;
+    }
     
     private void Start() {
         _xMultiplySignText.text = "x" + _xMultiplyValue;
@@ -18,7 +24,7 @@ public class MoneyMultiplyZone : MonoBehaviour {
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
             Debug.Log("ChangeMultiplyer MoneyMultiplyZone");
-            ZoneManager.Instance.ChangeMultiplyer(_xMultiplyValue);
+            _zoneManager.ChangeMultiplyer(_xMultiplyValue);
         }    
     }
 
