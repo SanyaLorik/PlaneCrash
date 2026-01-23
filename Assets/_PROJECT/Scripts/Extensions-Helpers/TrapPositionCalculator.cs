@@ -33,7 +33,7 @@ public class TrapPositionCalculator : MonoBehaviour {
     
     public Vector3 GetInBoostPosition(Vector3 boost) {
         Vector3 position = new Vector3(
-            boost.x + GetRandomOffset(_distanceX), // чуть лэва права похуй
+            boost.x, // чуть лэва права похуй
             boost.y, 
             boost.z - GetPositiveOffset(_distanceZ)  // перед бустом)))
         );
@@ -49,7 +49,5 @@ public class TrapPositionCalculator : MonoBehaviour {
     private float GetPositiveOffset(PairedValue<float> offset) 
         => Random.Range(offset.From, offset.To);
 
-    
-    
     
 }

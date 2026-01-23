@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -59,11 +60,13 @@ public class MoneyCube : MonoBehaviour {
         return height;
     }
     
+    private Tween _tween;
     public void SetMoneyAmount(float amount, bool updateMiniMoney = true) {
         _textCount.text = amount.ToString("N0"); // шо за NO 
         
         
         Vector3 newScale = NewScale(amount);
+        
         transform.localScale = newScale;
 
         if (_bottomPoint != null) {
@@ -71,6 +74,10 @@ public class MoneyCube : MonoBehaviour {
             float deltaY = _bottomPoint.position.y - b.min.y;
             transform.position += new Vector3(0, deltaY, 0);
         }
+        
+        
+        
+        
 
         if (updateMiniMoney) {
             UpdateSpawnRadius();

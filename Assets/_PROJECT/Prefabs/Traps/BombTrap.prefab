@@ -217,11 +217,13 @@ MonoBehaviour:
     <From>k__BackingField: 10
     <To>k__BackingField: -10
   _xMovePoints:
-    <From>k__BackingField: -5
-    <To>k__BackingField: 5
+    <From>k__BackingField: 10
+    <To>k__BackingField: -10
   _durationDiapasone:
-    <From>k__BackingField: 2
-    <To>k__BackingField: 5
+    <From>k__BackingField: 0.7
+    <To>k__BackingField: 1
+  _bombRenderer: {fileID: 7264857251732335989}
+  _brightnessMultiply: 0.05
   _moveInfos: []
 --- !u!65 &6694014442115287327
 BoxCollider:
@@ -242,8 +244,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.57999, y: 1.4455891, z: 1.604763}
-  m_Center: {x: -0.29355437, y: 2.800149, z: -1.8304615}
+  m_Size: {x: 1.092452, y: 1.2264253, z: 1.604763}
+  m_Center: {x: -0.029911518, y: 0.020500481, z: 0}
 --- !u!54 &412489290651951896
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -570,6 +572,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38289bad9c2be284585326048f15d40e, type: 3}
+--- !u!23 &7264857251732335989 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7026749234315577361, guid: 38289bad9c2be284585326048f15d40e, type: 3}
+  m_PrefabInstance: {fileID: 8838892478748826266}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9016405038201798001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 38289bad9c2be284585326048f15d40e, type: 3}

@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks.Triggers;
 using DG.Tweening;
 using SanyaBeerExtension;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -13,6 +15,7 @@ public struct MoveInfo {
 }
 
 public class BombTrap : MonoBehaviour {
+    
     [Header("Explosion settings")]
     [SerializeField] private float _radius = 6f;
     [SerializeField] private float _force = 800f;
@@ -25,11 +28,36 @@ public class BombTrap : MonoBehaviour {
     
     [SerializeField] private PairedValue<float> _durationDiapasone;
 
+    
+    
+    // == ПА ПРИКОЛУ ДЛЯ ТЕСТА
+    [SerializeField] private Renderer _bombRenderer; 
+    [SerializeField] private float _brightnessMultiply = 5f;
+    private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+    private Material _triggerObjectMat;
+    private LevelBounds _levelBounds;
+    
     private Rigidbody _playerRb;
     public List<MoveInfo> _moveInfos;
     
     private Ease _ease1;
     private Ease _ease2;
+
+
+    [Inject]
+    public void Init(LevelBounds levelBounds) {
+        _levelBounds = levelBounds;
+    }
+    
+    private void Awake() {
+        SetRandomEase();
+        
+        
+        _triggerObjectMat = _bombRenderer.GetComponent<Renderer>().material;
+        _triggerObjectMat.EnableKeyword("_EMISSION");
+        SetGreen();
+    }
+    
     
     private void OnTriggerEnter(Collider collider) {
         Debug.Log("OnTriggerEnter!");
@@ -47,9 +75,7 @@ public class BombTrap : MonoBehaviour {
         // gameObject.DisactiveSelf();
     }
 
-    private void Awake() {
-        SetRandomEase();
-    }
+
 
     private void SetRandomEase() {
         Ease[] eases =
@@ -79,25 +105,38 @@ public class BombTrap : MonoBehaviour {
     private Vector3 startPos; 
     public void SetMovable() {
         startPos = transform.position;
+        
         if (Random.value < 0.5f) {
-            SetUpDownTrajectory();
+            SetRed();
+            // Near Boost
+            if(Random.value < 0.5) SetUpDownTrajectory();
+            else SetLeftRightTrajectory();
             return;
         }
-
-        SetLeftRightTrajectory();
+        // Из стены или попий
+        if (Random.value < 0.5f) {
+            // Floor or Wall
+            if (Random.value < 0.5) SetFloorUpTrajectory();
+            else SetWallTrajectory();
+        }
     }
 
     private void SetUpDownTrajectory() {
+        Debug.Log("SetUpDownTrajectory");
         float duration1 = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
         float duration2 = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
         
+        
+        float offset1 = Random.Range(_yMovePoints.From, _yMovePoints.To);
+        // float offset2 = Random.Range(_yMovePoints.From, _yMovePoints.To);
+        
         DOTween.Sequence()
             .Append(
-                transform.DOMoveY(startPos.y + _yMovePoints.From, duration1)
+                transform.DOMoveY(startPos.y + offset1, duration1)
                 .SetEase(_ease1)
             )
             .Append(
-                transform.DOMoveY(startPos.y + _yMovePoints.To, duration2)
+                transform.DOMoveY(startPos.y - offset1, duration2)
                 .SetEase(_ease2)
             )
             .SetLoops(-1, LoopType.Yoyo)
@@ -106,16 +145,20 @@ public class BombTrap : MonoBehaviour {
     }
     
     private void SetLeftRightTrajectory() {
+        Debug.Log("SetLeftRightTrajectory");
         float duration1 = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
         float duration2 = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
 
+        float offset1 = Random.Range(_xMovePoints.From, _xMovePoints.To);
+        // float offset2 = Random.Range(_xMovePoints.From, _xMovePoints.To);
+        
         DOTween.Sequence()
             .Append(
-                transform.DOMoveX(startPos.x + _xMovePoints.From, duration1)
+                transform.DOMoveX(startPos.x + offset1, duration1)
                     .SetEase(_ease1)
             )
             .Append(
-                transform.DOMoveX(startPos.x + _xMovePoints.To, duration2)
+                transform.DOMoveX(startPos.x - offset1, duration2)
                     .SetEase(_ease2)
             )
             .SetLoops(-1, LoopType.Yoyo)
@@ -123,6 +166,78 @@ public class BombTrap : MonoBehaviour {
     }
     
     
+    private void SetWallTrajectory() {
+        SetYellow();
+        Debug.Log("SetLeftRightTrajectory");
+        float duration = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
+        float x = _levelBounds.LeftX;
+        if(Random.value < 0.5f) x =  _levelBounds.RightX;
+        
+        DOTween.Sequence()
+            .Append(
+                transform.DOMoveX(x, duration)
+                    .SetEase(_ease1)
+            )
+            .Append(
+                transform.DOMoveX(startPos.x, duration)
+                    .SetEase(_ease2)
+            )
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetLink(gameObject);
+    }
+    
+    
+    private void SetFloorUpTrajectory() {
+        SetBlue();
+        Debug.Log("SetUpDownTrajectory");
+        float duration1 = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
+        float duration2 = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
+        
+        
+        float offset1 = Random.Range(_yMovePoints.From, _yMovePoints.To) * 3;
+        // float offset2 = Random.Range(_yMovePoints.From, _yMovePoints.To);
+        
+        DOTween.Sequence()
+            .Append(
+                transform.DOMoveY(startPos.y + offset1, duration1/2)
+                    .SetEase(_ease1)
+            )
+            .Append(
+                transform.DOMoveY(startPos.y - offset1, duration2/2)
+                    .SetEase(_ease2)
+            )
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetLink(gameObject);
+
+    }
+    
+    
+    
+    
+    private void SetRed() {
+        Color emission = Color.red * _brightnessMultiply; // множитель яркости
+        _triggerObjectMat.SetColor(EmissionColor, emission);
+        // Debug.Log("Установка красным");
+    }
+    
+    private void SetGreen() {
+        Color emission = Color.green * _brightnessMultiply; // множитель яркости
+        _triggerObjectMat.SetColor(EmissionColor, emission);
+        // Debug.Log("Установка зеленым");
+    } 
+    
+    private void SetBlue() {
+        Color emission = Color.blue * _brightnessMultiply; // множитель яркости
+        _triggerObjectMat.SetColor(EmissionColor, emission);
+        // Debug.Log("Установка зеленым");
+    }
+    
+    
+    private void SetYellow() {
+        Color emission = Color.yellow * _brightnessMultiply; // множитель яркости
+        _triggerObjectMat.SetColor(EmissionColor, emission);
+        // Debug.Log("Установка зеленым");
+    }
 
 
 }

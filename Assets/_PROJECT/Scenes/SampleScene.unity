@@ -812,6 +812,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7641439034947648390, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 488968862574065814, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
@@ -10978,14 +10982,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrapsManager
   _zonesInfo:
   - ZoneName: "\u041F\u041E\u041A\u0410\u0417\u0423\u0428\u041D\u0410\u042F"
-    PercentageStart: 0.15
-    PercentageEnd: 0.3
+    PercentageStart: 0
+    PercentageEnd: 0.2
     ChunksCount: 0
     EnemiesPerChunk:
       <From>k__BackingField: 0
       <To>k__BackingField: 0
   - ZoneName: 1
-    PercentageStart: 0.3
+    PercentageStart: 0.2
     PercentageEnd: 1
     ChunksCount: 3
     EnemiesPerChunk:
@@ -11019,14 +11023,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrapPositionCalculator
   _distanceX:
-    <From>k__BackingField: 2
-    <To>k__BackingField: 3
+    <From>k__BackingField: 1
+    <To>k__BackingField: 2
   _distanceY:
     <From>k__BackingField: 2
     <To>k__BackingField: 3
   _distanceZ:
-    <From>k__BackingField: 2
-    <To>k__BackingField: 3
+    <From>k__BackingField: 3
+    <To>k__BackingField: 4
 --- !u!4 &743157438 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3a55333a8618fbb4db687c902bfac9cf, type: 3}
@@ -16066,7 +16070,7 @@ MonoBehaviour:
   _transformRend: {fileID: 1201291653}
   _liftPhysical: {fileID: 1201291649}
   _playerRb: {fileID: 1824038472}
-  _speedUp: 10
+  _speedUp: 40
   _inLift: 0
 --- !u!65 &1058216810
 BoxCollider:
@@ -27508,7 +27512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fa58f1166ea48e43bc14a686bc7d00b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBank
-  _playerCapital: 1500
+  _playerCapital: 1000
   _playerCapitalVisual: {fileID: 1739242165}
   _cube: {fileID: 2108755024}
   _updateMoney: 0
@@ -28443,15 +28447,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df0c1ac364b504b40aa8056634816add, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: -0.00000003348487
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df0c1ac364b504b40aa8056634816add, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.000000028097139
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df0c1ac364b504b40aa8056634816add, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6427876
+      value: 0.64278764
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df0c1ac364b504b40aa8056634816add, type: 3}
       propertyPath: m_LocalRotation.z

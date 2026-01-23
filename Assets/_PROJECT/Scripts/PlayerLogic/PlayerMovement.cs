@@ -215,7 +215,7 @@ public class PlayerMovement : FlightObject {
     private void FlightLogic() {
         Vector3 newPos =  transform.position;
         if (IsBombed) {
-            newPos.y -= _config.FallingSpeed * 10 * Time.fixedDeltaTime;
+            newPos.y -= _config.FallingSpeed * 25f * Time.fixedDeltaTime;
             transform.position = newPos;
             return;
         }
