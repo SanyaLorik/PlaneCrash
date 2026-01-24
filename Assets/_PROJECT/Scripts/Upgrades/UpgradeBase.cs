@@ -25,7 +25,7 @@ public abstract class UpgradeBase : MonoBehaviour {
     protected void Awake() {
         _visual = GetComponent<UpgradeItemVisual>();
         _currentPrice = _startPrice;
-        _visual.UpdateData(_level, _playerStats.XMultiplier, _playerStats.XMultiplier*_k, _currentPrice);
+        UpdateVisual();
     }
 
     private void BankOnBankChanged(float playerCapital) {
@@ -50,9 +50,8 @@ public abstract class UpgradeBase : MonoBehaviour {
             }
         }
     }
-    
-
 
     protected abstract void ApplyUpgrade();
+    protected abstract void UpdateVisual();
 
 }

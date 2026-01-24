@@ -27,6 +27,8 @@ public class BombTrap : MonoBehaviour {
     [SerializeField] private PairedValue<float> _xMovePoints;
     
     [SerializeField] private PairedValue<float> _durationDiapasone;
+    
+    
 
     
     
@@ -63,8 +65,13 @@ public class BombTrap : MonoBehaviour {
         // Debug.Log("OnTriggerEnter!");
         if (collider.TryGetComponent(out PlayerMovement movement)) {
             _particleSystem.Play();
-            Explode(collider.GetComponent<Rigidbody>());
             movement.SetPlayerIsBombed();
+            if (movement.TryToKill()) {
+                Debug.Log("Killed");
+                Explode(collider.GetComponent<Rigidbody>());
+                return;
+            }
+            Debug.Log("Вы пережили бомбу!");
         }
         // Если бот еще одна логика
         if (collider.TryGetComponent(out BotStateManager bot)) {
@@ -170,7 +177,7 @@ public class BombTrap : MonoBehaviour {
         float x = _levelBounds.LeftX;
         if(Random.value < 0.5f) x =  _levelBounds.RightX;
         
-        DOTween.Sequence()
+        DOTween.Sequence()   
             .Append(
                 transform.DOMoveX(x, duration)
                     .SetEase(_ease1)
@@ -237,4 +244,5 @@ public class BombTrap : MonoBehaviour {
     }
 
 
+    
 }

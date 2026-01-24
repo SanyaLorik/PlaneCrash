@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using SanyaBeerExtension;
 using Unity.Collections;
 using UnityEngine;
@@ -62,16 +63,20 @@ public class TrapsManager : MonoBehaviour {
         
         // Нам нужны все бусты
         GetAllBoost();
-        // Начиная с зоны _zonesInfo[0] 
-        SpawnFakeTraps();
-        // Дальше 1-3 зоны
-        SpawnMoveTraps(_zonesInfo[1]);
-        SpawnMoveTraps(_zonesInfo[2]);
-        SpawnMoveTraps(_zonesInfo[3]);
+        SpawnAllTrapsAsync().Forget();
 
     }
 
-    private void SpawnFakeTraps() {
+    private async UniTask SpawnAllTrapsAsync() {
+        // Начиная с зоны _zonesInfo[0] 
+        await SpawnFakeTraps();
+        // Дальше 1-3 зоны
+        await SpawnMoveTraps(_zonesInfo[1]);
+        await SpawnMoveTraps(_zonesInfo[2]);
+        await SpawnMoveTraps(_zonesInfo[3]);
+    } 
+
+    private async UniTask SpawnFakeTraps() {
         // _trapObject
         float startZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageStart);
         float endZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageEnd);
@@ -86,17 +91,17 @@ public class TrapsManager : MonoBehaviour {
             boost.hasTrap = true;
             Vector3 _trapPosition = _trapPositionCalculator.GetNearBoostPosition(boost.transform.position);
             BombTrap _trap = Instantiate(_trapObject, _trapPosition, Quaternion.identity);
-            
             Debug.Log("Спавн фейк трапа в :" + _trapPosition);
             _trap.transform.localPosition = _trapPosition;
             
             _traps.Add(_trap);
+            await UniTask.WaitForEndOfFrame();
         }
     }
     
     
     
-    private void SpawnMoveTraps(ZoneInfo zone) {
+    private async UniTask SpawnMoveTraps(ZoneInfo zone) {
         // _trapObject
         float startZCoord = _zoneManager.CruiserDistance * (zone.PercentageStart);
         float endZCoord = _zoneManager.CruiserDistance * (zone.PercentageEnd);
@@ -132,6 +137,7 @@ public class TrapsManager : MonoBehaviour {
                 _trap.transform.localPosition = _trapPosition;
                 
                 _traps.Add(_trap);
+                await UniTask.WaitForEndOfFrame();
             }
         }
 

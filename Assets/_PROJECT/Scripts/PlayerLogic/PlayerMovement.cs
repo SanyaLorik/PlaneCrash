@@ -18,17 +18,20 @@ public class PlayerMovement : FlightObject {
 
     private PlayerStateManager _stateManager;
     private LevelBounds _levelBounds;
+    private IPlayerStatsReadOnly _playerStats;
 
     public float PlayerSpeed => _config.SpeedForce;
     public event Action SetBoost;
     
     [Inject]
-    public void Init(PlayerConfig config, PlayerStateManager stateManager, LevelBounds levelBounds) {
+    public void Init(PlayerConfig config, PlayerStateManager stateManager, LevelBounds levelBounds, IPlayerStatsReadOnly playerStats) {
         _stateManager =  stateManager;
         _config = config;
         _levelBounds = levelBounds;
         
         _stateManager.ChangeState += OnChangeSpaceRotation;
+
+        _playerStats = playerStats;
     }
     
     
@@ -45,6 +48,7 @@ public class PlayerMovement : FlightObject {
         TpPlayerInSpawn();
     }
 
+    [SerializeField] private int LifesCount;
     private void FixedUpdate() {
         if (_stateManager.CurrentState == PlayerState.Walking) {
             Walk();
@@ -62,6 +66,23 @@ public class PlayerMovement : FlightObject {
     }
 
 
+    /// <summary>
+    /// TEST  I`ll DELETE these Later
+    /// </summary>
+    [SerializeField] private bool _resetLifes;
+    private void Update() {
+        if (_resetLifes) {
+            ResetLifes();
+            _resetLifes = false;
+        }
+    }
+
+    public bool TryToKill() => LifesCount-- <= 0;
+    
+    private void ResetLifes() => LifesCount = _playerStats.DefenceCount;
+    
+
+
     public bool IsBombed;
     public void SetPlayerIsBombed() {
         _isBusted = false;
@@ -73,6 +94,7 @@ public class PlayerMovement : FlightObject {
     private void OnChangeSpaceRotation(PlayerState playerState) {
         _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
         if (playerState == PlayerState.Flight) {
+            ResetLifes();
             IsBombed = false;
             RotateLocalXAsync(-25, playerState, _token).Forget();
             _rb.useGravity = false;
@@ -263,7 +285,8 @@ public class PlayerMovement : FlightObject {
         euler.z = _currentRoll;
         transform.localEulerAngles = euler;
     }
-    
+
+
 
     
 }

@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3138703822843486446, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3138703822843486446, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.16062069
       objectReference: {fileID: 0}
     - target: {fileID: 3138703822843486446, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.11
       objectReference: {fileID: 0}
     - target: {fileID: 3138703822843486446, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26,15 +26,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3138703822843486446, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3138703822843486446, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3138703822843486446, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3138703822843486446, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -59,5 +59,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6337863765394426253, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6190819456242974869}
   m_SourcePrefab: {fileID: 100100000, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
+--- !u!1 &3013469097610208932 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6337863765394426253, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
+  m_PrefabInstance: {fileID: 9089781023025917737}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6190819456242974869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3013469097610208932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6508b3894684f054fa3d05e946b697a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LuckyUpgrade
+  _k: 1.5
+  _priceMultiply: 2
+  _startPrice: 500

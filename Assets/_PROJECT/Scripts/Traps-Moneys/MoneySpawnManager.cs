@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using SanyaBeerExtension;
 using UnityEngine;
@@ -18,9 +19,10 @@ public class MoneySpawnManager : MonoBehaviour {
     private PlayerStateManager _playerStateManager;
     private LevelBounds _levelBounds;
     
+    private DiContainer _container;
     [Inject]
     public void Init(PlayerConfig playerConfig, BoostSpawner boostSpawner, 
-        PlayerStateManager playerStateManager, LevelBounds levelBounds) {
+        PlayerStateManager playerStateManager, LevelBounds levelBounds, DiContainer container) {
         _playerConfig = playerConfig;
         _boostSpawner = boostSpawner;
         
@@ -30,17 +32,19 @@ public class MoneySpawnManager : MonoBehaviour {
 
 
         _levelBounds = levelBounds;
+
+        _container = container;
     }
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Flight) {
-            SpawnMoney(_boostSpawner.GetAllBoosts());
+            StartCoroutine(SpawnMoney(_boostSpawner.GetAllBoosts()));
         }
     }
 
 
     private List<MoneyObject> _spawnedMoneys = new();
-    private void SpawnMoney(List<Boost> _boosts) {
+    private IEnumerator SpawnMoney(List<Boost> _boosts) {
         ClearMoneyObjects();
         // Debug.Log("Spawn Money");
         foreach (var boost in _boosts) {
@@ -49,8 +53,10 @@ public class MoneySpawnManager : MonoBehaviour {
             Vector3 spawnPos = GetPositionOnBoost(boost);
 
             MoneyObject newMoney = Instantiate(_moneyPrefab, spawnPos, Quaternion.identity);
+            _container.Inject(newMoney);
             newMoney.SetMoneyAmount(Random.Range(_moneyAmountDiapasone.From, _moneyAmountDiapasone.To));
             _spawnedMoneys.Add(newMoney); 
+            yield return null;
         }
     }
     

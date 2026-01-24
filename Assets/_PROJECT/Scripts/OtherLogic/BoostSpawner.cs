@@ -48,12 +48,13 @@ public class BoostSpawner : MonoBehaviour {
     private List<List<Boost>> _trueWaysBeforeZone = new();
     private List<List<Boost>> _falseWays = new();
     
-
+    private DiContainer _container;
     [Inject]
-    public void Init(PlayerMovement playerMovement, IPlayerStatsReadOnly playerStats, LevelBounds levelBounds) {
+    public void Init(PlayerMovement playerMovement, IPlayerStatsReadOnly playerStats, LevelBounds levelBounds, DiContainer container) {
         _playerMovement = playerMovement;
         _playerStats =  playerStats;
         _levelBounds = levelBounds;
+        _container = container;
     }
 
 
@@ -177,7 +178,10 @@ public class BoostSpawner : MonoBehaviour {
                 zPos                  
             );
         
-            boost.Add(Instantiate(boostPrefab, spawnPosition, Quaternion.identity)); 
+            Boost newBoost = Instantiate(boostPrefab, spawnPosition, Quaternion.identity);
+            _container.Inject(newBoost);
+            boost.Add(newBoost); 
+            
         }
         for (int i = 0; i < boost.Count; i++) {
             if (i != boost.Count - 1) {
