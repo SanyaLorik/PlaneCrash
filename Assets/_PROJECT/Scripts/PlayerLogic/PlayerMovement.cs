@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
@@ -264,7 +266,12 @@ public class PlayerMovement : FlightObject {
     }
 
 
+    [SerializeField] private float _getObjectsCooldownSeconds;
+    public bool ObjectGetAllow { get; private set; } = true;
+
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
+        if (!ObjectGetAllow) return;
+
         _currentCurve = curve;
         _expandedTime = 0f;
         _isBusted = true;
@@ -273,6 +280,13 @@ public class PlayerMovement : FlightObject {
         float distance = Vector3.Distance(_initialPos, TargetPos);
         _segmentDuration = distance / _config.SpeedForce; 
         SetBoost?.Invoke();
+        ObjectGetAllow = false;
+        StartCoroutine(ObjectAllowCooldown());
+    }
+
+    private IEnumerator ObjectAllowCooldown() {
+        yield return new WaitForSeconds(_getObjectsCooldownSeconds);
+        ObjectGetAllow = true;
     } 
 
     

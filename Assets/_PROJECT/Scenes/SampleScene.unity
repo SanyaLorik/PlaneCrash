@@ -11090,8 +11090,8 @@ MonoBehaviour:
     <From>k__BackingField: 1
     <To>k__BackingField: 2
   _distanceZ:
-    <From>k__BackingField: 3
-    <To>k__BackingField: 6
+    <From>k__BackingField: 2
+    <To>k__BackingField: 4
 --- !u!4 &743157438 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3a55333a8618fbb4db687c902bfac9cf, type: 3}
@@ -26363,6 +26363,22 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8349797098346909760, guid: b32b89fa7d6f45c4299cefc92b905272, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2699165
+      objectReference: {fileID: 0}
+    - target: {fileID: 8349797098346909760, guid: b32b89fa7d6f45c4299cefc92b905272, type: 3}
+      propertyPath: m_Size.z
+      value: 1.2531415
+      objectReference: {fileID: 0}
+    - target: {fileID: 8349797098346909760, guid: b32b89fa7d6f45c4299cefc92b905272, type: 3}
+      propertyPath: m_Center.x
+      value: -0.041618254
+      objectReference: {fileID: 0}
+    - target: {fileID: 8349797098346909760, guid: b32b89fa7d6f45c4299cefc92b905272, type: 3}
+      propertyPath: m_Center.z
+      value: -0.029015103
+      objectReference: {fileID: 0}
+    - target: {fileID: 8349797098346909760, guid: b32b89fa7d6f45c4299cefc92b905272, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
@@ -27625,6 +27641,7 @@ MonoBehaviour:
   LifesCount: 0
   _resetLifes: 0
   IsBombed: 0
+  _getObjectsCooldownSeconds: 1
 --- !u!114 &1824038469
 MonoBehaviour:
   m_ObjectHideFlags: 0

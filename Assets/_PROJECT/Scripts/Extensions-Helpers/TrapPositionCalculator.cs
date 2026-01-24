@@ -34,7 +34,7 @@ public class TrapPositionCalculator : MonoBehaviour {
     public Vector3 GetInBoostPosition(Vector3 boost) {
         Vector3 position = new Vector3(
             boost.x, // чуть лэва права похуй
-            boost.y + GetRandomOffset(_distanceY), 
+            boost.y,
             boost.z - GetPositiveOffset(_distanceZ)  // перед бустом)))
         );
         position = _levelBounds.ClampPosition(position);

@@ -38,6 +38,7 @@ public class BombTrap : MonoBehaviour {
     private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
     private Material _triggerObjectMat;
     private LevelBounds _levelBounds;
+    private BoostSpawner _boostSpawner;
     
     private Rigidbody _playerRb;
     public List<MoveInfo> _moveInfos;
@@ -47,9 +48,12 @@ public class BombTrap : MonoBehaviour {
 
 
     [Inject]
-    public void Init(LevelBounds levelBounds) {
+    public void Init(LevelBounds levelBounds, BoostSpawner boostSpawner) {
         _levelBounds = levelBounds;
+        _boostSpawner = boostSpawner;
     }
+
+
     
     private void Awake() {
         SetRandomEase();
@@ -64,13 +68,16 @@ public class BombTrap : MonoBehaviour {
     private void OnTriggerEnter(Collider collider) {
         // Debug.Log("OnTriggerEnter!");
         if (collider.TryGetComponent(out PlayerMovement movement)) {
+            if(!movement.ObjectGetAllow) return;
             _particleSystem.Play();
-            movement.SetPlayerIsBombed();
             if (movement.TryToKill()) {
                 Debug.Log("Killed");
                 Explode(collider.GetComponent<Rigidbody>());
+                movement.SetPlayerIsBombed();
                 return;
             }
+
+            _boostSpawner.SetPlayerToNextRightBooster(movement.transform.position);
             Debug.Log("Вы пережили бомбу!");
         }
         // Если бот еще одна логика

@@ -48,6 +48,10 @@ public class BoostSpawner : MonoBehaviour {
     private List<List<Boost>> _trueWaysBeforeZone = new();
     private List<List<Boost>> _falseWays = new();
     
+    private bool MinimumFlightTimeIsBig;
+    
+    
+    
     private DiContainer _container;
     [Inject]
     public void Init(PlayerMovement playerMovement, IPlayerStatsReadOnly playerStats, LevelBounds levelBounds, DiContainer container) {
@@ -70,8 +74,8 @@ public class BoostSpawner : MonoBehaviour {
     }   
     
     public List<Boost> GetAllBoosts() {
-        return _trueWaysAfterZone
-            .Concat(_trueWaysBeforeZone)
+        return _trueWaysBeforeZone
+            .Concat(_trueWaysAfterZone)
             .Concat(_falseWays)
             .SelectMany(list=>list)
             .ToList();
@@ -79,7 +83,6 @@ public class BoostSpawner : MonoBehaviour {
 
 
 
-    private bool MinimumFlightTimeIsBig;
     public void SpawnBoosts(Vector3 curiserPosition) {
         Debug.Log("Генерация бустов");
         MinimumFlightTimeIsBig = false;
@@ -128,7 +131,36 @@ public class BoostSpawner : MonoBehaviour {
         }
         _playerMovement.SetBooster(_curves[0], _trueWaysBeforeZone[0][0].transform.position); // действует на игрока первым
     }
-    
+
+
+    private List<Boost> _rightBoosts = new ();
+    public void SetPlayerToNextRightBooster(Vector3 playerPosition) {
+        if (_rightBoosts.Count == 0) {
+            _rightBoosts = 
+                _trueWaysBeforeZone
+                    .Concat(_trueWaysAfterZone)
+                    .SelectMany(list => list)
+                    .OrderBy(boost => boost.transform.position.z)
+                    .ToList();
+        }
+
+        Debug.Log("Правильные бусты:");
+        foreach (var rightBoost in _rightBoosts) {
+            Debug.Log(rightBoost.transform.position.z);
+        }
+        
+
+        for (int i = 0; i < _rightBoosts.Count; i++) {
+            if (_rightBoosts[i].transform.position.z > playerPosition.z + 100f) {
+                if (i > 0) {
+                    Debug.Log("Нашли первый буст следующий после игрока" + _rightBoosts[i].transform.position);
+                    _playerMovement.SetBooster(_rightBoosts[i-1].randomTrajectory, _rightBoosts[i-1].nextBooster);
+                    return;
+                }
+            }
+        }
+        Debug.LogWarning("Буста не нашли(");
+    }
     
     
     private void MoveVisualZone() {
@@ -152,6 +184,7 @@ public class BoostSpawner : MonoBehaviour {
         _trueWaysAfterZone.Clear();
         _trueWaysBeforeZone.Clear();
         _falseWays.Clear();
+        _rightBoosts.Clear();
     }
 
     
@@ -163,6 +196,9 @@ public class BoostSpawner : MonoBehaviour {
         }
         
         List<float> spawnPoints = BoostsZPoints(initZPos, targetPosition, isBeforeZone);
+
+ 
+        
         List<Boost> boost = new ();
         
         // Начальная высота буста
@@ -181,7 +217,6 @@ public class BoostSpawner : MonoBehaviour {
             Boost newBoost = Instantiate(boostPrefab, spawnPosition, Quaternion.identity);
             _container.Inject(newBoost);
             boost.Add(newBoost); 
-            
         }
         for (int i = 0; i < boost.Count; i++) {
             if (i != boost.Count - 1) {
@@ -207,7 +242,7 @@ public class BoostSpawner : MonoBehaviour {
             // Первый буст дольше обычного чтоб игрок сдюжил
             if (firstBoost && isBeforeZone) {
                 firstBoost = false;
-                newSpawnPoint = _boostDistance.From + Random.Range(_boostDistance.From, _boostDistance.To);
+                newSpawnPoint = _boostDistance.From * Random.Range(1.2f, 1.7f);
             }
             initZPos += newSpawnPoint;
             // Прям если в нужной точке буст то хуйня
@@ -215,7 +250,6 @@ public class BoostSpawner : MonoBehaviour {
                 spawnPoints.Add(initZPos);
             }
         }
-        
     
         // Сортируем для гарантии порядка
         spawnPoints.Sort();

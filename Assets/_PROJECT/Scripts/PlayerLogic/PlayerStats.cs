@@ -4,8 +4,8 @@ using UnityEngine;
 public class PlayerStats : IPlayerStatsReadOnly, IPlayerStatsWritable {
     public float XMultiplier { get; private set; } = 1f;
     public float LuckyMultiplier { get; private set; } = 1f;
-    public float MagnetSpeed { get; private set; } = 0;
-    public int DefenceCount { get; private set; }
+    public float MagnetSpeed { get; private set; } = 1f;
+    public int DefenceCount { get; private set; } = 1;
     public event Action ChangeStats;
 
     public void UpdateXMultiplier(float x) {

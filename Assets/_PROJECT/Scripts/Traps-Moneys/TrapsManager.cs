@@ -74,6 +74,7 @@ public class TrapsManager : MonoBehaviour {
         await SpawnMoveTraps(_zonesInfo[1]);
         await SpawnMoveTraps(_zonesInfo[2]);
         await SpawnMoveTraps(_zonesInfo[3]);
+        await SpawnTrapsNearBoosts();
     } 
 
     private async UniTask SpawnFakeTraps() {
@@ -118,8 +119,8 @@ public class TrapsManager : MonoBehaviour {
         foreach (var diapasone in chunksDiapasone) {
             int enemiesCount = Random.Range(zone.EnemiesPerChunk.From, zone.EnemiesPerChunk.To);
             float distance = diapasone.Z2 - diapasone.Z1;
-            Debug.Log("Дистанция зоны: " + distance);
-            Debug.Log("Кол-во ловушек: " + enemiesCount);
+            // Debug.Log("Дистанция зоны: " + distance);
+            // Debug.Log("Кол-во ловушек: " + enemiesCount);
             
             for (int i = 0; i < enemiesCount; i++) {
                 float x = Random.Range(_levelBounds.LeftX, _levelBounds.RightX); // пока просто где-то
@@ -127,11 +128,11 @@ public class TrapsManager : MonoBehaviour {
                 float z = diapasone.Z1 + (distance * (i) / enemiesCount);  
                 
                 Vector3 _trapPosition = new Vector3(x, y, z);
-                Debug.Log("Спавн в " + _trapPosition);
+                // Debug.Log("Спавн в " + _trapPosition);
                     
                     
                 BombTrap _trap = Instantiate(_trapObject, _trapPosition, Quaternion.identity);
-                _trap.Init(_levelBounds);
+                _trap.Init(_levelBounds, _boostsSpawner);
                 _trap.SetMovable();
                 // Debug.Log("Спавн движущегося трапа в: " + _trapPosition);
                 _trap.transform.localPosition = _trapPosition;
@@ -139,6 +140,31 @@ public class TrapsManager : MonoBehaviour {
                 _traps.Add(_trap);
                 await UniTask.WaitForEndOfFrame();
             }
+        }
+
+    }
+    
+    
+    private async UniTask SpawnTrapsNearBoosts() {
+        // _trapObject
+        float startZCoord = _zoneManager.CruiserDistance * (_zonesInfo[1].PercentageStart);
+        float endZCoord = _zoneManager.CruiserDistance * (_zonesInfo[^1].PercentageEnd);
+        Debug.Log($"Спавн ловушек возле бустов будет в диапазоне: ({startZCoord}:{endZCoord})");
+
+        
+        foreach (var boost in _boosts) {
+            if(Random.value < 0.1f) continue;  
+            Vector3 _trapPosition = _trapPositionCalculator.GetInBoostPosition(boost.transform.position);
+            
+            BombTrap _trap = Instantiate(_trapObject, _trapPosition, Quaternion.identity);
+            _trap.Init(_levelBounds, _boostsSpawner);
+            _trap.SetMovable();
+            
+            // Debug.Log("Спавн движущегося трапа в: " + _trapPosition);
+            _trap.transform.localPosition = _trapPosition;
+            
+            _traps.Add(_trap);
+            await UniTask.WaitForEndOfFrame();
         }
 
     }
