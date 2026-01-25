@@ -44,7 +44,6 @@ public class PlayerMagnet : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.TryGetComponent(out IMagnetic magnetic)) {
-            Debug.Log("Попадание в коллайдер " + magnetic.Type);
             if (magnetic.Type == MagneticType.Boost) {
                 _magneticsBoost.Add(magnetic);
                 return;
@@ -56,7 +55,6 @@ public class PlayerMagnet : MonoBehaviour {
     
     private void OnTriggerExit(Collider collider) {
         if (collider.TryGetComponent(out IMagnetic magnetic)) {
-            Debug.Log("Попадание в коллайдер " + magnetic);
             if (magnetic.Type == MagneticType.Boost) {
                 _magneticsBoost.Add(magnetic);
                 return;

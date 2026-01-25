@@ -8,5 +8,16 @@ namespace _PROJECT.Scripts.Helpers {
             tokenSource =  new CancellationTokenSource();
             return tokenSource.Token;
         }
+
+        public static void StopTask(ref CancellationTokenSource tokenSource) {
+            tokenSource?.Cancel();
+        }
+        
+        public static void DisposeTask(ref CancellationTokenSource tokenSource) {
+            tokenSource?.Cancel();
+            tokenSource?.Dispose();
+            tokenSource = null;
+        }
+        
     }
 }

@@ -9,6 +9,8 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
 public class BotFlight : FlightObject, IBotBehaviour {
     [SerializeField] private int _countBoostEquilizeSpeed;
     [SerializeField] private float _botSpeedCorrect;
@@ -16,6 +18,10 @@ public class BotFlight : FlightObject, IBotBehaviour {
     [SerializeField] private Transform _botModelForRotate;
     [Range(0,1), SerializeField] private float _trueWayChance;
     [SerializeField] private float _fallingTime;
+    
+    [SerializeField] private Rigidbody _rb;
+    [SerializeField] private Collider _collider;
+    
     
     private PlayerConfig _playerConfig;
     private BoostSpawner _boostSpawner;
@@ -25,7 +31,6 @@ public class BotFlight : FlightObject, IBotBehaviour {
 
     
     public event Action EndFlight;
-    private Collider _collider;
     private LevelBounds _levelBounds;
     
     
@@ -37,7 +42,6 @@ public class BotFlight : FlightObject, IBotBehaviour {
     }
 
     private void Awake() {
-        _collider =  GetComponent<Collider>();
     }
 
     public void GoToFall() {
@@ -196,6 +200,8 @@ public class BotFlight : FlightObject, IBotBehaviour {
     
     private void TpToSpawn() {
         transform.position = _playerConfig.PlayerSpawnPosition;
+        _rb.linearVelocity = Vector3.zero;
+        
     }
 
 

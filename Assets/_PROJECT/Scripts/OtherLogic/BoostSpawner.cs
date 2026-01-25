@@ -84,7 +84,6 @@ public class BoostSpawner : MonoBehaviour {
 
 
     public void SpawnBoosts(Vector3 curiserPosition) {
-        Debug.Log("Генерация бустов");
         MinimumFlightTimeIsBig = false;
         ClearAllBoosts();
         
@@ -103,6 +102,9 @@ public class BoostSpawner : MonoBehaviour {
             _falseWays.Add(SpawnBoostWays(_startFlightZ, newFalsePosition, _falseBoostPrefab, false));
         }
 
+        MarkBoostFalse(_falseWays);
+        
+        
         // 2. После зоны
         if (curiserPosition.z - _minDistance < _boostDistance.To + _boostDistance.From) {
             Debug.Log("Задано большое значение MinimumFlightTime, все пути ведут к крейсеру " + MinimumFlightTime);
@@ -124,6 +126,9 @@ public class BoostSpawner : MonoBehaviour {
         }
     }
 
+
+    
+
     public void SpawnEntranceBoost() {
         if (_setPlayerFalseWay) {
             _playerMovement.SetBooster(_curves[0], _falseWays[0][0].transform.position); // действует на игрока первым
@@ -133,8 +138,10 @@ public class BoostSpawner : MonoBehaviour {
     }
 
 
-    private List<Boost> _rightBoosts = new ();
-    public void SetPlayerToNextRightBooster(Vector3 playerPosition) {
+    private List<Boost> _rightBoosts = new();
+
+
+    public List<Boost> GetRightBoosts() {
         if (_rightBoosts.Count == 0) {
             _rightBoosts = 
                 _trueWaysBeforeZone
@@ -143,12 +150,16 @@ public class BoostSpawner : MonoBehaviour {
                     .OrderBy(boost => boost.transform.position.z)
                     .ToList();
         }
+        return _rightBoosts;
+    }
+
+    public void SetPlayerToNextRightBooster(Vector3 playerPosition) {
+        GetRightBoosts();
 
         Debug.Log("Правильные бусты:");
         foreach (var rightBoost in _rightBoosts) {
             Debug.Log(rightBoost.transform.position.z);
         }
-        
 
         for (int i = 0; i < _rightBoosts.Count; i++) {
             if (_rightBoosts[i].transform.position.z > playerPosition.z + 100f) {
@@ -242,7 +253,8 @@ public class BoostSpawner : MonoBehaviour {
             // Первый буст дольше обычного чтоб игрок сдюжил
             if (firstBoost && isBeforeZone) {
                 firstBoost = false;
-                newSpawnPoint = _boostDistance.From * Random.Range(1.2f, 1.7f);
+                // Рандомное значение просто для отдаления
+                newSpawnPoint = _boostDistance.From * Random.Range(1.2f, 1.7f); 
             }
             initZPos += newSpawnPoint;
             // Прям если в нужной точке буст то хуйня
@@ -273,6 +285,14 @@ public class BoostSpawner : MonoBehaviour {
     private Vector3 CalculateMinEndPosition() {
         float x = Random.Range(_levelBounds.LeftX, _levelBounds.RightX);
         return new Vector3(x, 0f, _minDistance);
+    }
+    
+    private void MarkBoostFalse(List<List<Boost>> boostsWays) {
+        foreach (var ways in boostsWays) {
+            foreach (var boost in ways) {
+                boost.trueBoost = false;
+            }
+        }
     }
 
 

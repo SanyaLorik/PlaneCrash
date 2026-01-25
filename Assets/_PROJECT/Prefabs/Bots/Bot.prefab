@@ -400,6 +400,8 @@ MonoBehaviour:
   _botModelForRotate: {fileID: 973615598179476012}
   _trueWayChance: 0.3
   _fallingTime: 10
+  _rb: {fileID: 1774364267822763429}
+  _collider: {fileID: 6369799290924180892}
 --- !u!114 &8294990205142184892
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -92,7 +92,7 @@ public class TrapsManager : MonoBehaviour {
             boost.hasTrap = true;
             Vector3 _trapPosition = _trapPositionCalculator.GetNearBoostPosition(boost.transform.position);
             BombTrap _trap = Instantiate(_trapObject, _trapPosition, Quaternion.identity);
-            Debug.Log("Спавн фейк трапа в :" + _trapPosition);
+            // Debug.Log("Спавн фейк трапа в :" + _trapPosition);
             _trap.transform.localPosition = _trapPosition;
             
             _traps.Add(_trap);
@@ -180,7 +180,7 @@ public class TrapsManager : MonoBehaviour {
             };
             
             chunksDiapasone.Add(chunkDistance);
-            Debug.Log($"{i+1}ый чанк, Дистанция: ({chunksDiapasone[i].Z1:F1} - {chunksDiapasone[i].Z2:F1})");
+            // Debug.Log($"{i+1}ый чанк, Дистанция: ({chunksDiapasone[i].Z1:F1} - {chunksDiapasone[i].Z2:F1})");
         }
         return chunksDiapasone;
     }

@@ -12816,6 +12816,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77a159c0960f2848a649ba19ead7ae3, type: 3}
+--- !u!1 &855751499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 855751500}
+  - component: {fileID: 855751501}
+  m_Layer: 0
+  m_Name: Prediction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &855751500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855751499}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1824038463}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &855751501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855751499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1964f8dd481a7d545b002bfca8ae670b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPrediction
+  _predictDistance: 120
 --- !u!1001 &857834473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13551,7 +13596,7 @@ MonoBehaviour:
   _countTrueWays:
     <From>k__BackingField: 3
     <To>k__BackingField: 2
-  _countFalseWays: 1
+  _countFalseWays: 2
   _zoneSpawn: {fileID: 1668428521}
   _startFlightZ: 2
   _setPlayerFalseWay: 0
@@ -14113,7 +14158,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 11.749922
+  m_Radius: 17.78
   m_Center: {x: 0, y: 0.0000000027939446, z: 2.1235678}
 --- !u!114 &909948782
 MonoBehaviour:
@@ -16323,7 +16368,7 @@ MonoBehaviour:
   _transformRend: {fileID: 1201291653}
   _liftPhysical: {fileID: 1201291649}
   _playerRb: {fileID: 1824038472}
-  _speedUp: 40
+  _timeToUp: 3
   _inLift: 0
 --- !u!65 &1058216810
 BoxCollider:
@@ -17414,6 +17459,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Money_Stack_Animated
       objectReference: {fileID: 0}
+    - target: {fileID: 2596165461826219492, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18.645872
@@ -17452,6 +17501,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3447229542688790135, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189259040672320595, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6486997990498166115, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7318427119830615220, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8590800002736251984, guid: 1da4f93a3a101cc4e8080559932c31a7, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -19688,6 +19753,7 @@ GameObject:
   - component: {fileID: 1291533256}
   - component: {fileID: 1291533257}
   - component: {fileID: 1291533258}
+  - component: {fileID: 1291533259}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -19796,6 +19862,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedf14827a514de4f86cc313ad6cbc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HelpInstaller
+--- !u!114 &1291533259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291533252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b113d15627c4f034e81b13ca2ed66464, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.EconomicInstaller
+  _currencyTypeSOs: []
 --- !u!1 &1292426949
 GameObject:
   m_ObjectHideFlags: 0
@@ -25493,7 +25572,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1695576365}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca7de3aefa901374ba29464584a3109a, type: 3}
   m_Name: 
@@ -27624,6 +27703,7 @@ Transform:
   - {fileID: 909948780}
   - {fileID: 2103805099}
   - {fileID: 723943948}
+  - {fileID: 855751500}
   m_Father: {fileID: 699255799}
   m_LocalEulerAnglesHint: {x: -80, y: 0, z: 0}
 --- !u!114 &1824038466
@@ -27639,9 +27719,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   LifesCount: 0
-  _resetLifes: 0
   IsBombed: 0
   _getObjectsCooldownSeconds: 1
+  _smoothTime: 0.2
 --- !u!114 &1824038469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27852,7 +27932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fa58f1166ea48e43bc14a686bc7d00b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBank
-  _playerCapital: 30000
+  _playerCapital: 1000
   _playerCapitalVisual: {fileID: 1739242165}
   _cube: {fileID: 2108755024}
   _updateMoney: 0
@@ -33206,7 +33286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8077793226379734792, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.66
+      value: 12.39
       objectReference: {fileID: 0}
     - target: {fileID: 8077793226379734792, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
       propertyPath: m_LocalPosition.z

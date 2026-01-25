@@ -11,14 +11,13 @@ public class Lift : MonoBehaviour {
     [SerializeField] private Renderer _transformRend;
     [SerializeField] private GameObject _liftPhysical;
     [SerializeField] private Rigidbody _playerRb;
-    [SerializeField]  private float _speedUp = 10f; 
+    [SerializeField]  private float _timeToUp = 10f; 
     
     private Vector3 _liftDownPosition; 
     private Vector3 _moneyEndPos;
     private CancellationTokenSource _tokenSource;
     private Rigidbody _liftRb;
     public bool _inLift;
-    private Coroutine _liftDownRoutine;
 
 
 
@@ -45,16 +44,8 @@ public class Lift : MonoBehaviour {
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
             _inLift = true;
-            
-            if (_liftDownRoutine != null) {
-                StopCoroutine(_liftDownRoutine);
-            }
-
-            if (_tokenSource == null && _liftGoingDown) {
-                _liftGoingDown = false;
-                ReadyLiftWork();
-                LiftUp(_tokenSource.Token).Forget();
-            }
+            ReadyLiftWork();
+            LiftUp(_tokenSource.Token).Forget();
         }    
     }
 
@@ -62,24 +53,12 @@ public class Lift : MonoBehaviour {
     private void OnTriggerExit(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
             _inLift = false;
-            
-            if (_liftDownRoutine != null) {
-                StopCoroutine(_liftDownRoutine);
-            }
-
-            _liftDownRoutine = StartCoroutine(WaitChangeStateRoutine());
+            ReadyLiftWork();
+            LiftDown(_tokenSource.Token).Forget();
         }    
     }
 
-    private IEnumerator WaitChangeStateRoutine() {
-        yield return new WaitForSeconds(1.5f);
-        if (!_inLift ) {
-            
-            ReadyLiftWork();
-            LiftDown(_tokenSource.Token).Forget();
-        }
-        _liftDownRoutine =  null;
-    }
+
 
 
     private void CalculateMoneyDistance() {
@@ -112,24 +91,16 @@ public class Lift : MonoBehaviour {
             return;
         }
         
-        
-        
         Vector3 _startPos = transform.position;
         Vector3 _endPosition = _moneyEndPos;
-        
-        
-        Debug.Log($"Подьем лифта из {_startPos.y} в {_endPosition.y}");
-       
-        float duration = Math.Abs(_startPos.y - _endPosition.y) / _speedUp;
-        float elapsedTime = 0f;
-        
-        Debug.Log("LiftUp duration" + duration);
-        Debug.Log("LiftUp _endPosition" + _endPosition.y);
 
-        while (elapsedTime < duration) {
-            float t = elapsedTime / duration;
-            t = Mathf.SmoothStep(0, 1, t);
-            Vector3 newPos = Vector3.Lerp(_startPos, _endPosition, t);
+        float elapsedTime = 0f;
+
+
+        while (elapsedTime < _timeToUp) {
+            float t = elapsedTime / _timeToUp;
+            float y = Mathf.Lerp(_startPos.y, _endPosition.y, t);
+            Vector3 newPos = new Vector3(_startPos.x, y, _startPos.z);
             _liftRb.MovePosition(newPos);
             elapsedTime += Time.fixedDeltaTime;
             await UniTask.WaitForFixedUpdate(token);
@@ -153,21 +124,20 @@ public class Lift : MonoBehaviour {
         Debug.Log($"Опуск лифта из {_startPos.y} в {_endPosition.y}");
         
         
-        float duration = Math.Abs(_startPos.y - _endPosition.y) / _speedUp;
 
         float elapsedTime = 0f;
-        float durationForDown = duration / 1.5f;
 
-        while (elapsedTime < durationForDown) {
-            float t = elapsedTime / durationForDown;
-            t = Mathf.SmoothStep(0, 1, t);
-            Vector3 newPos = Vector3.Lerp(_startPos, _endPosition, t);
+        while (elapsedTime < _timeToUp/2) {
+            float t = elapsedTime / _timeToUp/2;
+            float y = Mathf.Lerp(_startPos.y, _endPosition.y, t);
+            Vector3 newPos = new Vector3(_startPos.x, y, _startPos.z);
             _liftRb.MovePosition(newPos);
             
             elapsedTime += Time.fixedDeltaTime;
             await UniTask.WaitForFixedUpdate(token);
         }
         _liftRb.MovePosition(_endPosition);
+        ResetPlayerVelocity();
         _liftPhysical.transform.position = _liftDownPosition;
         Debug.Log("Лифт опустился");
         _tokenSource = null;

@@ -1,13 +1,23 @@
 using System;
+using DG.Tweening;
 using SanyaBeerExtension;
 using UnityEngine;
 using Zenject;
 
 public class Boost : MonoBehaviour, IMagnetic {
+    [SerializeField] private Renderer _renderer;
+    
+    
+    
     public AnimationCurve randomTrajectory;
     public Vector3 nextBooster;
     public bool hasTrap;
+    public bool trueBoost = true;
 
+    
+    
+    private Material _mat;
+    private Tween _glowTween;
     
     private PlayerMovement _playerMovement;
     
@@ -15,9 +25,13 @@ public class Boost : MonoBehaviour, IMagnetic {
     public void Init(PlayerMovement playerMovement) {
         _playerMovement = playerMovement;
     }
-    
-    
-    
+
+    private void Awake() {
+        _mat = _renderer.material;
+        _mat.EnableKeyword("_EMISSION");
+    }
+
+
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement player)) {
             if (player.IsBombed) {
@@ -27,18 +41,10 @@ public class Boost : MonoBehaviour, IMagnetic {
         }
         else if (collider.gameObject.TryGetComponent(out BotFlight bot)) {
             bot.SetBooster(randomTrajectory, nextBooster);
-            Debug.Log("Бот налетел на буст");
         }
     }
     
-    
-    private void Collect() {
-        Debug.Log("Начисление буста!");
-        _playerMovement.SetBooster(randomTrajectory, nextBooster);
-        gameObject.DisactiveSelf();
-        CanBeMagnetic = false;
-    }
-    
+
 
     public Vector3 Position =>  transform.position;
     public MagneticType Type { get; } = MagneticType.Boost;
@@ -58,6 +64,39 @@ public class Boost : MonoBehaviour, IMagnetic {
             Collect();
         }
     }
+
+    public void SetBoostPersonalityVisibleAndRevealTheHiddenInnerEnergeticMetaphysicalGameplayEssenceOfThisSpecificAccelerationEntityWhileSynchronizingItsVisualAuraWithPlayerPerceptionSystemsTheLivingBreathingDigitalUniverse() {
+        transform
+            .DORotate(Vector3.up * 360f, .7f, RotateMode.LocalAxisAdd)
+            .SetLoops(-1, LoopType.Restart)
+            .SetEase(Ease.Linear)
+            .SetLink(gameObject);
+
+        LightBreeze();
+    }
+    
+    private void LightBreeze() {
+
+        _glowTween = DOTween.To(
+                () => _mat.GetColor("_EmissionColor"),
+                c => _mat.SetColor("_EmissionColor", c),
+                Color.cyan * 3f, // яркость
+                0.6f
+            )
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetEase(Ease.InOutSine)
+            .SetLink(gameObject);
+    }
+    
+    
+    
+        
+    private void Collect() {
+        _playerMovement.SetBooster(randomTrajectory, nextBooster);
+        gameObject.DisactiveSelf();
+        CanBeMagnetic = false;
+    }
+
     
     
 }

@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 447a0cffbb4c62e49b7703948aef8531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boost
+  _renderer: {fileID: 2694883217259635941}
   randomTrajectory:
     serializedVersion: 2
     m_Curve: []
@@ -133,3 +134,4 @@ MonoBehaviour:
     m_RotationOrder: 4
   nextBooster: {x: 0, y: 0, z: 0}
   hasTrap: 0
+  trueBoost: 1

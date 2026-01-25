@@ -6,6 +6,7 @@ using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.PlayerLoop;
 using Zenject;
 
 public class PlayerMovement : FlightObject {
@@ -50,6 +51,14 @@ public class PlayerMovement : FlightObject {
         TpPlayerInSpawn();
     }
 
+    
+    private void Update() {
+        if(_stateManager.CurrentState == PlayerState.Flight) {
+            VisualRotate();
+        }
+    }
+    
+
     [SerializeField] private int LifesCount;
     private void FixedUpdate() {
         if (_stateManager.CurrentState == PlayerState.Walking) {
@@ -57,9 +66,9 @@ public class PlayerMovement : FlightObject {
         }
         else if(_stateManager.CurrentState == PlayerState.Flight) {
             FlightLogic();
-            VisualRotate();
         }
     }
+    
 
     
     public void TpPlayerInSpawn() {
@@ -68,16 +77,7 @@ public class PlayerMovement : FlightObject {
     }
 
 
-    /// <summary>
-    /// TEST  I`ll DELETE these Later
-    /// </summary>
-    [SerializeField] private bool _resetLifes;
-    private void Update() {
-        if (_resetLifes) {
-            ResetLifes();
-            _resetLifes = false;
-        }
-    }
+
 
     public bool TryToKill() => LifesCount-- <= 0;
     
@@ -291,14 +291,24 @@ public class PlayerMovement : FlightObject {
 
     
   
+    private float _rollVelocity;
+    [SerializeField] private float _smoothTime = 0.3f;
+
     private void VisualRotate() {
-        float TargetPosRoll = -_moveInput.x * _config.MaxRotate;
-        _currentRoll = Mathf.Lerp(_currentRoll, TargetPosRoll, Time.fixedDeltaTime * _config.RotateSpeed);
+        float targetRoll = -_moveInput.x * _config.MaxRotate;
+
+        _currentRoll = Mathf.SmoothDamp(
+            _currentRoll,
+            targetRoll,
+            ref _rollVelocity,
+            _smoothTime // время сглаживания
+        );
 
         Vector3 euler = transform.localEulerAngles;
         euler.z = _currentRoll;
         transform.localEulerAngles = euler;
     }
+
 
 
 
