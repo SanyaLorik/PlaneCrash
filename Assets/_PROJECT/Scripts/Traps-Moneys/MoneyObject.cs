@@ -52,7 +52,7 @@ public class MoneyObject : MonoBehaviour, IMagnetic {
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
             
 
-        Debug.Log(Vector3.SqrMagnitude(transform.position - target));
+        // Debug.Log(Vector3.SqrMagnitude(transform.position - target));
         if (Vector3.SqrMagnitude(transform.position - target) <= 1f) {
             Collect();
         }

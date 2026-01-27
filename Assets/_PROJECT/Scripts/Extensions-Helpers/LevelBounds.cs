@@ -15,8 +15,8 @@ public class  LevelBounds : MonoBehaviour {
     
     private void Awake() {
         MinimumY = _floor.bounds.max.y + 0.5f;
-        RightX = _leftWall.bounds.max.x;
-        LeftX = _rightWall.bounds.min.x;
+        LeftX = _leftWall.bounds.max.x;
+        RightX = _rightWall.bounds.min.x;
         Debug.Log($"RightX = {RightX}, LeftX = {LeftX}");
         Debug.Log($"MinimumY = {MinimumY}");
     }

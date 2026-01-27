@@ -45,7 +45,6 @@ public class PlayerPrediction : MonoBehaviour {
             .Select(boost => boost.transform.position.z)
             .ToList();
         
-        Debug.Log("Z boosts is " + _boostsZ);
         foreach (var boost in _boostsZ) {
             Debug.Log(boost);
         }

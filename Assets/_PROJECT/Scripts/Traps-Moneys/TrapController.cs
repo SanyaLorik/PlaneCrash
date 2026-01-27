@@ -14,6 +14,7 @@ public class TrapController  : MonoBehaviour {
     
     [Inject]
     public void Init(BoostSpawner boostSpawner, LevelBounds levelBounds) {
+        
         _trapAttack.Init(boostSpawner);
         _trapMovement.Init(levelBounds);
     }

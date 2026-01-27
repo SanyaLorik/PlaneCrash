@@ -6,6 +6,8 @@ using Zenject;
 public abstract class TrapMovement : MonoBehaviour {
     [SerializeField] protected PairedValue<float> _durationDiapasone;
     [SerializeField] protected PairedValue<float> _offset;
+    [SerializeField] protected Transform _pivot;
+    [SerializeField] protected Vector3 _xOffsetVector;
 
     
     protected LevelBounds _levelBounds;

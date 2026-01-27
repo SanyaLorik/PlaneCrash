@@ -14707,7 +14707,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.1647, y: 2.1647, z: 2.1647}
+  m_LocalScale: {x: 3.624196, y: 3.624196, z: 3.624196}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 120182434175883152}
@@ -14769,6 +14769,8 @@ MonoBehaviour:
     <From>k__BackingField: 0
     <To>k__BackingField: 0
   _pivot: {fileID: 8165663104036160437}
+  _xOffsetVector: {x: 0, y: 0, z: 0}
+  _pivot: {fileID: 8165663104036160437}
   _duration: 2
   _rotatingVector: {x: 0, y: 360, z: 0}
 --- !u!114 &2976144517352471136
@@ -14785,7 +14787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BombTrap
   Visual: {fileID: 812226742619609650}
   _radius: 6
-  _force: 800
+  _force: 120
   _upwardModifier: 1.5
 --- !u!114 &812226742619609650
 MonoBehaviour:

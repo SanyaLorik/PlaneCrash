@@ -56,6 +56,8 @@ public class TrapsManager : MonoBehaviour {
     private List<Boost> _boosts;
     private PlayerStateManager _playerStateManager;
     
+    [Inject] private DiContainer _container;
+    
     [Inject] private LevelBounds _levelBounds;
     [Inject] private BoostSpawner _boostsSpawner;
     [Inject] private ZoneManager _zoneManager;
@@ -118,7 +120,7 @@ public class TrapsManager : MonoBehaviour {
         Debug.Log($"Спавн фейк трапа будет в диапазоне: ({startZCoord}:{endZCoord})");
 
         foreach (var boost in _boosts) {
-            if(Random.value > 0.6f) continue;
+            if(Random.value > 0.8f) continue;
             if (boost.transform.position.z > endZCoord) continue;
             if (boost.hasTrap) continue;
 
@@ -126,9 +128,10 @@ public class TrapsManager : MonoBehaviour {
             boost.hasTrap = true;
             Vector3 _trapPosition = _trapPositionCalculator.GetNearBoostPosition(boost.transform.position);
             TrapController _trap = Instantiate(GetRandomTrapForRole(TrapRole.Fake), _trapPosition, Quaternion.identity);
-            // Debug.Log("Спавн фейк трапа в :" + _trapPosition);
+            _trap.Init(_boostsSpawner, _levelBounds);
             _trap.transform.localPosition = _trapPosition;
             
+            _trap.StartMoveTrap();
             _сreatedTraps.Add(_trap);
             await UniTask.WaitForEndOfFrame();
         }
@@ -161,7 +164,7 @@ public class TrapsManager : MonoBehaviour {
                 
                 
                 float x = GetXCoord(trap);
-                float y = Random.Range(_levelBounds.MinimumY+5f, 40f); // пока просто где-то
+                float y = Random.Range(_levelBounds.MinimumY+5f, 60f); // пока просто где-то
                 float z = GetChunkZCoord(diapasone, distance, i, enemiesCount);  
 
                 Vector3 _trapPosition = new Vector3(x, y, z);
@@ -170,6 +173,8 @@ public class TrapsManager : MonoBehaviour {
                 TrapController _trap = Instantiate(trap, _trapPosition, Quaternion.identity);
                 _trap.Init(_boostsSpawner, _levelBounds);
                 _trap.transform.localPosition = _trapPosition;
+                _trap.StartMoveTrap();
+                
                 
                 _сreatedTraps.Add(_trap);
                 await UniTask.WaitForEndOfFrame();
@@ -179,12 +184,11 @@ public class TrapsManager : MonoBehaviour {
     }
 
     private float GetXCoord(TrapController trap) {
-        // if (trap.TrapRole == TrapRole.OnPath) {
-        //     return Random.Range(_levelBounds.LeftX, _levelBounds.RightX);
-        // }
-        // // Слева или справя
-        // return Random.value > 0.5f ? _levelBounds.LeftX : _levelBounds.RightX;
-        return Random.Range(_levelBounds.LeftX, _levelBounds.RightX);
+        if (trap.TrapRole == TrapRole.OnPath) {
+            return Random.Range(_levelBounds.LeftX, _levelBounds.RightX);
+        }
+        // Слева или справя
+        return Random.value > 0.5f ? _levelBounds.LeftX : _levelBounds.RightX;
     }
 
     private float GetChunkZCoord(ChunkDistance diapasone, float distance, int i, int enemiesCount) {

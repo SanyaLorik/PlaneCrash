@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class StageAnimatorManager : MonoBehaviour
 {
-    public const string STAGE_SUFFIX = "stage";  // РЕГИСТР ВАЖЕН: как в именах объектов!
+    public const string STAGE_SUFFIX = "stage";  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!
 
-    [Header("Конфигурация анимации")]
-    [SerializeField] private string animationTrigger = "StageChange";  // Триггер в Animator
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
+    [SerializeField] private string animationTrigger = "StageChange";  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ Animator
 
-    // Имена: "1_Stage", "2_Stage" и т.д.
+    // пїЅпїЅпїЅпїЅпїЅ: "1_Stage", "2_Stage" пїЅ пїЅ.пїЅ.
     private static readonly Regex stageRegex = new Regex(@"^\d+_" + STAGE_SUFFIX + "$");
 
     private readonly List<Animator> stageAnimators = new List<Animator>();
 
-    [Header("Переменная-триггер")]
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int currentStageValue = 1;
 
-    [Tooltip("Однократный флаг, чтобы дернуть триггер из инспектора")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public bool ChangeValue;
 
     [field: SerializeField]
@@ -30,7 +30,7 @@ public class StageAnimatorManager : MonoBehaviour
             {
                 currentStageValue = value;
                 TriggerStageAnimation();
-                Debug.Log($"Stage изменен на {currentStageValue} — анимация запущена");
+                Debug.Log($"Stage пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ {currentStageValue} пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
             }
         }
     }
@@ -45,8 +45,8 @@ public class StageAnimatorManager : MonoBehaviour
     {
         if (ChangeValue)
         {
-            // ВАЖНО: меняем значение, а не присваиваем то же самое
-            CurrentStageValue++;      // или CurrentStageValue = CurrentStageValue + 1;
+            // пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+            CurrentStageValue++;      // пїЅпїЅпїЅ CurrentStageValue = CurrentStageValue + 1;
             ChangeValue = false;
         }
     }
@@ -63,16 +63,16 @@ public class StageAnimatorManager : MonoBehaviour
                 if (anim != null)
                 {
                     stageAnimators.Add(anim);
-                    Debug.Log($"Добавлен Animator у: {child.name}");
+                    // Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Animator пїЅ: {child.name}");
                 }
                 else
                 {
-                    Debug.LogWarning($"Animator отсутствует у stage-ребенка: {child.name}");
+                    // Debug.LogWarning($"Animator пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ stage-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {child.name}");
                 }
             }
         }
 
-        Debug.Log($"Собрано stage-Animator'ов: {stageAnimators.Count}");
+        // Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ stage-Animator'пїЅпїЅ: {stageAnimators.Count}");
     }
 
     private void TriggerStageAnimation()
