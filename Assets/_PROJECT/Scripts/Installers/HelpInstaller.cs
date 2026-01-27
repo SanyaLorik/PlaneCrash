@@ -9,6 +9,7 @@ public class HelpInstaller: MonoInstaller {
         SpawnBoost();
         ZonesBind();
         LevelBoundsBind();
+        TrapsBoundsBind();
     }
 
     private void BindCube() {
@@ -25,5 +26,10 @@ public class HelpInstaller: MonoInstaller {
     
     private void LevelBoundsBind() {
         Container.Bind<LevelBounds>().FromComponentInHierarchy().AsSingle().NonLazy();;
+    } 
+    
+    
+    private void TrapsBoundsBind() {
+        Container.Bind<TrapPositionCalculator>().FromComponentInHierarchy().AsSingle().NonLazy();;
     }
 }

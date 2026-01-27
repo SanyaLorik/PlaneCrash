@@ -16,7 +16,7 @@ public class BotStateManager : MonoBehaviour {
     private IBotBehaviour _currentBotBehaviour;
 
     public BotState State { get; private set; }
-    
+    public Rigidbody Rb { get; private set; }
     
     private void Awake() {
         _botFlight = GetComponent<BotFlight>();

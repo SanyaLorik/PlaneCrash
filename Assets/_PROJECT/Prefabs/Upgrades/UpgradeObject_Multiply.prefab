@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3968821017108014814, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1808818783, guid: da82c208373455549b869bc9bfaba043, type: 3}
     - target: {fileID: 8983713674794311961, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
       propertyPath: m_Name
       value: UpgradeObject_Multiply

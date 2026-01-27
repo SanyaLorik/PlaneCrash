@@ -1,0 +1,35 @@
+using DG.Tweening;
+using UnityEngine;
+
+
+// Движение лево право / верх низ, как задали
+public class OscillateTrapMovement : TrapMovement {
+    
+    public override void StartMove() {
+        Vector3 offsetVector = Random.value < 0.5 ? 
+            new Vector3(0f, Random.Range(_offset.From, _offset.To), 0f) : 
+            new Vector3(Random.Range(_offset.From, _offset.To), 0f, 0f);
+        
+        SetOscillateTrajectory(offsetVector);
+    }
+    
+    
+    private void SetOscillateTrajectory(Vector3 offset) {
+        Vector3 startPos = transform.position;
+        Ease ease = GetRandomEase();
+        float duration = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
+
+        
+        DOTween.Sequence()
+            .Append(
+                transform.DOMove(startPos + offset, duration)
+                    .SetEase(ease)
+            )
+            .Append(
+                transform.DOMove(startPos - offset, duration)
+                    .SetEase(ease)
+            )
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetLink(gameObject);
+    }
+}

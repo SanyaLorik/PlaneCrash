@@ -17,13 +17,15 @@ public class PlayerPrediction : MonoBehaviour {
     private List<float> _boostsZ;
     private List<Boost> _trueBoosts;
     private BoostSpawner _boostSpawner;
+    private IPlayerStatsReadOnly _playerStats;
     
     
     [Inject]
-    private void Init(PlayerStateManager playerStateManager, LevelBounds levelBounds, BoostSpawner boostSpawner) {
+    private void Init(PlayerStateManager playerStateManager, LevelBounds levelBounds, BoostSpawner boostSpawner, IPlayerStatsReadOnly playerStats) {
         _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
         _boostSpawner =  boostSpawner;
+        _playerStats = playerStats;
     }
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
@@ -55,7 +57,7 @@ public class PlayerPrediction : MonoBehaviour {
     private async UniTask PlayerPredictAsync(CancellationToken token) {
         int index = 0;
         while(!token.IsCancellationRequested && index < _boostsZ.Count) {
-            if (transform.position.z + _predictDistance >= _boostsZ[index] ) {
+            if (transform.position.z + _playerStats.PredictDistance >= _boostsZ[index] ) {
                 _trueBoosts[index]
                     .SetBoostPersonalityVisibleAndRevealTheHiddenInnerEnergeticMetaphysicalGameplayEssenceOfThisSpecificAccelerationEntityWhileSynchronizingItsVisualAuraWithPlayerPerceptionSystemsTheLivingBreathingDigitalUniverse();
                 index++;

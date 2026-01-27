@@ -6,6 +6,7 @@ public class PlayerStats : IPlayerStatsReadOnly, IPlayerStatsWritable {
     public float LuckyMultiplier { get; private set; } = 1f;
     public float MagnetSpeed { get; private set; } = 1f;
     public int DefenceCount { get; private set; } = 1;
+    public float PredictDistance { get; private set; } = 40;
     public event Action ChangeStats;
 
     public void UpdateXMultiplier(float x) {
@@ -27,6 +28,11 @@ public class PlayerStats : IPlayerStatsReadOnly, IPlayerStatsWritable {
         DefenceCount += x;
         ChangeStats?.Invoke();
     }
+
+    public void UpdatePredictDistance(float x) {
+        PredictDistance += x;
+        ChangeStats?.Invoke();
+    }
 }
 
 public interface IPlayerStatsReadOnly {
@@ -34,6 +40,7 @@ public interface IPlayerStatsReadOnly {
     float LuckyMultiplier { get; }
     float MagnetSpeed { get; }
     int DefenceCount { get; }
+    float PredictDistance { get; }
     
     public event Action ChangeStats;
 }
@@ -43,8 +50,10 @@ public interface IPlayerStatsWritable {
     float LuckyMultiplier { get; }
     float MagnetSpeed { get; }
     int DefenceCount { get; }
+    float PredictDistance { get; }
     void UpdateXMultiplier(float x);
     void UpdateLucky(float x);
     void UpdateMagnet(float x);
     void UpdateDefence(int x);
+    void UpdatePredictDistance(float x);
 }

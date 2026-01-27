@@ -26,8 +26,8 @@ public class UpgradeItemVisual : MonoBehaviour {
     public void UpdateData(int level, float xCurrent, float xNext, float price) {
         // Debug.Log($"level {level} xCurrent {xCurrent} xNext {xNext} price {price}");
         _levelVisual.text = level.ToString();
-        _xCurrentVisual.text = xCurrent.ToString();
-        _xNextVisual.text = xNext.ToString();
+        _xCurrentVisual.text = xCurrent.ToString("F2");
+        _xNextVisual.text = xNext.ToString("F2");
         _priceVisual.text = price + "$";
     }
 

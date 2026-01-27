@@ -14,8 +14,8 @@ public class PlayerMovement : FlightObject {
 
     private bool _isBusted;
 
-    
-    private Rigidbody _rb;
+
+    public Rigidbody Rb { get; private set; } 
     private Vector2 _moveInput;
     private float _currentRoll;
 
@@ -42,8 +42,8 @@ public class PlayerMovement : FlightObject {
     
     
     private void Awake() {
-        _rb = GetComponent<Rigidbody>();
-        _rb.useGravity = true;
+        Rb = GetComponent<Rigidbody>();
+        Rb.useGravity = true;
     }
     
     private void Start() {
@@ -73,7 +73,7 @@ public class PlayerMovement : FlightObject {
     
     public void TpPlayerInSpawn() {
         transform.position = _config.PlayerSpawnPosition;
-        _rb.linearVelocity = Vector3.zero;
+        Rb.linearVelocity = Vector3.zero;
     }
 
 
@@ -89,7 +89,7 @@ public class PlayerMovement : FlightObject {
     public void SetPlayerIsBombed() {
         _isBusted = false;
         IsBombed = true;
-        // _rb.useGravity = true;
+        // Rb.useGravity = true;
     }
 
 
@@ -99,11 +99,11 @@ public class PlayerMovement : FlightObject {
             ResetLifes();
             IsBombed = false;
             RotateLocalXAsync(-25, playerState, _token).Forget();
-            _rb.useGravity = false;
+            Rb.useGravity = false;
         }
         else {
             RotateLocalXAsync(-80, playerState, _token).Forget();
-            _rb.useGravity = true;
+            Rb.useGravity = true;
         }
     }
 
@@ -148,19 +148,19 @@ public class PlayerMovement : FlightObject {
         Vector3 origin = transform.position;
         
         if (Physics.Raycast(origin, Vector3.down,  0.1f, _config.FloorMask)) {
-            _rb.AddForce(Vector3.up * _config.JumpForce, ForceMode.Impulse);
+            Rb.AddForce(Vector3.up * _config.JumpForce, ForceMode.Impulse);
             _secondJumpAllowed = true;
         }
         else if (_secondJumpAllowed) {
-            _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
-            _rb.AddForce(Vector3.up * _config.SecondJumpForce, ForceMode.Impulse);
+            Rb.linearVelocity = new Vector3(Rb.linearVelocity.x, 0f, Rb.linearVelocity.z);
+            Rb.AddForce(Vector3.up * _config.SecondJumpForce, ForceMode.Impulse);
             _secondJumpAllowed = false;
         }
     }
 
     private void Walk() {
         // усиленная гравитация
-        _rb.AddForce(Physics.gravity * (_config.GravityScale - 1) * _rb.mass);
+        Rb.AddForce(Physics.gravity * (_config.GravityScale - 1) * Rb.mass);
 
         Transform cam = Camera.main.transform;
         Vector3 camForward = cam.forward;
@@ -185,8 +185,8 @@ public class PlayerMovement : FlightObject {
         float checkDist = moveStep.magnitude + _config.WallOffset;
 
         // === STEP LOGIC ===
-        Vector3 lowOrigin  = _rb.position + Vector3.up * 0.05f;
-        Vector3 highOrigin = _rb.position + Vector3.up * _config.StepHeight;
+        Vector3 lowOrigin  = Rb.position + Vector3.up * 0.05f;
+        Vector3 highOrigin = Rb.position + Vector3.up * _config.StepHeight;
 
         bool hitLow = Physics.Raycast(
             lowOrigin,
@@ -206,11 +206,11 @@ public class PlayerMovement : FlightObject {
         if (hitLow && !hitHigh) {
             // это ступенька — шагаем вверх
             Vector3 stepUp = Vector3.up * _config.StepHeight;
-            _rb.MovePosition(_rb.position + stepUp + moveStep);
+            Rb.MovePosition(Rb.position + stepUp + moveStep);
         }
         else if (!hitLow) {
             // обычное движение
-            _rb.MovePosition(_rb.position + moveStep);
+            Rb.MovePosition(Rb.position + moveStep);
         }
         // если hitLow && hitHigh - это стена, никуда не идём
         WalkRotate(move);
