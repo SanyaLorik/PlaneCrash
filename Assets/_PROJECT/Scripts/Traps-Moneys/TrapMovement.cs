@@ -17,8 +17,6 @@ public abstract class TrapMovement : MonoBehaviour {
         _levelBounds = levelBounds;
     }
 
-    
-    
     public abstract void StartMove();
     
     

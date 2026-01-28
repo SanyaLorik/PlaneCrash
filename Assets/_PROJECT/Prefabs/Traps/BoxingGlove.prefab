@@ -14737,9 +14737,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BombTrap
   Visual: {fileID: 0}
-  _radius: 6
-  _force: 800.6
-  _upwardModifier: 1.5
+  _radius: 1.94
+  _force: 10
+  _upwardModifier: 1.3
 --- !u!114 &6389723858658061138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14754,7 +14754,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrapVisual
   _particleSystem: {fileID: 6508633978038897321}
   _brightnessMultiply: 5
-  _bombRenderer: {fileID: 5331525679062855733}
 --- !u!1 &4536047257415633300
 GameObject:
   m_ObjectHideFlags: 0
@@ -19718,7 +19717,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.4134808, y: 3.4134808, z: 3.4134808}
+  m_LocalScale: {x: 2.778471, y: 2.778471, z: 2.778471}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2018773665882178901}
@@ -19796,11 +19795,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dda5a62fe0b4af48aaecd10ea1a45cf, type: 3}
---- !u!23 &5331525679062855733 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 9dda5a62fe0b4af48aaecd10ea1a45cf, type: 3}
-  m_PrefabInstance: {fileID: 6790574992653855921}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6464440657660726106 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9dda5a62fe0b4af48aaecd10ea1a45cf, type: 3}

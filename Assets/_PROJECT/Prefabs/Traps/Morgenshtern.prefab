@@ -5010,8 +5010,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 3.528985, z: 11.937198}
-  m_Center: {x: -0.0000012537254, y: -0.10152912, z: 5.258506}
+  m_Size: {x: 3.396172, y: 3.528985, z: 11.937199}
+  m_Center: {x: 0.018895527, y: -0.101529144, z: 5.2585053}
 --- !u!114 &3406966750989322756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5032,7 +5032,6 @@ MonoBehaviour:
     <To>k__BackingField: 4
   _pivot: {fileID: 5468270256412057439}
   _xOffsetVector: {x: 0, y: 0, z: 0}
-  _pivot: {fileID: 5468270256412057439}
   _duration: 2
   _rotatingVector: {x: 360, y: 0, z: 0}
 --- !u!114 &7371659002664820632
@@ -5048,9 +5047,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BombTrap
   Visual: {fileID: 781121823045772695}
-  _radius: 6
-  _force: 800
-  _upwardModifier: 1.5
+  _radius: 3
+  _force: 10
+  _upwardModifier: 0.5
 --- !u!114 &781121823045772695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5065,7 +5064,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrapVisual
   _particleSystem: {fileID: 8600434029341777022}
   _brightnessMultiply: 5
-  _bombRenderer: {fileID: 8183197878280135415}
 --- !u!1 &3842819662087425363
 GameObject:
   m_ObjectHideFlags: 0

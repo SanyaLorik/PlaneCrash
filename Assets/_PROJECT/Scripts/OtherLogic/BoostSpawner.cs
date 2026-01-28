@@ -83,7 +83,9 @@ public class BoostSpawner : MonoBehaviour {
 
 
 
+    private Vector3 _curiserPosition;
     public void SpawnBoosts(Vector3 curiserPosition) {
+        _curiserPosition = curiserPosition;
         MinimumFlightTimeIsBig = false;
         ClearAllBoosts();
         
@@ -170,7 +172,9 @@ public class BoostSpawner : MonoBehaviour {
                 }
             }
         }
-        Debug.LogWarning("Буста не нашли(");
+
+        Debug.LogWarning("Буста не нашли(, летим к крейсеру");
+        _playerMovement.SetBooster(_rightBoosts[^2].randomTrajectory, _curiserPosition);
     }
     
     

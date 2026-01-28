@@ -14707,7 +14707,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.624196, y: 3.624196, z: 3.624196}
+  m_LocalScale: {x: 2.9326994, y: 2.9326994, z: 2.9326994}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 120182434175883152}
@@ -14770,7 +14770,6 @@ MonoBehaviour:
     <To>k__BackingField: 0
   _pivot: {fileID: 8165663104036160437}
   _xOffsetVector: {x: 0, y: 0, z: 0}
-  _pivot: {fileID: 8165663104036160437}
   _duration: 2
   _rotatingVector: {x: 0, y: 360, z: 0}
 --- !u!114 &2976144517352471136
@@ -14786,9 +14785,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BombTrap
   Visual: {fileID: 812226742619609650}
-  _radius: 6
-  _force: 120
-  _upwardModifier: 1.5
+  _radius: 3
+  _force: 10
+  _upwardModifier: 0.5
 --- !u!114 &812226742619609650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14803,7 +14802,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrapVisual
   _particleSystem: {fileID: 6682189699735250949}
   _brightnessMultiply: 5
-  _bombRenderer: {fileID: 570768583151398115}
 --- !u!1 &9045242827390915567
 GameObject:
   m_ObjectHideFlags: 0
@@ -19791,11 +19789,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eca501405a9e34147af0fe8404e3f789, type: 3}
---- !u!23 &570768583151398115 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 8156930599464634557, guid: eca501405a9e34147af0fe8404e3f789, type: 3}
-  m_PrefabInstance: {fileID: 8563869746002109534}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8165663104036160437 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: eca501405a9e34147af0fe8404e3f789, type: 3}

@@ -3,13 +3,9 @@ using DG.Tweening;
 using UnityEngine;
 
 public class RotateTrapMovement : TrapMovement {
-    [SerializeField] private Transform _pivot;
     [SerializeField] private float _duration;
     [SerializeField] private Vector3 _rotatingVector;
     
-
-
-
     public override void StartMove() {
         _pivot.localPosition = Vector3.zero;
         _pivot.position += _xOffsetVector;
