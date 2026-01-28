@@ -39,6 +39,7 @@ public class PlayerMovement : FlightObject {
     
     
     
+    [SerializeField] private int LifesCount;
     
     
     private void Awake() {
@@ -59,7 +60,6 @@ public class PlayerMovement : FlightObject {
     }
     
 
-    [SerializeField] private int LifesCount;
     private void FixedUpdate() {
         if (_stateManager.CurrentState == PlayerState.Walking) {
             Walk();
@@ -79,7 +79,13 @@ public class PlayerMovement : FlightObject {
 
 
 
-    public bool TryToKill() => LifesCount-- <= 0;
+    public bool TryToKill() {
+        LifesCount--;
+        if (LifesCount <= 0) {
+            SetPlayerIsBombed();
+        }
+        return LifesCount <= 0;
+    } 
     
     private void ResetLifes() => LifesCount = _playerStats.DefenceCount;
     
@@ -89,7 +95,6 @@ public class PlayerMovement : FlightObject {
     public void SetPlayerIsBombed() {
         _isBusted = false;
         IsBombed = true;
-        // Rb.useGravity = true;
     }
 
 
@@ -310,7 +315,17 @@ public class PlayerMovement : FlightObject {
     }
 
 
+    public Vector3 GetPlayerPositionAt(float t) {
+        // t ∈ [0..1], прогресс по кривой
+        float height = _currentCurve.Evaluate(t) * _config.JumpHeight;
+        float y = Mathf.Lerp(_initialPos.y, TargetPos.y, t) + height;
+        float z = Mathf.Lerp(_initialPos.z, TargetPos.z, t);
 
+        float x = transform.position.x; // фиксируем X в момент старта
+        return new Vector3(x, y, z);
+    }
+    
+    
 
     
 }

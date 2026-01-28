@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FlightObject : MonoBehaviour {
     protected AnimationCurve _currentCurve;
-    protected float _segmentDuration;
+    public float _segmentDuration { get; protected set; }
     protected float _expandedTime = 0;
     protected Vector3 _initialPos;
     protected CancellationTokenSource _tokenSource;

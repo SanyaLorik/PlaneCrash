@@ -35,7 +35,6 @@ public abstract class TrapAttack : MonoBehaviour {
        
        if (movement.TryToKill()) {
            Debug.Log("Killed");
-           movement.SetPlayerIsBombed();
            Atack(movement.Rb);    
        }
        else {
@@ -43,7 +42,7 @@ public abstract class TrapAttack : MonoBehaviour {
            Debug.Log("_boostSpawner = " + _boostSpawner);
            _boostSpawner.SetPlayerToNextRightBooster(movement.transform.position);
        }
-       Visual.GetEffect();
+       Visual?.GetEffect();
    }
 
    protected abstract void Atack(Rigidbody rb);
