@@ -1,39 +1,75 @@
+    using Cysharp.Threading.Tasks.Triggers;
     using Unity.Cinemachine;
     using Unity.VisualScripting;
     using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class CameraOrbitalController : MonoBehaviour {
 
     [SerializeField] private CinemachineCamera _cinemachineCamera;
+    [SerializeField] private CinemachineDecollider _cinemachineDecollider;
     [SerializeField] private float _sensitivity = 0.1f;
     
     [SerializeField] private CinemachineOrbitalFollow _orbitalFollow;
     private Mouse _mouse;
     private bool _isOrbiting = false;
+
+    private PlayerStateManager _playerStateManager;
+
+    private bool _allowRotation = true;
     
-    private void Awake()
-    {
+    
+    
+    [Inject]
+    private void Init(PlayerStateManager playerStateManager) {
+        _playerStateManager = playerStateManager;
+        _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
+    }
+
+    private void PlayerStateManagerOnChangeState(PlayerState state) {
+        if (state == PlayerState.Flight) {
+            // Вырубить
+            _cinemachineDecollider.enabled = false;
+            SetDefaultRotation();
+            _allowRotation = false;
+        }
+
+        else {
+            _cinemachineDecollider.enabled = true;
+            _allowRotation = true;
+        }
+    }
+
+
+    private float _defaultMouseX;
+    private float _defaultMouseY;
+    private void Awake() {
         // Получаем ссылку на мышь
         _mouse = Mouse.current;
+        _defaultMouseX = _orbitalFollow.HorizontalAxis.Value;
+        _defaultMouseY = _orbitalFollow.VerticalAxis.Value;
+    }
+
+
+    private void SetDefaultRotation() {
+        _orbitalFollow.HorizontalAxis.Value = _defaultMouseX;
+        _orbitalFollow.VerticalAxis.Value = _defaultMouseY; 
     }
     
     private void Update() {
         if (_orbitalFollow == null || _mouse == null) return;
         
         // Проверяем нажатие правой кнопки мыши
-        if (_mouse.rightButton.wasPressedThisFrame)
-        {
+        if (_mouse.rightButton.wasPressedThisFrame) {
             StartOrbiting();
         }
-        else if (_mouse.rightButton.wasReleasedThisFrame)
-        {
+        else if (_mouse.rightButton.wasReleasedThisFrame) {
             StopOrbiting();
         }
         
         // Вращение
-        if (_isOrbiting)
-        {
+        if (_isOrbiting && _allowRotation) {
             OrbitCamera();
         }
         

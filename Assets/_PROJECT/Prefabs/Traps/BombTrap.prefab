@@ -313,7 +313,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrapVisual
   _particleSystem: {fileID: 5484021630471331090}
   _brightnessMultiply: 5
-  _bombRenderer: {fileID: 7264857251732335989}
 --- !u!1001 &2151892540951862538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -604,6 +603,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7026749234315577361, guid: 38289bad9c2be284585326048f15d40e, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 38289bad9c2be284585326048f15d40e, type: 3}
       propertyPath: m_Name
       value: bomb
@@ -613,11 +616,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38289bad9c2be284585326048f15d40e, type: 3}
---- !u!23 &7264857251732335989 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7026749234315577361, guid: 38289bad9c2be284585326048f15d40e, type: 3}
-  m_PrefabInstance: {fileID: 8838892478748826266}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9016405038201798001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 38289bad9c2be284585326048f15d40e, type: 3}

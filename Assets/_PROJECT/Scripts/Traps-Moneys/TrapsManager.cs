@@ -113,31 +113,6 @@ public class TrapsManager : MonoBehaviour {
         // await SpawnTrapsNearBoosts();
     } 
 
-    private async UniTask SpawnFakeTraps() {
-        // _trapObject
-        float startZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageStart);
-        float endZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageEnd);
-        Debug.Log($"Спавн фейк трапа будет в диапазоне: ({startZCoord}:{endZCoord})");
-
-        foreach (var boost in _boosts) {
-            if(Random.value > 0.8f) continue;
-            if (boost.transform.position.z > endZCoord) continue;
-            if (boost.hasTrap) continue;
-
-
-            boost.hasTrap = true;
-            Vector3 _trapPosition = _trapPositionCalculator.GetNearBoostPosition(boost.transform.position);
-            TrapController _trap = Instantiate(GetRandomTrapForRole(TrapRole.Fake), _trapPosition, Quaternion.identity);
-            _trap.Init(_boostsSpawner, _levelBounds);
-            _trap.transform.localPosition = _trapPosition;
-            
-            _trap.StartMoveTrap();
-            _сreatedTraps.Add(_trap);
-            await UniTask.WaitForEndOfFrame();
-        }
-    }
-    
-    
     
     private async UniTask SpawnMoveTraps(ZoneInfo zone) {
         // _trapObject
@@ -155,6 +130,10 @@ public class TrapsManager : MonoBehaviour {
         
         foreach (var diapasone in chunksDiapasone) {
             int enemiesCount = Random.Range(zone.EnemiesPerChunk.From, zone.EnemiesPerChunk.To);
+            if (_zoneManager.CurrentMultiplyer == 2f) {
+                enemiesCount /= 2;
+            }
+            
             float distance = diapasone.Z2 - diapasone.Z1;
             // Debug.Log("Дистанция зоны: " + distance);
             // Debug.Log("Кол-во ловушек: " + enemiesCount);
@@ -181,6 +160,31 @@ public class TrapsManager : MonoBehaviour {
             }
         }
 
+    }
+    
+    
+    private async UniTask SpawnFakeTraps() {
+        // _trapObject
+        float startZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageStart);
+        float endZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageEnd);
+        Debug.Log($"Спавн фейк трапа будет в диапазоне: ({startZCoord}:{endZCoord})");
+
+        foreach (var boost in _boosts) {
+            if(Random.value > 0.8f) continue;
+            if (boost.transform.position.z > endZCoord) continue;
+            if (boost.hasTrap) continue;
+
+
+            boost.hasTrap = true;
+            Vector3 _trapPosition = _trapPositionCalculator.GetNearBoostPosition(boost.transform.position);
+            TrapController _trap = Instantiate(GetRandomTrapForRole(TrapRole.Fake), _trapPosition, Quaternion.identity);
+            _trap.Init(_boostsSpawner, _levelBounds);
+            _trap.transform.localPosition = _trapPosition;
+            
+            _trap.StartMoveTrap();
+            _сreatedTraps.Add(_trap);
+            await UniTask.WaitForEndOfFrame();
+        }
     }
 
     private float GetXCoord(TrapController trap) {
