@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using SanyaBeerExtension;
 using Unity.VisualScripting;
@@ -21,6 +22,7 @@ public class Torpedo : MonoBehaviour {
         _targetPoint = targetPoint;
         _targetPoint.y += 50f; // просто пусть выше летит
         Speed = speed;
+        StartCoroutine(TorpedaFlightAsync());
     }
 
 
@@ -51,20 +53,25 @@ public class Torpedo : MonoBehaviour {
     }
 
 
-    private void Update() {
-        // Летаем по направлению вверх к цели
-        Vector3 dir = (_targetPoint - transform.position).normalized;
-        transform.position += dir * Speed * Time.deltaTime;
+    private IEnumerator TorpedaFlightAsync() {
+        while (true) {
+            // Летаем по направлению вверх к цели
+            Vector3 dir = (_targetPoint - transform.position).normalized;
+            transform.position += dir * Speed * Time.deltaTime;
 
-        // Проверка на попадание (по Y)
-        if (Vector3.Distance(transform.position, _targetPoint) < 0.1f) {
-            // Тут можно нанести урон игроку
-            StartCoroutine(DestroyRoutine(3f));
+            // Проверка на попадание (по Y)
+            if (Vector3.Distance(transform.position, _targetPoint) < 0.1f) {
+                // Тут можно нанести урон игроку
+                StartCoroutine(DestroyRoutine(3f));
+            }
+            yield return null;
         }
     }
+    
+
 
     private IEnumerator DestroyRoutine(float time) {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(time);
             Destroy(gameObject);
     }
 }

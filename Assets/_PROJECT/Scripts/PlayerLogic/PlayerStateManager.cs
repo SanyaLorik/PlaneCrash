@@ -41,12 +41,12 @@ public class PlayerStateManager : MonoBehaviour {
         CurrentState = newState;
         if (newState  == PlayerState.Flight) {
             StartFlightPosition = transform.position.z;
-            Debug.Log("StartFlightPosition " + transform.position.z);
+            // Debug.Log("StartFlightPosition " + transform.position.z);
             
         }
 
         if (newState  == PlayerState.Grounded) {
-            Debug.Log("EndFlightPosition " + transform.position.z);
+            // Debug.Log("EndFlightPosition " + transform.position.z);
         }
         
         ChangeState?.Invoke(CurrentState);

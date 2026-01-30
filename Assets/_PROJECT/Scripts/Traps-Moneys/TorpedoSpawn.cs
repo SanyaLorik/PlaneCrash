@@ -33,7 +33,7 @@ public class TorpedoSpawn : MonoBehaviour {
 
     private Vector3 _spawnPos;
     private void PlayerOnSetBoost() {
-        Debug.Log("PlayerOnSetBoost");
+        // Debug.Log("PlayerOnSetBoost");
 
         float playerProgress = Random.Range(_diapasoneSpawnProgress.From, _diapasoneSpawnProgress.To);
         float spawnY = _levelBounds.MinimumY;
@@ -60,7 +60,6 @@ public class TorpedoSpawn : MonoBehaviour {
 
     private GameObject _circleObject;
     private void ShowWarning() {
-        Debug.Log("Warning! Torpedo incoming!");
         if (_circleObject != null) {
             _circleObject.transform.position = _spawnPos;
             return;
