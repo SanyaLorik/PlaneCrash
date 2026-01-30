@@ -3,4 +3,5 @@ public enum PlayerState {
     Walking,
     Grounded,
     Cruisered,
+    TrampolineJumping
 }

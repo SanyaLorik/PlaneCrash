@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 
@@ -25,17 +26,25 @@ public class Basketball : MonoBehaviour {
     [SerializeField] float _gravityMultiplier = 2f;
     [SerializeField] private Rigidbody _rb;
     
-    
+    [SerializeField] private float _rewardForScore = 100f;
+    private float _currentReward;
     
     
     private Vector3 _hoopPosition;
     private Vector3 _ballPositionSpawn;
+    private PlayerBank _bank;
 
+
+    [Inject]
+    private void Init(PlayerBank bank) {
+        _bank = bank;
+    }
     
     
     private void Awake() {
         _ballPositionSpawn = _parentBall.position;
         _hoopPosition = _hoop.position;
+        _currentReward = _rewardForScore;
     }
     
     
@@ -56,7 +65,7 @@ public class Basketball : MonoBehaviour {
     
     
     private void OnTriggerEnter(Collider collider) {
-        if (collider.TryGetComponent(out PlayerMovement playerMovement)) {
+        if (collider.TryGetComponent(out PlayerMovement player) || collider.TryGetComponent(out BotStateManager bot)) {
             if(_allowToCick){
                 _allowToCick = false;
                 SetBouncy(false);
@@ -67,14 +76,14 @@ public class Basketball : MonoBehaviour {
 
     private void KickBall() {
         if (Random.value < 0.5f) {
-            ThrowInHoopAsync(_hoopPosition).Forget();
+            ThrowInHoopAsync(_hoopPosition, true).Forget();
         }
         else {
             ThrowInHoopAsync(GetShieldPosition()).Forget();;
         }
     }
 
-    private async UniTask ThrowInHoopAsync(Vector3 position) {
+    private async UniTask ThrowInHoopAsync(Vector3 position, bool isRewarded = false) {
         float distance = Vector3.Distance(_parentBall.position, position);
         float timeToFlight = distance / _ballSpeed;
         Debug.Log("Дистанция до кольца: " + distance);
@@ -99,7 +108,7 @@ public class Basketball : MonoBehaviour {
             elapsedTime += Time.deltaTime;
             await UniTask.Yield();
         }
-        StartCoroutine(RespawnRoutine(_timeToRespawn));
+        StartCoroutine(RespawnRoutine(_timeToRespawn, isRewarded));
     }
 
     private Vector3 newPos;
@@ -126,14 +135,22 @@ public class Basketball : MonoBehaviour {
     
     
 
-    private IEnumerator RespawnRoutine(float timeToRespawn) {
+    private IEnumerator RespawnRoutine(float timeToRespawn, bool isRewarded) {
         yield return new WaitForSeconds(timeToRespawn);
         SetBouncy(true);
         _parentBall.position = _ballPositionSpawn;
         _rb.linearVelocity = Vector3.zero;
         _allowToCick = true;
-        
+        if (isRewarded) {
+            GetMoneyReward();
+        }
     } 
+    
+    private void GetMoneyReward() {
+        print("Награда за попадание: " + _rewardForScore);
+        _bank.AddMoney(_currentReward);
+        _currentReward+= _rewardForScore;
+    }
     
     
 

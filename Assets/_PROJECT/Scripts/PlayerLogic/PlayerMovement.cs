@@ -10,18 +10,29 @@ using UnityEngine.PlayerLoop;
 using Zenject;
 
 public class PlayerMovement : FlightObject {
+    [SerializeField] private float _smoothTime = 0.3f;
+      
+  
+    
     private PlayerConfig _config;
 
     private bool _isBusted;
 
 
     public Rigidbody Rb { get; private set; } 
+    public Transform Transform  => transform;
+    
+    
     private Vector2 _moveInput;
     private float _currentRoll;
+    private float _rollVelocity;
 
     private PlayerStateManager _stateManager;
     private LevelBounds _levelBounds;
     private IPlayerStatsReadOnly _playerStats;
+    
+    
+    public bool IsBombed;
 
     public float PlayerSpeed => _config.SpeedForce;
     public event Action SetBoost;
@@ -61,7 +72,8 @@ public class PlayerMovement : FlightObject {
     
 
     private void FixedUpdate() {
-        if (_stateManager.CurrentState == PlayerState.Walking) {
+        if (_stateManager.CurrentState == PlayerState.Walking ||
+            _stateManager.CurrentState == PlayerState.TrampolineJumping) {
             Walk();
         }
         else if(_stateManager.CurrentState == PlayerState.Flight) {
@@ -91,8 +103,7 @@ public class PlayerMovement : FlightObject {
     
 
 
-    public bool IsBombed;
-    public void SetPlayerIsBombed() {
+    private void SetPlayerIsBombed() {
         _isBusted = false;
         IsBombed = true;
     }
@@ -106,7 +117,7 @@ public class PlayerMovement : FlightObject {
             RotateLocalXAsync(-25, playerState, _token).Forget();
             Rb.useGravity = false;
         }
-        else {
+        else if(playerState == PlayerState.Grounded || playerState == PlayerState.Cruisered){
             RotateLocalXAsync(-80, playerState, _token).Forget();
             Rb.useGravity = true;
         }
@@ -166,7 +177,8 @@ public class PlayerMovement : FlightObject {
     private void Walk() {
         // усиленная гравитация
         Rb.AddForce(Physics.gravity * (_config.GravityScale - 1) * Rb.mass);
-
+        
+        
         Transform cam = Camera.main.transform;
         Vector3 camForward = cam.forward;
         Vector3 camRight   = cam.right;
@@ -294,10 +306,7 @@ public class PlayerMovement : FlightObject {
         ObjectGetAllow = true;
     } 
 
-    
   
-    private float _rollVelocity;
-    [SerializeField] private float _smoothTime = 0.3f;
 
     private void VisualRotate() {
         float targetRoll = -_moveInput.x * _config.MaxRotate;
