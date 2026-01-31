@@ -11,6 +11,7 @@ public class PlayerBank : MonoBehaviour {
     [SerializeField] private TMP_Text _playerCapitalVisual;
     [SerializeField] private MoneyCube _cube;
     public event Action<float> BankChanged;
+    public event Action<float> MoneyCollect;
     public float PlayerCapital { get => _playerCapital; }
 
     
@@ -47,6 +48,16 @@ public class PlayerBank : MonoBehaviour {
         _playerCapital += amount;
         BankChanged?.Invoke(_playerCapital);
     }
+    
+    
+    public void AddFlightMoney(float amount) {
+        if (amount < 0) return;
+        _playerCapital += amount;
+        MoneyCollect?.Invoke(amount);
+    }
+    
+    
+    
     
     public void Buy(float amount) {
         if (amount > _playerCapital) return;

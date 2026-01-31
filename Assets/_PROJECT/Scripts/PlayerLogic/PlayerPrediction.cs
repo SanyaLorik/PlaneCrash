@@ -46,7 +46,7 @@ public class PlayerPrediction : MonoBehaviour {
             .ToList();
         
         foreach (var boost in _boostsZ) {
-            Debug.Log(boost);
+            // Debug.Log(boost);
         }
     }
 

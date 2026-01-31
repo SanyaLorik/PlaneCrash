@@ -17,7 +17,7 @@ public class RotateTrapMovement : TrapMovement {
             _rotatingVector *= -1;
             
         }
-        Debug.Log("Вектор вращения: " +  _rotatingVector + " z = " +  transform.position.x );
+        // Debug.Log("Вектор вращения: " +  _rotatingVector + " z = " +  transform.position.x );
         
         
         _pivot.transform

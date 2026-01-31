@@ -33,8 +33,6 @@ public class PlayerStateManager : MonoBehaviour {
     }
 
     
-    
-
 
 
     public void ChangePlayerState(PlayerState newState) {
@@ -62,14 +60,17 @@ public class PlayerStateManager : MonoBehaviour {
         //     Debug.Log("Упали");
         //     ChangePlayerState(PlayerState.Grounded);
         // }
-        if (transform.position.y <= _levelBounds.MinimumY + _distanceCheck) {
-            Debug.Log("Упали");
-            ChangePlayerState(PlayerState.Grounded);
-        }
         if (Physics.Raycast(origin, Vector3.down,  _distanceCheck, _cruiserMask)) {
             Debug.Log("Попали!");
+            Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinimumY}, игрок в {transform.position.y}" );
             ChangePlayerState(PlayerState.Cruisered);
-        }  
+        }
+        if (transform.position.y <= _levelBounds.MinimumY + _distanceCheck) {
+            Debug.Log("Упали");
+            Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinimumY}, игрок в {transform.position.y}" );
+            ChangePlayerState(PlayerState.Grounded);
+        }
+          
         
     }
 

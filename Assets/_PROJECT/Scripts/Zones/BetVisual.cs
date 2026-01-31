@@ -34,8 +34,8 @@ public class BetVisual : MonoBehaviour {
     }
 
     private void Start() {
-        _zoneManager.OnChooseBet += ShowBet;
-        _zoneManager.OnChooseMultiplyer += ShowMultiplyer;
+        _zoneManager.ChooseBet += ShowBet;
+        _zoneManager.ChooseMultiplyer += ShowMultiplyer;
         PlayerStatsOnChangeStats();
     }
 
@@ -49,8 +49,8 @@ public class BetVisual : MonoBehaviour {
 
     private void OnDisable() {
         if (_zoneManager != null) {
-            _zoneManager.OnChooseBet -= ShowBet;
-            _zoneManager.OnChooseMultiplyer -= ShowMultiplyer;
+            _zoneManager.ChooseBet -= ShowBet;
+            _zoneManager.ChooseMultiplyer -= ShowMultiplyer;
         }
         _bank.BankChanged -= OnChangeBank;
         _playerStateManager.ChangeState -= OnChangeState;

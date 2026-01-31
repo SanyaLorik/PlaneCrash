@@ -9768,7 +9768,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8.467762, y: 8.467762, z: 8.467762}
+  m_LocalScale: {x: 4.3519073, y: 4.3519073, z: 4.3519073}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9106476747106961915}
@@ -9788,11 +9788,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Torpedo
   _particle: {fileID: 4967235500509877311}
-  modelForHide: {fileID: 0}
+  modelForHide: {fileID: 8442952938054882113}
   _radius: 6
   _force: 4
   _upwardModifier: 0.3
-  Speed: 70
+  Speed: 20
 --- !u!65 &4624002551242606892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24568,10 +24568,14 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: d6834ba12c5782249ac65b094b6cd92a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: e55abee6f0c15124187644b948319692, type: 2}
+      objectReference: {fileID: 2100000, guid: 26d3c6c9951009848af2046c3a0ede1c, type: 2}
     - target: {fileID: 919132149155446097, guid: d6834ba12c5782249ac65b094b6cd92a, type: 3}
       propertyPath: m_Name
       value: rocket_model
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d6834ba12c5782249ac65b094b6cd92a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24581,6 +24585,11 @@ PrefabInstance:
       addedObject: {fileID: 4155323545616773108}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6834ba12c5782249ac65b094b6cd92a, type: 3}
+--- !u!1 &8442952938054882113 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d6834ba12c5782249ac65b094b6cd92a, type: 3}
+  m_PrefabInstance: {fileID: 8784848484497305104}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9106476747106961915 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d6834ba12c5782249ac65b094b6cd92a, type: 3}

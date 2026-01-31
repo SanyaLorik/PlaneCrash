@@ -29,12 +29,9 @@ public class Trampoline : MonoBehaviour {
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Walking) {
-            Debug.Log("Игрок спрыгнул с батута! делает");
             _jumpForceCurrent = _firstJumpForce;
         }
-        else {
-            Debug.Log("Стейт игрока: " + _playerStateManager.CurrentState);
-        }
+
     }
 
 

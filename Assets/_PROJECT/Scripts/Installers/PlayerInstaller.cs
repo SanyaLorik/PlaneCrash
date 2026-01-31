@@ -15,7 +15,8 @@ public class PlayerInstaller : MonoInstaller {
         Container.Bind<PlayerBank>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<PlayerMovement>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<PlayerStateManager>().FromComponentInHierarchy().AsSingle().NonLazy();
-        Container.Bind<LineToBoosts>().FromComponentInHierarchy().AsSingle().NonLazy();
+        Container.Bind<LineToObjects>().FromComponentInHierarchy().AsSingle().NonLazy();
+        Container.Bind<TasksManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         
         
     }

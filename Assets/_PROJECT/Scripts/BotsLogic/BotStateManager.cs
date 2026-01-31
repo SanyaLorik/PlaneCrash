@@ -26,6 +26,7 @@ public class BotStateManager : MonoBehaviour {
         _botFlight.EndFlight += BotFlightOnEndFlight;
         _currentBotBehaviour = _botWander;
         State = BotState.Wandering;
+        Rb = GetComponent<Rigidbody>();
     }
  
     

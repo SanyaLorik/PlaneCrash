@@ -7,7 +7,10 @@ public class TorpedoSpawn : MonoBehaviour {
     [SerializeField] private Torpedo _torpedoPrefab;
     [SerializeField] private GameObject _circlePrefab;
     [SerializeField] private PairedValue<float> _diapasoneSpawnProgress;
+    [SerializeField] private float _chanseToSpawn;
         
+    
+    
     
     [Header("Настройки анимации")]
     [SerializeField] private float pulseScale = 1.2f;      // максимальный масштаб при пульсации
@@ -33,6 +36,9 @@ public class TorpedoSpawn : MonoBehaviour {
 
     private Vector3 _spawnPos;
     private void PlayerOnSetBoost() {
+        if (Random.value < _chanseToSpawn) {
+            return;
+        }
         // Debug.Log("PlayerOnSetBoost");
 
         float playerProgress = Random.Range(_diapasoneSpawnProgress.From, _diapasoneSpawnProgress.To);

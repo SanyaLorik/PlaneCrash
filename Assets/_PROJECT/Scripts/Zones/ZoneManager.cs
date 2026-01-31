@@ -12,20 +12,22 @@ public class ZoneManager : MonoBehaviour {
     
     
     
-    public event Action<float> OnChooseMultiplyer;
-    public event Action<float> OnChooseBet;
+    public event Action<float> ChooseMultiplyer;
+    public event Action<float> ChooseBet;
     
     public float CurrentMultiplyer { get; private set; }
     public float CurrentBet { get; private set; }
     
     public float CruiserDistance { get; private set; }
-    
-        
+
+
+    private LevelBounds _levelBounds;
     private BoostSpawner _boostSpawner;
 
     [Inject]
-    public void Init(BoostSpawner boostSpawner) {
+    public void Init(BoostSpawner boostSpawner, LevelBounds levelBounds) {
         _boostSpawner = boostSpawner;
+        _levelBounds = levelBounds;
     }
     
 
@@ -37,7 +39,7 @@ public class ZoneManager : MonoBehaviour {
 
     public void ChangeBet(float newBet) {
         CurrentBet = newBet;
-        OnChooseBet?.Invoke(CurrentBet);
+        ChooseBet?.Invoke(CurrentBet);
         _moneyCube.SetMoneyAmount(CurrentBet,false);
     }
 
@@ -62,9 +64,10 @@ public class ZoneManager : MonoBehaviour {
         _cruiser.position = newCruiserSpawnPos;
         Debug.Log($"Крейсер на {CruiserDistance}м");
         
+        newCruiserSpawnPos = _levelBounds.RecalculateCruiserY();
         _moneyCube.SetMoneyAmount(CurrentBet*CurrentMultiplyer);
         _boostSpawner.SpawnBoosts(newCruiserSpawnPos);
-        OnChooseMultiplyer?.Invoke(CurrentMultiplyer);
+        ChooseMultiplyer?.Invoke(CurrentMultiplyer);
     }
 
 

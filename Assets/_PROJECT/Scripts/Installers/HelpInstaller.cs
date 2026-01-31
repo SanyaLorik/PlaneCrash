@@ -32,4 +32,6 @@ public class HelpInstaller: MonoInstaller {
     private void TrapsBoundsBind() {
         Container.Bind<TrapPositionCalculator>().FromComponentInHierarchy().AsSingle().NonLazy();;
     }
+    
+
 }

@@ -118,7 +118,7 @@ public class TrapsManager : MonoBehaviour {
         // _trapObject
         float startZCoord = _zoneManager.CruiserDistance * (zone.PercentageStart);
         float endZCoord = _zoneManager.CruiserDistance * (zone.PercentageEnd);
-        Debug.Log($"Спавн зоны {zone.ZoneName} будет в диапазоне: ({startZCoord}:{endZCoord})");
+        // Debug.Log($"Спавн зоны {zone.ZoneName} будет в диапазоне: ({startZCoord}:{endZCoord})");
 
         int chunks = zone.ChunksCount;
 
@@ -167,7 +167,6 @@ public class TrapsManager : MonoBehaviour {
         // _trapObject
         float startZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageStart);
         float endZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageEnd);
-        Debug.Log($"Спавн фейк трапа будет в диапазоне: ({startZCoord}:{endZCoord})");
 
         foreach (var boost in _boosts) {
             if(Random.value > 0.8f) continue;

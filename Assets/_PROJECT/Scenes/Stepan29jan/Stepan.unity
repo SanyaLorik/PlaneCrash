@@ -25638,6 +25638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraOrbitalController
   _cinemachineCamera: {fileID: 1695576374}
+  _cinemachineDecollider: {fileID: 0}
   _sensitivity: 0.1
   _orbitalFollow: {fileID: 1695576376}
   _maxZoom: 10
@@ -27938,10 +27939,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5973336b637425a479f8e9c16756d207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  LifesCount: 0
-  IsBombed: 0
-  _getObjectsCooldownSeconds: 1
   _smoothTime: 0.3
+  IsBombed: 0
+  LifesCount: 0
+  _getObjectsCooldownSeconds: 1
 --- !u!114 &1824038469
 MonoBehaviour:
   m_ObjectHideFlags: 0
