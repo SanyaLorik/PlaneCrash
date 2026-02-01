@@ -6,8 +6,8 @@ using Zenject;
 public class LineToObjects : MonoBehaviour {
     [SerializeField] private int _countTimesShowLine;
     [SerializeField] private Transform _getTasksRewardTrigger;
-    [SerializeField] private float _yForBoost;
-    [SerializeField] private float _yForSpawn;
+    [SerializeField] private Vector3 _posForBoost; // -2.76
+    [SerializeField] private Vector3 _posForSpawn; // - 3.33
     
     
     
@@ -49,11 +49,9 @@ public class LineToObjects : MonoBehaviour {
         if (state == PlayerState.Walking) {
             gameObject.ActiveSelf();
             SetSpawnPose();
-            Debug.Log("Игрок ходит!");
             if (_tasksManager.NeedToGetReward()) {
                 _target = _getTasksRewardTrigger.position;
                 _arrowInBoost = false;
-                Debug.Log("Нужна стрелка на _tasksManager!");
             }
             else {
                 gameObject.DisactiveSelf();
@@ -83,7 +81,6 @@ public class LineToObjects : MonoBehaviour {
 
 
 
-
     private bool _arrowInBoost;
     private void Update() {
         if (_target != Vector3.zero) {
@@ -103,15 +100,11 @@ public class LineToObjects : MonoBehaviour {
     }
 
     private void SetBoosterPose() {
-        Vector3 position = transform.localPosition;
-        position.y = _yForBoost;
-        transform.localPosition = position;
+        transform.localPosition = _posForBoost;
     }
     
     private void SetSpawnPose() {
-        Vector3 position = transform.localPosition;
-        position.y = _yForSpawn;
-        transform.localPosition = position;
+        transform.localPosition = _posForSpawn;
     }
         
 
