@@ -25,6 +25,7 @@ public class Basketball : MonoBehaviour {
     [SerializeField] private List<AnimationCurve> _kickTrajectories;
     [SerializeField] float _gravityMultiplier = 2f;
     [SerializeField] private Rigidbody _rb;
+    [SerializeField] private Transform _spawnPointTransform;
     
     [SerializeField] private float _rewardForScore = 100f;
     private float _currentReward;
@@ -42,7 +43,9 @@ public class Basketball : MonoBehaviour {
     
     
     private void Awake() {
-        _ballPositionSpawn = _parentBall.position;
+        _ballPositionSpawn = _spawnPointTransform.position;
+        _parentBall.position = _ballPositionSpawn;
+        
         _hoopPosition = _hoop.position;
         _currentReward = _rewardForScore;
     }
@@ -138,8 +141,16 @@ public class Basketball : MonoBehaviour {
     private IEnumerator RespawnRoutine(float timeToRespawn, bool isRewarded) {
         yield return new WaitForSeconds(timeToRespawn);
         SetBouncy(true);
-        _parentBall.position = _ballPositionSpawn;
         _rb.linearVelocity = Vector3.zero;
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
+        
+        
+        _rb.isKinematic = true;   // временно выключаем физику
+        _parentBall.position = _ballPositionSpawn;
+        _rb.isKinematic = false;  // включаем обратно
+        
+        
         _allowToCick = true;
         if (isRewarded) {
             GetMoneyReward();

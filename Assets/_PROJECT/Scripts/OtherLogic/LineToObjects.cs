@@ -8,9 +8,7 @@ public class LineToObjects : MonoBehaviour {
     [SerializeField] private Transform _getTasksRewardTrigger;
     [SerializeField] private Vector3 _posForBoost; // -2.76
     [SerializeField] private Vector3 _posForSpawn; // - 3.33
-    
-    
-    
+
     
     private Vector3 _target;
     

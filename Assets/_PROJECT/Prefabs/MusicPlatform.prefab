@@ -148,8 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 504d49c3ef6144e4689685e03d223fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MusicButton
-  _audioSource: {fileID: 0}
-  compositionName: 
+  _audioSource: {fileID: 7524349612640328297}
+  _compositionName: 
+  _tileColor: {r: 0, g: 0, b: 0, a: 0}
+  _brightnessMultiplier: 0.5
+  _durationToShade: 1
 --- !u!82 &7524349612640328297
 AudioSource:
   m_ObjectHideFlags: 0
