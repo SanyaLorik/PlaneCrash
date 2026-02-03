@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa48dfb7d885cf84a96377c6765db882, type: 3}
+  m_Name: UpgradeConfig
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeConfig
+  XMultiplierUpgrade:
+    K: 1.5
+    BaseValue: 1
+    StartPrice: 500
+    PriceMultiplier: 2
+  LuckyUpgrade:
+    K: 1.5
+    BaseValue: 2
+    StartPrice: 500
+    PriceMultiplier: 2
+  MagneteUpgrade:
+    K: 1.2
+    BaseValue: 1
+    StartPrice: 1
+    PriceMultiplier: 1
+  DefenceUpgrade:
+    K: 1
+    BaseValue: 0
+    StartPrice: 500
+    PriceMultiplier: 2
+  PredictionUpgrade:
+    K: 20
+    BaseValue: 40
+    StartPrice: 500
+    PriceMultiplier: 2
+  MagneteSizeGrowSpeed: 0.005

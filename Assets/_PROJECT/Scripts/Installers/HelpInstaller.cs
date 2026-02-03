@@ -10,6 +10,7 @@ public class HelpInstaller: MonoInstaller {
         ZonesBind();
         LevelBoundsBind();
         TrapsBoundsBind();
+        Container.Bind<Money2dSpawner>().FromComponentInHierarchy().AsSingle();
     }
 
     private void BindCube() {

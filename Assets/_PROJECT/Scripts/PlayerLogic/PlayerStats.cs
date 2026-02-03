@@ -2,58 +2,58 @@ using System;
 using UnityEngine;
 
 public class PlayerStats : IPlayerStatsReadOnly, IPlayerStatsWritable {
-    public float XMultiplier { get; private set; } = 1f;
-    public float LuckyMultiplier { get; private set; } = 1f;
-    public float MagnetSpeed { get; private set; } = 1f;
-    public int DefenceCount { get; private set; } = 1;
-    public float PredictDistance { get; private set; } = 40;
+    public int XMultiplierLevel { get; private set; } = 1;
+    public int LuckyLevel { get; private set; } = 1;
+    public int MagnetLevel { get; private set; } = 1;
+    public int DefenceLevel { get; private set; } = 1;
+    public int PredictDistanceLevel { get; private set; } = 1;
     public event Action ChangeStats;
 
-    public void UpdateXMultiplier(float x) {
-        XMultiplier *= Mathf.Max(1f, x);
+    public void UpdateXMultiplierLevel(int x) {
+        XMultiplierLevel += x;
         ChangeStats?.Invoke();
     }
 
-    public void UpdateLucky(float x) {
-        LuckyMultiplier *= Mathf.Max(1f, x);
+    public void UpdateLuckyLevel(int x) {
+        LuckyLevel += x;
         ChangeStats?.Invoke();
     }
 
-    public void UpdateMagnet(float x) {
-        MagnetSpeed += x;
+    public void UpdateMagnetLevel(int x) {
+        MagnetLevel += x;
         ChangeStats?.Invoke();
     }
 
-    public void UpdateDefence(int x) {
-        DefenceCount += x;
+    public void UpdateDefenceLevel(int x) {
+        DefenceLevel += x;
         ChangeStats?.Invoke();
     }
 
-    public void UpdatePredictDistance(float x) {
-        PredictDistance += x;
+    public void UpdatePredictDistanceLevel(int x) {
+        PredictDistanceLevel += x;
         ChangeStats?.Invoke();
     }
 }
 
 public interface IPlayerStatsReadOnly {
-    float XMultiplier { get; }
-    float LuckyMultiplier { get; }
-    float MagnetSpeed { get; }
-    int DefenceCount { get; }
-    float PredictDistance { get; }
+   int XMultiplierLevel { get; }
+   int LuckyLevel { get; }
+   int MagnetLevel { get; }
+   int DefenceLevel { get; }
+   int PredictDistanceLevel { get; }
     
     public event Action ChangeStats;
 }
 
 public interface IPlayerStatsWritable {
-    float XMultiplier { get; }
-    float LuckyMultiplier { get; }
-    float MagnetSpeed { get; }
-    int DefenceCount { get; }
-    float PredictDistance { get; }
-    void UpdateXMultiplier(float x);
-    void UpdateLucky(float x);
-    void UpdateMagnet(float x);
-    void UpdateDefence(int x);
-    void UpdatePredictDistance(float x);
+    int XMultiplierLevel { get; }
+    int LuckyLevel { get; }
+    int MagnetLevel { get; }
+    int DefenceLevel { get; }
+    int PredictDistanceLevel { get; }
+    void UpdateXMultiplierLevel(int x = 1);
+    void UpdateLuckyLevel(int x = 1);
+    void UpdateMagnetLevel(int x = 1);
+    void UpdateDefenceLevel(int x = 1);
+    void UpdatePredictDistanceLevel(int x = 1);
 }

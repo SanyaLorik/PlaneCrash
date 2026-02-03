@@ -143,13 +143,13 @@ public class TrapsManager : MonoBehaviour {
                 
                 
                 float x = GetXCoord(trap);
-                float y = Random.Range(_levelBounds.MinimumY+5f, 60f); // пока просто где-то
+                float y = Random.Range(_levelBounds.MinY+5f, _levelBounds.MaxY); // пока просто где-то
                 float z = GetChunkZCoord(diapasone, distance, i, enemiesCount);  
 
                 Vector3 _trapPosition = new Vector3(x, y, z);
                 
                 
-                TrapController _trap = Instantiate(trap, _trapPosition, Quaternion.identity);
+                TrapController _trap = Instantiate(trap, _trapPosition, Quaternion.identity, transform);
                 _trap.Init(_boostsSpawner, _levelBounds);
                 _trap.transform.localPosition = _trapPosition;
                 _trap.StartMoveTrap();
@@ -176,7 +176,8 @@ public class TrapsManager : MonoBehaviour {
 
             boost.hasTrap = true;
             Vector3 _trapPosition = _trapPositionCalculator.GetNearBoostPosition(boost.transform.position);
-            TrapController _trap = Instantiate(GetRandomTrapForRole(TrapRole.Fake), _trapPosition, Quaternion.identity);
+            TrapController _trap = Instantiate(GetRandomTrapForRole(TrapRole.Fake), _trapPosition, Quaternion.identity, transform);
+            
             _trap.Init(_boostsSpawner, _levelBounds);
             _trap.transform.localPosition = _trapPosition;
             

@@ -2,16 +2,19 @@ using UnityEngine;
 using Zenject;
 
 public class PlayerInstaller : MonoInstaller {
-    [SerializeField] private PlayerConfig _config;
+    [SerializeField] private PlayerConfig _playerConfig;
+    [SerializeField] private UpgradeConfig _upgradesConfig;
     
     
     public override void InstallBindings() {
         BindPlayer();
         BindPlayerStats();
+        
+        BindUpgrades();
     }
 
     private void BindPlayer() {
-        Container.Bind<PlayerConfig>().FromInstance(_config).AsSingle().NonLazy();
+        Container.Bind<PlayerConfig>().FromInstance(_playerConfig).AsSingle().NonLazy();
         Container.Bind<PlayerBank>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<PlayerMovement>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<PlayerStateManager>().FromComponentInHierarchy().AsSingle().NonLazy();
@@ -23,6 +26,12 @@ public class PlayerInstaller : MonoInstaller {
 
     private void BindPlayerStats() {
         Container.BindInterfacesAndSelfTo<PlayerStats>().AsSingle().NonLazy();
+    }
+    
+    private void BindUpgrades() {
+        Container.Bind<UpgradesCalculator>().AsSingle().NonLazy();
+        Container.Bind<UpgradeConfig>().FromInstance(_upgradesConfig).AsSingle().NonLazy();
+
     }
     
 

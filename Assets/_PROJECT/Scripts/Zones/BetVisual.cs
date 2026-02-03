@@ -1,3 +1,4 @@
+using _PROJECT.Scripts.Extensions_Helpers;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -17,6 +18,8 @@ public class BetVisual : MonoBehaviour {
     private ZoneManager _zoneManager;
     private IPlayerStatsReadOnly _playerStats;
     
+    [Inject] private UpgradesCalculator _upgradesCalculator;
+    
     [Inject]
     public void Init(PlayerBank bank, PlayerStateManager playerStateManager, IPlayerStatsReadOnly playerStats, ZoneManager zoneManager) {
         _zoneManager = zoneManager;
@@ -30,7 +33,7 @@ public class BetVisual : MonoBehaviour {
     }
 
     private void PlayerStatsOnChangeStats() {
-        _playerXMultiplyer.text = $"Множитель метров: {_playerStats.XMultiplier:F2}";
+        _playerXMultiplyer.text = $"Множитель метров: {_upgradesCalculator.GetXMultiplierByLevel():F2}";
     }
 
     private void Start() {
@@ -57,11 +60,11 @@ public class BetVisual : MonoBehaviour {
     }
 
     private void OnChangeBank(float capital) {
-        _playerBank.text = $"Баланс: {capital:F2}";
+        _playerBank.text = $"Баланс: {GameHelper.ValuteFormatter(capital)}";
     }
 
     private void ShowBet(float bet) {
-        _playerBetVisual.text = $"Ставка: {bet:F2}";
+        _playerBetVisual.text = $"Ставка: {GameHelper.ValuteFormatter(bet)}";
         _xMultiplyVisual.text = "";
         _rewardVisual.text = "";
         _distanceVisual.text = "";
@@ -70,7 +73,7 @@ public class BetVisual : MonoBehaviour {
     
     private void ShowMultiplyer(float multiplyer) {
         _xMultiplyVisual.text = $"Множитель: x{multiplyer}";
-        _rewardVisual.text = $"Выигрышь: {_zoneManager.CurrentBet *  multiplyer:F2}";
+        _rewardVisual.text = $"Выигрыш: {GameHelper.ValuteFormatter(_zoneManager.CurrentBet *  multiplyer)}";
         _distanceVisual.text = $"До финиша: {_zoneManager.CruiserDistance}м.";
     }
 

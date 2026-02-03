@@ -11,9 +11,7 @@ using Zenject;
 
 public class PlayerMovement : FlightObject {
     [SerializeField] private float _smoothTime = 0.3f;
-      
-  
-    
+    [SerializeField] private int _currentLifesCount;
     private PlayerConfig _config;
 
     private bool _isBusted;
@@ -37,6 +35,10 @@ public class PlayerMovement : FlightObject {
     public float PlayerSpeed => _config.SpeedForce;
     public event Action SetBoost;
     
+    
+    [Inject] private UpgradesCalculator _upgradesCalculator;
+    
+    
     [Inject]
     public void Init(PlayerConfig config, PlayerStateManager stateManager, LevelBounds levelBounds, IPlayerStatsReadOnly playerStats) {
         _stateManager =  stateManager;
@@ -50,7 +52,6 @@ public class PlayerMovement : FlightObject {
     
     
     
-    [SerializeField] private int LifesCount;
     
     
     private void Awake() {
@@ -92,14 +93,14 @@ public class PlayerMovement : FlightObject {
 
 
     public bool TryToKill() {
-        LifesCount--;
-        if (LifesCount <= 0) {
+        _currentLifesCount--;
+        if (_currentLifesCount <= 0) {
             SetPlayerIsBombed();
         }
-        return LifesCount <= 0;
+        return _currentLifesCount <= 0;
     } 
     
-    private void ResetLifes() => LifesCount = _playerStats.DefenceCount;
+    private void ResetLifes() => _currentLifesCount = _upgradesCalculator.GetDefenceByLevel();
     
 
 

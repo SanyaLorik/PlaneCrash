@@ -1,4 +1,5 @@
 using System;
+using _PROJECT.Scripts.Extensions_Helpers;
 using SanyaBeerExtension;
 using TMPro;
 using UnityEngine;
@@ -16,8 +17,8 @@ public class TaskVisual : MonoBehaviour {
 
 
     public void SetTaskVisual(float rewardMoney, float fullValue, float playerValue) {
-        _rewardMoneyText.text = TasksManager.FormatBigNumber(rewardMoney);
-        _taskText.text = string.Format(_taskString, TasksManager.FormatBigNumber(fullValue));
+        _rewardMoneyText.text = GameHelper.ValuteFormatter(rewardMoney);
+        _taskText.text = string.Format(_taskString, GameHelper.ValuteFormatter(fullValue));
         _completeImg.DisactiveSelf();
         TaskIsComplete = false;
         UpdateTaskScoreVisual(playerValue,  fullValue);

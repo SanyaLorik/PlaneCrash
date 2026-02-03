@@ -43,7 +43,7 @@ public class LineToObjects : MonoBehaviour {
 
     
     private void PlayerStateManagerOnChangeState(PlayerState state) {
-        Debug.Log(state);
+            Debug.Log(state);
         if (state == PlayerState.Walking) {
             gameObject.ActiveSelf();
             SetSpawnPose();

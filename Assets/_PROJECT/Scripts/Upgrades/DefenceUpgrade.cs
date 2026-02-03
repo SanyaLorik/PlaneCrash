@@ -3,12 +3,20 @@ using UnityEngine;
 
 public class DefenceUpgrade : UpgradeBase {
     
+    private void Start() {
+        UpgradeInfo = _config.DefenceUpgrade;
+        _currentPrice = UpgradeInfo.StartPrice;
+        UpdateVisual();
+    }
+    
+    
+    
     protected override void ApplyUpgrade() {
         _bank.Buy(_currentPrice);
-        _playerStats.UpdateDefence((int)_k);
-        Debug.Log("Покупка DefenceUpgrade: " + _playerStats.DefenceCount);
+        _playerStats.UpdateDefenceLevel();
+        Debug.Log("Покупка DefenceUpgrade: " + _playerStats.PredictDistanceLevel);
         
-        _currentPrice *= _priceMultiply;
+        _currentPrice *= UpgradeInfo.PriceMultiplier;
         _level++;
 
         UpdateVisual();
@@ -17,7 +25,14 @@ public class DefenceUpgrade : UpgradeBase {
     
         
     protected override void UpdateVisual() {
-        _visual.UpdateData(_level, _playerStats.DefenceCount, _playerStats.DefenceCount+_k, _currentPrice);
+        _visual.UpdateData(
+            _level, 
+            _upgradesCalculator.GetDefenceByLevel(), 
+            _upgradesCalculator.GetDefenceByLevel(false), 
+            _currentPrice,
+            "шт",
+            true);
+        
     }
     
 }

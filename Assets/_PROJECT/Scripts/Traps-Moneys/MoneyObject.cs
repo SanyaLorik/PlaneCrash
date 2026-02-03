@@ -8,18 +8,17 @@ public class MoneyObject : MonoBehaviour, IMagnetic {
     
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private TMP_Text _text;
+    
+    
+    
+    
     public int MoneyAmount;
 
     
+    [Inject] private PlayerBank _playerBank;
+    [Inject] private Money2dSpawner _money2dSpawner;
     
-    private PlayerBank _playerBank;
-    
-    [Inject]
-    public void Init(PlayerBank playerBank) {
-        _playerBank = playerBank;
-    }
-    
-    
+
     
     public void SetMoneyAmount(int amount) {
         MoneyAmount = amount;
@@ -31,6 +30,8 @@ public class MoneyObject : MonoBehaviour, IMagnetic {
         _particleSystem.Play(true);
         if (collider.TryGetComponent(out PlayerMovement _)) {
             Collect();
+            
+            _money2dSpawner.SpawnOneMoneyInPoint(transform.position);
         }
        
     }

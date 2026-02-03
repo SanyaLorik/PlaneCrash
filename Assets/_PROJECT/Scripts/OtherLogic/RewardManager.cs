@@ -18,7 +18,6 @@ public class RewardManager : MonoBehaviour {
     [SerializeField] private TMP_Text _distanceMultiplier;
     [SerializeField] private TMP_Text _rewardText;
     
-    
     [SerializeField] private float _distanceRewardDivide = 2f;
     
     [SerializeField] private Button _backButton;
@@ -34,8 +33,8 @@ public class RewardManager : MonoBehaviour {
     private PlayerStateManager _playerStateManager;
     private PlayerMovement _playerMovement;
     private ZoneManager _zoneManager;
-    private IPlayerStatsReadOnly _playerStats;
     
+    [Inject] private UpgradesCalculator _upgradesCalculator;
     
     [Inject]
     public void Init(PlayerStateManager playerStateManager, PlayerMovement playerMovement, IPlayerStatsReadOnly playerStats, ZoneManager zoneManager) {
@@ -44,7 +43,6 @@ public class RewardManager : MonoBehaviour {
         _playerStateManager.ChangeState += OnStateChange;
         _playerMovement =  playerMovement;
 
-        _playerStats = playerStats;
     }
     
     
@@ -68,12 +66,12 @@ public class RewardManager : MonoBehaviour {
         _betMultiplier.ActiveSelf();
         _bet.ActiveSelf();
         
-        float reward = _playerStats.XMultiplier * (_zoneManager.CurrentBet * _zoneManager.CurrentMultiplyer) + _zoneManager.CruiserDistance; 
+        float reward = _upgradesCalculator.GetXMultiplierByLevel() * (_zoneManager.CurrentBet * _zoneManager.CurrentMultiplyer) + _zoneManager.CruiserDistance; 
         _distanceText.text = $"Дистанция: {_zoneManager.CruiserDistance:F2}";
         _betMultiplier.text = $"Множитель ставки: x{_zoneManager.CurrentMultiplyer}";
         _bet.text = $"Ставка: {_zoneManager.CurrentBet:F2}$";
         _rewardText.text = $"Выигрышь: {reward:F2}$";
-        _distanceMultiplier.text = $"Множитель: x{_playerStats.XMultiplier:F2}";
+        _distanceMultiplier.text = $"Множитель: x{_upgradesCalculator.GetXMultiplierByLevel():F2}";
         
         _playerBank.AddMoney(reward);
         // _rewardText.text = money.ToString();
@@ -82,13 +80,13 @@ public class RewardManager : MonoBehaviour {
     private void ShowDistanceReward() {
         ShowRewardWindow();
         float distance = _playerStateManager.CurrentPlayerDistance;
-        float reward = distance * _playerStats.XMultiplier;
+        float reward = distance * _upgradesCalculator.GetXMultiplierByLevel();
         _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.CurrentBet);
         _playerBank.AddMoney(reward);
         
         _distanceText.text = $"Дистанция: {_playerStateManager.CurrentPlayerDistance:F2}";
         _rewardText.text = $"Выигрышь: {reward:F2}";
-        _distanceMultiplier.text = $"Множитель: x{_playerStats.XMultiplier:F2}";
+        _distanceMultiplier.text = $"Множитель: x{_upgradesCalculator.GetXMultiplierByLevel():F2}";
 
         _betMultiplier.DisactiveSelf();
         _bet.DisactiveSelf();

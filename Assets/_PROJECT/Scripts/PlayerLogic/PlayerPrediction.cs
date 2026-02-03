@@ -18,6 +18,7 @@ public class PlayerPrediction : MonoBehaviour {
     private List<Boost> _trueBoosts;
     private BoostSpawner _boostSpawner;
     private IPlayerStatsReadOnly _playerStats;
+    [Inject] private UpgradesCalculator _upgradesCalculator;
     
     
     [Inject]
@@ -52,11 +53,11 @@ public class PlayerPrediction : MonoBehaviour {
 
 
 
-    [SerializeField] private float _predictDistance;
     private async UniTask PlayerPredictAsync(CancellationToken token) {
         int index = 0;
+        float predictDistance = _upgradesCalculator.GetPredictDistanceByLevel();
         while(!token.IsCancellationRequested && index < _boostsZ.Count) {
-            if (transform.position.z + _playerStats.PredictDistance >= _boostsZ[index] ) {
+            if (transform.position.z + predictDistance >= _boostsZ[index] ) {
                 _trueBoosts[index]
                     .SetBoostPersonalityVisibleAndRevealTheHiddenInnerEnergeticMetaphysicalGameplayEssenceOfThisSpecificAccelerationEntityWhileSynchronizingItsVisualAuraWithPlayerPerceptionSystemsTheLivingBreathingDigitalUniverse();
                 index++;

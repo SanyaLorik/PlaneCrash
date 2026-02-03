@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using _PROJECT.Scripts.Extensions_Helpers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,12 +24,17 @@ public class UpgradeItemVisual : MonoBehaviour {
     }
 
 
-    public void UpdateData(int level, float xCurrent, float xNext, float price) {
+    public void UpdateData(int level, float xCurrent, float xNext, float price, string mesure, bool needRound) {
         // Debug.Log($"level {level} xCurrent {xCurrent} xNext {xNext} price {price}");
         _levelVisual.text = level.ToString();
-        _xCurrentVisual.text = xCurrent.ToString("F2");
-        _xNextVisual.text = xNext.ToString("F2");
-        _priceVisual.text = price + "$";
+        _priceVisual.text = GameHelper.ValuteFormatter(price);
+        if (needRound) {
+            _xCurrentVisual.text = ((int)xCurrent) + mesure;
+            _xNextVisual.text = ((int)xNext) + mesure;
+            return;
+        }
+        _xCurrentVisual.text = xCurrent.ToString("F2")  + mesure;
+        _xNextVisual.text = xNext.ToString("F2")  + mesure;
     }
 
     public void SetRed() {

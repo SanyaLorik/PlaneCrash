@@ -1,4 +1,5 @@
 using System;
+using _PROJECT.Scripts.Extensions_Helpers;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -62,7 +63,7 @@ public class MoneyCube : MonoBehaviour {
     
     private Tween _tween;
     public void SetMoneyAmount(float amount, bool updateMiniMoney = true) {
-        _textCount.text = amount.ToString("N0"); // шо за NO 
+        _textCount.text = GameHelper.ValuteFormatter(amount);
         
         
         Vector3 newScale = NewScale(amount);

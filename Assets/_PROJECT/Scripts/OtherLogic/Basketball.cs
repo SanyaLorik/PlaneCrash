@@ -36,6 +36,7 @@ public class Basketball : MonoBehaviour {
     private PlayerBank _bank;
 
 
+    [Inject] private Money2dSpawner _money2dSpawner;
     [Inject]
     private void Init(PlayerBank bank) {
         _bank = bank;
@@ -139,6 +140,9 @@ public class Basketball : MonoBehaviour {
     
 
     private IEnumerator RespawnRoutine(float timeToRespawn, bool isRewarded) {
+        if (isRewarded) {
+            GetMoneyReward();
+        }
         yield return new WaitForSeconds(timeToRespawn);
         SetBouncy(true);
         _rb.linearVelocity = Vector3.zero;
@@ -152,14 +156,14 @@ public class Basketball : MonoBehaviour {
         
         
         _allowToCick = true;
-        if (isRewarded) {
-            GetMoneyReward();
-        }
+        
     } 
     
     private void GetMoneyReward() {
         print("Награда за попадание: " + _rewardForScore);
         _bank.AddMoney(_currentReward);
+        _money2dSpawner.SpawnOneMoneyInPoint(transform.position);
+        
         _currentReward+= _rewardForScore;
     }
     

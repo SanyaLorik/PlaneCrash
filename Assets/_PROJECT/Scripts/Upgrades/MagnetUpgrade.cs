@@ -3,12 +3,19 @@ using UnityEngine;
 
 public class MagnetUpgrade : UpgradeBase {
     
+    private void Start() {
+        UpgradeInfo = _config.MagneteUpgrade;
+        _currentPrice = UpgradeInfo.StartPrice;
+        UpdateVisual();
+    }
+    
+    
     protected override void ApplyUpgrade() {
         _bank.Buy(_currentPrice);
-        _playerStats.UpdateMagnet((int)_k);
-        Debug.Log("Покупка MagniteUpgrade: " + _playerStats.MagnetSpeed);
+        _playerStats.UpdateMagnetLevel();
+        Debug.Log("Покупка MagniteUpgrade: " + _playerStats.MagnetLevel);
         
-        _currentPrice *= _priceMultiply;
+        _currentPrice *= UpgradeInfo.PriceMultiplier;
         _level++;
 
         UpdateVisual();
@@ -17,7 +24,13 @@ public class MagnetUpgrade : UpgradeBase {
     
         
     protected override void UpdateVisual() {
-        _visual.UpdateData(_level, _playerStats.MagnetSpeed, _playerStats.MagnetSpeed+_k, _currentPrice);
+        _visual.UpdateData(
+            _level, 
+            _upgradesCalculator.GetMagnetKByLevel(), 
+            _upgradesCalculator.GetMagnetKByLevel(false), 
+            _currentPrice,
+            "",
+            false);
     }
     
 }

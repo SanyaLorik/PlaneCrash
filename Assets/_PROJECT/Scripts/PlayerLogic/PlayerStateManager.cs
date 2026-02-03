@@ -32,8 +32,6 @@ public class PlayerStateManager : MonoBehaviour {
         CheckGround();
     }
 
-    
-
 
     public void ChangePlayerState(PlayerState newState) {
         CurrentState = newState;
@@ -62,12 +60,12 @@ public class PlayerStateManager : MonoBehaviour {
         // }
         if (Physics.Raycast(origin, Vector3.down,  _distanceCheck, _cruiserMask)) {
             Debug.Log("Попали!");
-            Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinimumY}, игрок в {transform.position.y}" );
+            Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinY}, игрок в {transform.position.y}" );
             ChangePlayerState(PlayerState.Cruisered);
         }
-        if (transform.position.y <= _levelBounds.MinimumY + _distanceCheck) {
+        if (transform.position.y <= _levelBounds.MinY + _distanceCheck) {
             Debug.Log("Упали");
-            Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinimumY}, игрок в {transform.position.y}" );
+            Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinY}, игрок в {transform.position.y}" );
             ChangePlayerState(PlayerState.Grounded);
         }
           

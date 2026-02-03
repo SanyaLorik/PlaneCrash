@@ -2,11 +2,8 @@ using UnityEngine;
 using Zenject;
 
 public abstract class UpgradeBase : MonoBehaviour {
-    [Header("Коэффициент")]
-    [SerializeField] protected float _k;
-    [Header("Рост цены")]
-    [SerializeField] protected float _priceMultiply;
-    [SerializeField] protected float _startPrice;
+    protected UpgradeInfo UpgradeInfo;
+    
     protected int _level = 1;
 
     protected float _currentPrice;
@@ -14,7 +11,10 @@ public abstract class UpgradeBase : MonoBehaviour {
     protected IPlayerStatsWritable _playerStats;
 
     protected PlayerBank _bank;
-
+    
+    [Inject] protected UpgradeConfig _config;
+    [Inject] protected UpgradesCalculator _upgradesCalculator;
+    
     [Inject]
     public void Init(PlayerBank bank, IPlayerStatsWritable playerStats) {
         _playerStats = playerStats;
@@ -24,8 +24,6 @@ public abstract class UpgradeBase : MonoBehaviour {
 
     protected void Awake() {
         _visual = GetComponent<UpgradeItemVisual>();
-        _currentPrice = _startPrice;
-        UpdateVisual();
     }
 
     private void BankOnBankChanged(float playerCapital) {

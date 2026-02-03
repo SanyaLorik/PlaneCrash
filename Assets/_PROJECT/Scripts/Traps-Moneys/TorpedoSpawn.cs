@@ -42,7 +42,7 @@ public class TorpedoSpawn : MonoBehaviour {
         // Debug.Log("PlayerOnSetBoost");
 
         float playerProgress = Random.Range(_diapasoneSpawnProgress.From, _diapasoneSpawnProgress.To);
-        float spawnY = _levelBounds.MinimumY;
+        float spawnY = _levelBounds.MinY;
         _currentHitPoint = _player.GetPlayerPositionAt(playerProgress);
         _spawnPos = new Vector3(_currentHitPoint.x, spawnY, _currentHitPoint.z);
         ShowWarning();
