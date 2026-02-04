@@ -28,6 +28,10 @@ public class Basketball : MonoBehaviour {
     [SerializeField] private Transform _spawnPointTransform;
     
     [SerializeField] private float _rewardForScore = 100f;
+    [Range(0f,1f), SerializeField] private float _chanceToGoal = 0.5f;
+    
+    
+    [SerializeField] private ConfettiSpawner _confettiSpawner;
     private float _currentReward;
     
     
@@ -79,7 +83,7 @@ public class Basketball : MonoBehaviour {
     }
 
     private void KickBall() {
-        if (Random.value < 0.5f) {
+        if (Random.value < _chanceToGoal) {
             ThrowInHoopAsync(_hoopPosition, true).Forget();
         }
         else {
@@ -163,8 +167,9 @@ public class Basketball : MonoBehaviour {
         print("Награда за попадание: " + _rewardForScore);
         _bank.AddMoney(_currentReward);
         _money2dSpawner.SpawnOneMoneyInPoint(transform.position);
-        
+        _confettiSpawner.SpawnConfetti();
         _currentReward+= _rewardForScore;
+        
     }
     
     

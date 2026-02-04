@@ -64,6 +64,7 @@ public class MoneyRadiusSpawn : MonoBehaviour {
 
     public void SpawnMoney() {
         _minDistance = Mathf.Max(transform.localScale.x, transform.localScale.z);
+        Debug.Log("SpawnMoney");
         for (int i = 0; i < _spawnCount; i++) {
             float minDist = Mathf.Min(_minDistance, _spawnRadius * 0.99f); // чтобы не выйти за предел
             float distance = Random.Range(minDist, _spawnRadius);
@@ -74,12 +75,13 @@ public class MoneyRadiusSpawn : MonoBehaviour {
 
             newSpawn.y = _bottomPoint.position.y + _yCorrection + Random.Range(-0.005f, 0.005f);
 
-
             GameObject newObj = GetMoneyFromPool();
             newObj.transform.position = newSpawn;
             
+         
             
             newObj.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+            ReturnToPool(newObj);
             
             for (int j = 1; j < _countLevels; j++) {
                 if (Random.value > _newLevelProll) {
@@ -108,6 +110,8 @@ public class MoneyRadiusSpawn : MonoBehaviour {
         
         // Я чето не понял нахуй его еще один брать и присваивать туда ну лан
         obj = GetMoneyFromPool();
+        ReturnToPool(obj);
+        
         obj.transform.position = spawnAbove;
         
         obj.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);

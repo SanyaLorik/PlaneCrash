@@ -46,6 +46,7 @@ public class TrapsManager : MonoBehaviour {
     // Наверное зоны начиная с 3
     [SerializeField] private List<ZoneInfo> _zonesInfo;
     [SerializeField] private List<TrapRoleEntry> _trapsByRoleList;
+    [SerializeField] private Transform _parentForTraps;
     
     
     private Dictionary<TrapRole, List<TrapController>> _trapsDictionary;
@@ -147,15 +148,20 @@ public class TrapsManager : MonoBehaviour {
                 float z = GetChunkZCoord(diapasone, distance, i, enemiesCount);  
 
                 Vector3 _trapPosition = new Vector3(x, y, z);
+                Debug.Log($"Для трапа позиция вычисленная: {_trapPosition}");
                 
                 
-                TrapController _trap = Instantiate(trap, _trapPosition, Quaternion.identity, transform);
-                _trap.Init(_boostsSpawner, _levelBounds);
-                _trap.transform.localPosition = _trapPosition;
-                _trap.StartMoveTrap();
+                TrapController trapInstance = Instantiate(trap, _trapPosition, Quaternion.identity);
+                trapInstance.gameObject.transform.SetParent(_parentForTraps);
+                
+                Debug.Log($" После инстанса в: {trapInstance.transform.position}");
+                trapInstance.Init(_boostsSpawner, _levelBounds);
+                trapInstance.StartMoveTrap();
                 
                 
-                _сreatedTraps.Add(_trap);
+                
+                _сreatedTraps.Add(trapInstance);
+                Debug.Log($"После StartMoveTrap: {trapInstance.transform.position}");
                 await UniTask.WaitForEndOfFrame();
             }
         }
@@ -169,20 +175,21 @@ public class TrapsManager : MonoBehaviour {
         float endZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageEnd);
 
         foreach (var boost in _boosts) {
-            if(Random.value > 0.8f) continue;
+            if(Random.value < 0.2f) continue;
             if (boost.transform.position.z > endZCoord) continue;
             if (boost.hasTrap) continue;
 
 
             boost.hasTrap = true;
             Vector3 _trapPosition = _trapPositionCalculator.GetNearBoostPosition(boost.transform.position);
-            TrapController _trap = Instantiate(GetRandomTrapForRole(TrapRole.Fake), _trapPosition, Quaternion.identity, transform);
-            
-            _trap.Init(_boostsSpawner, _levelBounds);
-            _trap.transform.localPosition = _trapPosition;
-            
-            _trap.StartMoveTrap();
-            _сreatedTraps.Add(_trap);
+            Debug.Log(_trapPosition);
+            TrapController trapInstance = Instantiate(GetRandomTrapForRole(TrapRole.Fake), _trapPosition, Quaternion.identity);
+            trapInstance.gameObject.transform.SetParent(_parentForTraps);
+        
+            trapInstance.Init(_boostsSpawner, _levelBounds);
+        
+            trapInstance.StartMoveTrap();
+            _сreatedTraps.Add(trapInstance);
             await UniTask.WaitForEndOfFrame();
         }
     }

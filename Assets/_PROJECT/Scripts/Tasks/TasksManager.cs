@@ -40,7 +40,8 @@ public class TasksManager : MonoBehaviour {
     // Инфа по заданию и росту
     private readonly Dictionary<TaskType, TaskInfo> _taskTypeToInfoDictionary = new ();
     private readonly Dictionary<TaskType, TaskVisual> _taskTypeToVisualDictionary = new ();
-
+    [Inject] private Money2dSpawner _money2dSpawner;
+        
 
     // Стата игрока в данный момент 
     private float _playerDistance;
@@ -100,7 +101,7 @@ public class TasksManager : MonoBehaviour {
 
         if (state == PlayerState.Grounded || state == PlayerState.Cruisered) {
             _tokenSource?.Cancel();
-            Debug.Log($"Игрок перестал лететь, сейчас счет {_playerDistance}");
+            // Debug.Log($"Игрок перестал лететь, сейчас счет {_playerDistance}");
         }
         
     }
@@ -190,6 +191,8 @@ public class TasksManager : MonoBehaviour {
         TaskVisual taskVisual = _taskTypeToVisualDictionary[taskType];
 
         _bank.AddMoney(taskInfo.TaskMoney);
+        _money2dSpawner.SpawnOneMoneyInPoint(transform.position);
+        
         
         taskInfo.FullValue *= taskInfo.ValueMultiplier;
         taskInfo.TaskMoney *= taskInfo.MoneyMultiplier;

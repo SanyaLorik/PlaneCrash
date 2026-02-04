@@ -52,7 +52,7 @@ public class MoneySpawnManager : MonoBehaviour {
             
             Vector3 spawnPos = GetPositionOnBoost(boost);
 
-            MoneyObject newMoney = Instantiate(_moneyPrefab, spawnPos, Quaternion.identity);
+            MoneyObject newMoney = Instantiate(_moneyPrefab, spawnPos, Quaternion.identity, transform);
             _container.Inject(newMoney);
             newMoney.SetMoneyAmount(Random.Range(_moneyAmountDiapasone.From, _moneyAmountDiapasone.To));
             _spawnedMoneys.Add(newMoney); 

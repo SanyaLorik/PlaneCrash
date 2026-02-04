@@ -6,13 +6,17 @@ using Zenject;
 public class PlayerStateManager : MonoBehaviour {
     [SerializeField] LayerMask _groundMask;
     [SerializeField] LayerMask _cruiserMask;
+    [SerializeField] LayerMask _floorMask;
     [SerializeField] private float _distanceCheck = 0.1f;
     [SerializeField] private Renderer _floor;
+    [SerializeField] private ParticleSystem _particleSystem;
+    [SerializeField] private Transform _playerFootPoint;
 
 
     private LevelBounds _levelBounds;
     
     public event Action<PlayerState> ChangeState;
+    public event Action LandedInSpawn;
     public float StartFlightPosition { get; private set; }
 
 
@@ -30,6 +34,7 @@ public class PlayerStateManager : MonoBehaviour {
     
     private void Update() {
         CheckGround();
+        FloorCheck();
     }
 
 
@@ -38,7 +43,6 @@ public class PlayerStateManager : MonoBehaviour {
         if (newState  == PlayerState.Flight) {
             StartFlightPosition = transform.position.z;
             // Debug.Log("StartFlightPosition " + transform.position.z);
-            
         }
 
         if (newState  == PlayerState.Grounded) {
@@ -54,23 +58,34 @@ public class PlayerStateManager : MonoBehaviour {
             return;
         }
         Vector3 origin = transform.position;
-        // if (Physics.Raycast(origin, Vector3.down,  _distanceCheck, _groundMask)) {
-        //     Debug.Log("Упали");
-        //     ChangePlayerState(PlayerState.Grounded);
-        // }
+ 
         if (Physics.Raycast(origin, Vector3.down,  _distanceCheck, _cruiserMask)) {
             Debug.Log("Попали!");
             Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinY}, игрок в {transform.position.y}" );
             ChangePlayerState(PlayerState.Cruisered);
+            return;
         }
         if (transform.position.y <= _levelBounds.MinY + _distanceCheck) {
             Debug.Log("Упали");
             Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinY}, игрок в {transform.position.y}" );
             ChangePlayerState(PlayerState.Grounded);
+            return;
         }
-          
-        
     }
 
 
+    private bool _wasOnFloor;
+    private void FloorCheck() {
+        Vector3 feetPoint = _playerFootPoint.position;
+        
+        bool isOnFloor = Physics.Raycast(feetPoint, Vector3.down, _floorMask);
+
+        if (isOnFloor && !_wasOnFloor) {
+            Debug.Log("Пыль!");
+            LandedInSpawn?.Invoke();
+            _particleSystem.Play();
+        }
+
+        _wasOnFloor = isOnFloor;
+    }
 }

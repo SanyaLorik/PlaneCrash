@@ -176,7 +176,6 @@ public class Money2dSpawner : MonoBehaviour {
         Vector2 offset = GetRandomPointInCircle();
 
         Vector3 screenPos = Camera.main.WorldToScreenPoint(_playerSpawnPoint.transform.position);
-        Debug.Log(new Vector2(offset.x + screenPos.x, offset.y + screenPos.y));
         return new Vector2(offset.x + screenPos.x, offset.y + screenPos.y);
     }
     

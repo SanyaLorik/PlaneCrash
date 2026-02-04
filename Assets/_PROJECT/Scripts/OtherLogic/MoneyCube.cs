@@ -77,8 +77,6 @@ public class MoneyCube : MonoBehaviour {
         }
         
         
-        
-        
 
         if (updateMiniMoney) {
             UpdateSpawnRadius();

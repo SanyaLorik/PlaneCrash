@@ -234,7 +234,7 @@ public class BoostSpawner : MonoBehaviour {
                 zPos                  
             );
         
-            Boost newBoost = Instantiate(boostPrefab, spawnPosition, Quaternion.identity);
+            Boost newBoost = Instantiate(boostPrefab, spawnPosition, Quaternion.identity, transform);
             _container.Inject(newBoost);
             boost.Add(newBoost); 
         }

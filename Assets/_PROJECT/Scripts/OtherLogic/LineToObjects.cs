@@ -43,7 +43,6 @@ public class LineToObjects : MonoBehaviour {
 
     
     private void PlayerStateManagerOnChangeState(PlayerState state) {
-            Debug.Log(state);
         if (state == PlayerState.Walking) {
             gameObject.ActiveSelf();
             SetSpawnPose();
@@ -67,7 +66,6 @@ public class LineToObjects : MonoBehaviour {
         if (_currentShowLine < _countTimesShowLine) {
             _currentShowLine++;
             SetTarget(_player.TargetPos);
-            Debug.Log(gameObject.activeSelf);
             if (!gameObject.activeSelf) {
                 gameObject.ActiveSelf();
                 _arrowInBoost = true;

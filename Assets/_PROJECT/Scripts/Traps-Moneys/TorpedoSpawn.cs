@@ -88,7 +88,6 @@ public class TorpedoSpawn : MonoBehaviour {
     
 
     private void SpawnTorpedo() {
-        Debug.Log("Torpedo spawned!");
         Torpedo torpedo = Instantiate(_torpedoPrefab, _spawnPos, Quaternion.identity);
         Torpedo tScript = torpedo.GetComponent<Torpedo>();
         tScript.Launch(_currentHitPoint, _torpedoPrefab.Speed);

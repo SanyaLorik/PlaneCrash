@@ -15,9 +15,10 @@ public class ScoreVisual : MonoBehaviour {
     [SerializeField] private TMP_Text _currentDistanceText;
     
     [SerializeField] private Image _progressBar;
+    
+    [SerializeField] private RectTransform _progressBarRt;
     [SerializeField] private RectTransform _pointer;
     
-    private RectTransform _progressBarRt;
     private PlayerStateManager _playerStateManager;
     
     private float _startProgressX;
@@ -33,7 +34,6 @@ public class ScoreVisual : MonoBehaviour {
     
 
     private void Start() {
-        _progressBarRt = _progressBar.gameObject.GetComponent<RectTransform>();
         SetDefault();
         CalculateBounds();
         _pointer.anchoredPosition = new Vector2(_startProgressX, _pointY);
