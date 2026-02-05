@@ -30,14 +30,36 @@ public class LineToObjects : MonoBehaviour {
         _zoneManager.ChooseBet += ZoneManagerStep;
         _zoneManager.ChooseMultiplyer += ZoneManagerStep;
     }
-
-    private void ZoneManagerStep(float obj) {
-        _target = Vector3.zero;
+    
+    
+    private void Awake() {
+        _lineRenderer = GetComponent<LineRenderer>();
         gameObject.DisactiveSelf();
     }
 
-    private void Awake() {
-        _lineRenderer = GetComponent<LineRenderer>();
+    // Метод для изменения цели
+    public void SetTarget(Vector3 newTarget) {
+        _target = newTarget;
+        _lineRenderer.enabled = (_target != Vector3.zero);
+        gameObject.ActiveSelf();
+    }
+    
+    private bool _tutorialStarted = true;
+    public void SetTargetTutorial(Vector3 newTarget) {
+        _target = newTarget;
+        _lineRenderer.enabled = (_target != Vector3.zero);
+        gameObject.ActiveSelf();
+    }
+
+    public void HideArrow() {
+        _target = Vector3.zero;
+        gameObject.DisactiveSelf();
+    }
+    
+    
+    private void ZoneManagerStep(float obj) {
+        if(_tutorialStarted) return;
+        _target = Vector3.zero;
         gameObject.DisactiveSelf();
     }
 
@@ -50,7 +72,7 @@ public class LineToObjects : MonoBehaviour {
                 _target = _getTasksRewardTrigger.position;
                 _arrowInBoost = false;
             }
-            else {
+            else if(!_tutorialStarted) {
                 gameObject.DisactiveSelf();
             }
         }
@@ -58,7 +80,6 @@ public class LineToObjects : MonoBehaviour {
 
     private int _currentShowLine;
     private void PlayerOnSetBoost() {
-        Debug.Log("PlayerOnSetBoost");
         if (_currentShowLine == _countTimesShowLine) {
             SetTarget(Vector3.zero);
             gameObject.DisactiveSelf();
@@ -84,16 +105,13 @@ public class LineToObjects : MonoBehaviour {
             _lineRenderer.SetPosition(0, transform.position); // от игрока
             _lineRenderer.SetPosition(1, _target); // до цели
             if (_player.transform.position.z > _target.z && _arrowInBoost) {
+                Debug.Log("Офаем стрелку");
                 _target = Vector3.zero;
             }
         }
     }
     
-    // Метод для изменения цели
-    public void SetTarget(Vector3 newTarget) {
-        _target = newTarget;
-        _lineRenderer.enabled = (_target != Vector3.zero);
-    }
+
 
     private void SetBoosterPose() {
         transform.localPosition = _posForBoost;

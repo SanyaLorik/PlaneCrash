@@ -64,7 +64,7 @@ public class MoneyRadiusSpawn : MonoBehaviour {
 
     public void SpawnMoney() {
         _minDistance = Mathf.Max(transform.localScale.x, transform.localScale.z);
-        Debug.Log("SpawnMoney");
+        // Debug.Log("SpawnMoney");
         for (int i = 0; i < _spawnCount; i++) {
             float minDist = Mathf.Min(_minDistance, _spawnRadius * 0.99f); // чтобы не выйти за предел
             float distance = Random.Range(minDist, _spawnRadius);

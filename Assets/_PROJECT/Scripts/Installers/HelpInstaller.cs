@@ -5,16 +5,18 @@ public class HelpInstaller: MonoInstaller {
     
     
     public override void InstallBindings() {
-        BindCube();
+        BindMoneyVisualLogic();
         SpawnBoost();
         ZonesBind();
         LevelBoundsBind();
         TrapsBoundsBind();
-        Container.Bind<Money2dSpawner>().FromComponentInHierarchy().AsSingle();
+
+        TutorialBind();
     }
 
-    private void BindCube() {
+    private void BindMoneyVisualLogic() {
         Container.Bind<MoneyCube>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<Money2dSpawner>().FromComponentInHierarchy().AsSingle();
     }
     
     private void SpawnBoost() {
@@ -22,17 +24,24 @@ public class HelpInstaller: MonoInstaller {
     }
     
     private void ZonesBind() {
-        Container.Bind<ZoneManager>().FromComponentInHierarchy().AsSingle().NonLazy();;
+        Container.Bind<ZoneManager>().FromComponentInHierarchy().AsSingle().NonLazy();
     }
     
     private void LevelBoundsBind() {
-        Container.Bind<LevelBounds>().FromComponentInHierarchy().AsSingle().NonLazy();;
+        Container.Bind<LevelBounds>().FromComponentInHierarchy().AsSingle().NonLazy();
     } 
     
     
     private void TrapsBoundsBind() {
-        Container.Bind<TrapPositionCalculator>().FromComponentInHierarchy().AsSingle().NonLazy();;
+        Container.Bind<TrapPositionCalculator>().FromComponentInHierarchy().AsSingle().NonLazy();
     }
+    
+    
+    private void TutorialBind() {
+        Container.Bind<Narrator>().FromComponentInHierarchy().AsSingle().NonLazy();
+    }
+    
+    
     
 
 }

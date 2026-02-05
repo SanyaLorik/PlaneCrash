@@ -70,7 +70,7 @@ public class PlayerMagnet : MonoBehaviour {
         float height = _levelBounds.CalculateFlightHeight() * 4;
         float length = _boostSpawner.BoostDistance.To / 2;
         _maxColliderSize = new Vector3(width, height, length);
-        Debug.Log("_maxColliderSize" + _maxColliderSize);
+        // Debug.Log("_maxColliderSize" + _maxColliderSize);
     }
 
 

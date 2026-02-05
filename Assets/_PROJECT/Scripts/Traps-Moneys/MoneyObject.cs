@@ -38,7 +38,6 @@ public class MoneyObject : MonoBehaviour, IMagnetic {
 
     private void Collect() {
         _playerBank.AddFlightMoney(MoneyAmount);
-        Debug.Log("Начисление бабла!");
         gameObject.DisactiveSelf();
         CanBeMagnetic = false;
     }

@@ -160,7 +160,6 @@ public class PlayerMovement : FlightObject {
 
     public void OnMove(InputAction.CallbackContext context) {
         MoveInput = context.ReadValue<Vector2>();
-        Debug.Log(MoveInput);
     }
     
 

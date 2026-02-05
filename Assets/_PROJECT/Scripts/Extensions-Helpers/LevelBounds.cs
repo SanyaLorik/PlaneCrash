@@ -32,8 +32,8 @@ public class  LevelBounds : MonoBehaviour {
         LeftX = _leftWall.bounds.max.x;
         RightX = _rightWall.bounds.min.x;
         RecalculateCruiserY();
-        Debug.Log($"MinY = {MinY}   |  MaxY = {MaxY} ");
-        Debug.Log($"LeftX = {LeftX} | RightX = {RightX} ");
+        // Debug.Log($"MinY = {MinY}   |  MaxY = {MaxY} ");
+        // Debug.Log($"LeftX = {LeftX} | RightX = {RightX} ");
     }
 
     public float CalculateFlightWidth() => Math.Abs(_leftWall.bounds.max.x) + Math.Abs(_rightWall.bounds.min.x);

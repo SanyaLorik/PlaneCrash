@@ -1,13 +1,26 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem.iOS;
 using Zenject;
 
 public class DualLegParticles : MonoBehaviour {
     public ParticleSystem _ps1; // одна система
+    private ParticleSystem.EmissionModule _emission;
 
     [Inject] private PlayerMovement _playerMovement;
 
+    private void Awake() {
+        _emission = _ps1.emission;
+        StartCoroutine(StartSystem());
+    }
+
+    private IEnumerator StartSystem() {
+        StartRunning();
+        yield return null;
+        StopRunning();
+    }
+    
 
     private bool _needPlay = false;
     private void Update() {
@@ -25,15 +38,12 @@ public class DualLegParticles : MonoBehaviour {
 
 
     private void StartRunning() {
-        var emission1 = _ps1.emission;
-        emission1.enabled = true; 
+        _emission.enabled = true; 
        
     }
 
     private void StopRunning() {
-        var emission1 = _ps1.emission;
-        emission1.enabled = false; 
-        
+        _emission.enabled = false; 
     }
 
 

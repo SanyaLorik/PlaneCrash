@@ -26,7 +26,6 @@ public class BoostSpawner : MonoBehaviour {
     [SerializeField] private AnimationCurve[] _curves;
     
     [SerializeField] private float _xOffset;
-    [SerializeField] private float _minimumFlightTimeDefault;
 
     [SerializeField] private float _yMinCorrect = 5f;
     
@@ -298,7 +297,7 @@ public class BoostSpawner : MonoBehaviour {
         return z;
     }
     
-    private Vector3 CalculateMinEndPosition() {
+    public Vector3 CalculateMinEndPosition() {
         float x = Random.Range(_levelBounds.LeftX, _levelBounds.RightX);
         return new Vector3(x, 0f, _minDistance);
     }

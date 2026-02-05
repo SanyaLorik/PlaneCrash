@@ -116,9 +116,15 @@ public class TrapsManager : MonoBehaviour {
 
     
     private async UniTask SpawnMoveTraps(ZoneInfo zone) {
-        // _trapObject
-        float startZCoord = _zoneManager.CruiserDistance * (zone.PercentageStart);
+        float safeZone = _boostsSpawner.CalculateMinEndPosition().z;
+        
+        
+        float startZCoord = Mathf.Max(_zoneManager.CruiserDistance * (zone.PercentageStart), safeZone);
         float endZCoord = _zoneManager.CruiserDistance * (zone.PercentageEnd);
+
+        if (startZCoord >= endZCoord) {
+            Debug.LogWarning($"Сейф дистанция дольше зоны {zone.ZoneName} ловушек на ней немаэ ");
+        }
         // Debug.Log($"Спавн зоны {zone.ZoneName} будет в диапазоне: ({startZCoord}:{endZCoord})");
 
         int chunks = zone.ChunksCount;
@@ -148,20 +154,17 @@ public class TrapsManager : MonoBehaviour {
                 float z = GetChunkZCoord(diapasone, distance, i, enemiesCount);  
 
                 Vector3 _trapPosition = new Vector3(x, y, z);
-                Debug.Log($"Для трапа позиция вычисленная: {_trapPosition}");
                 
                 
                 TrapController trapInstance = Instantiate(trap, _trapPosition, Quaternion.identity);
                 trapInstance.gameObject.transform.SetParent(_parentForTraps);
                 
-                Debug.Log($" После инстанса в: {trapInstance.transform.position}");
                 trapInstance.Init(_boostsSpawner, _levelBounds);
                 trapInstance.StartMoveTrap();
                 
                 
                 
                 _сreatedTraps.Add(trapInstance);
-                Debug.Log($"После StartMoveTrap: {trapInstance.transform.position}");
                 await UniTask.WaitForEndOfFrame();
             }
         }

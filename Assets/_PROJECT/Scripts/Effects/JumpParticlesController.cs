@@ -29,7 +29,6 @@ public class JumpParticlesController : MonoBehaviour  {
         yield return new WaitForSeconds(_trailsEnabledTime);
         EnableTrails(true);
         yield return new WaitForSeconds(_freezeDelay-_trailsEnabledTime);
-        Debug.Log("Заморозка");
         FreezeParticles(_flyPS);
         EnableTrails(false);
     }

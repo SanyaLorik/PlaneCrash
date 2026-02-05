@@ -82,7 +82,6 @@ public class PlayerStateManager : MonoBehaviour {
         bool isOnFloor = Physics.Raycast(feetPoint, Vector3.down, _floorMask);
 
         if (isOnFloor && !_wasOnFloor) {
-            Debug.Log("Пыль!");
             LandedInSpawn?.Invoke();
             _jumpParticlesController.Play();
         }
