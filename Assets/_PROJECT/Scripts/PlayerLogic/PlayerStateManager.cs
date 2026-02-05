@@ -11,6 +11,7 @@ public class PlayerStateManager : MonoBehaviour {
     [SerializeField] private Renderer _floor;
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private Transform _playerFootPoint;
+    [SerializeField] private JumpParticlesController _jumpParticlesController;
 
 
     private LevelBounds _levelBounds;
@@ -83,7 +84,7 @@ public class PlayerStateManager : MonoBehaviour {
         if (isOnFloor && !_wasOnFloor) {
             Debug.Log("Пыль!");
             LandedInSpawn?.Invoke();
-            _particleSystem.Play();
+            _jumpParticlesController.Play();
         }
 
         _wasOnFloor = isOnFloor;

@@ -31,7 +31,6 @@ public class ConfettiSpawner : MonoBehaviour {
                 Random.Range(0f, 5f),
                 Random.Range(-5f, 5f)
             );
-
             // Рандомный цвет
             emitParams.startColor = Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
 

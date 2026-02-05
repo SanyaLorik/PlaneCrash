@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: eef736422c3bf6445a6b2c841d905c09
+guid: fbe01dbe907b81c489a15c261f921f0f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dust atlass_0
+      name: atlas_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 336
-        width: 263
-        height: 150
+        x: 0
+        y: 0
+        width: 259
+        height: 217
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,20 +125,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5873553552c4b744381808d7f3a63acd
-      internalID: 1505958164
+      spriteID: e604e4a1dd30ced41ad416c82330a6fb
+      internalID: 1827087908
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dust atlass_1
+      name: atlas_1
       rect:
         serializedVersion: 2
-        x: 282
-        y: 328
-        width: 212
-        height: 153
+        x: 259
+        y: 0
+        width: 259
+        height: 217
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,20 +147,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a1060aa0cef6c14a94dc9231f18f10e
-      internalID: -1095192516
+      spriteID: 9e829c4b06e3a564b81db0cfa323805b
+      internalID: 2033083976
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dust atlass_5
+      name: atlas_2
       rect:
         serializedVersion: 2
-        x: 15
-        y: 50
-        width: 181
-        height: 193
+        x: 518
+        y: 0
+        width: 267
+        height: 217
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,20 +169,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 547cf24191480bc4a863bb8cd1d11597
-      internalID: -1343843305
+      spriteID: 63c064ccc50b3864fb7583b12e6afe5e
+      internalID: 159611235
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dust atlass_6
+      name: atlas_3
       rect:
         serializedVersion: 2
-        x: 234
-        y: 54
-        width: 252
-        height: 233
+        x: 785
+        y: 0
+        width: 260
+        height: 217
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,8 +191,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4ed967a5dc02584dbdd9f236234f74a
-      internalID: -2068138184
+      spriteID: b2bb5cacc55c1ed4b8298316eab79045
+      internalID: 922636034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: atlas_5
+      rect:
+        serializedVersion: 2
+        x: 1045
+        y: 0
+        width: 260
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a3b7d26897258a4f9ee85915059ffd3
+      internalID: -675953587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: atlas_4
+      rect:
+        serializedVersion: 2
+        x: 1305
+        y: 0
+        width: 267
+        height: 217
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d28698c295da2e4ea1f47b50fd7a3fa
+      internalID: -1875086078
       vertices: []
       indices: 
       edges: []
@@ -201,7 +245,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 37f693b0110bf58499db15717dcf6c44
+    spriteID: fbc4ccfdda5df3d4f8ca11b3585be49c
     internalID: 0
     vertices: []
     indices: 
@@ -213,14 +257,14 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      dust atlass_0: 1505958164
-      dust atlass_1: -1095192516
-      dust atlass_2: 1732121500
-      dust atlass_3: -601032660
-      dust atlass_4: -937438301
-      dust atlass_5: -1343843305
-      dust atlass_6: -2068138184
-      dust atlass_7: 872599502
+      atlas_0: 1827087908
+      atlas_1: 2033083976
+      atlas_2: 159611235
+      atlas_3: 922636034
+      atlas_4: -1875086078
+      atlas_5: -675953587
+      atlas_6: -1479751585
+      atlas_7: -567568725
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

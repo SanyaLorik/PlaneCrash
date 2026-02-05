@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
@@ -12,6 +13,10 @@ using Zenject;
 public class PlayerMovement : FlightObject {
     [SerializeField] private float _smoothTime = 0.3f;
     [SerializeField] private int _currentLifesCount;
+    [SerializeField] private JumpParticlesController _jumpParticlesController;
+    
+    
+    
     private PlayerConfig _config;
 
     private bool _isBusted;
@@ -21,7 +26,7 @@ public class PlayerMovement : FlightObject {
     public Transform Transform  => transform;
     
     
-    private Vector2 _moveInput;
+    public Vector2 MoveInput;
     private float _currentRoll;
     private float _rollVelocity;
 
@@ -154,7 +159,8 @@ public class PlayerMovement : FlightObject {
     }
 
     public void OnMove(InputAction.CallbackContext context) {
-        _moveInput = context.ReadValue<Vector2>();
+        MoveInput = context.ReadValue<Vector2>();
+        Debug.Log(MoveInput);
     }
     
 
@@ -167,11 +173,13 @@ public class PlayerMovement : FlightObject {
         if (Physics.Raycast(origin, Vector3.down,  0.1f, _config.FloorMask)) {
             Rb.AddForce(Vector3.up * _config.JumpForce, ForceMode.Impulse);
             _secondJumpAllowed = true;
+            _jumpParticlesController.Play();
         }
         else if (_secondJumpAllowed) {
             Rb.linearVelocity = new Vector3(Rb.linearVelocity.x, 0f, Rb.linearVelocity.z);
             Rb.AddForce(Vector3.up * _config.SecondJumpForce, ForceMode.Impulse);
             _secondJumpAllowed = false;
+            _jumpParticlesController.Play();
         }
     }
 
@@ -191,8 +199,8 @@ public class PlayerMovement : FlightObject {
         camRight.Normalize();
 
         Vector3 move =
-            camRight   * _moveInput.x +
-            camForward * _moveInput.y;
+            camRight   * MoveInput.x +
+            camForward * MoveInput.y;
 
         if (move.sqrMagnitude < 0.001f)
             return;
@@ -262,7 +270,7 @@ public class PlayerMovement : FlightObject {
             return;
         }
         
-        newPos.x += _moveInput.x * _config.RotateSpeed * Time.fixedDeltaTime;
+        newPos.x += MoveInput.x * _config.RotateSpeed * Time.fixedDeltaTime;
         
         newPos.x = Mathf.Clamp(newPos.x, _levelBounds.LeftX, _levelBounds.RightX);
         if (!_isBusted) {
@@ -310,7 +318,7 @@ public class PlayerMovement : FlightObject {
   
 
     private void VisualRotate() {
-        float targetRoll = -_moveInput.x * _config.MaxRotate;
+        float targetRoll = -MoveInput.x * _config.MaxRotate;
 
         _currentRoll = Mathf.SmoothDamp(
             _currentRoll,
