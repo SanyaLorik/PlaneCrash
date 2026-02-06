@@ -14,8 +14,6 @@ public class PlayerConfig : ScriptableObject {
     [Header("Rotate data")]
     [field: SerializeField] public float RotateSpeed { get; private set; } = 6f;
    
-    [Header("Rotate data")]
-    [field: SerializeField] public Vector3 PlayerSpawnPosition { get; private set; }
     
     [Header("Jump/Collider data")]
     [field: SerializeField] public float JumpForce { get; private set; }

@@ -47,6 +47,7 @@ public class TrapsManager : MonoBehaviour {
     [SerializeField] private List<ZoneInfo> _zonesInfo;
     [SerializeField] private List<TrapRoleEntry> _trapsByRoleList;
     [SerializeField] private Transform _parentForTraps;
+    [Range(0f,1f), SerializeField] private float _chanseToSpawnFakeTrap;
     
     
     private Dictionary<TrapRole, List<TrapController>> _trapsDictionary;
@@ -116,7 +117,7 @@ public class TrapsManager : MonoBehaviour {
 
     
     private async UniTask SpawnMoveTraps(ZoneInfo zone) {
-        float safeZone = _boostsSpawner.CalculateMinEndPosition().z;
+        float safeZone = _boostsSpawner.CalculateFalseTargetDistance();
         
         
         float startZCoord = Mathf.Max(_zoneManager.CruiserDistance * (zone.PercentageStart), safeZone);
@@ -178,7 +179,7 @@ public class TrapsManager : MonoBehaviour {
         float endZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageEnd);
 
         foreach (var boost in _boosts) {
-            if(Random.value < 0.2f) continue;
+            if(Random.value < _chanseToSpawnFakeTrap) continue;
             if (boost.transform.position.z > endZCoord) continue;
             if (boost.hasTrap) continue;
 

@@ -22,35 +22,22 @@ public class BotFlight : FlightObject, IBotBehaviour {
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Collider _collider;
     
-    
-    private PlayerConfig _playerConfig;
-    private BoostSpawner _boostSpawner;
     private List<Boost> _boostWay;
-
     private int _countGetBoosts;
-
     
     public event Action EndFlight;
-    private LevelBounds _levelBounds;
+    
+    [Inject] private LevelBounds _levelBounds;
+    [Inject] private PlayerConfig _playerConfig;
+    [Inject] private PlayerMovement _playerMovement;
+    [Inject] private BoostSpawner _boostSpawner;
     
     
-    [Inject]
-    public void Init(BoostSpawner boostSpawner, PlayerConfig playerConfig,  LevelBounds levelBounds) {
-        _levelBounds = levelBounds;
-        _boostSpawner = boostSpawner;
-        _playerConfig = playerConfig;
-    }
-
-    private void Awake() {
-    }
-
     public void GoToFall() {
         // Логика падения
         _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
         BotFallAsync(_token).Forget();
     }
-
-
 
     
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
@@ -199,7 +186,7 @@ public class BotFlight : FlightObject, IBotBehaviour {
     
     
     private void TpToSpawn() {
-        transform.position = _playerConfig.PlayerSpawnPosition;
+        transform.position = _levelBounds.PlayerSpawnPoint.position;
         _rb.linearVelocity = Vector3.zero;
         
     }

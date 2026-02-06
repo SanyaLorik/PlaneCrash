@@ -1,20 +1,29 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using JetBrains.Annotations;
 using SanyaBeerExtension;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Narrator : MonoBehaviour {
     [SerializeField] private TMP_Text _text;
     [SerializeField] private RectTransform _girlImage;
-    [SerializeField] private Image _backGround;
+    [SerializeField] private Image[] _backgrounds;
     
     
     [SerializeField] private float _durationNarratorShow;
     [SerializeField] private float _durationTextShow;
+
     
+    [SerializeField] private float _textShowSpeed = 0.05f;  
+    
+
+    [Header("Тряска бабы с сиьсками")]
+    [SerializeField] private float _strength = 5f;    // насколько далеко двигаем
+    [SerializeField] private float _speed = 0.05f;  
     
 
     private Vector2 _startPos;
@@ -34,51 +43,91 @@ public class Narrator : MonoBehaviour {
 
         // Текст в ноль
         _text.transform.localScale = Vector3.zero;
-        _text.alpha = 0f;
-        
-        HideNarrator();
     }
 
 
 
-    public void SetTextWithNarattor(string text) {
+    public void SetTextWithNarattor(string text, float speakTimeAnimation) {
         _text.text = text;
-        ShowNarrator();
+        // Сбиваем старые анимации текста
+        _text.transform.DOKill();
+
+        // Маленький "пульс"
+
+
+        ShowNarrator(speakTimeAnimation);
+
     }
     
     
 
-    private void ShowNarrator() {
+    private Coroutine _timerCoroutine;
+    private void ShowNarrator(float speakTime) {
+        Debug.Log("ShowNarrator");
+        if (_timerCoroutine!=null) {
+            StopCoroutine(_timerCoroutine);
+        }
         DOTween.Kill(this);
-
         Sequence seq = DOTween.Sequence();
-        seq.SetTarget(this);
 
-        // Картинка летит в позицию
+        // Картинка летит
         seq.Append(
             _girlImage.DOAnchorPos(_startPos, _durationNarratorShow)
                 .SetEase(Ease.OutCubic)
+                .OnComplete(() => {
+                    if (_timerCoroutine != null) {
+                        StopCoroutine(_timerCoroutine);
+                    }
+                    _timerCoroutine = StartCoroutine(Timer(speakTime));
+                    _girlImage.anchoredPosition = _startPos; // фиксируем базу
+                    _stopSpeaking = false;
+                    StartTalking();
+                })
         );
-
-        // Текст увеличивается
+        foreach (var background in _backgrounds) {
+            seq.Join(
+                background.DOFade(0.9f, _durationTextShow)
+            );
+        }
         seq.Join(
             _text.transform
-                .DOScale(1f, _durationTextShow)
-                .SetEase(Ease.OutBack)
+                .DOScale(1.15f, _textShowSpeed) // быстро увеличился
+                .SetEase(Ease.OutQuad)
+                .OnComplete(() => {
+                    _text.transform
+                        .DOScale(1f, _textShowSpeed); // вернулся назад
+            })
         );
 
-        // Плавно появляется
-        seq.Join(
-            _text.DOFade(1f, _durationTextShow)
-        );
-        seq.Join(
-            _backGround.DOFade(0.5f, _durationTextShow)
-        );
+        // Только появление текста (без scale)
+
+        _stopSpeaking = false;
+
         
     }
 
+
+
+    private IEnumerator Timer(float time) {
+        yield return new WaitForSeconds(time);
+        Debug.Log("_stopSpeaking = true");
+        _stopSpeaking = true;
+    }
+    
+    
+    
+    
     public void HideNarrator() {
+        Debug.Log("HideNarrator");
+
+        if (_timerCoroutine != null)
+            StopCoroutine(_timerCoroutine);
+
         DOTween.Kill(this);
+
+        _stopSpeaking = true;
+
+        StopTalking(); // ВАЖНО
 
         Sequence seq = DOTween.Sequence();
         seq.SetTarget(this);
@@ -87,15 +136,53 @@ public class Narrator : MonoBehaviour {
             _girlImage.DOAnchorPos(_hidePos, 0.4f)
                 .SetEase(Ease.InCubic)
         );
+
         seq.Join(
             _text.transform.DOScale(0f, 0.3f)
         );
-                                    
-        seq.Join(
-            _text.DOFade(0f, 0.2f)
-        );
-        seq.Join(
-            _backGround.DOFade(0f, _durationTextShow)
-        );
+
+        foreach (var background in _backgrounds)
+        {
+            seq.Join(
+                background.DOFade(0f, _durationTextShow)
+            );
+        }
     }
+
+    
+
+    private Tween _talkTween;
+
+    private void StartTalking() {
+        DoNextMove();
+    }
+
+    private void DoNextMove() {
+        if (_stopSpeaking) return;
+
+        Vector2 offset = new Vector2(
+            Random.Range(-_strength, _strength),
+            Random.Range(-_strength, _strength)
+        );
+
+        _talkTween = _girlImage
+            .DOAnchorPos(_startPos + offset, _speed)
+            .SetEase(Ease.Linear)
+            .OnComplete(DoNextMove);
+    }
+
+    private void StopTalking() {
+        _stopSpeaking = true;
+
+        if (_talkTween != null && _talkTween.IsActive()) {
+            _talkTween.Kill();
+            _talkTween = null;
+        }
+
+        _girlImage.anchoredPosition = _startPos;
+    }
+
+
+
+    private bool _stopSpeaking;
 }

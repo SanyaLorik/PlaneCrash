@@ -12,7 +12,8 @@ public class TextMission : IMission {
     
 
     public async UniTask RunAsync() {
-        _narrator.SetTextWithNarattor(_text);
+        _narrator.SetTextWithNarattor(_text, 3f);
         await UniTask.WaitForSeconds(_duration);
+        _narrator.HideNarrator();
     }
 }

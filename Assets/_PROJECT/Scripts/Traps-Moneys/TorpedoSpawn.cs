@@ -7,7 +7,8 @@ public class TorpedoSpawn : MonoBehaviour {
     [SerializeField] private Torpedo _torpedoPrefab;
     [SerializeField] private GameObject _circlePrefab;
     [SerializeField] private PairedValue<float> _diapasoneSpawnProgress;
-    [SerializeField] private float _chanseToSpawn;
+    [Range(0f,1f),SerializeField] private float _chanseToSpawn;
+
         
     
     
@@ -19,31 +20,36 @@ public class TorpedoSpawn : MonoBehaviour {
     
     
     
+    
+    
     private Vector3 _currentHitPoint;
+    
+    
     private PlayerMovement _player;
-    private LevelBounds _levelBounds;
-    
-    
+    [Inject] private LevelBounds _levelBounds;
+    [Inject] private BoostSpawner _boostSpawner;
     
     
     [Inject]
-    private void Init(PlayerMovement player, LevelBounds levelBounds) {
+    private void Init(PlayerMovement player) {
         _player = player;
         player.SetBoost += PlayerOnSetBoost;
-        _levelBounds =  levelBounds;
     }
+
+
+   
 
 
     private Vector3 _spawnPos;
     private void PlayerOnSetBoost() {
-        if (Random.value < _chanseToSpawn) {
+        float playerProgress = Random.Range(_diapasoneSpawnProgress.From, _diapasoneSpawnProgress.To);
+        _currentHitPoint = _player.GetPlayerPositionAt(playerProgress);
+        if (Random.value > _chanseToSpawn || _currentHitPoint.z < _boostSpawner.MinDistance) {
             return;
         }
         // Debug.Log("PlayerOnSetBoost");
 
-        float playerProgress = Random.Range(_diapasoneSpawnProgress.From, _diapasoneSpawnProgress.To);
         float spawnY = _levelBounds.MinY;
-        _currentHitPoint = _player.GetPlayerPositionAt(playerProgress);
         _spawnPos = new Vector3(_currentHitPoint.x, spawnY, _currentHitPoint.z);
         ShowWarning();
         

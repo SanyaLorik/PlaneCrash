@@ -39,10 +39,16 @@ public class LineToObjects : MonoBehaviour {
 
     // Метод для изменения цели
     public void SetTarget(Vector3 newTarget) {
+        if (_tutorialStarted && !_arrowInBoost) {
+            return;
+        }
         _target = newTarget;
         _lineRenderer.enabled = (_target != Vector3.zero);
         gameObject.ActiveSelf();
     }
+    
+
+
     
     private bool _tutorialStarted = true;
     public void SetTargetTutorial(Vector3 newTarget) {
@@ -56,7 +62,6 @@ public class LineToObjects : MonoBehaviour {
         gameObject.DisactiveSelf();
     }
     
-    
     private void ZoneManagerStep(float obj) {
         if(_tutorialStarted) return;
         _target = Vector3.zero;
@@ -66,16 +71,16 @@ public class LineToObjects : MonoBehaviour {
     
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Walking) {
+            _arrowInBoost = false;
             gameObject.ActiveSelf();
             SetSpawnPose();
             if (_tasksManager.NeedToGetReward()) {
-                _target = _getTasksRewardTrigger.position;
-                _arrowInBoost = false;
+                SetTarget(_getTasksRewardTrigger.position);
             }
             else if(!_tutorialStarted) {
                 gameObject.DisactiveSelf();
             }
-        }
+        } 
     }
 
     private int _currentShowLine;
@@ -83,20 +88,17 @@ public class LineToObjects : MonoBehaviour {
         if (_currentShowLine == _countTimesShowLine) {
             SetTarget(Vector3.zero);
             gameObject.DisactiveSelf();
+            return;
         }
-        if (_currentShowLine < _countTimesShowLine) {
-            _currentShowLine++;
-            SetTarget(_player.TargetPos);
-            if (!gameObject.activeSelf) {
-                gameObject.ActiveSelf();
-                _arrowInBoost = true;
-                SetBoosterPose();
-            }
+        _arrowInBoost = true;
+        _currentShowLine++;
+        SetTarget(_player.TargetPos);
+        if (!gameObject.activeSelf) {
+            gameObject.ActiveSelf();
+            SetBoosterPose();
         }
         
     }
-
-
 
     private bool _arrowInBoost;
     private void Update() {
@@ -120,7 +122,6 @@ public class LineToObjects : MonoBehaviour {
     private void SetSpawnPose() {
         transform.localPosition = _posForSpawn;
     }
-        
-
+       
     
 }

@@ -14,12 +14,6 @@ public class PlayerMovement : FlightObject {
     [SerializeField] private float _smoothTime = 0.3f;
     [SerializeField] private int _currentLifesCount;
     [SerializeField] private JumpParticlesController _jumpParticlesController;
-    
-    
-    
-    private PlayerConfig _config;
-
-    private bool _isBusted;
 
 
     public Rigidbody Rb { get; private set; } 
@@ -29,35 +23,28 @@ public class PlayerMovement : FlightObject {
     public Vector2 MoveInput;
     private float _currentRoll;
     private float _rollVelocity;
+    private bool _isBusted;
 
-    private PlayerStateManager _stateManager;
-    private LevelBounds _levelBounds;
-    private IPlayerStatsReadOnly _playerStats;
-    
     
     public bool IsBombed;
 
     public float PlayerSpeed => _config.SpeedForce;
     public event Action SetBoost;
     
-    
+    [Inject] private PlayerConfig _config;
     [Inject] private UpgradesCalculator _upgradesCalculator;
-    
+    [Inject] private PlayerStateManager _stateManager;
+    [Inject] private LevelBounds _levelBounds;
+    [Inject] private IPlayerStatsReadOnly _playerStats;
+    [Inject] private PlayerMovement _playerMovement;
     
     [Inject]
     public void Init(PlayerConfig config, PlayerStateManager stateManager, LevelBounds levelBounds, IPlayerStatsReadOnly playerStats) {
         _stateManager =  stateManager;
-        _config = config;
-        _levelBounds = levelBounds;
-        
         _stateManager.ChangeState += OnChangeSpaceRotation;
-
-        _playerStats = playerStats;
     }
     
-    
-    
-    
+
     
     private void Awake() {
         Rb = GetComponent<Rigidbody>();
@@ -90,7 +77,7 @@ public class PlayerMovement : FlightObject {
 
     
     public void TpPlayerInSpawn() {
-        transform.position = _config.PlayerSpawnPosition;
+        transform.position = _levelBounds.PlayerSpawnPoint.position;
         Rb.linearVelocity = Vector3.zero;
     }
 

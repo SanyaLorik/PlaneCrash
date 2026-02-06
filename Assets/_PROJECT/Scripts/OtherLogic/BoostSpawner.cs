@@ -41,8 +41,8 @@ public class BoostSpawner : MonoBehaviour {
     private PlayerMovement _playerMovement;
     private IPlayerStatsReadOnly _playerStats;
     private LevelBounds _levelBounds;
-    private float _minDistance;
-    
+    public float MinDistance { get; private set; }
+
     private List<List<Boost>> _trueWaysAfterZone = new();
     private List<List<Boost>> _trueWaysBeforeZone = new();
     private List<List<Boost>> _falseWays = new();
@@ -58,6 +58,13 @@ public class BoostSpawner : MonoBehaviour {
         _playerStats =  playerStats;
         _levelBounds = levelBounds;
         _container = container;
+        _playerStats.ChangeStats += PlayerStatsOnChangeStats;
+        PlayerStatsOnChangeStats();
+    }
+
+    private void PlayerStatsOnChangeStats() {
+        MinDistance = CalculateFalseTargetDistance();
+        MoveVisualZone();
     }
 
 
@@ -81,10 +88,9 @@ public class BoostSpawner : MonoBehaviour {
     }
 
 
-
-    private Vector3 _curiserPosition;
-    public void SpawnBoosts(Vector3 curiserPosition) {
-        _curiserPosition = curiserPosition;
+    private Vector3 _cruiserPosition;
+    public void SpawnBoosts(Vector3 cruiserPosition) {
+        _cruiserPosition = cruiserPosition;
         MinimumFlightTimeIsBig = false;
         ClearAllBoosts();
         
@@ -94,12 +100,12 @@ public class BoostSpawner : MonoBehaviour {
         3. Спавн в начальной зоне n1 бустов, где n1>n2
         4. Соединение выхода из первой зоны с выходом во вторую зону
         */
-        _minDistance = CalculateFalseTargetDistance();
-        MoveVisualZone();
+        
         for (int i = 0; i < _countFalseWays; i++) {
+            
             // Тут тоже подумать до куда он может лететь, 
             Vector3 newFalsePosition = CalculateMinEndPosition();
-            newFalsePosition.z = Random.Range(newFalsePosition.z, curiserPosition.z+100f);
+            newFalsePosition.z = Random.Range(newFalsePosition.z, cruiserPosition.z+100f);
             _falseWays.Add(SpawnBoostWays(_startFlightZ, newFalsePosition, _falseBoostPrefab, false));
         }
 
@@ -107,14 +113,14 @@ public class BoostSpawner : MonoBehaviour {
         
         
         // 2. После зоны
-        if (curiserPosition.z - _minDistance < BoostDistance.To + BoostDistance.From) {
+        if (cruiserPosition.z - MinDistance < BoostDistance.To + BoostDistance.From) {
             Debug.Log("Задано большое значение MinimumFlightTime, все пути ведут к крейсеру " + _upgradesCalculator.GetLuckyByLevel());
             MinimumFlightTimeIsBig = true;
         }
         else {
             Debug.Log("MinimumFlightTime: " + _upgradesCalculator.GetLuckyByLevel());
             for (int i = 0; i < _countTrueWays.To; i++) {
-                _trueWaysAfterZone.Add(SpawnBoostWays(_minDistance, curiserPosition, _boostPrefab, false));
+                _trueWaysAfterZone.Add(SpawnBoostWays(MinDistance, cruiserPosition, _boostPrefab, false));
             }
         }
         
@@ -122,7 +128,7 @@ public class BoostSpawner : MonoBehaviour {
             Vector3 endPosition = !MinimumFlightTimeIsBig ? 
                 _trueWaysAfterZone[Random.Range(0, _trueWaysAfterZone.Count)][0].transform.position 
                 : 
-                curiserPosition;
+                cruiserPosition;
             _trueWaysBeforeZone.Add(SpawnBoostWays(_startFlightZ, endPosition, _boostPrefab, true));
         }
     }
@@ -178,13 +184,13 @@ public class BoostSpawner : MonoBehaviour {
         }
 
         Debug.LogWarning("Буста не нашли(, летим к крейсеру");
-        _playerMovement.SetBooster(_rightBoosts[^2].randomTrajectory, _curiserPosition);
+        _playerMovement.SetBooster(_rightBoosts[^2].randomTrajectory, _cruiserPosition);
     }
     
     
     private void MoveVisualZone() {
         Vector3 zonePos =  _zoneSpawn.position;
-        zonePos.z = _minDistance;
+        zonePos.z = MinDistance;
         _zoneSpawn.position = zonePos;
     }
 
@@ -286,7 +292,7 @@ public class BoostSpawner : MonoBehaviour {
     }
 
 
-    private float CalculateFalseTargetDistance() {
+    public float CalculateFalseTargetDistance() {
         Debug.Log($"CalculateFalseTargetDistance: MinimumFlightTime = {_upgradesCalculator.GetLuckyByLevel()}");
         float speed = _playerMovement.PlayerSpeed;
         float z = speed * _upgradesCalculator.GetLuckyByLevel();
@@ -297,9 +303,10 @@ public class BoostSpawner : MonoBehaviour {
         return z;
     }
     
-    public Vector3 CalculateMinEndPosition() {
+    private Vector3 CalculateMinEndPosition() {
+        Debug.Log("Подсчет позиции сейф зоны");
         float x = Random.Range(_levelBounds.LeftX, _levelBounds.RightX);
-        return new Vector3(x, 0f, _minDistance);
+        return new Vector3(x, 0f, MinDistance);
     }
     
     private void MarkBoostFalse(List<List<Boost>> boostsWays) {

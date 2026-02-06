@@ -10,16 +10,14 @@ public class  LevelBounds : MonoBehaviour {
     [SerializeField] private Renderer _leftWall;
     [SerializeField] private Renderer _rightWall;
     [SerializeField] private Renderer _cruiser;
+    [SerializeField] private Transform _cruisePoint;
     [field: SerializeField] public float MaxY {get; private set; }
+    [field: SerializeField] public Transform PlayerSpawnPoint { get; private set; }
 
-
-
-
-    public Vector3 RecalculateCruiserY() {
-       float cruiserY = _cruiser.bounds.max.y;
-       CruiserPosition = new Vector3(_cruiser.transform.position.x, cruiserY, _cruiser.transform.position.z);
-       return CruiserPosition;
-    }
+    
+    
+    public Vector3 RecalculateCruiserY() =>
+        new (_cruiser.transform.position.x, _cruisePoint.position.y, _cruiser.transform.position.z);
 
 
     public float MinY { get;private set; }
@@ -31,7 +29,6 @@ public class  LevelBounds : MonoBehaviour {
         MinY = _floor.bounds.max.y;
         LeftX = _leftWall.bounds.max.x;
         RightX = _rightWall.bounds.min.x;
-        RecalculateCruiserY();
         // Debug.Log($"MinY = {MinY}   |  MaxY = {MaxY} ");
         // Debug.Log($"LeftX = {LeftX} | RightX = {RightX} ");
     }

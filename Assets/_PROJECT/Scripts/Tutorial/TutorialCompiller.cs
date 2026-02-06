@@ -11,6 +11,7 @@ public class TutorialCompiller : MonoBehaviour {
    
     private bool _isInjected = false;
     
+    [Inject] private Narrator _narrator; 
     [Inject] private DiContainer _diContainer;
 
     [Inject]
@@ -18,7 +19,6 @@ public class TutorialCompiller : MonoBehaviour {
         foreach (var mission in _missions) {
             _diContainer.QueueForInject(mission);
         }
-
         _isInjected = true; 
     }
     
@@ -32,5 +32,7 @@ public class TutorialCompiller : MonoBehaviour {
        foreach (var mission in _missions) {
            await mission.RunAsync();
        }
+       _narrator.HideNarrator();
+       
    }
 }
