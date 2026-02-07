@@ -14800,8 +14800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b58d6a30868d944fada111bbd153e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrapVisual
-  _particleSystem:
-  - {fileID: 6682189699735250949}
+  _particleSystem: {fileID: 6682189699735250949}
   _brightnessMultiply: 5
 --- !u!1 &9045242827390915567
 GameObject:

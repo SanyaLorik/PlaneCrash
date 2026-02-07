@@ -28,7 +28,10 @@ public class TargetMission : IMission {
             _lineToObjects.SetTargetTutorial(_target.position);
         }
         
-        await UniTask.WaitWhile(() => Vector3.Distance(_player.Transform.position, _target.position) > _delta);
+        await UniTask.WaitWhile(
+            () => Vector3.Distance(_player.transform.position, _target.position) > _delta,
+            cancellationToken: _player.GetCancellationTokenOnDestroy()
+        );
         
         if (_showArrow) {
             _lineToObjects.HideArrow();
