@@ -11,7 +11,6 @@ public class PlayerPrediction : MonoBehaviour {
     // Прокачивается Z координата до бустов
     private PlayerStateManager _playerStateManager;
     private CancellationTokenSource _tokenSource;
-    private CancellationToken _token;
     
     
     private List<float> _boostsZ;
@@ -31,12 +30,12 @@ public class PlayerPrediction : MonoBehaviour {
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Flight) {
-            _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
+            _tokenSource = new CancellationTokenSource();
             GetZBoostCoord();
-            PlayerPredictAsync(_token).Forget();
+            PlayerPredictAsync(_tokenSource.Token).Forget();
         }
         else {
-            UniTaskHelper.StopTask(ref _tokenSource);
+            _tokenSource?.Cancel();
         }
     }
     

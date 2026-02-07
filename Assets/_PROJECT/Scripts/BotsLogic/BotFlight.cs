@@ -35,8 +35,9 @@ public class BotFlight : FlightObject, IBotBehaviour {
     
     public void GoToFall() {
         // Логика падения
-        _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
-        BotFallAsync(_token).Forget();
+        _tokenSource = new CancellationTokenSource();
+
+        BotFallAsync(_tokenSource.Token).Forget();
     }
 
     
@@ -65,8 +66,9 @@ public class BotFlight : FlightObject, IBotBehaviour {
 
     public void Enter() {
         _collider.enabled = true;
-        _token =  UniTaskHelper.CreateNewToken(ref _tokenSource);
-        RotateLocalXAsync(-25, _token).Forget();
+        _tokenSource = new CancellationTokenSource();
+
+        RotateLocalXAsync(-25, _tokenSource.Token).Forget();
         TpNearPlayer();
         // Сбросить кол-во бустов надо
         ResetCountBoosts();
@@ -80,8 +82,9 @@ public class BotFlight : FlightObject, IBotBehaviour {
     }
 
     private void StartFlightCycle() {
-        _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
-        BotFlightCycleAsync(_token).Forget();
+        _tokenSource = new CancellationTokenSource();
+
+        BotFlightCycleAsync(_tokenSource.Token).Forget();
     }
     
     private async UniTaskVoid BotFlightCycleAsync(CancellationToken token) {

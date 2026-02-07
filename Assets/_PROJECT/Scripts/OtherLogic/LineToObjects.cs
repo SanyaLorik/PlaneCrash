@@ -6,11 +6,14 @@ using Zenject;
 public class LineToObjects : MonoBehaviour {
     [SerializeField] private int _countTimesShowLine;
     [SerializeField] private Transform _getTasksRewardTrigger;
-    [SerializeField] private Vector3 _posForBoost; // -2.76
-    [SerializeField] private Vector3 _posForSpawn; // - 3.33
+    [SerializeField] private Transform _posForBoost; // -2.76
+    [SerializeField] private Transform _posForSpawn; // - 3.33
 
     
     private Vector3 _target;
+    private bool _tutorialStarted;
+    
+    
     
     private LineRenderer _lineRenderer;
     private PlayerStateManager _playerStateManager;
@@ -18,6 +21,8 @@ public class LineToObjects : MonoBehaviour {
     private TasksManager _tasksManager;
     private ZoneManager _zoneManager;
 
+    
+    
 
     [Inject]
     private void Init(PlayerMovement player, PlayerStateManager playerStateManager, TasksManager tasksManager, ZoneManager zoneManager) {
@@ -44,13 +49,26 @@ public class LineToObjects : MonoBehaviour {
         }
         _target = newTarget;
         _lineRenderer.enabled = (_target != Vector3.zero);
-        gameObject.ActiveSelf();
+        if (_target != Vector3.zero) {
+            gameObject.ActiveSelf();
+        }
+        else {
+            gameObject.DisactiveSelf();
+            
+        }
+    }
+
+
+
+    public void TutorialModeEnable() {
+        _tutorialStarted = true;
     }
     
-
-
+    public void TutorialModeDisable() {
+        _tutorialStarted = false;
+        SetTarget(Vector3.zero);
+    }
     
-    private bool _tutorialStarted = true;
     public void SetTargetTutorial(Vector3 newTarget) {
         _target = newTarget;
         _lineRenderer.enabled = (_target != Vector3.zero);
@@ -71,7 +89,10 @@ public class LineToObjects : MonoBehaviour {
     
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Walking) {
-            _arrowInBoost = false;
+            if (_arrowInBoost) {
+                _arrowInBoost = false;
+                SetTarget(Vector3.zero);
+            }
             gameObject.ActiveSelf();
             SetSpawnPose();
             if (_tasksManager.NeedToGetReward()) {
@@ -80,7 +101,11 @@ public class LineToObjects : MonoBehaviour {
             else if(!_tutorialStarted) {
                 gameObject.DisactiveSelf();
             }
-        } 
+        }
+
+        if (state == PlayerState.Cruisered || state == PlayerState.Grounded) {
+            SetTarget(Vector3.zero);
+        }
     }
 
     private int _currentShowLine;
@@ -93,9 +118,9 @@ public class LineToObjects : MonoBehaviour {
         _arrowInBoost = true;
         _currentShowLine++;
         SetTarget(_player.TargetPos);
+        SetBoosterPose();
         if (!gameObject.activeSelf) {
             gameObject.ActiveSelf();
-            SetBoosterPose();
         }
         
     }
@@ -116,11 +141,11 @@ public class LineToObjects : MonoBehaviour {
 
 
     private void SetBoosterPose() {
-        transform.localPosition = _posForBoost;
+        transform.localPosition = _posForBoost.localPosition;
     }
     
     private void SetSpawnPose() {
-        transform.localPosition = _posForSpawn;
+        transform.localPosition = _posForSpawn.localPosition;
     }
        
     

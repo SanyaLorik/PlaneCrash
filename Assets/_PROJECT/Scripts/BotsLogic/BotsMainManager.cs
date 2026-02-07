@@ -16,7 +16,6 @@ public class BotsMainManager : IInitializable, IDisposable {
 
     
     private CancellationTokenSource _tokenSource;
-    private CancellationToken _token;
     private bool _stopBotSpeaking;
     private List<BotStateManager> _speakingBots = new();
     
@@ -32,8 +31,8 @@ public class BotsMainManager : IInitializable, IDisposable {
 
     
     public void Initialize() {
-        _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
-        BotSpeakCycleAsync(_token).Forget();
+        _tokenSource = new CancellationTokenSource();
+        BotSpeakCycleAsync(_tokenSource.Token).Forget();
     }
 
     private async UniTask BotSpeakCycleAsync(CancellationToken token) {

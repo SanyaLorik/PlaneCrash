@@ -36,6 +36,7 @@ public class TasksManager : MonoBehaviour {
     [SerializeField] private List<TaskVisual> _tasksVisual;
 
     [SerializeField] private TaskNotification _taskNotification;
+    [SerializeField] private ParticleSystem _taskCompletePS;
     
     // Инфа по заданию и росту
     private readonly Dictionary<TaskType, TaskInfo> _taskTypeToInfoDictionary = new ();
@@ -50,7 +51,6 @@ public class TasksManager : MonoBehaviour {
     private float _playerMoneyBet;
     
     private CancellationTokenSource _tokenSource;
-    private CancellationToken _token;
     
 
     private PlayerMovement _playerMovement;
@@ -80,6 +80,7 @@ public class TasksManager : MonoBehaviour {
     private void OnTriggerEnter(Collider collider) {
         if (collider.TryGetComponent(out PlayerMovement player)) {
             UpdateCompleteTasks();
+            _taskCompletePS.Play();
         }
     }
 
@@ -95,8 +96,8 @@ public class TasksManager : MonoBehaviour {
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Flight) {
             UpdateMoneyBet(_zoneManager.CurrentBet);
-            _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
-            PlayerFlightAsync(_token, _playerMovement.Transform).Forget();
+            _tokenSource = new CancellationTokenSource();
+            PlayerFlightAsync(_tokenSource.Token, _playerMovement.Transform).Forget();
         }
 
         if (state == PlayerState.Grounded || state == PlayerState.Cruisered) {

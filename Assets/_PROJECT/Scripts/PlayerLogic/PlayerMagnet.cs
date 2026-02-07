@@ -17,7 +17,6 @@ public class PlayerMagnet : MonoBehaviour {
     private IMagnetic _currentTargetMoney;
     
     private CancellationTokenSource _tokenSource;
-    private CancellationToken _token;
     
     private BoxCollider _collider;
     
@@ -80,8 +79,9 @@ public class PlayerMagnet : MonoBehaviour {
         _magneticsMoney.Clear();
         if (state == PlayerState.Flight) {
             _collider.enabled = true;
-            _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
-            MonitoringTargets(_token).Forget();
+            _tokenSource = new CancellationTokenSource();
+
+            MonitoringTargets(_tokenSource.Token).Forget();
         }
         else {
             _collider.enabled = false;
@@ -117,7 +117,7 @@ public class PlayerMagnet : MonoBehaviour {
 
 
     private async UniTask MonitoringTargets(CancellationToken token) {
-        while (!_token.IsCancellationRequested) {
+        while (!token.IsCancellationRequested) {
             // Буст
             _currentTargetBoost = GetClosest(_magneticsBoost);
             foreach (var obj in _magneticsBoost) {

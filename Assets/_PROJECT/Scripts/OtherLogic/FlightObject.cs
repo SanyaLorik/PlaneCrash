@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -9,14 +10,12 @@ public class FlightObject : MonoBehaviour {
     protected float _expandedTime = 0;
     protected Vector3 _initialPos;
     protected CancellationTokenSource _tokenSource;
-    protected CancellationToken _token;
     
     public Vector3 TargetPos { get; protected set; }
     
         
     private void OnDestroy() {
-        _tokenSource?.Cancel();
-        _tokenSource?.Dispose();
+        UniTaskHelper.DisposeTask(ref _tokenSource);
     }
 
 }

@@ -37,6 +37,7 @@ public class PlayerMovement : FlightObject {
     [Inject] private LevelBounds _levelBounds;
     [Inject] private IPlayerStatsReadOnly _playerStats;
     [Inject] private PlayerMovement _playerMovement;
+    [Inject] private PlayerVisual _visual;
     
     [Inject]
     public void Init(PlayerConfig config, PlayerStateManager stateManager, LevelBounds levelBounds, IPlayerStatsReadOnly playerStats) {
@@ -86,6 +87,7 @@ public class PlayerMovement : FlightObject {
 
     public bool TryToKill() {
         _currentLifesCount--;
+        _visual.StartDizzy();
         if (_currentLifesCount <= 0) {
             SetPlayerIsBombed();
         }
@@ -103,15 +105,15 @@ public class PlayerMovement : FlightObject {
 
 
     private void OnChangeSpaceRotation(PlayerState playerState) {
-        _token = UniTaskHelper.CreateNewToken(ref _tokenSource);
+        _tokenSource = new CancellationTokenSource();
         if (playerState == PlayerState.Flight) {
             ResetLifes();
             IsBombed = false;
-            RotateLocalXAsync(-25, playerState, _token).Forget();
+            RotateLocalXAsync(-25, playerState, _tokenSource.Token).Forget();
             Rb.useGravity = false;
         }
         else if(playerState == PlayerState.Grounded || playerState == PlayerState.Cruisered){
-            RotateLocalXAsync(-80, playerState, _token).Forget();
+            RotateLocalXAsync(-80, playerState, _tokenSource.Token).Forget();
             Rb.useGravity = true;
         }
     }

@@ -81,6 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee7b6deb1a18004e816cda4e043a1fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PredictUpgrade
-  _k: 20
-  _priceMultiply: 2
-  _startPrice: 500
+  _particleSystem: {fileID: 6477827903153626195}
+--- !u!198 &6477827903153626195 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5497264793800973303, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
+  m_PrefabInstance: {fileID: 1562726103046506404}
+  m_PrefabAsset: {fileID: 0}

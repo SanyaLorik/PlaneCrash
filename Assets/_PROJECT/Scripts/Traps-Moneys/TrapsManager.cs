@@ -175,8 +175,8 @@ public class TrapsManager : MonoBehaviour {
     
     private async UniTask SpawnFakeTraps() {
         // _trapObject
-        float startZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageStart);
         float endZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageEnd);
+        endZCoord = Math.Max(endZCoord, _boostsSpawner.CalculateFalseTargetDistance());
 
         foreach (var boost in _boosts) {
             if(Random.value < _chanseToSpawnFakeTrap) continue;
@@ -186,7 +186,6 @@ public class TrapsManager : MonoBehaviour {
 
             boost.hasTrap = true;
             Vector3 _trapPosition = _trapPositionCalculator.GetNearBoostPosition(boost.transform.position);
-            Debug.Log(_trapPosition);
             TrapController trapInstance = Instantiate(GetRandomTrapForRole(TrapRole.Fake), _trapPosition, Quaternion.identity);
             trapInstance.gameObject.transform.SetParent(_parentForTraps);
         

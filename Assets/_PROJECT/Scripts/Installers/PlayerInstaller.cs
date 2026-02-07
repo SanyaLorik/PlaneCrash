@@ -20,8 +20,7 @@ public class PlayerInstaller : MonoInstaller {
         Container.Bind<PlayerStateManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<LineToObjects>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<TasksManager>().FromComponentInHierarchy().AsSingle().NonLazy();
-        
-        
+        Container.Bind<PlayerVisual>().FromComponentInHierarchy().AsSingle().NonLazy();
     }
 
     private void BindPlayerStats() {

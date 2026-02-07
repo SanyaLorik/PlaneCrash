@@ -2,6 +2,10 @@ using UnityEngine;
 using Zenject;
 
 public abstract class UpgradeBase : MonoBehaviour {
+    [SerializeField] private ParticleSystem _particleSystem;
+    
+    
+    
     protected UpgradeInfo UpgradeInfo;
     
     protected int _level = 1;
@@ -9,11 +13,13 @@ public abstract class UpgradeBase : MonoBehaviour {
     protected float _currentPrice;
     protected UpgradeItemVisual _visual;
     protected IPlayerStatsWritable _playerStats;
-
     protected PlayerBank _bank;
     
     [Inject] protected UpgradeConfig _config;
     [Inject] protected UpgradesCalculator _upgradesCalculator;
+    [Inject] private PlayerVisual _playerVsual;
+    
+    
     
     [Inject]
     public void Init(PlayerBank bank, IPlayerStatsWritable playerStats) {
@@ -33,15 +39,19 @@ public abstract class UpgradeBase : MonoBehaviour {
     protected void CheckColor() {
         if (_bank.CanBuy(_currentPrice)) {
             _visual.SetGreen();
+            _particleSystem.Play();
+            
             return;
         }
         _visual.SetRed();
+        _particleSystem.Stop();
     }
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
             if (_bank.CanBuy(_currentPrice)) {
                 ApplyUpgrade();
+                _playerVsual.SetBought();
             }
             else {
                 Debug.LogWarning("Не хватает срэдств(");

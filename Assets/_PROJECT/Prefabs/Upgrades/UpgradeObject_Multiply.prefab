@@ -57,13 +57,19 @@ PrefabInstance:
       value: UpgradeObject_Multiply
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4092650353024002921, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6337863765394426253, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3077033291350705278}
   m_SourcePrefab: {fileID: 100100000, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
+--- !u!198 &619981409497788128 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3276224611257726426, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
+  m_PrefabInstance: {fileID: 2733088086607960890}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8221739628847764151 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6337863765394426253, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
@@ -81,6 +87,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68911ae3cb2d9254d97227d9f7243fb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::XMultiplyUpgrade
-  _k: 1.5
-  _priceMultiply: 2
-  _startPrice: 500
+  _particleSystem: {fileID: 619981409497788128}

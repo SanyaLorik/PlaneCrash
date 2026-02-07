@@ -13,6 +13,7 @@ public class TutorialCompiller : MonoBehaviour {
     
     [Inject] private Narrator _narrator; 
     [Inject] private DiContainer _diContainer;
+    [Inject] private LineToObjects _lineToObjects;
 
     [Inject]
     private void Init() {
@@ -29,10 +30,12 @@ public class TutorialCompiller : MonoBehaviour {
 
    private async UniTaskVoid StartTutorial() {
        await UniTask.WaitWhile(() => !_isInjected);
+       _lineToObjects.TutorialModeEnable();
        foreach (var mission in _missions) {
            await mission.RunAsync();
        }
        _narrator.HideNarrator();
-       
+       _lineToObjects.TutorialModeDisable();
+
    }
 }
