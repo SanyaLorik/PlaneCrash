@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.marijnzwemmer.unity-toolbar-extender": {
+      "version": "https://github.com/marijnz/unity-toolbar-extender.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "84c2d4f5927b0579e18859fecde7f7bb17f634f7"
+    },
     "com.romanlee17.mirrasdk5": {
       "version": "https://github.com/MirraSDK/SDK5.git",
       "depth": 0,

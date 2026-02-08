@@ -45,7 +45,7 @@ public class PlayerMovement : FlightObject {
         _stateManager.ChangeState += OnChangeSpaceRotation;
     }
     
-
+    
     
     private void Awake() {
         Rb = GetComponent<Rigidbody>();

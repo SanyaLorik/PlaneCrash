@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Architecture_M;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 public class PlayerBank : MonoBehaviour {
     
@@ -12,8 +14,9 @@ public class PlayerBank : MonoBehaviour {
     [SerializeField] private MoneyCube _cube;
     public event Action<float> BankChanged;
     public event Action<float> MoneyCollect;
-    public float PlayerCapital { get => _playerCapital; }
+    public float PlayerCapital { get => _playerCapital;  }
 
+    [Inject] IGameSave<GameSavePC> _gameSave;
     
     private void Start() {
         BankChanged += OnBankChanged;
@@ -32,12 +35,15 @@ public class PlayerBank : MonoBehaviour {
 
     private void OnBankChanged(float obj) {
         _cube.SetMoneyAmount(_playerCapital);
+        _gameSave.GetSave.Money = (long)obj;
+        _gameSave.Save();
     }
 
     private async UniTaskVoid LoadPlayerMoney() {
         // Имитация задержки перед загрузкой денег
         await UniTask.Delay(500);
-        BankChanged?.Invoke(_playerCapital);
+        _playerCapital = _gameSave.GetSave.Money;
+        BankChanged?.Invoke(PlayerCapital);
     }
 
     

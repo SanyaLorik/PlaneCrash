@@ -7,6 +7,7 @@ public abstract class UpgradeBase : MonoBehaviour {
     
     
     protected UpgradeInfo UpgradeInfo;
+    protected string Id;
     
     protected int _level = 1;
 

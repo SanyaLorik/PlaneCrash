@@ -60771,6 +60771,10 @@ PrefabInstance:
       propertyPath: _recalculateBtn
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4444904595369620693, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4951356058960082027, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
       propertyPath: _spawnCount
       value: 60
