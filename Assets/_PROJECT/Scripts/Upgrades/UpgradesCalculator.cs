@@ -7,16 +7,13 @@ using Zenject;
 public class UpgradesCalculator {
     [Inject] private IPlayerStatsReadOnly _playerStats;
     [Inject] private UpgradeConfig _config;
-
-
-
+    
 
     public float GetLuckyByLevel(bool thisLevel = true) {
         if (thisLevel) {
             return _config.LuckyUpgrade.BaseValue * Mathf.Pow(_config.LuckyUpgrade.K,_playerStats.LuckyLevel);
         }
         return _config.LuckyUpgrade.BaseValue * Mathf.Pow(_config.LuckyUpgrade.K,_playerStats.LuckyLevel  + 1);
-
     }
 
 

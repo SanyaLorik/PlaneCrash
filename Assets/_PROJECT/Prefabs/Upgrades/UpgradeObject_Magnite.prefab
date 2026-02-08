@@ -64,9 +64,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8990505802799507172}
   m_SourcePrefab: {fileID: 100100000, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
---- !u!198 &7005918467206660490 stripped
+--- !u!198 &2054311372648359 stripped
 ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5497264793800973303, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3276224611257726426, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
   m_PrefabInstance: {fileID: 3274170317118331517}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &8828371444100551664 stripped
@@ -86,4 +86,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d914d89deabeb40bdd7b48040f3267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MagnetUpgrade
-  _particleSystem: {fileID: 7005918467206660490}
+  _particleSystem: {fileID: 2054311372648359}
+  _id: 2

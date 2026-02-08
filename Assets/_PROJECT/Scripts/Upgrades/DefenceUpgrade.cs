@@ -3,14 +3,6 @@ using UnityEngine;
 
 public class DefenceUpgrade : UpgradeBase {
     
-    private void Start() {
-        UpgradeInfo = _config.DefenceUpgrade;
-        _currentPrice = UpgradeInfo.StartPrice;
-        UpdateVisual();
-    }
-    
-    
-    
     protected override void ApplyUpgrade() {
         _bank.Buy(_currentPrice);
         _playerStats.UpdateDefenceLevel();
@@ -34,5 +26,11 @@ public class DefenceUpgrade : UpgradeBase {
             true);
         
     }
-    
+
+    protected override void LoadLevel() {
+        UpgradeInfo = _config.DefenceUpgrade;
+        _currentPrice = UpgradeInfo.StartPrice;
+        _playerStats.UpdateDefenceLevel(_level, false);
+        UpdateVisual();
+    }
 }

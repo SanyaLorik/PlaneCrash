@@ -13372,11 +13372,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b77a159c0960f2848a649ba19ead7ae3, type: 3}
   m_PrefabInstance: {fileID: 610433784}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &614943946 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2054311372648359, guid: 69f3360ec0aee7e4890f092b42f46c7f, type: 3}
-  m_PrefabInstance: {fileID: 852022465}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &615182040
 GameObject:
   m_ObjectHideFlags: 0
@@ -24278,14 +24273,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 243460901}
     m_Modifications:
-    - target: {fileID: 2054311372648359, guid: 69f3360ec0aee7e4890f092b42f46c7f, type: 3}
-      propertyPath: playOnAwake
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 117009072520422236, guid: 69f3360ec0aee7e4890f092b42f46c7f, type: 3}
-      propertyPath: playOnAwake
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 504080937240787603, guid: 69f3360ec0aee7e4890f092b42f46c7f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1
@@ -24330,10 +24317,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpgradeObject_Magnite
       objectReference: {fileID: 0}
-    - target: {fileID: 8990505802799507172, guid: 69f3360ec0aee7e4890f092b42f46c7f, type: 3}
-      propertyPath: _particleSystem
-      value: 
-      objectReference: {fileID: 614943946}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33369,7 +33352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f95c1bac16dab4e8c503cb614b9b0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DualLegParticles
-  _ps1: {fileID: 1121555212}
+  _ps: {fileID: 1121555212}
 --- !u!1001 &1210889027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51733,10 +51716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fa58f1166ea48e43bc14a686bc7d00b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBank
-  _playerCapital: 5000
   _playerCapitalVisual: {fileID: 1739242165}
   _cube: {fileID: 2108755024}
-  _updateMoney: 0
 --- !u!4 &1826799909 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b77a159c0960f2848a649ba19ead7ae3, type: 3}

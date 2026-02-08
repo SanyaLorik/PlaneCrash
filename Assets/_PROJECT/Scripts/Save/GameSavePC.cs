@@ -6,12 +6,13 @@ using UnityEngine;
 [Serializable]
 public class GameSavePC : GameSaveBase {
     public long Money = 0;
-    public List<Upgrades> Upgrades = new ();
+    public List<UpgradeData> Upgrades = new ();
+    public bool TutorialPassed = false;
 }
 
 
 [Serializable]
-public class Upgrades {
-    public int Level = 0;
+public class UpgradeData {
+    public int Level = 1;
     public int ID = 0;
 }

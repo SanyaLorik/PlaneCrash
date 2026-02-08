@@ -5,13 +5,13 @@ using UnityEngine.InputSystem.iOS;
 using Zenject;
 
 public class DualLegParticles : MonoBehaviour {
-    public ParticleSystem _ps1; // одна система
+    public ParticleSystem _ps; // одна система
     private ParticleSystem.EmissionModule _emission;
 
     [Inject] private PlayerMovement _playerMovement;
 
     private void Awake() {
-        _emission = _ps1.emission;
+        _emission = _ps.emission;
         StartCoroutine(StartSystem());
     }
 

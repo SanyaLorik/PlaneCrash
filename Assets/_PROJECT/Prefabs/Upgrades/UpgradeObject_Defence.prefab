@@ -68,6 +68,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5912489306497911271}
   m_SourcePrefab: {fileID: 100100000, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
+--- !u!198 &4457973223420013564 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3276224611257726426, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
+  m_PrefabInstance: {fileID: 1200943688533909030}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5142554868743411627 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6337863765394426253, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
@@ -85,9 +90,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5dbf06061bb0b40a9df27f044aa80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DefenceUpgrade
-  _particleSystem: {fileID: 6692541322169615825}
---- !u!198 &6692541322169615825 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5497264793800973303, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
-  m_PrefabInstance: {fileID: 1200943688533909030}
-  m_PrefabAsset: {fileID: 0}
+  _particleSystem: {fileID: 4457973223420013564}
+  _id: 3

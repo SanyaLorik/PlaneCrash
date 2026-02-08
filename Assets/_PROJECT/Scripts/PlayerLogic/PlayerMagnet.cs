@@ -22,16 +22,16 @@ public class PlayerMagnet : MonoBehaviour {
     
     private PlayerStateManager _playerStateManager; 
     private IPlayerStatsReadOnly _playerStats;
-    
-    
-    [Inject] private UpgradesCalculator _upgradesCalculator;
+
+    private UpgradesCalculator _upgradesCalculator;
     [Inject] private LevelBounds _levelBounds;
     [Inject] private BoostSpawner _boostSpawner;
 
     private int _magnetLevel = -1;
     
     [Inject]
-    public void Init(PlayerStateManager playerStateManager, IPlayerStatsReadOnly playerStats) {
+    public void Init(PlayerStateManager playerStateManager, IPlayerStatsReadOnly playerStats, UpgradesCalculator upgradesCalculator) {
+        _upgradesCalculator = upgradesCalculator;
         _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
 
@@ -45,12 +45,16 @@ public class PlayerMagnet : MonoBehaviour {
     private void Awake() {
         _collider =  GetComponent<BoxCollider>();
         _defaultColliderSize  = _collider.size;
+       
+    }
+
+    private void Start() {
         CalculateColliderMaxScale();
         SetColiderInHead();
+        PlayerStatsOnChangeStats();
     }
-    
-    
-    
+
+
     private void PlayerStatsOnChangeStats() {
         if (_magnetLevel != _playerStats.MagnetLevel) {
             // Перерасчет если изменился + 
@@ -97,9 +101,10 @@ public class PlayerMagnet : MonoBehaviour {
         if (collider.TryGetComponent(out IMagnetic magnetic)) {
             if (magnetic.Type == MagneticType.Boost) {
                 _magneticsBoost.Add(magnetic);
-                return;
             }
-            _magneticsMoney.Add(magnetic);
+            else {
+                _magneticsMoney.Add(magnetic);
+            }
             
         }
     }
@@ -107,10 +112,11 @@ public class PlayerMagnet : MonoBehaviour {
     private void OnTriggerExit(Collider collider) {
         if (collider.TryGetComponent(out IMagnetic magnetic)) {
             if (magnetic.Type == MagneticType.Boost) {
-                _magneticsBoost.Add(magnetic);
-                return;
+                _magneticsBoost.Remove(magnetic);
             }
-            _magneticsMoney.Add(magnetic);
+            else {
+                _magneticsMoney.Remove(magnetic);
+            }
         }
     }
 

@@ -2,15 +2,7 @@ using System;
 using UnityEngine;
 
 public class PredictUpgrade : UpgradeBase {
-    
-    private void Start() {
-        UpgradeInfo = _config.PredictionUpgrade;
-        _currentPrice = UpgradeInfo.StartPrice;
-        UpdateVisual();
-    }
-    
-    
-    
+
     protected override void ApplyUpgrade() {
         _bank.Buy(_currentPrice);
         _playerStats.UpdatePredictDistanceLevel();
@@ -33,5 +25,11 @@ public class PredictUpgrade : UpgradeBase {
             "м",
             true);
     }
-    
+
+    protected override void LoadLevel() {
+        UpgradeInfo = _config.PredictionUpgrade;
+        _currentPrice = UpgradeInfo.StartPrice;
+        _playerStats.UpdatePredictDistanceLevel(_level, false);
+        UpdateVisual();
+    }
 }

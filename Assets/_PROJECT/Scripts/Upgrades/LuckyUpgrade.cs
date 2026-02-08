@@ -1,16 +1,6 @@
-
-
-using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 
 public class LuckyUpgrade : UpgradeBase {
-
-
-    private void Start() {
-        UpgradeInfo = _config.LuckyUpgrade;
-        _currentPrice = UpgradeInfo.StartPrice;
-        UpdateVisual();
-    }
     
     protected override void ApplyUpgrade() {
         _bank.Buy(_currentPrice);
@@ -38,4 +28,10 @@ public class LuckyUpgrade : UpgradeBase {
             false);
     }
 
+    protected override void LoadLevel() {
+        UpgradeInfo = _config.LuckyUpgrade;
+        _currentPrice = UpgradeInfo.StartPrice;
+        _playerStats.UpdateLuckyLevel(_level, false);
+        UpdateVisual();
+    }
 }

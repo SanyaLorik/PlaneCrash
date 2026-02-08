@@ -9,9 +9,11 @@ using Zenject;
 
 public class PlayerBank : MonoBehaviour {
     
-    [SerializeField] private float _playerCapital;
     [SerializeField] private TMP_Text _playerCapitalVisual;
     [SerializeField] private MoneyCube _cube;
+    private float _playerCapital;
+    
+    
     public event Action<float> BankChanged;
     public event Action<float> MoneyCollect;
     public float PlayerCapital { get => _playerCapital;  }
@@ -20,18 +22,16 @@ public class PlayerBank : MonoBehaviour {
     
     private void Start() {
         BankChanged += OnBankChanged;
-        LoadPlayerMoney().Forget();
+        LoadPlayerMoney();
     }
 
-    [Header("Для теста")]
-    [SerializeField] private bool _updateMoney = false;
-    // Сугубо для теста 
-    private void Update() {
-        if (_updateMoney) {
-            BankChanged?.Invoke(_playerCapital);
-            _updateMoney = false;
-        }
+    
+    private void LoadPlayerMoney() {
+        _playerCapital = _gameSave.GetSave.Money;
+        BankChanged?.Invoke(PlayerCapital);
     }
+    
+ 
 
     private void OnBankChanged(float obj) {
         _cube.SetMoneyAmount(_playerCapital);
@@ -39,12 +39,7 @@ public class PlayerBank : MonoBehaviour {
         _gameSave.Save();
     }
 
-    private async UniTaskVoid LoadPlayerMoney() {
-        // Имитация задержки перед загрузкой денег
-        await UniTask.Delay(500);
-        _playerCapital = _gameSave.GetSave.Money;
-        BankChanged?.Invoke(PlayerCapital);
-    }
+
 
     
 

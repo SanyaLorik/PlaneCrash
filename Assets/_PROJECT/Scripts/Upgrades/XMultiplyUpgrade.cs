@@ -5,12 +5,6 @@ using Zenject;
 
 public class XMultiplyUpgrade : UpgradeBase {
     
-    private void Start() {
-        UpgradeInfo = _config.XMultiplierUpgrade;
-        _currentPrice = UpgradeInfo.StartPrice;
-        UpdateVisual();
-    }
-    
     
     protected override void ApplyUpgrade() {
         _bank.Buy(_currentPrice);
@@ -37,5 +31,12 @@ public class XMultiplyUpgrade : UpgradeBase {
             _currentPrice,  
             "x", 
             false);
+    }
+
+    protected override void LoadLevel() {
+        UpgradeInfo = _config.XMultiplierUpgrade;
+        _currentPrice = UpgradeInfo.StartPrice;
+        _playerStats.UpdateXMultiplierLevel(_level, false);
+        UpdateVisual();
     }
 }

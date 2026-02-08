@@ -9,28 +9,43 @@ public class PlayerStats : IPlayerStatsReadOnly, IPlayerStatsWritable {
     public int PredictDistanceLevel { get; private set; } = 1;
     public event Action ChangeStats;
 
-    public void UpdateXMultiplierLevel(int x) {
+    public void UpdateXMultiplierLevel(int x, bool isInvokable = true) {
         XMultiplierLevel += x;
+        if (!isInvokable) {
+            return;
+        }
         ChangeStats?.Invoke();
     }
 
-    public void UpdateLuckyLevel(int x) {
+    public void UpdateLuckyLevel(int x, bool isInvokable = true) {
         LuckyLevel += x;
+        if (!isInvokable) {
+            return;
+        }
         ChangeStats?.Invoke();
     }
 
-    public void UpdateMagnetLevel(int x) {
+    public void UpdateMagnetLevel(int x, bool isInvokable = true) {
         MagnetLevel += x;
+        if (!isInvokable) {
+            return;
+        }
         ChangeStats?.Invoke();
     }
 
-    public void UpdateDefenceLevel(int x) {
+    public void UpdateDefenceLevel(int x, bool isInvokable = true) {
         DefenceLevel += x;
+        if (!isInvokable) {
+            return;
+        }
         ChangeStats?.Invoke();
     }
 
-    public void UpdatePredictDistanceLevel(int x) {
+    public void UpdatePredictDistanceLevel(int x, bool isInvokable = true) {
         PredictDistanceLevel += x;
+        if (!isInvokable) {
+            return;
+        }
         ChangeStats?.Invoke();
     }
 }
@@ -51,9 +66,9 @@ public interface IPlayerStatsWritable {
     int MagnetLevel { get; }
     int DefenceLevel { get; }
     int PredictDistanceLevel { get; }
-    void UpdateXMultiplierLevel(int x = 1);
-    void UpdateLuckyLevel(int x = 1);
-    void UpdateMagnetLevel(int x = 1);
-    void UpdateDefenceLevel(int x = 1);
-    void UpdatePredictDistanceLevel(int x = 1);
+    void UpdateXMultiplierLevel(int x = 1, bool isInvokable = true);
+    void UpdateLuckyLevel(int x = 1, bool isInvokable = true);
+    void UpdateMagnetLevel(int x = 1, bool isInvokable = true);
+    void UpdateDefenceLevel(int x = 1, bool isInvokable = true);
+    void UpdatePredictDistanceLevel(int x = 1, bool isInvokable = true);
 }

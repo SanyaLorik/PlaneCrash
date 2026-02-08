@@ -1,24 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Architecture_M;
 using UnityEngine;
 using Zenject;
 
 public abstract class UpgradeBase : MonoBehaviour {
     [SerializeField] private ParticleSystem _particleSystem;
+    [SerializeField] protected int _id;
     
     
     
     protected UpgradeInfo UpgradeInfo;
-    protected string Id;
+    
     
     protected int _level = 1;
-
     protected float _currentPrice;
     protected UpgradeItemVisual _visual;
     protected IPlayerStatsWritable _playerStats;
     protected PlayerBank _bank;
     
+    
     [Inject] protected UpgradeConfig _config;
     [Inject] protected UpgradesCalculator _upgradesCalculator;
     [Inject] private PlayerVisual _playerVsual;
+    [Inject] IGameSave<GameSavePC> _gameSave;
     
     
     
@@ -31,7 +37,21 @@ public abstract class UpgradeBase : MonoBehaviour {
 
     protected void Awake() {
         _visual = GetComponent<UpgradeItemVisual>();
+        bool exist = _gameSave.GetSave.Upgrades.Any(upgrade => upgrade.ID == _id);
+        if (!exist) {
+            _gameSave.GetSave.Upgrades.Add(new UpgradeData {
+                ID = _id,
+                Level = 1,
+            });
+            _gameSave.Save();
+        }
+        else {
+            _level = _gameSave.GetSave.Upgrades.First(upgrade => upgrade.ID == _id).Level;
+        }
+        LoadLevel();
     }
+
+
 
     private void BankOnBankChanged(float playerCapital) {
         CheckColor();
@@ -52,7 +72,10 @@ public abstract class UpgradeBase : MonoBehaviour {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
             if (_bank.CanBuy(_currentPrice)) {
                 ApplyUpgrade();
+                var upgrade = _gameSave.GetSave.Upgrades.First(upgrade => upgrade.ID == _id);
+                upgrade.Level = _level;
                 _playerVsual.SetBought();
+                _gameSave.Save();
             }
             else {
                 Debug.LogWarning("Не хватает срэдств(");
@@ -62,5 +85,6 @@ public abstract class UpgradeBase : MonoBehaviour {
 
     protected abstract void ApplyUpgrade();
     protected abstract void UpdateVisual();
+    protected abstract void LoadLevel();
 
 }
