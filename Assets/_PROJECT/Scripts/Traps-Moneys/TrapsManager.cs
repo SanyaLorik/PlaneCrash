@@ -46,7 +46,6 @@ public class TrapsManager : MonoBehaviour {
     // Наверное зоны начиная с 3
     [SerializeField] private List<ZoneInfo> _zonesInfo;
     [SerializeField] private List<TrapRoleEntry> _trapsByRoleList;
-    [SerializeField] private Transform _parentForTraps;
     [Range(0f,1f), SerializeField] private float _chanseToSpawnFakeTrap;
     
     
@@ -64,6 +63,7 @@ public class TrapsManager : MonoBehaviour {
     [Inject] private BoostSpawner _boostsSpawner;
     [Inject] private ZoneManager _zoneManager;
     [Inject] private TrapPositionCalculator _trapPositionCalculator;
+    [Inject] private ObjectPoolManager _poolManager;
     
     [Inject]
     private void Init(PlayerStateManager playerStateManager) {
@@ -93,13 +93,16 @@ public class TrapsManager : MonoBehaviour {
     
     
     private void PlayerStateManagerOnChangeState(PlayerState state) {
-        if (state != PlayerState.Flight) return;
-        ClearTraps();
+        if (state == PlayerState.Grounded || state == PlayerState.Cruisered) {
+            ClearTraps();
+        }
         
-        // Нам нужны все бусты
-        GetAllBoost();
-        SpawnAllTrapsAsync().Forget();
-
+        else if (state == PlayerState.Flight) {
+            // Нам нужны все бусты
+            GetAllBoost();
+            SpawnAllTrapsAsync().Forget();
+            
+        }
     }
 
     private async UniTask SpawnAllTrapsAsync() {
@@ -157,8 +160,9 @@ public class TrapsManager : MonoBehaviour {
                 Vector3 _trapPosition = new Vector3(x, y, z);
                 
                 
-                TrapController trapInstance = Instantiate(trap, _trapPosition, Quaternion.identity);
-                trapInstance.gameObject.transform.SetParent(_parentForTraps);
+                // TrapController trapInstance = Instantiate(trap, _trapPosition, Quaternion.identity);
+                TrapController trapInstance = _poolManager.Spawn<TrapController>(trap.gameObject, _trapPosition, PoolType.Trap);
+                // trapInstance.gameObject.transform.SetParent(_parentForTraps);
                 
                 trapInstance.Init(_boostsSpawner, _levelBounds);
                 trapInstance.StartMoveTrap();
@@ -186,8 +190,13 @@ public class TrapsManager : MonoBehaviour {
 
             boost.hasTrap = true;
             Vector3 _trapPosition = _trapPositionCalculator.GetNearBoostPosition(boost.transform.position);
-            TrapController trapInstance = Instantiate(GetRandomTrapForRole(TrapRole.Fake), _trapPosition, Quaternion.identity);
-            trapInstance.gameObject.transform.SetParent(_parentForTraps);
+            // TrapController trapInstance = Instantiate(GetRandomTrapForRole(TrapRole.Fake), _trapPosition, Quaternion.identity);
+            
+            TrapController trapInstance = _poolManager.Spawn<TrapController>(GetRandomTrapForRole(TrapRole.Fake).gameObject, _trapPosition, PoolType.Trap);
+            trapInstance.ResetTrap();
+            
+            
+            // trapInstance.gameObject.transform.SetParent(_parentForTraps);
         
             trapInstance.Init(_boostsSpawner, _levelBounds);
         
@@ -217,34 +226,7 @@ public class TrapsManager : MonoBehaviour {
         
         return trap;
     }
-
-
     
-    
-    // private async UniTask SpawnTrapsNearBoosts() {
-    //     // _trapObject
-    //     float startZCoord = _zoneManager.CruiserDistance * (_zonesInfo[1].PercentageStart);
-    //     float endZCoord = _zoneManager.CruiserDistance * (_zonesInfo[^1].PercentageEnd);
-    //     Debug.Log($"Спавн ловушек возле бустов будет в диапазоне: ({startZCoord}:{endZCoord})");
-    //
-    //     
-    //     foreach (var boost in _boosts) {
-    //         if(Random.value < 0.1f) continue;  
-    //         Vector3 _trapPosition = _trapPositionCalculator.GetInBoostPosition(boost.transform.position);
-    //         
-    //         TrapController _trap = Instantiate(_trapObject, _trapPosition, Quaternion.identity);
-    //         _trap.Init(_boostsSpawner, _levelBounds);
-    //         
-    //         
-    //         
-    //         // Debug.Log("Спавн движущегося трапа в: " + _trapPosition);
-    //         _trap.transform.localPosition = _trapPosition;
-    //         
-    //         _сreatedTraps.Add(_trap);
-    //         await UniTask.WaitForEndOfFrame();
-    //     }
-    //
-    // }
 
     private List<ChunkDistance> GetChunksDistances(int chunks, float startZCoord, float endZCoord) {
         List<ChunkDistance> chunksDiapasone = new ();
@@ -265,7 +247,8 @@ public class TrapsManager : MonoBehaviour {
 
     private void ClearTraps() {
         foreach (var trap in _сreatedTraps) {
-            Destroy(trap.gameObject);
+            trap.ResetTrap();
+            _poolManager.ReturnObjectToPool(trap.gameObject, PoolType.Trap);
         }
         _сreatedTraps.Clear();
     }

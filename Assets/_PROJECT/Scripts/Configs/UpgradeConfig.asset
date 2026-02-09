@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: UpgradeConfig
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeConfig
   XMultiplierUpgrade:
-    K: 1.5
+    K: 1.1
     BaseValue: 1
     StartPrice: 2
     PriceMultiplier: 2
   LuckyUpgrade:
-    K: 1.5
+    K: 1.1
     BaseValue: 5
     StartPrice: 2
     PriceMultiplier: 2
   MagneteUpgrade:
-    K: 1.2
+    K: 1.1
     BaseValue: 1
     StartPrice: 1
     PriceMultiplier: 1

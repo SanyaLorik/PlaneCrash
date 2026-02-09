@@ -5,10 +5,11 @@ using Zenject;
 
 public class TorpedoSpawn : MonoBehaviour {
     [SerializeField] private Torpedo _torpedoPrefab;
-    [SerializeField] private GameObject _circlePrefab;
     [SerializeField] private PairedValue<float> _diapasoneSpawnProgress;
     [Range(0f,1f),SerializeField] private float _chanseToSpawn;
 
+    [SerializeField] private GameObject _rocketWarning;
+    [SerializeField] private GameObject _circlePrefab;
         
     
     
@@ -26,18 +27,27 @@ public class TorpedoSpawn : MonoBehaviour {
     
     
     private PlayerMovement _player;
+    private PlayerStateManager _stateManager;
     [Inject] private LevelBounds _levelBounds;
     [Inject] private BoostSpawner _boostSpawner;
     
     
     [Inject]
-    private void Init(PlayerMovement player) {
+    private void Init(PlayerMovement player, PlayerStateManager stateManager) {
         _player = player;
+        _stateManager = stateManager;
         player.SetBoost += PlayerOnSetBoost;
+        _stateManager.ChangeState += StateManagerOnChangeState;
     }
 
-
-   
+    private void StateManagerOnChangeState(PlayerState state) {
+        if (state == PlayerState.Cruisered || state == PlayerState.Grounded) {
+            if (_circleObject != null) {
+                _circleObject.DisactiveSelf();
+                _rocketWarnObject.DisactiveSelf();
+            }
+        }
+    }
 
 
     private Vector3 _spawnPos;
@@ -71,13 +81,20 @@ public class TorpedoSpawn : MonoBehaviour {
 
 
     private GameObject _circleObject;
+    private GameObject _rocketWarnObject;
     private void ShowWarning() {
         if (_circleObject != null) {
             _circleObject.transform.position = _spawnPos;
+            _rocketWarnObject.transform.position = _spawnPos;
+            if (!_circleObject.activeSelf) {
+                _circleObject.ActiveSelf();
+                _rocketWarnObject.ActiveSelf();
+            }
             return;
         }
 
         _circleObject = Instantiate(_circlePrefab, _spawnPos, Quaternion.identity);
+        _rocketWarnObject = Instantiate(_rocketWarning.gameObject, _spawnPos, Quaternion.identity);
         // Вращаем бесконечно вокруг Y
         _circleObject.transform.DORotate(new Vector3(0, 360f, 0), 360f / _rotationSpeed, RotateMode.FastBeyond360)
             .SetLoops(-1, LoopType.Restart)

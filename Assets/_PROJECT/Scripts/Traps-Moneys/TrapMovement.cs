@@ -36,5 +36,7 @@ public abstract class TrapMovement : MonoBehaviour {
     protected float GetRandomDurationDiapasone() {
         return Random.Range(_durationDiapasone.From, _durationDiapasone.To);
     }
-    
+
+    public abstract void ResetTrap();
+
 }

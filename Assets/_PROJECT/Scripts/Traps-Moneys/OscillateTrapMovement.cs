@@ -11,24 +11,26 @@ public class OscillateTrapMovement : TrapMovement {
             new Vector3(Random.Range(_offset.From, _offset.To), 0f, 0f);
         
         SetOscillateTrajectory(offsetVector);
+        
     }
+
+    public override void ResetTrap() {
+        _oscillateTween?.Kill();
+    }
+
+
     
-    
+    private Tween _oscillateTween;
     private void SetOscillateTrajectory(Vector3 offset) {
         Vector3 startPos = transform.position;
-        Ease ease = GetRandomEase();
-        float duration = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
+        int sign = Random.value < 0.5 ? -1 : 1;
 
-        
-        DOTween.Sequence()
-            .Append(
-                transform.DOMove(startPos + offset, duration)
-                    .SetEase(ease)
-            )
-            .Append(
-                transform.DOMove(startPos - offset, duration)
-                    .SetEase(ease)
-            )
+        float duration = Random.Range(_durationDiapasone.From, _durationDiapasone.To);
+        Ease ease = GetRandomEase();
+
+        _oscillateTween = transform
+            .DOMove(startPos + offset * sign, duration)
+            .SetEase(ease)
             .SetLoops(-1, LoopType.Yoyo)
             .SetLink(gameObject);
     }

@@ -9792,7 +9792,7 @@ MonoBehaviour:
   _radius: 6
   _force: 4
   _upwardModifier: 0.3
-  Speed: 20
+  Speed: 40
 --- !u!65 &4624002551242606892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9812,8 +9812,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.29616374, y: 1.0351268, z: 0.34229884}
-  m_Center: {x: 0.005482064, y: 0.10922733, z: -0.015061633}
+  m_Size: {x: 0.35872868, y: 1.0351268, z: 0.4066333}
+  m_Center: {x: 0.004791017, y: 0.109227344, z: 0.00357152}
 --- !u!1 &2490049693649369684
 GameObject:
   m_ObjectHideFlags: 0
@@ -24523,15 +24523,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d6834ba12c5782249ac65b094b6cd92a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.006
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d6834ba12c5782249ac65b094b6cd92a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.131
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d6834ba12c5782249ac65b094b6cd92a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.005
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d6834ba12c5782249ac65b094b6cd92a, type: 3}
       propertyPath: m_LocalRotation.w

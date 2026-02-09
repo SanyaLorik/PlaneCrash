@@ -12,6 +12,8 @@ public class HelpInstaller: MonoInstaller {
         TrapsBoundsBind();
 
         TutorialBind();
+        
+        Container.Bind<ObjectPoolManager>().FromComponentInHierarchy().AsSingle();
     }
 
     private void BindMoneyVisualLogic() {

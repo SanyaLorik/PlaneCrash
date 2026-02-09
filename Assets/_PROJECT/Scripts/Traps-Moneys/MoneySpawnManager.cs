@@ -14,26 +14,17 @@ public class MoneySpawnManager : MonoBehaviour {
     [SerializeField] private PairedValue<float> _boostProgress;
 
 
-    private PlayerConfig _playerConfig;
-    private BoostSpawner _boostSpawner;
     private PlayerStateManager _playerStateManager;
-    private LevelBounds _levelBounds;
+    [Inject] private PlayerConfig _playerConfig;
+    [Inject] private BoostSpawner _boostSpawner;
+    [Inject]private LevelBounds _levelBounds;
     
-    private DiContainer _container;
+    [Inject] private DiContainer _container;
+    
     [Inject]
-    public void Init(PlayerConfig playerConfig, BoostSpawner boostSpawner, 
-        PlayerStateManager playerStateManager, LevelBounds levelBounds, DiContainer container) {
-        _playerConfig = playerConfig;
-        _boostSpawner = boostSpawner;
-        
-
+    public void Init(PlayerStateManager playerStateManager) {
         _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
-
-
-        _levelBounds = levelBounds;
-
-        _container = container;
     }
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {

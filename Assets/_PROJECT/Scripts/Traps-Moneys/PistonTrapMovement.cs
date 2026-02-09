@@ -11,28 +11,33 @@ public class PistonTrapMovement : TrapMovement {
         _pivot.localPosition = Vector3.zero;
         _pivot.position += _xOffsetVector;
         
-        if (transform.position.x > 0) {
+        if (Mathf.Approximately(transform.position.x, _levelBounds.RightX)) {
             _pivot.rotation = Quaternion.Euler(0f, 0f, 180f);
         }
+        else {
+            _pivot.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+        
+        
         float bitePoint = (_levelBounds.RightX + _levelBounds.LeftX) / 2f;
         SetPistonTrajectory(bitePoint);
     }
-    
 
-    
-    
-    
+    public override void ResetTrap() {
+        _oscillateTween?.Kill();
+    }
+
+    private Tween _oscillateTween;
+
     private void SetPistonTrajectory(float bitePoint) {
         
         Ease ease = GetRandomEase();
         float duration = GetRandomDurationDiapasone();
         
         
-        DOTween.Sequence()   
-            .Append(
-                _pivot.transform.DOMoveX(bitePoint, duration)
-                    .SetEase(ease)
-            )
+        _oscillateTween = _pivot.transform.
+            DOMoveX(bitePoint, duration)
+            .SetEase(ease)
             .SetLoops(-1, LoopType.Yoyo)
             .SetLink(gameObject);
     }

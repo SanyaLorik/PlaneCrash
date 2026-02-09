@@ -10,8 +10,6 @@ public class TrapController  : MonoBehaviour {
     public TrapRole TrapRole;
 
     
-    
-    
     [Inject]
     public void Init(BoostSpawner boostSpawner, LevelBounds levelBounds) {
         
@@ -23,5 +21,9 @@ public class TrapController  : MonoBehaviour {
     public void StartMoveTrap() {
         _trapMovement.StartMove();
     }
-    
+
+    public void ResetTrap() {
+        _trapMovement.ResetTrap();
+    }
+
 }

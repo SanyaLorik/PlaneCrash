@@ -9,16 +9,27 @@ public class FireThrowerMovement : TrapMovement {
     
     
     private Collider _collider;
+    private Coroutine _flameCoroutine;
     public override void StartMove() {
         _pivot.localPosition = Vector3.zero;
         _pivot.position += _xOffsetVector;
         
-        if (transform.position.x > 0) {
-            // Debug.Log("Поворот кулака бьет типо в другую сторону");
+        if (Mathf.Approximately(transform.position.x, _levelBounds.RightX)) {
             _pivot.rotation = Quaternion.Euler(0f, 180f, 0f);
         }
+        else {
+            _pivot.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
         _collider = GetComponent<Collider>();
-        StartCoroutine(FlameCycle());
+        ResetTrap();
+        _flameCoroutine = StartCoroutine(FlameCycle());
+    }
+
+    public override void ResetTrap() {
+        if (_flameCoroutine != null) {
+            StopCoroutine(_flameCoroutine);
+            _flameCoroutine = null;
+        }
     }
 
 

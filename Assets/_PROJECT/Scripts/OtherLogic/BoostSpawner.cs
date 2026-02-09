@@ -38,9 +38,7 @@ public class BoostSpawner : MonoBehaviour {
     [SerializeField] private bool _setPlayerFalseWay;
     
 
-    private PlayerMovement _playerMovement;
     private IPlayerStatsReadOnly _playerStats;
-    private LevelBounds _levelBounds;
     public float MinDistance { get; private set; }
 
     private List<List<Boost>> _trueWaysAfterZone = new();
@@ -49,17 +47,27 @@ public class BoostSpawner : MonoBehaviour {
     
     private bool MinimumFlightTimeIsBig;
     
-    [Inject] UpgradesCalculator _upgradesCalculator;
     
-    private DiContainer _container;
+    [Inject] private LevelBounds _levelBounds;
+    [Inject] private PlayerMovement _playerMovement;
+    [Inject] private PlayerStateManager _playerStateManager;
+    
+    [Inject] UpgradesCalculator _upgradesCalculator;
+    [Inject] ObjectPoolManager _objectPoolManager;
+    
+    [Inject] private DiContainer _container;
     [Inject]
-    public void Init(PlayerMovement playerMovement, IPlayerStatsReadOnly playerStats, LevelBounds levelBounds, DiContainer container) {
-        _playerMovement = playerMovement;
+    public void Init(IPlayerStatsReadOnly playerStats) {
         _playerStats =  playerStats;
-        _levelBounds = levelBounds;
-        _container = container;
         _playerStats.ChangeStats += PlayerStatsOnChangeStats;
+        _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
         PlayerStatsOnChangeStats();
+    }
+
+    private void PlayerStateManagerOnChangeState(PlayerState state) {
+        if (state == PlayerState.Cruisered || state == PlayerState.Grounded) {
+            ClearAllBoosts();
+        }
     }
 
     private void PlayerStatsOnChangeStats() {
@@ -109,7 +117,6 @@ public class BoostSpawner : MonoBehaviour {
             _falseWays.Add(SpawnBoostWays(_startFlightZ, newFalsePosition, _falseBoostPrefab, false));
         }
 
-        MarkBoostFalse(_falseWays);
         
         
         // 2. После зоны
@@ -201,8 +208,13 @@ public class BoostSpawner : MonoBehaviour {
         boosts.AddRange(_trueWaysBeforeZone);
         boosts.AddRange(_falseWays);
         foreach (var chain in boosts) {
-            foreach (var item in chain) {
-                Destroy(item.gameObject);
+            foreach (var boost in chain) {
+                if (boost.InPool) {
+                    // Destroy(boost.gameObject);
+                    boost.SetBoostDefault();
+                    _objectPoolManager.ReturnObjectToPool(boost.gameObject, PoolType.Boost);
+                }
+                
             }
         }
 
@@ -239,7 +251,11 @@ public class BoostSpawner : MonoBehaviour {
                 zPos                  
             );
         
-            Boost newBoost = Instantiate(boostPrefab, spawnPosition, Quaternion.identity, transform);
+            // Boost newBoost = Instantiate(boostPrefab, spawnPosition, Quaternion.identity, transform);
+            
+            Boost newBoost = _objectPoolManager.Spawn<Boost>(boostPrefab.gameObject, spawnPosition, PoolType.Boost);
+            newBoost.InPool = true;
+            
             _container.Inject(newBoost);
             boost.Add(newBoost); 
         }
@@ -309,13 +325,5 @@ public class BoostSpawner : MonoBehaviour {
         return new Vector3(x, 0f, MinDistance);
     }
     
-    private void MarkBoostFalse(List<List<Boost>> boostsWays) {
-        foreach (var ways in boostsWays) {
-            foreach (var boost in ways) {
-                boost.trueBoost = false;
-            }
-        }
-    }
-
 
 }

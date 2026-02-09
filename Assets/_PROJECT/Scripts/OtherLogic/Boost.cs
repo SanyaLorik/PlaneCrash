@@ -12,9 +12,8 @@ public class Boost : MonoBehaviour, IMagnetic {
     public AnimationCurve randomTrajectory;
     public Vector3 nextBooster;
     public bool hasTrap;
-    public bool trueBoost = true;
 
-    
+    public bool InPool;
     
     private Material _mat;
     private Tween _glowTween;
@@ -26,9 +25,12 @@ public class Boost : MonoBehaviour, IMagnetic {
         _playerMovement = playerMovement;
     }
 
+
+    private Vector3 _spawnRotation;
     private void Awake() {
         _mat = _renderer.material;
         _mat.EnableKeyword("_EMISSION");
+        _spawnRotation = transform.localEulerAngles;
     }
 
 
@@ -64,6 +66,14 @@ public class Boost : MonoBehaviour, IMagnetic {
             Collect();
         }
     }
+    
+    public void SetBoostDefault() {
+        transform.DOKill();          
+        _glowTween?.Kill();          
+        _mat.SetColor("_EmissionColor", Color.black); // сброс цвета
+        InPool = false;
+        transform.localEulerAngles = _spawnRotation;
+    }
 
     public void SetBoostPersonalityVisibleAndRevealTheHiddenInnerEnergeticMetaphysicalGameplayEssenceOfThisSpecificAccelerationEntityWhileSynchronizingItsVisualAuraWithPlayerPerceptionSystemsTheLivingBreathingDigitalUniverse() {
         transform
@@ -87,8 +97,6 @@ public class Boost : MonoBehaviour, IMagnetic {
             .SetEase(Ease.InOutSine)
             .SetLink(gameObject);
     }
-    
-    
     
         
     private void Collect() {

@@ -15557,6 +15557,7 @@ GameObject:
   m_Component:
   - component: {fileID: 699255799}
   - component: {fileID: 699255800}
+  - component: {fileID: 699255801}
   m_Layer: 0
   m_Name: -----Environment-----
   m_TagString: Untagged
@@ -15580,7 +15581,6 @@ Transform:
   - {fileID: 1824038463}
   - {fileID: 2048660191}
   - {fileID: 1134289479}
-  - {fileID: 1278820099}
   - {fileID: 296128711}
   - {fileID: 1951303084}
   - {fileID: 205032296}
@@ -15608,6 +15608,18 @@ MonoBehaviour:
   _cruisePoint: {fileID: 1820414630}
   <MaxY>k__BackingField: 60
   <PlayerSpawnPoint>k__BackingField: {fileID: 1134289479}
+--- !u!114 &699255801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699255798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808ab5784b868f948b24427ba4ebeb7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolManager
 --- !u!1 &702040264
 GameObject:
   m_ObjectHideFlags: 0
@@ -17218,7 +17230,6 @@ MonoBehaviour:
     Traps:
     - {fileID: 9085201780675271725, guid: 6333736fda853f847a7a70c812acefa9, type: 3}
     - {fileID: 6785409605208709625, guid: b5a1f98a912c4764d8a8c2a9107c1e4f, type: 3}
-  _parentForTraps: {fileID: 1278820099}
   _chanseToSpawnFakeTrap: 0.2
 --- !u!114 &738633778
 MonoBehaviour:
@@ -17254,11 +17265,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TorpedoSpawn
   _torpedoPrefab: {fileID: 2387763946969296901, guid: 285a2554a471ca8428d3d62adf62390e, type: 3}
-  _circlePrefab: {fileID: 4108482549749632362, guid: 42ff01a23e35b5b4f9b18e0dbccc9321, type: 3}
   _diapasoneSpawnProgress:
-    <From>k__BackingField: 0.7
+    <From>k__BackingField: 0.6
     <To>k__BackingField: 0.9
-  _chanseToSpawn: 0.3
+  _chanseToSpawn: 1
+  _rocketWarning: {fileID: 6760580818340078113, guid: 2bbbbcc78cc1a134e9dc5e975cb6a7c5, type: 3}
+  _circlePrefab: {fileID: 4108482549749632362, guid: 42ff01a23e35b5b4f9b18e0dbccc9321, type: 3}
   pulseScale: 2.5
   pulseDuration: 0.2
   _rotationSpeed: 140
@@ -31986,7 +31998,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _accumulateDuration: 5
+  _accumulateDuration: 10
 --- !u!65 &1129805892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39790,37 +39802,6 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 619981409497788128, guid: 7d42662fd24f98c4392635dda112f66f, type: 3}
   m_PrefabInstance: {fileID: 1446857455}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1278820098
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1278820099}
-  m_Layer: 0
-  m_Name: TrapsInstance
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1278820099
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1278820098}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 699255799}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1279107216
 GameObject:
   m_ObjectHideFlags: 0
@@ -60766,7 +60747,7 @@ PrefabInstance:
       objectReference: {fileID: 2145278658}
     - target: {fileID: 4951356058960082027, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
       propertyPath: _yCorrection
-      value: 0.1
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4951356058960082027, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
       propertyPath: _newLevelProll

@@ -5,6 +5,7 @@ using ModestTree;
 using SanyaBeerExtension;
 using UnityEditor;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 public class MoneyRadiusSpawn : MonoBehaviour {
@@ -21,45 +22,20 @@ public class MoneyRadiusSpawn : MonoBehaviour {
     private Vector3 _spawnPoint;
     
     
-    private Queue<GameObject> _moneyPool = new ();
-    
+    [Inject] ObjectPoolManager _poolManager;
     
     private void Awake() {
         _spawnPoint = transform.position;
-
-        StartCoroutine(SpawnMoneyRoutine());
+        SpawnInAllGame();
     }
 
-    private IEnumerator SpawnMoneyRoutine() {
+    private List<Transform> _moneys = new ();
+    private void SpawnInAllGame() {
         for (int i = 0; i < _spawnCount; i++) {
-            GameObject money = Instantiate(_spawnObject, Vector3.zero, Quaternion.identity, _bottomPoint);
-         
-            
-            _moneyPool.Enqueue(money);
-            yield return null;
+            var money = _poolManager.Spawn<Transform>(_spawnObject, Vector3.zero, PoolType.MoneyNearCube);
+            _moneys.Add(money);
         }
     }
-    
-    private GameObject GetMoneyFromPool() {
-        GameObject obj;
-        if (_moneyPool.Count > 0) {
-            obj = _moneyPool.Dequeue();
-            obj.ActiveSelf();
-        }
-        else {
-            obj = Instantiate(_spawnObject, Vector3.zero, Quaternion.identity, _bottomPoint);
-        }
-
-        obj.transform.localScale = Vector3.one;
-        obj.transform.rotation = Quaternion.identity;
-
-        return obj;
-    }
-    
-    private void ReturnToPool(GameObject money) {
-        _moneyPool.Enqueue(money);
-    }
-
 
 
     public void SpawnMoney() {
@@ -73,25 +49,23 @@ public class MoneyRadiusSpawn : MonoBehaviour {
             direction.y = 0; 
             Vector3 newSpawn = _spawnPoint + direction.normalized * distance;
 
-            newSpawn.y = _bottomPoint.position.y + _yCorrection + Random.Range(-0.005f, 0.005f);
+            newSpawn.y = _bottomPoint.position.y + _yCorrection + Random.Range(-0.0005f, 0.0005f);
 
-            GameObject newObj = GetMoneyFromPool();
-            newObj.transform.position = newSpawn;
+            Transform newObj = _moneys[i];
+            newObj.position = newSpawn;
             
-         
-            
-            newObj.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
-            ReturnToPool(newObj);
+            newObj.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
             
             for (int j = 1; j < _countLevels; j++) {
-                if (Random.value > _newLevelProll) {
-                    newObj = SpawnUpperObject(newObj);
+                if (Random.value > _newLevelProll && i < _spawnCount) {
+                    newObj = SpawnUpperObject(newObj, i);
+                    i++;
                 }
             }
         }
     }
     
-    private GameObject SpawnUpperObject(GameObject obj) {
+    private Transform SpawnUpperObject(Transform obj, int index) {
         Physics.SyncTransforms();
         var prefabRenderer = obj.GetComponentInChildren<Renderer>();
         Bounds bounds1 = prefabRenderer.bounds;
@@ -109,11 +83,8 @@ public class MoneyRadiusSpawn : MonoBehaviour {
         );
         
         // Я чето не понял нахуй его еще один брать и присваивать туда ну лан
-        obj = GetMoneyFromPool();
-        ReturnToPool(obj);
-        
+        obj = _moneys[index];
         obj.transform.position = spawnAbove;
-        
         obj.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
         return obj;
     }
