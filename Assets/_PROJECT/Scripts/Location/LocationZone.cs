@@ -72,6 +72,7 @@ public class LocationZone : MonoBehaviour {
                 
                 // obj.localPosition = point;
                 _objects.Add(obj.gameObject);
+                obj.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
             }
         }
     }
