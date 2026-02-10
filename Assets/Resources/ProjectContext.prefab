@@ -33,6 +33,7 @@ Transform:
   - {fileID: 2950140382904711317}
   - {fileID: 1767170793234386892}
   - {fileID: 2299117414762224517}
+  - {fileID: 5743804057535003212}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6634558047515281937
@@ -52,6 +53,7 @@ MonoBehaviour:
   - {fileID: 4967705868716838652}
   - {fileID: 4600151043953983026}
   - {fileID: 3633859116935372308}
+  - {fileID: 7665023540870364988}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
@@ -66,6 +68,54 @@ MonoBehaviour:
       _missingHandlerDefaultResponse: 2
       _requireStrictUnsubscribe: 0
       _defaultAsyncTickPriority: 1
+--- !u!1 &1595048594938676702
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5743804057535003212}
+  - component: {fileID: 7665023540870364988}
+  m_Layer: 0
+  m_Name: LocalizationInstallerPC
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5743804057535003212
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595048594938676702}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9166033850420844382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7665023540870364988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595048594938676702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8cd7dd848c64b9f9883bed86dcea043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizationInstallerPC
+  _textDataSuitable:
+    _textDatas:
+    - {fileID: 11400000, guid: b0531f82a3b9b1b41b98beb86946635c, type: 2}
+    - {fileID: 11400000, guid: c51d4566341436e4186b22065b361f1d, type: 2}
 --- !u!1 &3175899789519374987
 GameObject:
   m_ObjectHideFlags: 0

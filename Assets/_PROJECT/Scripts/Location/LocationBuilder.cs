@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using NaughtyAttributes;
@@ -9,40 +11,98 @@ using Zenject;
 
 public class LocationBuilder : MonoBehaviour {
     [SerializeField] private List<LocationModule>  _buildingModulesPrefabs;
-    [SerializeField] private float _distanceToFill = 500f;
+    [SerializeField] private float _distanceToSpawn;
+    // Надо чтоб оно было длинне самого мелкого буста а то будет прям видно как он исчезает
+    [SerializeField] private float _distanceToSpawnNew;
+    [SerializeField] private float _distanceToDestroyOld;
     [SerializeField] private Transform _firstPoint;
 
+    
+    // Указатель на последний в цепочке
     private Vector3 _lastEnd;
+    private float _nextSpawnDistance;
+    private float _nextDestroyDistance;
+    
+    
+    
     [Inject] private ObjectPoolManager _poolManager;
+    [Inject] private PlayerMovement _playerMovement;
     [Inject] private DiContainer _diContainer;
+
+    private PlayerStateManager _playerStateManager;
+
+    [Inject] LocalizationDataPC _localizationDataPC;
     
     
     
-    private void Start() {
-        _lastEnd = _firstPoint.position;
-        ReBuildPoints();
+    [Inject]
+    private void Init(PlayerStateManager playerStateManager) {
+        _playerStateManager = playerStateManager;
+        _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
+    }
+    
+
+    private CancellationTokenSource _tokenSource;
+
+    private void PlayerStateManagerOnChangeState(PlayerState state) {
+        if (state == PlayerState.Flight) {
+            _nextSpawnDistance = (_playerMovement.Transform.position.z + _distanceToSpawnNew);
+            _nextDestroyDistance =  (_playerMovement.Transform.position.z + _distanceToDestroyOld);
+            _lastEnd = _firstPoint.position;
+            _tokenSource = new CancellationTokenSource();
+            ConstructRoutine(_tokenSource.Token).Forget();
+        }
+        else if(state == PlayerState.Walking) {
+            _tokenSource?.Cancel();
+            HideCreations();
+        }
+
+        Debug.Log(_localizationDataPC.lol);
     }
 
-    
-    
-    private IEnumerator ConstructRoutine() {
-        while (_lastEnd.z < _distanceToFill) {
+
+    private async UniTask ConstructRoutine(CancellationToken token) {
+        // Первичный спавн обьектов
+        int indexDeletedModule = 0;
+        while (_lastEnd.z < _distanceToSpawn) {
             SpawnNext();
-            yield return null;
+            await UniTask.Yield(token);
+        }
+        while (!token.IsCancellationRequested) {
+            if (_playerMovement.Transform.position.z > _nextSpawnDistance) {
+                _nextSpawnDistance += _distanceToSpawnNew;
+                SpawnNext();
+            }
+
+            if (_playerMovement.Transform.position.z > _nextDestroyDistance) {
+                _nextDestroyDistance += _distanceToDestroyOld;
+                if (_createdModules.Count > 0) {
+                    HideOldestModule();
+                }
+            }
+            await UniTask.Yield(token);
         }
 
-        Debug.Log("_createdModules.count = " +  _buildingModulesPrefabs.Count);
-        foreach (var module in _createdModules) {
-            yield return null;
-            module.GenerateProps();
-        }
     }
 
+    private void HideCreations() {
+        Debug.Log("_createdModules.count : " + _createdModules.Count);
+        foreach (var module in _createdModules) {
+            _poolManager.ReturnObjectToPool(module.gameObject, PoolType.LocationObject);
+            module.HideObjects();
+        } 
+        _createdModules.Clear();
+    }
+
+    private void HideOldestModule() {
+        var module = _createdModules[0];
+
+        module.HideObjects();
+        _poolManager.ReturnObjectToPool(module.gameObject, PoolType.LocationObject);
+
+        _createdModules.RemoveAt(0);
+    }
     
-    [Button]
-    public void ReBuildPoints() {
-        StartCoroutine(ConstructRoutine());
-    } 
     
     
     private List<LocationModule> _createdModules = new ();
@@ -58,6 +118,7 @@ public class LocationBuilder : MonoBehaviour {
         module.transform.position = _lastEnd + offset;
         
         _lastEnd = module.End.position;
+        module.GenerateProps();
     }
     
 

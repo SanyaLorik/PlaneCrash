@@ -24,19 +24,23 @@ public class LocationZone : MonoBehaviour {
     
     private void Start() {
         _bounds = _renderer.bounds;
-        Debug.Log(_poolManager);
     }
     
     
 
     private List<GameObject> _objects = new ();
 
+    // Мб снизить нагрузку 
     public void GenerateProps() {
+        _bounds = _renderer.bounds;
+        GeneratePoints(_bounds, _spawnPointCount, _minPointDistance);
+    }
+
+    public void HideObjects() {
         foreach (var obj in _objects) {
             _poolManager.ReturnObjectToPool(obj, PoolType.Props);
         }
         _objects.Clear();
-        GeneratePoints(_bounds, _spawnPointCount, _minPointDistance);
     }
     
     
@@ -58,7 +62,7 @@ public class LocationZone : MonoBehaviour {
             }
 
             if (valid) {
-                Debug.Log("Спавн точки в " + point);
+                // Debug.Log(point);
                 points.Add(point);
                 var obj = _poolManager.Spawn<Transform>(
                     _objectsToSpawn[Random.Range(0, _objectsToSpawn.Count)], 
@@ -66,7 +70,7 @@ public class LocationZone : MonoBehaviour {
                     PoolType.Props
                 );
                 
-                // obj.localPosition = p;
+                // obj.localPosition = point;
                 _objects.Add(obj.gameObject);
             }
         }

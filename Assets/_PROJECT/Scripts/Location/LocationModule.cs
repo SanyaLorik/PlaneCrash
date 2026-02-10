@@ -14,7 +14,6 @@ public class LocationModule: MonoBehaviour {
 
     public void Init(DiContainer diContainer) {
         foreach (var zone in _zones) {
-            Debug.Log(diContainer);
             diContainer.Inject(zone);
         }
 
@@ -23,6 +22,12 @@ public class LocationModule: MonoBehaviour {
     public void GenerateProps() {
         foreach (var zone in _zones) {
             zone.GenerateProps();
+        }
+    }
+
+    public void HideObjects() {
+        foreach (var zone in _zones) {
+            zone.HideObjects();
         }
     }
 }
