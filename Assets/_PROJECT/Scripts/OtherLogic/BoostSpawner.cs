@@ -145,14 +145,14 @@ public class BoostSpawner : MonoBehaviour {
 
     public void SpawnEntranceBoost() {
         if (_setPlayerFalseWay) {
-            _playerMovement.SetBooster(_curves[0], _falseWays[0][0].transform.position); // действует на игрока первым
+            _playerMovement.SetBooster(_curves[0], _falseWays[0][0].transform.position); 
             return;
         }
         if (_trueWaysBeforeZone.Count != 0) {
-            _playerMovement.SetBooster(_curves[0], _trueWaysBeforeZone[0][0].transform.position); // действует на игрока первым
+            _playerMovement.SetBooster(_curves[0], _trueWaysBeforeZone[0][0].transform.position); 
         }
         else {
-            _playerMovement.SetBooster(_curves[0], _trueWaysAfterZone[0][0].transform.position); // действует на игрока первым
+            _playerMovement.SetBooster(_curves[0], _trueWaysAfterZone[0][0].transform.position); 
         }
     }
 

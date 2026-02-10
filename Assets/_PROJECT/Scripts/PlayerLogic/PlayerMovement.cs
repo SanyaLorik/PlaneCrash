@@ -80,6 +80,7 @@ public class PlayerMovement : FlightObject {
     public void TpPlayerInSpawn() {
         transform.position = _levelBounds.PlayerSpawnPoint.position;
         Rb.linearVelocity = Vector3.zero;
+        _visual.TeleportParticles();
     }
 
 

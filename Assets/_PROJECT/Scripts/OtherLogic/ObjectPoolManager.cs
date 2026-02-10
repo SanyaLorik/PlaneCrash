@@ -9,7 +9,9 @@ public enum PoolType {
     MoneyNearCube,
     RolledMoney,
     Boost, 
-    Trap
+    Trap,
+    LocationObject,
+    Props
 }
 
 public class ObjectPoolManager : MonoBehaviour {
@@ -18,6 +20,7 @@ public class ObjectPoolManager : MonoBehaviour {
     private GameObject _moneyParent;
     private GameObject _boostParent;
     private GameObject _trapsParent;
+    private GameObject _locationObject;
 
     
     private Dictionary<GameObject, ObjectPool<GameObject>> _objectPoolsDict;
@@ -73,6 +76,10 @@ public class ObjectPoolManager : MonoBehaviour {
                 return _moneyParent.transform;
             case PoolType.Boost :
                 return _boostParent.transform;
+            case PoolType.LocationObject :
+                return _locationObject.transform;
+            case PoolType.Props:
+                return _locationObject.transform;
             default:
                 return _trapsParent.transform;;
         }
@@ -91,6 +98,9 @@ public class ObjectPoolManager : MonoBehaviour {
         
         _trapsParent = new GameObject("Traps Pool");
         _trapsParent.transform.SetParent(_emptyHolder.transform);
+        
+        _locationObject = new GameObject("Location Objects");
+        _locationObject.transform.SetParent(_emptyHolder.transform);
     }
 
     private void CreatePool(GameObject prefab) {

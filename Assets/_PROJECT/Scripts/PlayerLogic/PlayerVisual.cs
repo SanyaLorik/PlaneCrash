@@ -15,7 +15,11 @@ public class PlayerVisual : MonoBehaviour {
     [Header("Покупка")]
     [SerializeField] private ParticleSystem _upgradePS;
     
-    CancellationTokenSource _tokenSource;
+    [Header("Покупка")]
+    [SerializeField] private ParticleSystem _teleportParticle;
+    
+    
+    private CancellationTokenSource _tokenSource;
 
     private void Start() {
         StopDizzy();
@@ -37,6 +41,10 @@ public class PlayerVisual : MonoBehaviour {
             _tokenSource.Token
         ).Forget();
     }
+    
+    public void TeleportParticles() {
+        _teleportParticle.Play();
+    }
      
     
     private void StopDizzy() {
@@ -47,4 +55,6 @@ public class PlayerVisual : MonoBehaviour {
         _tokenSource?.Cancel();
         _tokenSource?.Dispose();
     }
+
+
 }

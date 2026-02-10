@@ -57,8 +57,6 @@ public class TrapsManager : MonoBehaviour {
     private List<Boost> _boosts;
     private PlayerStateManager _playerStateManager;
     
-    [Inject] private DiContainer _container;
-    
     [Inject] private LevelBounds _levelBounds;
     [Inject] private BoostSpawner _boostsSpawner;
     [Inject] private ZoneManager _zoneManager;
