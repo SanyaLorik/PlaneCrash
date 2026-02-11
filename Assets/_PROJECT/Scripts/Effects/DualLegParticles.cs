@@ -29,7 +29,6 @@ public class DualLegParticles : MonoBehaviour {
     public void Play() {
         IsPlaying = true;
         StartRunning();
-        Debug.Log("Вызов у бота StartRunning");
     }
 
     

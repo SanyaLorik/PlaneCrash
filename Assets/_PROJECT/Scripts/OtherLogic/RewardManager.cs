@@ -1,4 +1,5 @@
 using System;
+using _PROJECT.Scripts.Extensions_Helpers;
 using DG.Tweening;
 using SanyaBeerExtension;
 using TMPro;
@@ -35,6 +36,7 @@ public class RewardManager : MonoBehaviour {
     private ZoneManager _zoneManager;
     
     [Inject] private UpgradesCalculator _upgradesCalculator;
+    [Inject] private LocalizationDataPC _localization;
     
     [Inject]
     public void Init(PlayerStateManager playerStateManager, PlayerMovement playerMovement, IPlayerStatsReadOnly playerStats, ZoneManager zoneManager) {
@@ -67,10 +69,10 @@ public class RewardManager : MonoBehaviour {
         _bet.ActiveSelf();
         
         float reward = _upgradesCalculator.GetXMultiplierByLevel() * (_zoneManager.CurrentBet * _zoneManager.CurrentMultiplyer) + _zoneManager.CruiserDistance; 
-        _distanceText.text = $"Дистанция: {_zoneManager.CruiserDistance:F2}";
+        _distanceText.text = $"Дистанция: {_playerStateManager.CurrentPlayerDistance:F0} м.";
         _betMultiplier.text = $"Множитель ставки: x{_zoneManager.CurrentMultiplyer}";
         _bet.text = $"Ставка: {_zoneManager.CurrentBet:F2}$";
-        _rewardText.text = $"Выигрышь: {reward:F2}$";
+        _rewardText.text = $"Выигрышь: {GameHelper.ValuteFormatter(reward)}$";
         _distanceMultiplier.text = $"Множитель: x{_upgradesCalculator.GetXMultiplierByLevel():F2}";
         
         _playerBank.AddMoney(reward);
@@ -84,8 +86,8 @@ public class RewardManager : MonoBehaviour {
         _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.CurrentBet);
         _playerBank.AddMoney(reward);
         
-        _distanceText.text = $"Дистанция: {_playerStateManager.CurrentPlayerDistance:F2}";
-        _rewardText.text = $"Выигрышь: {reward:F2}";
+        _distanceText.text = $"Дистанция: {_playerStateManager.CurrentPlayerDistance:F0} м.";
+        _rewardText.text = $"Выигрышь: {GameHelper.ValuteFormatter(reward)}";
         _distanceMultiplier.text = $"Множитель: x{_upgradesCalculator.GetXMultiplierByLevel():F2}";
 
         _betMultiplier.DisactiveSelf();
