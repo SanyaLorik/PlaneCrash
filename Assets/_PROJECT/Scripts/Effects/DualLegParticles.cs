@@ -1,5 +1,9 @@
 using System;
 using System.Collections;
+using System.Threading;
+using _PROJECT.Scripts.Helpers;
+using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.iOS;
 using Zenject;
@@ -7,45 +11,72 @@ using Zenject;
 public class DualLegParticles : MonoBehaviour {
     public ParticleSystem _ps; // одна система
     private ParticleSystem.EmissionModule _emission;
+    
+    [SerializeField] private bool _botBehaviour;
+    
 
     [Inject] private PlayerMovement _playerMovement;
+    private CancellationTokenSource _tokenSource;
 
     private void Awake() {
         _emission = _ps.emission;
         StartCoroutine(StartSystem());
     }
 
+
+    public bool IsPlaying { get; private set; }
+
+    public void Play() {
+        IsPlaying = true;
+        StartRunning();
+        Debug.Log("Вызов у бота StartRunning");
+    }
+
+    
+    public void Stop() {
+        IsPlaying = false;
+        StopRunning();
+    }
+    
+    
+    
     private IEnumerator StartSystem() {
         StartRunning();
         yield return null;
         StopRunning();
+        _tokenSource = new CancellationTokenSource();
+        if (!_botBehaviour) {
+            PlayerLogic(_tokenSource.Token).Forget();
+        }
+    }
+
+    private async UniTask PlayerLogic(CancellationToken token) {
+        while (!token.IsCancellationRequested) {
+            Vector2 move = _playerMovement.MoveInput;
+
+            if (move == Vector2.zero && IsPlaying) {
+                IsPlaying = false;
+                StopRunning();
+            }
+            else if (move != Vector2.zero && !IsPlaying) {
+                IsPlaying = true;
+                StartRunning();
+            }
+            await UniTask.Yield(token);
+        }
     }
     
-
-    private bool _needPlay = false;
-    private void Update() {
-        Vector2 move = _playerMovement.MoveInput;
-
-        if (move == Vector2.zero && _needPlay) {
-            _needPlay = false;
-            StopRunning();
-        }
-        else if (move != Vector2.zero && !_needPlay) {
-            _needPlay = true;
-            StartRunning();
-        }
-    }
-
+    
 
     private void StartRunning() {
         _emission.enabled = true; 
-       
     }
 
     private void StopRunning() {
         _emission.enabled = false; 
     }
 
-
-   
+    private void OnDestroy() {
+        UniTaskHelper.DisposeTask(ref _tokenSource);
+    }
 }

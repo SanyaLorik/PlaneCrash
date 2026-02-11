@@ -15,6 +15,12 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
     [SerializeField] private Transform _moneyCube;
     [SerializeField] private Transform _betZoneCube;
     
+    [Header("Партиклы")]
+    [SerializeField] private JumpParticlesController _jumpParticlesController;
+    [SerializeField] private JumpParticlesController _landParticleController;
+    [SerializeField] private DualLegParticles _walkingParticles;
+    
+    
     
     private NavMeshAgent _agent;
     
@@ -52,6 +58,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         _botTokenSource = new CancellationTokenSource();
         _eblaning = true;
         LifeCycleAsync(_botTokenSource.Token).Forget();
+        MonitorMovementAsync(_botTokenSource.Token).Forget();
     }
     
     public void Exit() {
@@ -63,18 +70,37 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         _eblaning = false;
     }
 
+    private async UniTask MonitorMovementAsync(CancellationToken token) {
+        while (!token.IsCancellationRequested) {
+            if (_agent.enabled && _agent.velocity.sqrMagnitude > 0.05f) {
+                if (!_walkingParticles.IsPlaying) {
+                    _walkingParticles.Play();
+                }
+            }
+            else {
+                if (_walkingParticles.IsPlaying) {
+                    _walkingParticles.Stop();
+                }
+            }
+
+            await UniTask.Yield(token);
+        }
+    }
 
 
     private async UniTask LifeCycleAsync(CancellationToken token) {
         while (!token.IsCancellationRequested) {
+            
             Vector3 target = ChooseNextTarget();
 
             _agent.SetDestination(target);
-            
+            await UniTask.Yield();
             Jump(token).Forget();
 
-            await UniTask.WaitUntil(() => !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance,
+            await UniTask.WaitUntil(() => 
+                !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance,
                 cancellationToken: token);
+            
             await RotateTowardsAsync(target, _rotationSpeed, token);
 
             float waitTime = Random.Range(_timeToStay.From, _timeToStay.To);
@@ -111,7 +137,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
 
         float t = 0f;
         Vector3 basePos;
-
+        _jumpParticlesController.Play();
         while (t < _jumpDuration) {
             t += Time.deltaTime;
             float normalized = t / _jumpDuration;
@@ -123,6 +149,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
 
             await UniTask.Yield(PlayerLoopTiming.Update, token);
         }
+        _landParticleController.Play();
     }
 
 

@@ -68,13 +68,13 @@ public class TorpedoSpawn : MonoBehaviour {
         float torpedoTime = (_currentHitPoint.y - spawnY) / _torpedoPrefab.Speed;
 
         // Доля кривой, которую игрок проходит за время полета торпеды
-        float playerTorpedoProgress = torpedoTime / _player._segmentDuration;
+        float playerTorpedoProgress = torpedoTime / _player.SegmentDuration;
         // На каком прогрессе ее спавнить
         float progressFire = playerProgress - playerTorpedoProgress;
         progressFire = Mathf.Max(progressFire, 0f);
         
         // Когда ее запустить чтоб она попала в нужную точку одновременно с игроком
-        float fireTime = progressFire * _player._segmentDuration;
+        float fireTime = progressFire * _player.SegmentDuration;
         
         Invoke(nameof(SpawnTorpedo), fireTime);
     }

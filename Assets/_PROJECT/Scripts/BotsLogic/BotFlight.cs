@@ -22,6 +22,11 @@ public class BotFlight : FlightObject, IBotBehaviour {
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Collider _collider;
     
+    
+    [Header("Партиклы")]
+    [SerializeField] private ParticleSystem _tpParticle;
+    
+    
     private List<Boost> _boostWay;
     private int _countGetBoosts;
     
@@ -42,25 +47,27 @@ public class BotFlight : FlightObject, IBotBehaviour {
 
     
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
-        _currentCurve = curve;
-        _expandedTime = 0f;
+        CurrentCurve = curve;
+        ExpandedTime = 0f;
         _initialPos = transform.position;
         TargetPos = nextBoost;
         float distance = Vector3.Distance(_initialPos, TargetPos);
         _countGetBoosts++;
         if (_countGetBoosts < _countBoostEquilizeSpeed) {
             // Чуть бырее
-            _segmentDuration = distance / (_playerConfig.SpeedForce + _botSpeedCorrect);
+            SegmentDuration = distance / (_playerConfig.SpeedForce + _botSpeedCorrect);
         }
         else {
             // Уравниваем скорость
-            _segmentDuration = distance / _playerConfig.SpeedForce;
+            SegmentDuration = distance / _playerConfig.SpeedForce;
         }
     }
+    
     
     public void Exit() {
         _collider.enabled = false;
         TpToSpawn();
+        _tpParticle.Play();
     }
 
 
@@ -109,9 +116,9 @@ public class BotFlight : FlightObject, IBotBehaviour {
             _initialPos.z + Random.Range(100f,300f)
         );
         float timeToFall = 5f;
-        _expandedTime = 0f;
-        while (_expandedTime < timeToFall) {
-            float progress = _expandedTime / timeToFall;
+        ExpandedTime = 0f;
+        while (ExpandedTime < timeToFall) {
+            float progress = ExpandedTime / timeToFall;
             
             Vector3 newPos =  transform.position;
             newPos.x = Mathf.Lerp(_initialPos.x, TargetPos.x, progress);
@@ -120,7 +127,7 @@ public class BotFlight : FlightObject, IBotBehaviour {
             
             transform.position = newPos;
             
-            _expandedTime += Time.fixedDeltaTime;
+            ExpandedTime += Time.fixedDeltaTime;
             await UniTask.WaitForFixedUpdate(token);
         }
 
@@ -149,13 +156,13 @@ public class BotFlight : FlightObject, IBotBehaviour {
     
     private void FlightLogic() {
         Vector3 newPos =  transform.position;
-        float normalizedTime = _expandedTime / _segmentDuration;
+        float normalizedTime = ExpandedTime / SegmentDuration;
             
-        float height = _currentCurve.Evaluate(normalizedTime) * _playerConfig.JumpHeight; // По высоте подымается
+        float height = CurrentCurve.Evaluate(normalizedTime) * _playerConfig.JumpHeight; // По высоте подымается
         newPos.y = Mathf.Lerp(_initialPos.y, TargetPos.y, normalizedTime) + height;
         newPos.z = Mathf.Lerp(_initialPos.z, TargetPos.z, normalizedTime);
         newPos.x = Mathf.Lerp(_initialPos.x, TargetPos.x, normalizedTime);
-        _expandedTime += Time.fixedDeltaTime;
+        ExpandedTime += Time.fixedDeltaTime;
 
         transform.position = newPos;
     }

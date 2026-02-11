@@ -5,9 +5,9 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class FlightObject : MonoBehaviour {
-    protected AnimationCurve _currentCurve;
-    public float _segmentDuration { get; protected set; }
-    protected float _expandedTime = 0;
+    public AnimationCurve CurrentCurve { get; protected set; }
+    public float SegmentDuration { get; protected set; }
+    public float ExpandedTime { get; protected set; } = 0;
     protected Vector3 _initialPos;
     protected CancellationTokenSource _tokenSource;
     

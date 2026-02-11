@@ -18,17 +18,18 @@ public class PlayerMovement : FlightObject {
 
     public Rigidbody Rb { get; private set; } 
     public Transform Transform  => transform;
-    
-    
-    public Vector2 MoveInput;
+
+
+    public Vector2 MoveInput {get; private set; }
     private float _currentRoll;
     private float _rollVelocity;
-    private bool _isBusted;
+    public bool IsBusted {get; private set; }
 
     
     public bool IsBombed;
 
     public float PlayerSpeed => _config.SpeedForce;
+    public float JumpHeight => _config.JumpHeight;
     public event Action SetBoost;
     
     [Inject] private PlayerConfig _config;
@@ -100,7 +101,7 @@ public class PlayerMovement : FlightObject {
 
 
     private void SetPlayerIsBombed() {
-        _isBusted = false;
+        IsBusted = false;
         IsBombed = true;
     }
 
@@ -262,19 +263,19 @@ public class PlayerMovement : FlightObject {
         newPos.x += MoveInput.x * _config.RotateSpeed * Time.fixedDeltaTime;
         
         newPos.x = Mathf.Clamp(newPos.x, _levelBounds.LeftX, _levelBounds.RightX);
-        if (!_isBusted) {
+        if (!IsBusted) {
             newPos.z += _config.SpeedForce * Time.fixedDeltaTime;
             newPos.y -= _config.FallingSpeed * Time.fixedDeltaTime;
         }
         else {
-            float normalizedTime = _expandedTime / _segmentDuration;
+            float normalizedTime = ExpandedTime / SegmentDuration;
             
-            float height = _currentCurve.Evaluate(normalizedTime) * _config.JumpHeight; // По высоте подымается
+            float height = CurrentCurve.Evaluate(normalizedTime) * _config.JumpHeight; // По высоте подымается
             newPos.y = Mathf.Lerp(_initialPos.y, TargetPos.y, normalizedTime) + height;
             newPos.z = Mathf.Lerp(_initialPos.z, TargetPos.z, normalizedTime);
-            _expandedTime += Time.fixedDeltaTime;
-            if (_expandedTime >= _segmentDuration) {
-                _isBusted = false;
+            ExpandedTime += Time.fixedDeltaTime;
+            if (ExpandedTime >= SegmentDuration) {
+                IsBusted = false;
             }
         }
         transform.position = newPos;
@@ -287,13 +288,13 @@ public class PlayerMovement : FlightObject {
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
         if (!ObjectGetAllow) return;
 
-        _currentCurve = curve;
-        _expandedTime = 0f;
-        _isBusted = true;
+        CurrentCurve = curve;
+        ExpandedTime = 0f;
+        IsBusted = true;
         _initialPos = transform.position;
         TargetPos = nextBoost;
         float distance = Vector3.Distance(_initialPos, TargetPos);
-        _segmentDuration = distance / _config.SpeedForce; 
+        SegmentDuration = distance / _config.SpeedForce; 
         SetBoost?.Invoke();
         ObjectGetAllow = false;
         StartCoroutine(ObjectAllowCooldown());
@@ -324,7 +325,7 @@ public class PlayerMovement : FlightObject {
 
     public Vector3 GetPlayerPositionAt(float t) {
         // t ∈ [0..1], прогресс по кривой
-        float height = _currentCurve.Evaluate(t) * _config.JumpHeight;
+        float height = CurrentCurve.Evaluate(t) * _config.JumpHeight;
         float y = Mathf.Lerp(_initialPos.y, TargetPos.y, t) + height;
         float z = Mathf.Lerp(_initialPos.z, TargetPos.z, t);
 

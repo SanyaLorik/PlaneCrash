@@ -13,15 +13,17 @@ public class JumpParticlesController : MonoBehaviour  {
     private void Start() {
         EnableTrails(false);
     }
+    
+    public void Play() {
+        StartCoroutine(Sequence());
+    }
 
     private void EnableTrails(bool state) {
         ParticleSystem.TrailModule _trails = _flyPS.trails;
         _trails.enabled = state;
     }
 
-    public void Play() {
-        StartCoroutine(Sequence());
-    }
+
 
     private IEnumerator Sequence() {
         // 1. Вылет
