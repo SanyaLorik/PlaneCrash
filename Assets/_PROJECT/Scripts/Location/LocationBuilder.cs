@@ -57,7 +57,6 @@ public class LocationBuilder : MonoBehaviour {
             HideCreations();
         }
 
-        Debug.Log(_localizationDataPC.lol);
     }
 
 

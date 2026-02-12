@@ -1,9 +1,8 @@
-using System;
-using _PROJECT.Scripts.Extensions_Helpers;
 using DG.Tweening;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using Zenject;
 
 public class MoneyCube : MonoBehaviour {
     [SerializeField] private Renderer rend;
@@ -19,7 +18,13 @@ public class MoneyCube : MonoBehaviour {
     [SerializeField] private TMP_Text _textCount;
     [SerializeField] private float _baseAmount = 10000f;
 
+    [SerializeField] private bool _editSpecialBadTexture;
+    [SerializeField, ShowIf(nameof(_editSpecialBadTexture))] private float _sideTextureMultiplier = 2f;
+    [SerializeField, ShowIf(nameof(_editSpecialBadTexture))] private int _indexSpecialBadTexture;
+
     private MoneyRadiusSpawn _moneyRadiusSpawn;
+    
+    [Inject] private NumberFormatter _formatter; 
 
     private void Awake() {
         _moneyRadiusSpawn = GetComponent<MoneyRadiusSpawn>();
@@ -29,18 +34,21 @@ public class MoneyCube : MonoBehaviour {
         Vector3 size = transform.localScale;
 
         float baseX = size.x / tileWorldSize;
-        float baseZ = size.z / tileWorldSize;
+        float baseY = size.y / tileWorldSize;
 
         Vector2 finalTiling = new Vector2(
             Mathf.Round(baseX * tilingRatio.x),
-            Mathf.Round(baseZ * tilingRatio.y)
+            Mathf.Round(baseY * tilingRatio.y)
         );
 
         Material[] mats = rend.materials;
 
         foreach (int id in moneyMaterialSlots)
             mats[id].mainTextureScale = finalTiling;
-
+        if (_editSpecialBadTexture) {
+            mats[_indexSpecialBadTexture].mainTextureScale = finalTiling * _sideTextureMultiplier;
+        }
+        
         rend.materials = mats;
     }
 
@@ -63,7 +71,7 @@ public class MoneyCube : MonoBehaviour {
     
     private Tween _tween;
     public void SetMoneyAmount(float amount, bool updateMiniMoney = true) {
-        _textCount.text = GameHelper.ValuteFormatter(amount);
+        _textCount.text = _formatter.ValuteFormatter(amount);
         
         
         Vector3 newScale = NewScale(amount);
@@ -75,8 +83,6 @@ public class MoneyCube : MonoBehaviour {
             float deltaY = _bottomPoint.position.y - b.min.y;
             transform.position += new Vector3(0, deltaY, 0);
         }
-        
-        
 
         if (updateMiniMoney) {
             UpdateSpawnRadius();

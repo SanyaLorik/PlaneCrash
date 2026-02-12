@@ -3,13 +3,13 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Zenject;
 
-public class XMultiplyUpgrade : UpgradeBase {
+public class MultiplyUpgrade : UpgradeBase {
     
     
     protected override void ApplyUpgrade() {
         _bank.Buy(_currentPrice);
-        _playerStats.UpdateXMultiplierLevel();
-        Debug.Log("Покупка XMultiplyUpgrade: " + _playerStats.XMultiplierLevel);
+        _playerStats.UpdateMultiplierLevel();
+        Debug.Log("Покупка XMultiplyUpgrade: " + _playerStats.MultiplierLevel);
         
         
         _currentPrice *= UpgradeInfo.PriceMultiplier;
@@ -26,8 +26,8 @@ public class XMultiplyUpgrade : UpgradeBase {
     protected override void UpdateVisual() {
         _visual.UpdateData(
             _level, 
-            _upgradesCalculator.GetXMultiplierByLevel(), 
-            _upgradesCalculator.GetXMultiplierByLevel(false), 
+            _upgradesCalculator.GetUpgradeMultiplierByLevel(), 
+            _upgradesCalculator.GetUpgradeMultiplierByLevel(false), 
             _currentPrice,  
             "x", 
             false);
@@ -36,7 +36,7 @@ public class XMultiplyUpgrade : UpgradeBase {
     protected override void LoadLevel() {
         UpgradeInfo = _config.XMultiplierUpgrade;
         _currentPrice = UpgradeInfo.StartPrice;
-        _playerStats.UpdateXMultiplierLevel(_level, false);
+        _playerStats.UpdateMultiplierLevel(_level, false);
         UpdateVisual();
     }
 }

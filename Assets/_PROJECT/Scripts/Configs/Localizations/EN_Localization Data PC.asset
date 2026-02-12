@@ -19,7 +19,32 @@ MonoBehaviour:
   <SecondTime>k__BackingField: 
   <AdsInterstitial>k__BackingField: 
   <LabelProgressNarrator>k__BackingField: 
-  lol: "\u041F\u0440\u0438\u0432\u0435\u0442 \u0438\u0433\u0440\u043E\u043A"
+  Suffixies:
+  - 
+  - K
+  - M
+  - B
+  - T
+  DistanceTemplate: 'Distance: {0} m'
+  BetMultiplierTemplate: 'Bet multiplier: x{0}'
+  BetAmountTemplate: 'Bet: ${0}'
+  RewardTemplate: 'Reward: ${0}'
+  UpgradeMultiplierTemplate: 'Reward Multiplier: x{0}'
+  FlightResultTitle: Result
+  FlightComebackButton: Come back
+  PlayerBalanceTemplate: 'Balance: {0}'
+  TaskCompletedNotification: Task complete!
+  CollectRewardNotification: Collect reward
+  TaskTableTitle: Tasks
+  TaskTranslates:
+  - Type: 0
+    TaskText: Fly {0} m.
+  - Type: 1
+    TaskText: Collect {0} boosts.
+  - Type: 2
+    TaskText: Collect {0} coins.
+  - Type: 3
+    TaskText: Place {0} coins.
   TutorTranslates:
   - Id: 0
     Phrase: Hi! Let me show you how things work here.
@@ -46,3 +71,33 @@ MonoBehaviour:
     Phrase: "You can upgrade your character. Let\u2019s boost your distance reward."
   - Id: 10
     Phrase: You can also earn money in mini-games. Good luck out there!
+  RangName:
+  - Id: 0
+    Name: Noob
+  - Id: 1
+    Name: Loh
+  - Id: 2
+    Name: Yeban
+  - Id: 3
+    Name: Petuh
+  - Id: 4
+    Name: Diamond
+  - Id: 5
+    Name: Legend
+  BotsPhrases:
+  - hey
+  - hey there
+  - heyo
+  - yo
+  - ey
+  - sup
+  - hi
+  - hello
+  - well, hey
+  - listen
+  - hold on a sec
+  - wait up
+  - ah, there you are
+  - been here long?
+  - you come here often?
+  - you new here?

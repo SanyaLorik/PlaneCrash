@@ -24,7 +24,7 @@ public class MoneyMultiplyZone : MonoBehaviour {
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
             Debug.Log("ChangeMultiplyer MoneyMultiplyZone");
-            _zoneManager.ChangeMultiplyer(_xMultiplyValue);
+            _zoneManager.ChangeMultiplier(_xMultiplyValue);
         }    
     }
 

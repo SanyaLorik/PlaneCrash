@@ -1,5 +1,3 @@
-using System;
-using _PROJECT.Scripts.Extensions_Helpers;
 using DG.Tweening;
 using SanyaBeerExtension;
 using TMPro;
@@ -16,8 +14,13 @@ public class RewardManager : MonoBehaviour {
     [SerializeField] private TMP_Text _distanceText;
     [SerializeField] private TMP_Text _bet;
     [SerializeField] private TMP_Text _betMultiplier;
-    [SerializeField] private TMP_Text _distanceMultiplier;
+    [SerializeField] private TMP_Text _upgradeMultiplier;
     [SerializeField] private TMP_Text _rewardText;
+
+    [Header("UI элементы")]
+    [SerializeField] private TMP_Text _titleText;
+    [SerializeField] private TMP_Text _buttonText;
+    
     
     [SerializeField] private float _distanceRewardDivide = 2f;
     
@@ -37,6 +40,7 @@ public class RewardManager : MonoBehaviour {
     
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private LocalizationDataPC _localization;
+    [Inject] private NumberFormatter _formatter;
     
     [Inject]
     public void Init(PlayerStateManager playerStateManager, PlayerMovement playerMovement, IPlayerStatsReadOnly playerStats, ZoneManager zoneManager) {
@@ -46,12 +50,17 @@ public class RewardManager : MonoBehaviour {
         _playerMovement =  playerMovement;
 
     }
+
     
     
     private void Start() {
-        _backButton.onClick.AddListener(RewardLogic);
+        _backButton.onClick.AddListener(RewardAnimation);
         _finalCavasPosition = _canvasBody.anchoredPosition;
         _startCavasPosition = new Vector2(_finalCavasPosition.x, -Screen.height/2);
+
+
+        _titleText.text = _localization.FlightResultTitle;
+        _buttonText.text = _localization.FlightComebackButton;
     }
 
     private void OnStateChange(PlayerState state) {
@@ -68,40 +77,73 @@ public class RewardManager : MonoBehaviour {
         _betMultiplier.ActiveSelf();
         _bet.ActiveSelf();
         
-        float reward = _upgradesCalculator.GetXMultiplierByLevel() * (_zoneManager.CurrentBet * _zoneManager.CurrentMultiplyer) + _zoneManager.CruiserDistance; 
-        _distanceText.text = $"Дистанция: {_playerStateManager.CurrentPlayerDistance:F0} м.";
-        _betMultiplier.text = $"Множитель ставки: x{_zoneManager.CurrentMultiplyer}";
-        _bet.text = $"Ставка: {_zoneManager.CurrentBet:F2}$";
-        _rewardText.text = $"Выигрышь: {GameHelper.ValuteFormatter(reward)}$";
-        _distanceMultiplier.text = $"Множитель: x{_upgradesCalculator.GetXMultiplierByLevel():F2}";
+        float reward = 
+            _upgradesCalculator.GetUpgradeMultiplierByLevel() 
+            *
+            (_zoneManager.BetAmount * _zoneManager.BetMultiplier) 
+            + 
+            _zoneManager.CruiserDistance; 
         
+                
         _playerBank.AddMoney(reward);
-        // _rewardText.text = money.ToString();
+
+        ShowBaseReward(reward);
+        
+        // Множитель ставки
+        _betMultiplier.text = string.Format(
+            _localization.BetMultiplierTemplate,
+            $"{_zoneManager.BetMultiplier}"
+        );
+        
+        // Ставка
+        _bet.text = string.Format(
+            _localization.BetAmountTemplate,
+            $"{_formatter.ValuteFormatter(_zoneManager.BetAmount)}"
+        );
     }
     
     private void ShowDistanceReward() {
         ShowRewardWindow();
-        float distance = _playerStateManager.CurrentPlayerDistance;
-        float reward = distance * _upgradesCalculator.GetXMultiplierByLevel();
-        _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.CurrentBet);
+        float reward = _playerStateManager.CurrentPlayerDistance 
+                       *
+                       _upgradesCalculator.GetUpgradeMultiplierByLevel();
+        
+        _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.BetAmount);
         _playerBank.AddMoney(reward);
         
-        _distanceText.text = $"Дистанция: {_playerStateManager.CurrentPlayerDistance:F0} м.";
-        _rewardText.text = $"Выигрышь: {GameHelper.ValuteFormatter(reward)}";
-        _distanceMultiplier.text = $"Множитель: x{_upgradesCalculator.GetXMultiplierByLevel():F2}";
+        ShowBaseReward(reward);
 
         _betMultiplier.DisactiveSelf();
         _bet.DisactiveSelf();
     }
-    
-    private void RewardLogic() {
+
+    private void ShowBaseReward(float reward) {
+        _distanceText.text = string.Format(
+            _localization.DistanceTemplate,
+            $"{_playerStateManager.CurrentPlayerDistance:F0}"
+        );
+        
+        // Выигрышь
+        _rewardText.text = string.Format(
+            _localization.RewardTemplate,
+            $"{_formatter.ValuteFormatter(reward)}"
+        );
+        
+        // Множитель дистанции
+        _upgradeMultiplier.text = string.Format(
+            _localization.UpgradeMultiplierTemplate,
+            $"{_upgradesCalculator.GetUpgradeMultiplierByLevel():F2}"
+        );
+    }
+
+    private void RewardAnimation() {
         Sequence buttonPop =  DOTween.Sequence();
         buttonPop
             .Append(_backButton.transform.DOScale(1.2f, 0.2f).From(1f).SetEase(Ease.OutBounce))
             .Append(_backButton.transform.DOScale(1f, 0.2f).From(1.2f).SetEase(Ease.OutBounce));
         
         
-        HideReward();
+        HideRewardWindow();
         _playerStateManager.ChangePlayerState(PlayerState.Walking);
         _playerMovement.TpPlayerInSpawn();
     }
@@ -115,7 +157,7 @@ public class RewardManager : MonoBehaviour {
     }
 
     
-    private void HideReward() {
+    private void HideRewardWindow() {
         Sequence animation =  DOTween.Sequence();
 
         animation
@@ -124,10 +166,6 @@ public class RewardManager : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        KillAnimation();
-    }
-
-    private void KillAnimation() {
         if (_inAnimation) {
             _animation.Kill();
         }

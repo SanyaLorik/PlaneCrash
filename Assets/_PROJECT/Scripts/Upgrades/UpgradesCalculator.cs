@@ -17,11 +17,11 @@ public class UpgradesCalculator {
     }
 
 
-    public float GetXMultiplierByLevel(bool thisLevel = true) {
+    public float GetUpgradeMultiplierByLevel(bool thisLevel = true) {
         if (thisLevel) {
-            return _config.XMultiplierUpgrade.BaseValue * Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.XMultiplierLevel);
+            return _config.XMultiplierUpgrade.BaseValue * Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel);
         }
-        return _config.XMultiplierUpgrade.BaseValue * Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.XMultiplierLevel + 1);
+        return _config.XMultiplierUpgrade.BaseValue * Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel + 1);
     } 
     
 

@@ -33,7 +33,7 @@ public class LineToObjects : MonoBehaviour {
         _tasksManager = tasksManager;
         _zoneManager = zoneManager;
         _zoneManager.ChooseBet += ZoneManagerStep;
-        _zoneManager.ChooseMultiplyer += ZoneManagerStep;
+        _zoneManager.ChooseMultiplier += ZoneManagerStep;
     }
     
     

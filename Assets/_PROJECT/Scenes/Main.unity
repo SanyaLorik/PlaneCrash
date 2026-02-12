@@ -197,6 +197,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b77a159c0960f2848a649ba19ead7ae3, type: 3}
   m_PrefabInstance: {fileID: 1868614}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2834202 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8124451870536558390, guid: 3a71dcb13efddcd4e9ffec7669ce908f, type: 3}
+  m_PrefabInstance: {fileID: 7575974985621585034}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &3016065
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,7 +1698,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &68342194
 Canvas:
   m_ObjectHideFlags: 0
@@ -2688,6 +2699,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &141597881 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1038685345882188594, guid: 3a71dcb13efddcd4e9ffec7669ce908f, type: 3}
+  m_PrefabInstance: {fileID: 7575974985621585034}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &141834524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6279,7 +6301,7 @@ GameObject:
   - component: {fileID: 305707020}
   - component: {fileID: 305707019}
   m_Layer: 0
-  m_Name: Multiply
+  m_Name: BetMultiply
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7982,6 +8004,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 868945790117488125, guid: fe1d462fbb1ee624aa9823a89581ca43, type: 3}
+      propertyPath: m_Name
+      value: TableTitle
+      objectReference: {fileID: 0}
     - target: {fileID: 3387824233268932670, guid: fe1d462fbb1ee624aa9823a89581ca43, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8053,6 +8079,18 @@ PrefabInstance:
     - target: {fileID: 4003503707534831147, guid: fe1d462fbb1ee624aa9823a89581ca43, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602886323902871784, guid: fe1d462fbb1ee624aa9823a89581ca43, type: 3}
+      propertyPath: <TaskType>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651381306965460198, guid: fe1d462fbb1ee624aa9823a89581ca43, type: 3}
+      propertyPath: <TaskType>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7452035590005448023, guid: fe1d462fbb1ee624aa9823a89581ca43, type: 3}
+      propertyPath: <TaskType>k__BackingField
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8516431117219588423, guid: fe1d462fbb1ee624aa9823a89581ca43, type: 3}
       propertyPath: m_Name
@@ -10384,7 +10422,7 @@ GameObject:
   - component: {fileID: 525901591}
   - component: {fileID: 525901590}
   m_Layer: 5
-  m_Name: Title
+  m_Name: TaskCompletedText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14626,6 +14664,7 @@ GameObject:
   - component: {fileID: 715291367}
   - component: {fileID: 715291370}
   - component: {fileID: 715291371}
+  - component: {fileID: 715291372}
   m_Layer: 0
   m_Name: TaskManager
   m_TagString: Untagged
@@ -14786,8 +14825,28 @@ MonoBehaviour:
   - {fileID: 1757580329}
   - {fileID: 224162213}
   - {fileID: 1679908271}
-  _taskNotification: {fileID: 1215903426}
+  _taskNotification: {fileID: 715291372}
   _taskCompletePS: {fileID: 801995255}
+  _tableTitle: {fileID: 1010846159}
+--- !u!114 &715291372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715291365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1844a6aa66f8eb64182b22b73cec16e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaskNotification
+  _moneyText: {fileID: 2021518144}
+  _taskCompletedText: {fileID: 525901590}
+  _collectRewardText: {fileID: 1902299337}
+  _panel: {fileID: 149664731}
+  _canvas: {fileID: 1215903422}
+  _timeToShow: 3
+  _duration: 0.6
 --- !u!198 &717630386 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4457973223420013564, guid: 5e8c9df6a417359448247217bd440787, type: 3}
@@ -26881,6 +26940,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3a55333a8618fbb4db687c902bfac9cf, type: 3}
   m_PrefabInstance: {fileID: 1010041295}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1010846159 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7141693887849043031, guid: fe1d462fbb1ee624aa9823a89581ca43, type: 3}
+  m_PrefabInstance: {fileID: 407646610}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!4 &1011566201 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3a55333a8618fbb4db687c902bfac9cf, type: 3}
@@ -27202,9 +27272,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2108981285}
     - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: _baseAmount
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
       propertyPath: _bottomPoint
       value: 
       objectReference: {fileID: 197649537}
+    - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: tileWorldSize
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: tilingRatio.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: _editSpecialBadTexture
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: _indexSpecialBadTexture
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4951356058960082027, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
       propertyPath: _bottomPoint
       value: 
@@ -30902,7 +30992,6 @@ GameObject:
   - component: {fileID: 1215903425}
   - component: {fileID: 1215903424}
   - component: {fileID: 1215903423}
-  - component: {fileID: 1215903426}
   m_Layer: 5
   m_Name: TaskNotificationCanvas
   m_TagString: Untagged
@@ -30993,23 +31082,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_TargetDisplay: 0
---- !u!114 &1215903426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1215903421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1844a6aa66f8eb64182b22b73cec16e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TaskNotification
-  _moneyText: {fileID: 2021518144}
-  _panel: {fileID: 149664731}
-  _canvas: {fileID: 1215903422}
-  _timeToShow: 3
-  _duration: 0.6
 --- !u!1001 &1218217432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37058,8 +37130,10 @@ MonoBehaviour:
   _distanceText: {fileID: 1828085512}
   _bet: {fileID: 641678327}
   _betMultiplier: {fileID: 1610450367}
-  _distanceMultiplier: {fileID: 655034393}
+  _upgradeMultiplier: {fileID: 655034393}
   _rewardText: {fileID: 1475111465}
+  _titleText: {fileID: 2834202}
+  _buttonText: {fileID: 141597881}
   _distanceRewardDivide: 2
   _backButton: {fileID: 1518942717}
   _cruiser: {fileID: 220604356}
@@ -38319,7 +38393,7 @@ GameObject:
   - component: {fileID: 1315977971}
   - component: {fileID: 1315977970}
   m_Layer: 0
-  m_Name: XMultiply
+  m_Name: UpgradeMultiply
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50266,7 +50340,7 @@ GameObject:
   - component: {fileID: 1902299338}
   - component: {fileID: 1902299337}
   m_Layer: 5
-  m_Name: Title_1
+  m_Name: CollectRewardText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56736,9 +56810,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 646641120}
     - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: _baseAmount
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
       propertyPath: _bottomPoint
       value: 
       objectReference: {fileID: 197649537}
+    - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: tileWorldSize
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: tilingRatio.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: tilingRatio.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: _editSpecialBadTexture
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: _indexSpecialBadTexture
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4951356058960082027, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
       propertyPath: _bottomPoint
       value: 
@@ -57514,14 +57612,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RewardCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 274714441729259837, guid: 3a71dcb13efddcd4e9ffec7669ce908f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 967855566630489688, guid: 3a71dcb13efddcd4e9ffec7669ce908f, type: 3}
-      propertyPath: m_Name
-      value: BetMultiply
-      objectReference: {fileID: 0}
     - target: {fileID: 2420797564188467022, guid: 3a71dcb13efddcd4e9ffec7669ce908f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -57674,10 +57764,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4782086848374966920, guid: 3a71dcb13efddcd4e9ffec7669ce908f, type: 3}
-      propertyPath: m_Alpha
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6443741681025051669, guid: 3a71dcb13efddcd4e9ffec7669ce908f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -57701,10 +57787,6 @@ PrefabInstance:
     - target: {fileID: 6443741681025051669, guid: 3a71dcb13efddcd4e9ffec7669ce908f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7523911134650648779, guid: 3a71dcb13efddcd4e9ffec7669ce908f, type: 3}
-      propertyPath: m_Name
-      value: DistanceMultiplier
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

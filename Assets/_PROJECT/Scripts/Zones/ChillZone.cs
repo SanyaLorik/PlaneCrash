@@ -15,7 +15,7 @@ public class ChillZone : MonoBehaviour {
     
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
-            _zoneManager.ChangeMultiplyer(0);
+            _zoneManager.ChangeMultiplier(0);
             _zoneManager.ChangeBet(0);
             _playerStateManager.ChangePlayerState(PlayerState.Walking);
         }    

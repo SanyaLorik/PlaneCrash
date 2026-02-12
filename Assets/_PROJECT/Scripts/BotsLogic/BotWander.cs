@@ -119,36 +119,32 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
                 _agent.remainingDistance <= jumpLength &&
                 _agent.remainingDistance > _agent.stoppingDistance, 
             cancellationToken: token);
-            
-        _agent.updatePosition = false;
-        _agent.updateRotation = false;
 
         FakeJump(token);
         
         await UniTask.Delay(200, cancellationToken: token);
-
-        _agent.updatePosition = true;
-        _agent.updateRotation = true;
     }
     
     [SerializeField] private float _jumpDuration;
     private async UniTask FakeJump(CancellationToken token) {
-        float height = _playerConfig.JumpHeight/1.5f;
-
+        float height = _playerConfig.JumpHeight / 1.5f;
         float t = 0f;
-        Vector3 basePos;
+
         _jumpParticlesController.Play();
+
         while (t < _jumpDuration) {
             t += Time.deltaTime;
             float normalized = t / _jumpDuration;
-
             float yOffset = Mathf.Sin(normalized * Mathf.PI) * height;
 
-            basePos = _agent.nextPosition;
-            transform.position = new Vector3(basePos.x, basePos.y + yOffset, basePos.z);
+            Vector3 pos = transform.position;
+            pos.y = _agent.nextPosition.y + yOffset;
 
-            await UniTask.Yield(PlayerLoopTiming.Update, token);
+            transform.position = pos;
+
+            await UniTask.Yield(token);
         }
+
         _landParticleController.Play();
     }
 

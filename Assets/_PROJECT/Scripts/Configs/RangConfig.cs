@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 [Serializable]
 public class RangData {
-    public string Name;
+    public int Id;
     public int Money;
     public Sprite Sprite;
 }

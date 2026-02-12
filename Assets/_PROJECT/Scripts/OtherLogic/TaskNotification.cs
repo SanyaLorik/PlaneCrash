@@ -4,9 +4,12 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 public class TaskNotification : MonoBehaviour {
     [SerializeField] private TMP_Text _moneyText;
+    [SerializeField] private TMP_Text _taskCompletedText;
+    [SerializeField] private TMP_Text _collectRewardText;
     
     
     [SerializeField] private RectTransform _panel;
@@ -23,11 +26,17 @@ public class TaskNotification : MonoBehaviour {
     private Vector2 _hiddenPos;
     private bool _notifIsShowed;
     
+    [Inject] private LocalizationDataPC _localization;
+    
+    
     private void Awake() {
         CachePositions();
-        
-
         _panel.anchoredPosition = _hiddenPos; // сразу прячем
+    }
+
+    private void Start() {
+        _taskCompletedText.text = _localization.TaskCompletedNotification;
+        _collectRewardText.text = _localization.CollectRewardNotification;
     }
 
 

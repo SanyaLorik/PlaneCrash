@@ -1,9 +1,9 @@
 using System;
 using System.Globalization;
-using _PROJECT.Scripts.Extensions_Helpers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class UpgradeItemVisual : MonoBehaviour {
     private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
@@ -12,12 +12,14 @@ public class UpgradeItemVisual : MonoBehaviour {
     [SerializeField] private TMP_Text _xCurrentVisual;
     [SerializeField] private TMP_Text _xNextVisual;
     [SerializeField] private TMP_Text _priceVisual;
-    
-    
     [SerializeField] private float _brightnessMultiply = 5f;
 
     private Material _triggerObjectMat;
 
+    
+    [Inject] private NumberFormatter _formatter; 
+    
+    
     private void Awake() {
         _triggerObjectMat = GetComponent<Renderer>().material;
         _triggerObjectMat.EnableKeyword("_EMISSION");
@@ -27,7 +29,7 @@ public class UpgradeItemVisual : MonoBehaviour {
     public void UpdateData(int level, float xCurrent, float xNext, float price, string mesure, bool needRound) {
         // Debug.Log($"level {level} xCurrent {xCurrent} xNext {xNext} price {price}");
         _levelVisual.text = level.ToString();
-        _priceVisual.text = GameHelper.ValuteFormatter(price);
+        _priceVisual.text = _formatter.ValuteFormatter(price);
         if (needRound) {
             _xCurrentVisual.text = ((int)xCurrent) + mesure;
             _xNextVisual.text = ((int)xNext) + mesure;

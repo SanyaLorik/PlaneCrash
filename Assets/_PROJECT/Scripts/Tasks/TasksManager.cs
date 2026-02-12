@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using _PROJECT.Scripts.Extensions_Helpers;
 using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -38,10 +38,13 @@ public class TasksManager : MonoBehaviour {
     [SerializeField] private TaskNotification _taskNotification;
     [SerializeField] private ParticleSystem _taskCompletePS;
     
+    [Header("Заголовок таблицы")]
+    [SerializeField] private TMP_Text _tableTitle;
+    
+    
     // Инфа по заданию и росту
     private readonly Dictionary<TaskType, TaskInfo> _taskTypeToInfoDictionary = new ();
     private readonly Dictionary<TaskType, TaskVisual> _taskTypeToVisualDictionary = new ();
-    [Inject] private Money2dSpawner _money2dSpawner;
         
 
     // Стата игрока в данный момент 
@@ -57,7 +60,10 @@ public class TasksManager : MonoBehaviour {
     private PlayerStateManager _playerStateManager;
     private PlayerBank _bank;
     
+    [Inject] private Money2dSpawner _money2dSpawner;
     [Inject] private ZoneManager _zoneManager;
+    [Inject] private NumberFormatter _formatter; 
+    [Inject] private LocalizationDataPC _localization; 
 
     [Inject]
     private void Init(PlayerStateManager playerStateManager, PlayerMovement playerMovement, PlayerBank bank) {
@@ -73,10 +79,13 @@ public class TasksManager : MonoBehaviour {
     private void Awake() {
         CreateTaskInfoDictionary();
         CreateTaskVisualDictionary();
-        FirstTaskCreate();
     }
 
-    
+
+    private void Start() {
+        TableInitialize();
+    }
+
     private void OnTriggerEnter(Collider collider) {
         if (collider.TryGetComponent(out PlayerMovement player)) {
             UpdateCompleteTasks();
@@ -95,7 +104,7 @@ public class TasksManager : MonoBehaviour {
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Flight) {
-            UpdateMoneyBet(_zoneManager.CurrentBet);
+            UpdateMoneyBet(_zoneManager.BetAmount);
             _tokenSource = new CancellationTokenSource();
             PlayerFlightAsync(_tokenSource.Token, _playerMovement.Transform).Forget();
         }
@@ -228,9 +237,12 @@ public class TasksManager : MonoBehaviour {
         }
     }   
     
-    private void FirstTaskCreate() {
+    
+    private void TableInitialize() {
+        _tableTitle.text = _localization.TaskTableTitle;
         foreach (var taskVisual in _taskTypeToVisualDictionary) {
             TaskInfo taskInfo = _taskTypeToInfoDictionary[taskVisual.Key];
+            _taskTypeToVisualDictionary[taskVisual.Key].SetTaskLocalizationText();
             _taskTypeToVisualDictionary[taskVisual.Key].SetTaskVisual(taskInfo.TaskMoney,taskInfo.FullValue, PlayerValue(taskVisual.Key));
         }
     }
@@ -252,7 +264,7 @@ public class TasksManager : MonoBehaviour {
     }
     
     private void ShowNotification(TaskInfo taskInfo) {
-        _taskNotification.ShowNotification("+"+ GameHelper.ValuteFormatter(taskInfo.TaskMoney));
+        _taskNotification.ShowNotification("+"+ _formatter.ValuteFormatter(taskInfo.TaskMoney));
     }
 
     

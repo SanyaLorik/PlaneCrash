@@ -139,7 +139,7 @@ public class TrapsManager : MonoBehaviour {
         
         foreach (var diapasone in chunksDiapasone) {
             int enemiesCount = Random.Range(zone.EnemiesPerChunk.From, zone.EnemiesPerChunk.To);
-            if (_zoneManager.CurrentMultiplyer == 2f) {
+            if (_zoneManager.BetMultiplier == 2f) {
                 enemiesCount /= 2;
             }
             

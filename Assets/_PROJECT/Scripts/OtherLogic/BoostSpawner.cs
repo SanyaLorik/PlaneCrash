@@ -1,13 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using SanyaBeerExtension;
-using Unity.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.iOS;
-using UnityEngine.UIElements;
 using Zenject;
 using Random = UnityEngine.Random;
 

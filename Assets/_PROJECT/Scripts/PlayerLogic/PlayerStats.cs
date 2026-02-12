@@ -2,15 +2,15 @@ using System;
 using UnityEngine;
 
 public class PlayerStats : IPlayerStatsReadOnly, IPlayerStatsWritable {
-    public int XMultiplierLevel { get; private set; } = 1;
+    public int MultiplierLevel { get; private set; } = 1;
     public int LuckyLevel { get; private set; } = 1;
     public int MagnetLevel { get; private set; } = 1;
     public int DefenceLevel { get; private set; } = 1;
     public int PredictDistanceLevel { get; private set; } = 1;
     public event Action ChangeStats;
 
-    public void UpdateXMultiplierLevel(int x, bool isInvokable = true) {
-        XMultiplierLevel += x;
+    public void UpdateMultiplierLevel(int x, bool isInvokable = true) {
+        MultiplierLevel += x;
         if (!isInvokable) {
             return;
         }
@@ -51,7 +51,7 @@ public class PlayerStats : IPlayerStatsReadOnly, IPlayerStatsWritable {
 }
 
 public interface IPlayerStatsReadOnly {
-   int XMultiplierLevel { get; }
+   int MultiplierLevel { get; }
    int LuckyLevel { get; }
    int MagnetLevel { get; }
    int DefenceLevel { get; }
@@ -61,12 +61,12 @@ public interface IPlayerStatsReadOnly {
 }
 
 public interface IPlayerStatsWritable {
-    int XMultiplierLevel { get; }
+    int MultiplierLevel { get; }
     int LuckyLevel { get; }
     int MagnetLevel { get; }
     int DefenceLevel { get; }
     int PredictDistanceLevel { get; }
-    void UpdateXMultiplierLevel(int x = 1, bool isInvokable = true);
+    void UpdateMultiplierLevel(int x = 1, bool isInvokable = true);
     void UpdateLuckyLevel(int x = 1, bool isInvokable = true);
     void UpdateMagnetLevel(int x = 1, bool isInvokable = true);
     void UpdateDefenceLevel(int x = 1, bool isInvokable = true);

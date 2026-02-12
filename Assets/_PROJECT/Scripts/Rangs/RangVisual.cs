@@ -21,21 +21,18 @@ public class RangVisual : MonoBehaviour {
     [SerializeField] private float _record;
 
     
-    private RangConfig _config;
-    private PlayerBank _playerBank;
-    private MoneyCube _moneyCube;
-    
     private float _maxMoney;
     private float _xStart;
     private float _xMax;
     private float _yPos;
     
-
+    private PlayerBank _playerBank;
+    [Inject] private RangConfig _config;
+    [Inject] private MoneyCube _moneyCube;
+    [Inject] private LocalizationDataPC _localization;
 
     [Inject]
-    public void Init(RangConfig config, PlayerBank playerBank, MoneyCube  moneyCube) {
-        _config = config;
-        _moneyCube =  moneyCube;
+    public void Init(PlayerBank playerBank) {
         _playerBank = playerBank;
         _playerBank.BankChanged += PlayerBankOnBankChanged;
 
@@ -75,7 +72,7 @@ public class RangVisual : MonoBehaviour {
             RectTransform rt = rangInstance.GetComponent<RectTransform>();
             rt.anchoredPosition = new Vector2(rangXPos, 0f);
             
-            rangInstance.SetData(rang.Name, rang.Sprite);
+            rangInstance.SetData(_localization.GetRangName(rang.Id), rang.Sprite);
         }
     }
     

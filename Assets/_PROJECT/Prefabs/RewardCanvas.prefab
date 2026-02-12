@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 9159897837736769784}
   - component: {fileID: 4604228909731415697}
   m_Layer: 0
-  m_Name: Multiply
+  m_Name: BetMultiply
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -759,7 +759,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4342508497571322639}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -851,7 +851,7 @@ GameObject:
   - component: {fileID: 3874482219446183169}
   - component: {fileID: 1038685345882188594}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: ReturnText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1328,7 +1328,7 @@ GameObject:
   - component: {fileID: 7010735199786114423}
   - component: {fileID: 1622517394322899611}
   m_Layer: 0
-  m_Name: DistanceMultiplyer
+  m_Name: UpgradeMultiplier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

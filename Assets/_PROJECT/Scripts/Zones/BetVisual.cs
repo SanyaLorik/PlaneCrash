@@ -1,4 +1,3 @@
-using _PROJECT.Scripts.Extensions_Helpers;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -19,10 +18,15 @@ public class BetVisual : MonoBehaviour {
     private IPlayerStatsReadOnly _playerStats;
     
     [Inject] private UpgradesCalculator _upgradesCalculator;
+    [Inject] private NumberFormatter _formatter; 
+    [Inject] private LocalizationDataPC _localization; 
+
     
     [Inject]
     public void Init(PlayerBank bank, PlayerStateManager playerStateManager, IPlayerStatsReadOnly playerStats, ZoneManager zoneManager) {
         _zoneManager = zoneManager;
+        _zoneManager.ChooseBet += ShowBet;
+        _zoneManager.ChooseMultiplier += ShowMultiplier;
         
         _bank = bank;
         _bank.BankChanged += OnChangeBank;
@@ -33,12 +37,13 @@ public class BetVisual : MonoBehaviour {
     }
 
     private void PlayerStatsOnChangeStats() {
-        _playerXMultiplyer.text = $"Множитель метров: {_upgradesCalculator.GetXMultiplierByLevel():F2}";
+        _playerXMultiplyer.text = string.Format(
+            _localization.UpgradeMultiplierTemplate,
+            $"{_upgradesCalculator.GetUpgradeMultiplierByLevel():F2}"
+        );
     }
 
     private void Start() {
-        _zoneManager.ChooseBet += ShowBet;
-        _zoneManager.ChooseMultiplyer += ShowMultiplyer;
         PlayerStatsOnChangeStats();
     }
 
@@ -50,31 +55,56 @@ public class BetVisual : MonoBehaviour {
     }
 
 
-    private void OnDisable() {
-        if (_zoneManager != null) {
-            _zoneManager.ChooseBet -= ShowBet;
-            _zoneManager.ChooseMultiplyer -= ShowMultiplyer;
-        }
-        _bank.BankChanged -= OnChangeBank;
-        _playerStateManager.ChangeState -= OnChangeState;
-    }
-
     private void OnChangeBank(float capital) {
-        _playerBank.text = $"Баланс: {GameHelper.ValuteFormatter(capital)}";
+
+        _playerBank.text = string.Format(
+            _localization.PlayerBalanceTemplate,
+            $"{_formatter.ValuteFormatter(capital)}"
+        );
+
     }
 
     private void ShowBet(float bet) {
-        _playerBetVisual.text = $"Ставка: {GameHelper.ValuteFormatter(bet)}";
+        _playerBetVisual.text = string.Format(
+            _localization.BetAmountTemplate,
+            $"{_formatter.ValuteFormatter(bet)}"
+        );
+        
         _xMultiplyVisual.text = "";
         _rewardVisual.text = "";
         _distanceVisual.text = "";
 
     }
     
-    private void ShowMultiplyer(float multiplyer) {
-        _xMultiplyVisual.text = $"Множитель: x{multiplyer}";
-        _rewardVisual.text = $"Выигрыш: {GameHelper.ValuteFormatter(_zoneManager.CurrentBet *  multiplyer)}";
-        _distanceVisual.text = $"До финиша: {_zoneManager.CruiserDistance}м.";
+    private void ShowMultiplier(float multiplyer) {
+        _xMultiplyVisual.text = string.Format(
+            _localization.BetMultiplierTemplate,
+            $"{multiplyer}"
+        );
+        
+        _rewardVisual.text = string.Format(
+            _localization.RewardTemplate,
+            $"{_formatter.ValuteFormatter(_zoneManager.BetAmount *  multiplyer)}"
+        );
+        
+        _distanceVisual.text = string.Format(
+            _localization.DistanceTemplate,
+            $"{_zoneManager.CruiserDistance}"
+        );
+        
     }
 
+    
+    
+    private void OnDisable() {
+        if (_zoneManager != null) {
+            _zoneManager.ChooseBet -= ShowBet;
+            _zoneManager.ChooseMultiplier -= ShowMultiplier;
+        }
+        _bank.BankChanged -= OnChangeBank;
+        _playerStateManager.ChangeState -= OnChangeState;
+    }
+
+    
+    
 }

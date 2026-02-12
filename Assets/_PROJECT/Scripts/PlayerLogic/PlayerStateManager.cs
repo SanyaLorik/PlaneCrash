@@ -28,7 +28,7 @@ public class PlayerStateManager : MonoBehaviour {
     
     
     public float CurrentPlayerDistance
-        => CurrentState == PlayerState.Walking ? 0f : transform.position.z;
+        => CurrentState == PlayerState.Walking ? 0f : transform.position.z-StartFlightPosition;
     
 
     public PlayerState CurrentState { get; private set; } = PlayerState.Walking;

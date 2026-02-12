@@ -12,11 +12,11 @@ public class ZoneManager : MonoBehaviour {
     
     
     
-    public event Action<float> ChooseMultiplyer;
+    public event Action<float> ChooseMultiplier;
     public event Action<float> ChooseBet;
     
-    public float CurrentMultiplyer { get; private set; }
-    public float CurrentBet { get; private set; }
+    public float BetMultiplier { get; private set; }
+    public float BetAmount { get; private set; }
     
     public float CruiserDistance { get; private set; }
 
@@ -38,24 +38,24 @@ public class ZoneManager : MonoBehaviour {
 
 
     public void ChangeBet(float newBet) {
-        CurrentBet = newBet;
-        ChooseBet?.Invoke(CurrentBet);
-        _moneyCube.SetMoneyAmount(CurrentBet,false);
+        BetAmount = newBet;
+        ChooseBet?.Invoke(BetAmount);
+        _moneyCube.SetMoneyAmount(BetAmount,false);
     }
 
 
-    public void ChangeMultiplyer(float newMultiplyer) {
-        if (newMultiplyer < 0) {
+    public void ChangeMultiplier(float newMultiplier) {
+        if (newMultiplier < 0) {
             Debug.Log("Множитель не может быть < 0");
             return;
         }
-        CurrentMultiplyer = newMultiplyer;
+        BetMultiplier = newMultiplier;
 
-        if (newMultiplyer == 0) {
+        if (newMultiplier == 0) {
             return;
         }
 
-        CruiserDistance = CurrentMultiplyer * _cruiserBaseSpawnDistance;
+        CruiserDistance = BetMultiplier * _cruiserBaseSpawnDistance;
         Vector3 newCruiserSpawnPos = new Vector3(
             Random.Range(_cruiserSpawnDistanceX.From, _cruiserSpawnDistanceX.To), 
             0f, 
@@ -65,9 +65,9 @@ public class ZoneManager : MonoBehaviour {
         Debug.Log($"Крейсер на {CruiserDistance}м");
         
         newCruiserSpawnPos = _levelBounds.RecalculateCruiserY();
-        _moneyCube.SetMoneyAmount(CurrentBet*CurrentMultiplyer);
+        _moneyCube.SetMoneyAmount(BetAmount * BetMultiplier);
         _boostSpawner.SpawnBoosts(newCruiserSpawnPos);
-        ChooseMultiplyer?.Invoke(CurrentMultiplyer);
+        ChooseMultiplier?.Invoke(BetMultiplier);
     }
 
 

@@ -14,6 +14,9 @@ public class HelpInstaller: MonoInstaller {
         TutorialBind();
         
         Container.Bind<ObjectPoolManager>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<NumberFormatter>().AsSingle();
+        
+        
     }
 
     private void BindMoneyVisualLogic() {
