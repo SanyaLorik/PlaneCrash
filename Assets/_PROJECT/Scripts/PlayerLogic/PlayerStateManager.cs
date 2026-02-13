@@ -61,14 +61,14 @@ public class PlayerStateManager : MonoBehaviour {
         Vector3 origin = transform.position;
  
         if (Physics.Raycast(origin, Vector3.down,  _distanceCheck, _cruiserMask)) {
-            Debug.Log("Попали!");
-            Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinY}, игрок в {transform.position.y}" );
+            // Debug.Log("Попали!");
+            // Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinY}, игрок в {transform.position.y}" );
             ChangePlayerState(PlayerState.Cruisered);
             return;
         }
         if (transform.position.y <= _levelBounds.MinY + _distanceCheck) {
-            Debug.Log("Упали");
-            Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinY}, игрок в {transform.position.y}" );
+            // Debug.Log("Упали");
+            // Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinY}, игрок в {transform.position.y}" );
             ChangePlayerState(PlayerState.Grounded);
             return;
         }

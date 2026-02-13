@@ -33,7 +33,6 @@ public class BotStateManager : MonoBehaviour {
     
 
     public void ChangeBotState(BotState newState) {
-        Debug.Log("смена состояния бота: " + newState);
         _currentBotBehaviour?.Exit();
         
         State = newState;

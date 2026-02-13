@@ -85,6 +85,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6190819456242974869}
   m_SourcePrefab: {fileID: 100100000, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
+--- !u!114 &902022281237160824 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8260098498673445969, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
+  m_PrefabInstance: {fileID: 9089781023025917737}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d66d662139f20144b91e62d9e231e22e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DelayedTrigger
 --- !u!1 &3013469097610208932 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6337863765394426253, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}
@@ -104,6 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LuckyUpgrade
   _particleSystem: {fileID: 6003895624752388851}
   _id: 1
+  _delayedTrigger: {fileID: 902022281237160824}
 --- !u!198 &6003895624752388851 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 3276224611257726426, guid: 33ba36012f3c1654f916b042f4a10f89, type: 3}

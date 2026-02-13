@@ -40,37 +40,55 @@ public class LocationBuilder : MonoBehaviour {
         _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
     }
-    
+
+    private void Awake() {
+        _deletePoint = _distanceToSpawn; // берем в 2 раза больше просто чтоб при первом спавне не исчезало
+        _lastEnd = _firstPoint.position;
+        RespawnStartingLocation();
+    }
+
 
     private CancellationTokenSource _tokenSource;
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Flight) {
             _nextSpawnDistance = (_playerMovement.Transform.position.z + _distanceToSpawnNew);
-            _nextDestroyDistance =  (_playerMovement.Transform.position.z + _distanceToDestroyOld);
-            _lastEnd = _firstPoint.position;
+            _nextDestroyDistance =  _distanceToSpawn;
             _tokenSource = new CancellationTokenSource();
             ConstructRoutine(_tokenSource.Token).Forget();
         }
-        else if(state == PlayerState.Walking) {
+        else if (state == PlayerState.Grounded || state == PlayerState.Cruisered) {
+            // Чуть чуть сзади именно что
             _tokenSource?.Cancel();
-            HideCreations();
+            // За спиной игрока все удаляем
+            
+            _deletePoint = Mathf.Max(_playerMovement.Transform.position.z, _distanceToSpawn);
+            if (!Mathf.Approximately(_deletePoint, _distanceToSpawn)) {
+                HideCreationsBeforePlayerFall();
+                _lastEnd = _firstPoint.position;
+                // Спавн на спавненском
+                RespawnStartingLocation();
+            }
+        }
+        else if (state == PlayerState.Walking && !Mathf.Approximately(_deletePoint, _distanceToSpawn)) {
+            HideCreationsAfterPlayerFall();
         }
 
+    }
+
+    private void RespawnStartingLocation() {
+        _tokenSource?.Cancel();
+        _tokenSource = new CancellationTokenSource();
+        SpawnStartDistanceAsync(_tokenSource.Token).Forget();
     }
 
 
     private async UniTask ConstructRoutine(CancellationToken token) {
         // Первичный спавн обьектов
-        int indexDeletedModule = 0;
-        while (_lastEnd.z < _distanceToSpawn) {
-            SpawnNext();
-            await UniTask.Yield(token);
-        }
         while (!token.IsCancellationRequested) {
             if (_playerMovement == null || _playerMovement.Transform == null)
                 return;
-            var playerZ = _playerMovement.Transform.position.z;
+            float playerZ = _playerMovement.Transform.position.z;
             
             if (playerZ > _nextSpawnDistance) {
                 _nextSpawnDistance += _distanceToSpawnNew;
@@ -85,25 +103,63 @@ public class LocationBuilder : MonoBehaviour {
             }
             await UniTask.Yield(token);
         }
-
     }
 
-    private void HideCreations() {
-        Debug.Log("_createdModules.count : " + _createdModules.Count);
-        foreach (var module in _createdModules) {
-            _poolManager.ReturnObjectToPool(module.gameObject, PoolType.LocationObject);
-            module.HideObjects();
-        } 
-        _createdModules.Clear();
+    private async UniTask SpawnStartDistanceAsync(CancellationToken token) {
+        while (_lastEnd.z < _distanceToSpawn) {
+            SpawnNext();
+            await UniTask.Yield(token);
+        }
     }
+
+    private float _deletePoint;
+    private void HideCreationsBeforePlayerFall() {
+        Debug.Log($"Удаляем все штуки ДО {_deletePoint} их {_createdModules.Count} шт");
+
+        for (int i = _createdModules.Count - 1; i >= 0; i--) {
+            var module = _createdModules[i];
+
+            if (module.End.position.z < _deletePoint) {
+                Debug.Log("module.End.position.z = " + module.End.position.z);
+
+                module.HideObjects();
+                _poolManager.ReturnObjectToPool(module.gameObject, PoolType.LocationObject);
+
+                _createdModules.RemoveAt(i);
+            }
+        }
+    }
+
+    
+    private void HideCreationsAfterPlayerFall() {
+        Debug.Log($"Удаляем все штуки после {_deletePoint}");
+
+        for (int i = _createdModules.Count - 1; i >= 0; i--) {
+            var module = _createdModules[i];
+
+            if (module.End.position.z >= _deletePoint) {
+                module.HideObjects();
+                _poolManager.ReturnObjectToPool(module.gameObject, PoolType.LocationObject);
+
+                _createdModules.RemoveAt(i);
+            }
+        }
+    }
+
 
     private void HideOldestModule() {
-        var module = _createdModules[0];
+        LocationModule oldestModule = _createdModules[0];
+        foreach (var createdModule in _createdModules) {
+            if (createdModule.transform.position.z < oldestModule.transform.position.z) {
+                oldestModule = createdModule;
+            }
+        }
+        Debug.Log($"Удаление {oldestModule.transform.position.z} всего модулей {_createdModules.Count}");
+        Debug.Log($"Удаление {oldestModule.transform.position.z}");
 
-        module.HideObjects();
-        _poolManager.ReturnObjectToPool(module.gameObject, PoolType.LocationObject);
-
-        _createdModules.RemoveAt(0);
+        oldestModule.HideObjects();
+        _poolManager.ReturnObjectToPool(oldestModule.gameObject, PoolType.LocationObject);
+        _createdModules.Remove(oldestModule);
     }
     
     
@@ -122,6 +178,7 @@ public class LocationBuilder : MonoBehaviour {
         
         _lastEnd = module.End.position;
         module.GenerateProps();
+        Debug.Log("Создани модуля в " + module.transform.position.z);
     }
     
 

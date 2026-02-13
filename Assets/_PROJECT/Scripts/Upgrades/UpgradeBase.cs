@@ -8,6 +8,7 @@ using Zenject;
 public abstract class UpgradeBase : MonoBehaviour {
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] protected int _id;
+    [SerializeField] private DelayedTrigger _delayedTrigger;
     
     
     
@@ -69,19 +70,33 @@ public abstract class UpgradeBase : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider collider) {
-        if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
-            if (_bank.CanBuy(_currentPrice)) {
-                ApplyUpgrade();
-                var upgrade = _gameSave.GetSave.Upgrades.First(upgrade => upgrade.ID == _id);
-                upgrade.Level = _level;
-                _playerVsual.SetBought();
-                _gameSave.Save();
-            }
-            else {
-                Debug.LogWarning("Не хватает срэдств(");
-            }
+        if (!collider.TryGetComponent(out PlayerMovement _)) return;
+
+        _delayedTrigger.DelayedTriggerAction(TryBuy); 
+    }
+
+    
+    private void OnTriggerExit(Collider other) {
+        if (!other.TryGetComponent(out PlayerMovement _))
+            return;
+        _delayedTrigger.CancelTriggerAction();
+    }
+    
+    private void TryBuy() {
+        if (_bank.CanBuy(_currentPrice)) {
+            ApplyUpgrade();
+            var upgrade = _gameSave.GetSave.Upgrades.First(upgrade => upgrade.ID == _id);
+            upgrade.Level = _level;
+            _playerVsual.SetBought();
+            _gameSave.Save();
+        }
+        else {
+            Debug.LogWarning("Не хватает срэдств(");
         }
     }
+
+
+
 
     protected abstract void ApplyUpgrade();
     protected abstract void UpdateVisual();

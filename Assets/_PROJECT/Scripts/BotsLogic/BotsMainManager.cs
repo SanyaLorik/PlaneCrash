@@ -100,7 +100,6 @@ public class BotsMainManager : IInitializable, IDisposable {
    
     
     private void PlayerOnChangeState(PlayerState state){
-        Debug.Log("Смена состояния игрока: " + state);
         if (state == PlayerState.Flight) {
             SetFlightRandomBot();
         }

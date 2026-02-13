@@ -44,23 +44,19 @@ public class BotFlight : FlightObject, IBotBehaviour {
 
     
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
-        Debug.Log($"Установка буста боту, некст буст в {nextBoost}");
         CurrentCurve = curve;
         ExpandedTime = 0f;
         _initialPos = transform.position;
         TargetPos = nextBoost;
         float distance = Vector3.Distance(_initialPos, TargetPos);
         _countGetBoosts++;
-        Debug.Log("_countGetBoosts = " + _countGetBoosts);
         if (_countGetBoosts < _countBoostEquilizeSpeed) {
             // Чуть бырее
             SegmentDuration = distance / (_playerConfig.SpeedForce + _botSpeedCorrect);
-            Debug.Log($"SegmentDuration1 = {SegmentDuration}");
         }
         else {
             // Уравниваем скорость
             SegmentDuration = distance / _playerConfig.SpeedForce;
-            Debug.Log($"SegmentDuration2 = {SegmentDuration}");
         }
     }
     
@@ -136,7 +132,6 @@ public class BotFlight : FlightObject, IBotBehaviour {
 
 
     private async UniTask BotIsFalledAsync(CancellationToken token) {
-        Debug.Log("BotIsFalledAsync");
         RotateLocalXAsync(-80, token).Forget();
         await UniTask.Delay(2000, cancellationToken: token);
         EndFlight?.Invoke();

@@ -300,10 +300,10 @@ public class BoostSpawner : MonoBehaviour {
 
 
     public float CalculateFalseTargetDistance() {
-        Debug.Log($"CalculateFalseTargetDistance: MinimumFlightTime = {_upgradesCalculator.GetLuckyByLevel()}");
+        // Debug.Log($"CalculateFalseTargetDistance: MinimumFlightTime = {_upgradesCalculator.GetLuckyByLevel()}");
         float speed = _playerMovement.PlayerSpeed;
         float z = speed * _upgradesCalculator.GetLuckyByLevel();
-        Debug.Log($"Минимальная точка падения {z}м. ");
+        // Debug.Log($"Минимальная точка падения {z}м. ");
         if (z < BoostDistance.From) {
             Debug.LogWarning("Задано ооочень маленькое значение для зоны 45 секунд");
         }
