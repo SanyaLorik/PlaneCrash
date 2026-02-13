@@ -39,8 +39,9 @@ public class DelayedTrigger : MonoBehaviour {
 
         if (!token.IsCancellationRequested) {
             action?.Invoke();
+            _canvas.DisactiveSelf();
         }
-        _canvas.DisactiveSelf();
+
     }
 
 

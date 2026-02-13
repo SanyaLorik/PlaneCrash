@@ -90,7 +90,8 @@ public class BotFlight : FlightObject, IBotBehaviour {
     
     private async UniTaskVoid BotFlightCycleAsync(CancellationToken token) {
         float currentY = 20f;
-        float minY = _levelBounds.MinY + _boostSpawner.YMinUpBoostCorrect;
+        // Чуть выше пола
+        float minY = _levelBounds.MinY + 10f;
         while (currentY > minY && !token.IsCancellationRequested) {
             FlightLogic();
             currentY = transform.position.y;
