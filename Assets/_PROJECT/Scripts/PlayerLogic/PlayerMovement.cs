@@ -288,6 +288,7 @@ public class PlayerMovement : FlightObject {
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
         if (!ObjectGetAllow) return;
 
+        _visual.SetBoosted();
         CurrentCurve = curve;
         ExpandedTime = 0f;
         IsBusted = true;

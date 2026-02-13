@@ -22,8 +22,8 @@ public class BoostSpawner : MonoBehaviour {
     
     [SerializeField] private float _xOffset;
 
-    [SerializeField] private float _yMinCorrect = 5f;
-    
+    [field: SerializeField] public float YMinUpBoostCorrect { get; private set;  } = 5f;
+
     [Header("До и после зоны кол-во бустов, From > To")]
     [SerializeField] private PairedValue<int> _countTrueWays;
     [SerializeField] private int _countFalseWays;
@@ -71,15 +71,11 @@ public class BoostSpawner : MonoBehaviour {
     }
 
 
-    public List<Boost> GetRandomWay(float trueChance) {
+    public Boost GetRandomFirstBoost(float trueChance) {
         if (Random.value > trueChance) {
-            return _falseWays[Random.Range(0, _falseWays.Count)];
+            return _falseWays[Random.Range(0, _falseWays.Count)][0];
         }
-        List<Boost> trueList = _trueWaysBeforeZone[Random.Range(0, _trueWaysBeforeZone.Count)];
-        if (_trueWaysAfterZone.Count > 0) {
-            trueList.AddRange(_trueWaysAfterZone[Random.Range(0, _trueWaysAfterZone.Count)]);
-        }
-        return trueList;
+        return _trueWaysBeforeZone[Random.Range(0, _trueWaysBeforeZone.Count)][0];
     }   
     
     public List<Boost> GetAllBoosts() {
@@ -238,7 +234,7 @@ public class BoostSpawner : MonoBehaviour {
         foreach (float zPos in spawnPoints) {
             float deltaY = Random.Range(_yDelta.From, _yDelta.To);
             currentY += deltaY;
-            currentY = Mathf.Clamp(currentY, _levelBounds.MinY + _yMinCorrect, _levelBounds.MaxY);
+            currentY = Mathf.Clamp(currentY, _levelBounds.MinY + YMinUpBoostCorrect, _levelBounds.MaxY);
             
             Vector3 spawnPosition = new Vector3(
                 Random.Range(_levelBounds.LeftX + _xOffset,_levelBounds.RightX - _xOffset), 

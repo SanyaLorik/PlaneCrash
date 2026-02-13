@@ -68,12 +68,16 @@ public class LocationBuilder : MonoBehaviour {
             await UniTask.Yield(token);
         }
         while (!token.IsCancellationRequested) {
-            if (_playerMovement.Transform.position.z > _nextSpawnDistance) {
+            if (_playerMovement == null || _playerMovement.Transform == null)
+                return;
+            var playerZ = _playerMovement.Transform.position.z;
+            
+            if (playerZ > _nextSpawnDistance) {
                 _nextSpawnDistance += _distanceToSpawnNew;
                 SpawnNext();
             }
 
-            if (_playerMovement.Transform.position.z > _nextDestroyDistance) {
+            if (playerZ > _nextDestroyDistance) {
                 _nextDestroyDistance += _distanceToDestroyOld;
                 if (_createdModules.Count > 0) {
                     HideOldestModule();

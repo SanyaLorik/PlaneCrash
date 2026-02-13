@@ -7127,7 +7127,7 @@ Transform:
   m_GameObject: {fileID: 354620162}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23860,7 +23860,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _xOffset: 10
-  _yMinCorrect: 6
+  <YMinUpBoostCorrect>k__BackingField: 5
   _countTrueWays:
     <From>k__BackingField: 3
     <To>k__BackingField: 2
@@ -24397,6 +24397,73 @@ MonoBehaviour:
   _boostProgress:
     <From>k__BackingField: 0.3
     <To>k__BackingField: 0.9
+--- !u!1001 &899768445
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2103805099}
+    m_Modifications:
+    - target: {fileID: 2255769692134045186, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+      propertyPath: m_Name
+      value: BoostParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253035496065262036, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253035496065262036, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253035496065262036, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253035496065262036, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253035496065262036, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253035496065262036, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253035496065262036, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253035496065262036, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253035496065262036, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253035496065262036, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+--- !u!4 &899768446 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4253035496065262036, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+  m_PrefabInstance: {fileID: 899768445}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &899768447 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5069474599891564246, guid: c77b161b1d3bddd459e361e980daf736, type: 3}
+  m_PrefabInstance: {fileID: 899768445}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &907506287 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3a55333a8618fbb4db687c902bfac9cf, type: 3}
@@ -29062,8 +29129,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.9999999, z: 70.59016}
-  m_Center: {x: 0, y: 0, z: 34.79508}
+  m_Size: {x: 1, y: 0.9999999, z: 71.47798}
+  m_Center: {x: 0, y: 0, z: 34.351166}
 --- !u!23 &1106075285
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30738,15 +30805,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1203204627}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.52, z: 0.16}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5200027, z: 0.1600005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1406358074}
   - {fileID: 7046013066251128255}
   - {fileID: 2046730147}
-  m_Father: {fileID: 1824038463}
+  m_Father: {fileID: 2103805099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1203204629
 MonoBehaviour:
@@ -44431,7 +44498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6861167293607587675, guid: 461201e8882e77f42afb2baa65d2d6be, type: 3}
       propertyPath: m_Name
-      value: Dizzles
+      value: DizzlesParticle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -48092,7 +48159,6 @@ Transform:
   - {fileID: 909948780}
   - {fileID: 2103805099}
   - {fileID: 855751500}
-  - {fileID: 1203204628}
   - {fileID: 143453488}
   m_Father: {fileID: 699255799}
   m_LocalEulerAnglesHint: {x: -80, y: 0, z: 0}
@@ -54462,7 +54528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5009654817438741041, guid: 5cbfffe72a9a42241bf057f7926a5f17, type: 3}
       propertyPath: m_Name
-      value: Sparks
+      value: SparksParticle
       objectReference: {fileID: 0}
     - target: {fileID: 7480944793818342282, guid: 5cbfffe72a9a42241bf057f7926a5f17, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55261,9 +55327,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 899768446}
   - {fileID: 432014297}
   - {fileID: 609532784}
   - {fileID: 353014076}
+  - {fileID: 1203204628}
   m_Father: {fileID: 1824038463}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2103805100
@@ -55281,7 +55349,8 @@ MonoBehaviour:
   _dizzyPS: {fileID: 609532786}
   _dizzyDuration: 5
   _upgradePS: {fileID: 432014299}
-  _teleportParticle: {fileID: 432014299}
+  _teleportPS: {fileID: 432014299}
+  _boostPS: {fileID: 899768447}
 --- !u!114 &2103805101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56811,7 +56880,7 @@ PrefabInstance:
       objectReference: {fileID: 646641120}
     - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
       propertyPath: _baseAmount
-      value: 1000
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
       propertyPath: _bottomPoint

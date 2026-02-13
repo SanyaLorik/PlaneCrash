@@ -15,12 +15,18 @@ public class PlayerVisual : MonoBehaviour {
     [Header("Покупка")]
     [SerializeField] private ParticleSystem _upgradePS;
     
-    [Header("Покупка")]
-    [SerializeField] private ParticleSystem _teleportParticle;
+    [Header("Телепорт")]
+    [SerializeField] private ParticleSystem _teleportPS;
     
+    [Header("Бустинг")]
+    [SerializeField] private ParticleSystem _boostPS;
     
     private CancellationTokenSource _tokenSource;
 
+    
+    
+    
+    
     private void Start() {
         StopDizzy();
     }
@@ -43,9 +49,13 @@ public class PlayerVisual : MonoBehaviour {
     }
     
     public void TeleportParticles() {
-        _teleportParticle.Play();
+        _teleportPS.Play();
     }
-     
+
+    public void SetBoosted() {
+        _boostPS.Play();
+    }
+    
     
     private void StopDizzy() {
         _dizzyPS.Stop();

@@ -399,8 +399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dfdaf35b5031d146a7db0f121b490f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BotFlightLogic
-  _countBoostEquilizeSpeed: 3
-  _botSpeedCorrect: 10
+  _countBoostEquilizeSpeed: 5
+  _botSpeedCorrect: 14
   _flightPosition: {x: -2.078169, y: 10.221079, z: -5.649}
   _botModelForRotate: {fileID: 973615598179476012}
   _trueWayChance: 0.3
