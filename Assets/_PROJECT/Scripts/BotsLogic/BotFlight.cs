@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 public class BotFlight : FlightObject, IBotBehaviour {
     [SerializeField] private int _countBoostEquilizeSpeed;
     [SerializeField] private float _botSpeedCorrect;
-    [SerializeField] private Vector3 _flightPosition;
+    [SerializeField] private Transform _flightPosition;
     [SerializeField] private Transform _botModelForRotate;
     [Range(0,1), SerializeField] private float _trueWayChance;
     [SerializeField] private float _fallingTime;
@@ -89,15 +89,19 @@ public class BotFlight : FlightObject, IBotBehaviour {
     }
     
     private async UniTaskVoid BotFlightCycleAsync(CancellationToken token) {
-        float currentY = 20f;
+        float currentY = 2000f;
         // Чуть выше пола
         float minY = _levelBounds.MinY + 10f;
+        Debug.Log("Бот в " + transform.position.y);
+        Debug.Log("minY = " + minY);
         while (currentY > minY && !token.IsCancellationRequested) {
             FlightLogic();
             currentY = transform.position.y;
             await UniTask.WaitForFixedUpdate(token);
         }
         Debug.Log("Выход из цикла полёта: ");
+        Debug.Log("Бот в " + transform.position.y);
+        Debug.Log("minY = " + minY);
         
         // Чутка подождать пока полежит
         await BotIsFalledAsync(token);
@@ -140,7 +144,7 @@ public class BotFlight : FlightObject, IBotBehaviour {
 
 
     private void TpNearPlayer() {
-        Vector3 flightPosition = _flightPosition;
+        Vector3 flightPosition = _flightPosition.position;
         flightPosition.x += Random.Range(-7, 7);
         transform.position = flightPosition;
     }

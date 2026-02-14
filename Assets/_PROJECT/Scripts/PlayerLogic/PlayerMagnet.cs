@@ -18,7 +18,7 @@ public class PlayerMagnet : MonoBehaviour {
     
     private CancellationTokenSource _tokenSource;
     
-    private BoxCollider _collider;
+    [SerializeField] private BoxCollider _collider;
     
     private PlayerStateManager _playerStateManager; 
     private IPlayerStatsReadOnly _playerStats;
@@ -33,25 +33,25 @@ public class PlayerMagnet : MonoBehaviour {
     public void Init(PlayerStateManager playerStateManager, IPlayerStatsReadOnly playerStats, UpgradesCalculator upgradesCalculator) {
         _upgradesCalculator = upgradesCalculator;
         _playerStateManager = playerStateManager;
-        _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
-
         _playerStats = playerStats;
-        _playerStats.ChangeStats += PlayerStatsOnChangeStats;
     }
 
 
     private Vector3 _maxColliderSize;
     private Vector3 _defaultColliderSize;
-    private void Awake() {
-        _collider =  GetComponent<BoxCollider>();
-        _defaultColliderSize  = _collider.size;
-       
+
+
+    private void OnEnable() {
+        _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
+        _playerStats.ChangeStats += PlayerStatsOnChangeStats;
     }
 
     private void Start() {
         CalculateColliderMaxScale();
         SetColiderInHead();
         PlayerStatsOnChangeStats();
+        _defaultColliderSize  = _collider.size;
+        
     }
 
 
@@ -59,12 +59,11 @@ public class PlayerMagnet : MonoBehaviour {
         if (_magnetLevel != _playerStats.MagnetLevel) {
             // Перерасчет если изменился + 
             _magnetLevel = _playerStats.MagnetLevel;
-
+        
             _collider.size = _upgradesCalculator.GetMagnetSizeByLevel(_defaultColliderSize, _maxColliderSize);
             Debug.Log("Collider Size = " + _collider.size);
             SetColiderInHead();
         }
-  
     }
 
 
@@ -84,7 +83,7 @@ public class PlayerMagnet : MonoBehaviour {
         if (state == PlayerState.Flight) {
             _collider.enabled = true;
             _tokenSource = new CancellationTokenSource();
-
+        
             MonitoringTargets(_tokenSource.Token).Forget();
         }
         else {
