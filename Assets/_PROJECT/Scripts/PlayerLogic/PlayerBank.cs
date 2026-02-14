@@ -39,8 +39,6 @@ public class PlayerBank : MonoBehaviour {
         _gameSave.Save();
     }
 
-
-
     
 
 
@@ -56,7 +54,6 @@ public class PlayerBank : MonoBehaviour {
         _playerCapital += amount;
         MoneyCollect?.Invoke(amount);
     }
-    
     
     
     

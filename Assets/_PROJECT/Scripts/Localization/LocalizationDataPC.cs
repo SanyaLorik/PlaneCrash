@@ -21,6 +21,7 @@ public class LocalizationDataPC : LocalizationData {
     
     [Header("UI")]
     public string PlayerBalanceTemplate;
+    public string OpenButton;
    
     
     [Header("Tasks")]

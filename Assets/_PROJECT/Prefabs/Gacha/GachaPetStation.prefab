@@ -126,6 +126,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PetStationView
   _customTrigger: {fileID: 7758395808831209304}
+  _config: {fileID: 11400000, guid: a73016fac212ae848bc2f961d7c05749, type: 2}
+  _views:
+  - Icon: {fileID: 7625453646051617083}
+    Percentage: {fileID: 6029979848344645267}
+  - Icon: {fileID: 6466546487191248855}
+    Percentage: {fileID: 29104241644591716}
+  - Icon: {fileID: 8108316429027260144}
+    Percentage: {fileID: 6581596310762160158}
+  _price: {fileID: 4909910641486849295}
 --- !u!1 &277810023351264591
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +147,7 @@ GameObject:
   - component: {fileID: 1723023474924189783}
   - component: {fileID: 29104241644591716}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Percentage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,8 +227,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.6
-  m_fontSizeBase: 0.6
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -720,7 +729,7 @@ GameObject:
   - component: {fileID: 2636739437583340058}
   - component: {fileID: 6029979848344645267}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Percentage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -773,7 +782,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 30%
+  m_text: 30,333%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -800,8 +809,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.6
-  m_fontSizeBase: 0.6
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1161,7 +1170,7 @@ GameObject:
   - component: {fileID: 4279849700801045583}
   - component: {fileID: 6581596310762160158}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Percentage3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1241,8 +1250,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.6
-  m_fontSizeBase: 0.6
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

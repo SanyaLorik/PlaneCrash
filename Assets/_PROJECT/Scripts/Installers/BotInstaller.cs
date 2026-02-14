@@ -12,7 +12,7 @@ public class BotInstaller: MonoInstaller {
         
         Container.BindInterfacesAndSelfTo<BotsMainManager>().AsSingle().NonLazy();
 
-        Container.Bind<BotsManagerConfig>().FromScriptableObject(_botsManagerConfig).AsSingle().NonLazy();;
+        Container.Bind<BotsManagerConfig>().FromScriptableObject(_botsManagerConfig).AsSingle().NonLazy();
         
         
         Container.Bind<BotStateManager>()
