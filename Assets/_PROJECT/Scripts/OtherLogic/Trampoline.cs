@@ -11,16 +11,15 @@ public class Trampoline : MonoBehaviour {
     [SerializeField] private float _rewardForDistance = 10f; 
     
     private PlayerStateManager _playerStateManager;
-    private PlayerBank _bank;
     private float _jumpForceCurrent;
+    [Inject]  private PlayerBank _bank;
     [Inject] private Money2dSpawner _money2dSpawner;
+    [Inject] private UpgradesCalculator _upgradesCalculator;
 
     [Inject]
-    private void Init(PlayerStateManager playerStateManager, PlayerBank bank) {
+    private void Init(PlayerStateManager playerStateManager) {
         _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
-
-        _bank = bank;
     }
 
     private void Awake() {
@@ -61,7 +60,7 @@ public class Trampoline : MonoBehaviour {
         }
         float distance =  player.position.y - startY;
         print($"Старт координата: {startY}, конечная: {player.position.y}, дистанция: {distance}" );
-        _bank.AddMoney(GetMoneyReward(distance));
+        _bank.AddMoney(GetMoneyReward(distance) * _upgradesCalculator.GetUpgradeMultiplierByLevel());
         // _money2dSpawner.SpawnOneMoneyNearPlayer();
         _money2dSpawner.SpawnOneMoneyInPoint(transform.position);
         

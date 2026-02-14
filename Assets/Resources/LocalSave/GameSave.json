@@ -1,25 +1,55 @@
 {
-    "Money": 996,
+    "Money": 35127,
     "Upgrades": [
         {
             "Level": 15,
-            "ID": 0
+            "Id": 0
         },
         {
             "Level": 3,
-            "ID": 2
+            "Id": 0
         },
         {
             "Level": 3,
-            "ID": 1
+            "Id": 0
         },
         {
             "Level": 3,
-            "ID": 4
+            "Id": 0
         },
         {
             "Level": 1,
-            "ID": 3
+            "Id": 0
+        },
+        {
+            "Level": 1,
+            "Id": 3
+        },
+        {
+            "Level": 1,
+            "Id": 4
+        },
+        {
+            "Level": 1,
+            "Id": 2
+        },
+        {
+            "Level": 1,
+            "Id": 1
+        }
+    ],
+    "Pets": [
+        {
+            "Id": 2,
+            "Count": 5
+        },
+        {
+            "Id": 1,
+            "Count": 4
+        },
+        {
+            "Id": 0,
+            "Count": 2
         }
     ],
     "TutorialPassed": true

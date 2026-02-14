@@ -37,6 +37,7 @@ public class PetOpenView : MonoBehaviour {
     private void Start() {
         _openButtonText.text = _localization.OpenButton;
         _openButton.onClick.AddListener(OpenLogic);
+        _canvas.DisactiveSelf();
     }
     
     public void ShowOpenPetView(PetChance pet) {

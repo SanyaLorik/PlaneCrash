@@ -38,16 +38,16 @@ public abstract class UpgradeBase : MonoBehaviour {
 
     protected void Awake() {
         _visual = GetComponent<UpgradeItemVisual>();
-        bool exist = _gameSave.GetSave.Upgrades.Any(upgrade => upgrade.ID == _id);
+        bool exist = _gameSave.GetSave.Upgrades.Any(upgrade => upgrade.Id == _id);
         if (!exist) {
             _gameSave.GetSave.Upgrades.Add(new UpgradeData {
-                ID = _id,
+                Id = _id,
                 Level = 1,
             });
             _gameSave.Save();
         }
         else {
-            _level = _gameSave.GetSave.Upgrades.First(upgrade => upgrade.ID == _id).Level;
+            _level = _gameSave.GetSave.Upgrades.First(upgrade => upgrade.Id == _id).Level;
         }
         LoadLevel();
     }
@@ -85,7 +85,7 @@ public abstract class UpgradeBase : MonoBehaviour {
     private void TryBuy() {
         if (_bank.CanBuy(_currentPrice)) {
             ApplyUpgrade();
-            var upgrade = _gameSave.GetSave.Upgrades.First(upgrade => upgrade.ID == _id);
+            var upgrade = _gameSave.GetSave.Upgrades.First(upgrade => upgrade.Id == _id);
             upgrade.Level = _level;
             _playerVsual.SetBought();
             _gameSave.Save();

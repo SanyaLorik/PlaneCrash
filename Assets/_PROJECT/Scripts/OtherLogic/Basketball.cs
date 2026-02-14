@@ -37,14 +37,12 @@ public class Basketball : MonoBehaviour {
     
     private Vector3 _hoopPosition;
     private Vector3 _ballPositionSpawn;
-    private PlayerBank _bank;
 
 
     [Inject] private Money2dSpawner _money2dSpawner;
-    [Inject]
-    private void Init(PlayerBank bank) {
-        _bank = bank;
-    }
+    [Inject] private PlayerBank _bank;
+    [Inject] private UpgradesCalculator _upgradesCalculator;
+
     
     
     private void Awake() {
@@ -165,7 +163,7 @@ public class Basketball : MonoBehaviour {
     
     private void GetMoneyReward() {
         print("Награда за попадание: " + _rewardForScore);
-        _bank.AddMoney(_currentReward);
+        _bank.AddMoney(_currentReward * _upgradesCalculator.GetUpgradeMultiplierByLevel());
         _money2dSpawner.SpawnOneMoneyInPoint(transform.position);
         _confettiSpawner.SpawnConfetti();
         _currentReward+= _rewardForScore;

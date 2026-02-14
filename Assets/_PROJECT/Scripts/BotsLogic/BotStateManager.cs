@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -9,6 +10,8 @@ public enum BotState {
 
 
 public class BotStateManager : MonoBehaviour {
+    [SerializeField] private List<Transform> _petsPoints;
+    
     private BotFlight _botFlight;
     private BotWander _botWander;
     private BotMonolog _botMonolog;
@@ -17,6 +20,9 @@ public class BotStateManager : MonoBehaviour {
 
     public BotState State { get; private set; }
     public Rigidbody Rb { get; private set; }
+    
+    
+    [Inject] private PetsManager _petsManager;
     
     private void Awake() {
         _botFlight = GetComponent<BotFlight>();
@@ -28,9 +34,11 @@ public class BotStateManager : MonoBehaviour {
         State = BotState.Wandering;
         Rb = GetComponent<Rigidbody>();
     }
- 
-    
-    
+
+
+    private void Start() {
+        _petsManager.SetRandomPets(_petsPoints);
+    }
 
     public void ChangeBotState(BotState newState) {
         _currentBotBehaviour?.Exit();

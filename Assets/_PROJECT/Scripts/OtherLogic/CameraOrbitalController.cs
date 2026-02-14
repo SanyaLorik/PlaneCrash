@@ -20,7 +20,6 @@ public class CameraOrbitalController : MonoBehaviour {
     private bool _allowRotation = true;
     
     
-    
     [Inject]
     private void Init(PlayerStateManager playerStateManager) {
         _playerStateManager = playerStateManager;

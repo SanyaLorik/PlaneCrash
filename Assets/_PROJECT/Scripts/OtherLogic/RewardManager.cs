@@ -58,7 +58,7 @@ public class RewardManager : MonoBehaviour {
         _finalCavasPosition = _canvasBody.anchoredPosition;
         _startCavasPosition = new Vector2(_finalCavasPosition.x, -Screen.height/2);
 
-
+        _canvasBody.anchoredPosition = _startCavasPosition;
         _titleText.text = _localization.FlightResultTitle;
         _buttonText.text = _localization.FlightComebackButton;
     }

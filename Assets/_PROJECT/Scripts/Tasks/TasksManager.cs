@@ -64,6 +64,8 @@ public class TasksManager : MonoBehaviour {
     [Inject] private ZoneManager _zoneManager;
     [Inject] private NumberFormatter _formatter; 
     [Inject] private LocalizationDataPC _localization; 
+    [Inject] private UpgradesCalculator _upgradesCalculator;
+
 
     [Inject]
     private void Init(PlayerStateManager playerStateManager, PlayerMovement playerMovement, PlayerBank bank) {
@@ -200,7 +202,7 @@ public class TasksManager : MonoBehaviour {
         TaskInfo taskInfo = _taskTypeToInfoDictionary[taskType];
         TaskVisual taskVisual = _taskTypeToVisualDictionary[taskType];
 
-        _bank.AddMoney(taskInfo.TaskMoney);
+        _bank.AddMoney(taskInfo.TaskMoney * _upgradesCalculator.GetUpgradeMultiplierByLevel());
         _money2dSpawner.SpawnOneMoneyInPoint(transform.position);
         
         

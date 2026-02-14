@@ -7,6 +7,7 @@ using Zenject;
 public class UpgradesCalculator {
     [Inject] private IPlayerStatsReadOnly _playerStats;
     [Inject] private UpgradeConfig _config;
+    [Inject] private PetsManager _petsManager;
     
 
     public float GetLuckyByLevel(bool thisLevel = true) {
@@ -31,7 +32,9 @@ public class UpgradesCalculator {
         if (thisLevel) {
             return _config.MagneteUpgrade.BaseValue * Mathf.Pow(_config.MagneteUpgrade.K,_playerStats.MagnetLevel);
         }
-        return _config.MagneteUpgrade.BaseValue * Mathf.Pow(_config.MagneteUpgrade.K,_playerStats.MagnetLevel + 1);
+        return _config.MagneteUpgrade.BaseValue * 
+               Mathf.Pow(_config.MagneteUpgrade.K,_playerStats.MagnetLevel + 1)
+               * GetPetMultiplyer();
     }
     
     
@@ -57,6 +60,14 @@ public class UpgradesCalculator {
             return _playerStats.DefenceLevel - 1;
         }
         return _playerStats.DefenceLevel;
+    }
+
+    public float GetPetMultiplyer() {
+        float multiplyer = 1f;
+        foreach (var pet in _petsManager.PetsInstances) {
+            multiplyer *= pet.PetInfo.Modifier;
+        }
+        return multiplyer;
     }
 
 
