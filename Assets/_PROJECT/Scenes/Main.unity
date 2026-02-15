@@ -5948,6 +5948,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 1886579657, guid: da82c208373455549b869bc9bfaba043, type: 3}
+    - target: {fileID: 2754141193862462490, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4428192436971235696, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
       propertyPath: m_Name
       value: Skill_1
@@ -58995,6 +58999,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -1021625692, guid: da82c208373455549b869bc9bfaba043, type: 3}
+    - target: {fileID: 4359452892966271709, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.98
+      objectReference: {fileID: 0}
     - target: {fileID: 4428192436971235696, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
       propertyPath: m_Name
       value: Skill_2
@@ -94111,6 +94119,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 2025041490, guid: da82c208373455549b869bc9bfaba043, type: 3}
+    - target: {fileID: 2754141193862462490, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359452892966271709, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.95
+      objectReference: {fileID: 0}
     - target: {fileID: 4428192436971235696, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
       propertyPath: m_Name
       value: Skill_3
