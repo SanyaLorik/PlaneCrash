@@ -121,8 +121,8 @@ public class TrapsManager : MonoBehaviour {
         float safeZone = _boostsSpawner.CalculateFalseTargetDistance();
         
         
-        float startZCoord = Mathf.Max(_zoneManager.CruiserDistance * (zone.PercentageStart), safeZone);
-        float endZCoord = _zoneManager.CruiserDistance * (zone.PercentageEnd);
+        float startZCoord = Mathf.Max(_zoneManager.DistanceToCruise * zone.PercentageStart, safeZone);
+        float endZCoord = _zoneManager.DistanceToCruise * (zone.PercentageEnd);
 
         if (startZCoord >= endZCoord) {
             Debug.LogWarning($"Сейф дистанция дольше зоны {zone.ZoneName} ловушек на ней немаэ ");
@@ -177,7 +177,7 @@ public class TrapsManager : MonoBehaviour {
     
     private async UniTask SpawnFakeTraps() {
         // _trapObject
-        float endZCoord = _zoneManager.CruiserDistance * (_zonesInfo[0].PercentageEnd);
+        float endZCoord = _zoneManager.DistanceToCruise * (_zonesInfo[0].PercentageEnd);
         endZCoord = Math.Max(endZCoord, _boostsSpawner.CalculateFalseTargetDistance());
 
         foreach (var boost in _boosts) {

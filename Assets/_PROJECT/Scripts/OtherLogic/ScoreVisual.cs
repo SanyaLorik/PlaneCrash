@@ -8,7 +8,6 @@ using Zenject;
 
 public class ScoreVisual : MonoBehaviour {
     [SerializeField] private GameObject _canvas;
-    [SerializeField] private Transform _cruiser;
     [SerializeField] private TMP_Text _flightTime;
     [SerializeField] private TMP_Text _totalDistanceText;
     
@@ -25,6 +24,7 @@ public class ScoreVisual : MonoBehaviour {
     private float _endProgressX;
     private float _pointY;
     
+    [Inject] private ZoneManager _zoneManager;
     
     [Inject]
     public void Init(PlayerStateManager playerStateManager) {
@@ -53,6 +53,7 @@ public class ScoreVisual : MonoBehaviour {
     private void OnPlayerStateChange(PlayerState state) {
         if (state == PlayerState.Flight) {
             _canvas.SetActive(true);
+            _cruiserDistanceZ = _zoneManager.DistanceToCruise;
             FlightScoreLogic();
         }
         else if (state == PlayerState.Grounded) {
@@ -74,15 +75,17 @@ public class ScoreVisual : MonoBehaviour {
     
     
     private Coroutine _flightRoutine;
-    public void FlightScoreLogic() {
-        _totalDistanceText.text = _cruiser.position.z + "m";
+    private float _cruiserDistanceZ;
+    
+    private void FlightScoreLogic() {
+        _totalDistanceText.text = _cruiserDistanceZ + "m";
         _flightRoutine = StartCoroutine(ShowDistanceRoutine());
     }
 
     private IEnumerator ShowDistanceRoutine() {
         float timer = 0f;
         while (_playerStateManager.CurrentState == PlayerState.Flight) {
-            float progress = _playerStateManager.CurrentPlayerDistance / _cruiser.position.z;
+            float progress = _playerStateManager.CurrentPlayerDistance / _cruiserDistanceZ;
             _progressBar.fillAmount = progress;
 
             // Visual
@@ -92,7 +95,7 @@ public class ScoreVisual : MonoBehaviour {
             _pointer.anchoredPosition = newPosition;
             
             _currentDistanceText.text = $"{_playerStateManager.CurrentPlayerDistance:F2}m";
-            _flightTime.text = $"Время полёта: {timer:F2}c";
+            // _flightTime.text = $"Время полёта: {timer:F2}c";
             
             timer += Time.deltaTime;
             yield return null; 
@@ -114,7 +117,7 @@ public class ScoreVisual : MonoBehaviour {
         Vector3 newPosition = _pointer.anchoredPosition;
         newPosition.x = newX;
         _pointer.anchoredPosition = newPosition;
-        _currentDistanceText.text = $"{Math.Round(_cruiser.position.z)}m";
+        _currentDistanceText.text = $"{Math.Round(_cruiserDistanceZ)}m";
     }
 
 

@@ -23,9 +23,7 @@ public class RewardManager : MonoBehaviour {
     
     
     [SerializeField] private float _distanceRewardDivide = 2f;
-    
     [SerializeField] private Button _backButton;
-    [SerializeField] private Transform _cruiser;
 
 
     private Vector2 _startCavasPosition; 
@@ -82,12 +80,12 @@ public class RewardManager : MonoBehaviour {
             *
             (_zoneManager.BetAmount * _zoneManager.BetMultiplier) 
             + 
-            _zoneManager.CruiserDistance; 
+            _zoneManager.DistanceToCruise; 
         
                 
         _playerBank.AddMoney(reward);
 
-        ShowBaseReward(reward);
+        ShowBaseReward(reward, true);
         
         // Множитель ставки
         _betMultiplier.text = string.Format(
@@ -111,17 +109,14 @@ public class RewardManager : MonoBehaviour {
         _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.BetAmount);
         _playerBank.AddMoney(reward);
         
-        ShowBaseReward(reward);
+        ShowBaseReward(reward, false);
 
         _betMultiplier.DisactiveSelf();
         _bet.DisactiveSelf();
     }
 
-    private void ShowBaseReward(float reward) {
-        _distanceText.text = string.Format(
-            _localization.DistanceTemplate,
-            $"{_playerStateManager.CurrentPlayerDistance:F0}"
-        );
+    private void ShowBaseReward(float reward, bool cruisered) {
+     
         
         // Выигрышь
         _rewardText.text = string.Format(
@@ -133,6 +128,17 @@ public class RewardManager : MonoBehaviour {
         _upgradeMultiplier.text = string.Format(
             _localization.UpgradeMultiplierTemplate,
             $"{_upgradesCalculator.GetUpgradeMultiplierByLevel():F2}"
+        );
+        if (cruisered) {
+            _distanceText.text = string.Format(
+                _localization.DistanceTemplate,
+                $"{_zoneManager.DistanceToCruise:F0}"
+            );
+            return;
+        }
+        _distanceText.text = string.Format(
+            _localization.DistanceTemplate,
+            $"{_playerStateManager.CurrentPlayerDistance:F0}"
         );
     }
 

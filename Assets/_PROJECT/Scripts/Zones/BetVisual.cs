@@ -89,7 +89,7 @@ public class BetVisual : MonoBehaviour {
         
         _distanceVisual.text = string.Format(
             _localization.DistanceTemplate,
-            $"{_zoneManager.CruiserDistance}"
+            $"{_zoneManager.DistanceToCruise}"
         );
         
     }

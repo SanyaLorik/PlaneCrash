@@ -18,12 +18,15 @@ public class ZoneManager : MonoBehaviour {
     public float BetMultiplier { get; private set; }
     public float BetAmount { get; private set; }
     
-    public float CruiserDistance { get; private set; }
-
+    public float CruiserSpawnDistance { get; private set; } 
+    public float DistanceToCruise { get; private set; } 
 
     private LevelBounds _levelBounds;
     private BoostSpawner _boostSpawner;
 
+    
+    [Inject] private PlayerStateManager _playerStateManager;
+    
     [Inject]
     public void Init(BoostSpawner boostSpawner, LevelBounds levelBounds) {
         _boostSpawner = boostSpawner;
@@ -55,14 +58,18 @@ public class ZoneManager : MonoBehaviour {
             return;
         }
 
-        CruiserDistance = BetMultiplier * _cruiserBaseSpawnDistance;
+        CruiserSpawnDistance = BetMultiplier * _cruiserBaseSpawnDistance + _playerStateManager.StartFlightPosition;
+        DistanceToCruise = BetMultiplier * _cruiserBaseSpawnDistance;
+        
         Vector3 newCruiserSpawnPos = new Vector3(
             Random.Range(_cruiserSpawnDistanceX.From, _cruiserSpawnDistanceX.To), 
             0f, 
-            CruiserDistance);
+            CruiserSpawnDistance);
         
         _cruiser.position = newCruiserSpawnPos;
-        Debug.Log($"Крейсер на {CruiserDistance}м");
+        Debug.Log($"Крейсер на {DistanceToCruise}м");
+        Debug.Log($"Реальная точка в {CruiserSpawnDistance}м");
+        Debug.Log($"Игрок стартанул в {_playerStateManager.StartFlightPosition}м");
         
         newCruiserSpawnPos = _levelBounds.RecalculateCruiserY();
         _moneyCube.SetMoneyAmount(BetAmount * BetMultiplier);

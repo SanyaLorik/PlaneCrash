@@ -12,13 +12,19 @@ public class PlayerStateManager : MonoBehaviour {
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private Transform _playerFootPoint;
     [SerializeField] private JumpParticlesController _jumpParticlesController;
-
+    [SerializeField] private Transform _startFlightPoint;
 
     private LevelBounds _levelBounds;
     
     public event Action<PlayerState> ChangeState;
     public event Action LandedInSpawn;
+    
+    
     public float StartFlightPosition { get; private set; }
+
+    private void Awake() {
+        StartFlightPosition = _startFlightPoint.position.z;
+    }
 
 
     [Inject]
@@ -28,7 +34,7 @@ public class PlayerStateManager : MonoBehaviour {
     
     
     public float CurrentPlayerDistance
-        => CurrentState == PlayerState.Walking ? 0f : transform.position.z-StartFlightPosition;
+        => CurrentState == PlayerState.Walking ? 0f : transform.position.z - StartFlightPosition;
     
 
     public PlayerState CurrentState { get; private set; } = PlayerState.Walking;
@@ -49,6 +55,7 @@ public class PlayerStateManager : MonoBehaviour {
         if (newState  == PlayerState.Grounded) {
             // Debug.Log("EndFlightPosition " + transform.position.z);
         }
+        Debug.Log("CurrentPlayerDistance: " + CurrentPlayerDistance);
         
         ChangeState?.Invoke(CurrentState);
         

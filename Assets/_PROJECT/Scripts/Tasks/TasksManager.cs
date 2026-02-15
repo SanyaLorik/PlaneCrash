@@ -91,7 +91,6 @@ public class TasksManager : MonoBehaviour {
     private void OnTriggerEnter(Collider collider) {
         if (collider.TryGetComponent(out PlayerMovement player)) {
             UpdateCompleteTasks();
-            _taskCompletePS.Play();
         }
     }
 
@@ -187,10 +186,15 @@ public class TasksManager : MonoBehaviour {
     
 
     private void UpdateCompleteTasks() {
+        bool taskComplete = false;
         foreach (var taskVisual in _taskTypeToVisualDictionary) {
             if (_taskTypeToVisualDictionary[taskVisual.Key].TaskIsComplete) {
                 RefreshCompleteTask(taskVisual.Key);
+                taskComplete = true;
             }
+        }
+        if (taskComplete) {
+            _taskCompletePS.Play();
         }
     }
 
