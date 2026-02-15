@@ -65,17 +65,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\u041D\u0423 \u043F\u0440\u0438\u0432\u0435\u0442"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+  m_sharedMaterial: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -382,8 +382,7 @@ MonoBehaviour:
   _timeToStay:
     <From>k__BackingField: 6
     <To>k__BackingField: 10
-  _moneyCube: {fileID: 0}
-  _betZoneCube: {fileID: 0}
+  _pointsToWalks: []
   _jumpParticlesController: {fileID: 1011767767924799366}
   _landParticleController: {fileID: 2706502204186433788}
   _walkingParticles: {fileID: 4653993950270494915}
@@ -402,7 +401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BotFlightLogic
   _countBoostEquilizeSpeed: 5
   _botSpeedCorrect: 14
-  _flightPosition: {x: -2.078169, y: 10.221079, z: -5.649}
+  _flightPosition: {fileID: 0}
   _botModelForRotate: {fileID: 973615598179476012}
   _trueWayChance: 0.3
   _fallingTime: 10
