@@ -11,10 +11,9 @@ public class RangVisual : MonoBehaviour {
     [SerializeField] private RectTransform _playerIcon;
     [SerializeField] private RangUnit _rangPrefab;
 
-    [SerializeField] private float _planeZ;
-    [SerializeField] private float _planeX;
     [SerializeField] private GameObject _planePrefab;
     [SerializeField] private Transform _planesParent;
+    [SerializeField] private Transform _moneyCubeBottomPoint;
 
     
     [Header("Рекорд игрока")]
@@ -49,11 +48,11 @@ public class RangVisual : MonoBehaviour {
 
     private void SetPlanes() {
         foreach (var rang in _config.Rangs) {
-            float planeY = _moneyCube.GetCubeHeight(rang.Money) - _planesParent.transform.position.y;
-            Vector3 position = new Vector3(_planeX, planeY, _planeZ);
+            float planeY = _moneyCube.GetCubeHeight(rang.Money) - _moneyCubeBottomPoint.position.y;
+            Vector3 position = new Vector3(_planesParent.transform.position.x, planeY, _planesParent.transform.position.z);
             // Debug.Log($"Для ранга: {rang.Name} высота будет: {planeY}");
-            GameObject plane = Instantiate(_planePrefab, _planesParent);
-            plane.transform.localPosition = position;
+            GameObject plane = Instantiate(_planePrefab, position, Quaternion.identity, _planesParent);
+            // plane.transform.position = position;
         }
         
     }

@@ -1,6 +1,8 @@
 using DG.Tweening;
 using NaughtyAttributes;
+using SanyaBeerExtension;
 using TMPro;
+using Unity.Mathematics.Geometry;
 using UnityEngine;
 using Zenject;
 
@@ -15,17 +17,22 @@ public class MoneyCube : MonoBehaviour {
     [SerializeField] private Transform _bottomPoint; // точка, на которой должен стоять низ куба
     [SerializeField] private float _maxSide = 7f; 
     [SerializeField] private float _baseSide = 1f;
-    [SerializeField] private TMP_Text _textCount;
     [SerializeField] private float _baseAmount = 10000f;
-
-    [SerializeField] private bool _editSpecialBadTexture;
-    [SerializeField, ShowIf(nameof(_editSpecialBadTexture))] private float _sideTextureMultiplier = 2f;
-    [SerializeField, ShowIf(nameof(_editSpecialBadTexture))] private int _indexSpecialBadTexture;
-
-    private MoneyRadiusSpawn _moneyRadiusSpawn;
+    [SerializeField] private TMP_Text _textCount;
+    
+    
+    [Header("Настройка верхнего тайлинга")]
+    [SerializeField] private Vector2 _upSideTiling;
+    [SerializeField] private int _upSideMaterialSlot;
+   
+    
+   
+    
+    
     
     [Inject] private NumberFormatter _formatter; 
 
+    private MoneyRadiusSpawn _moneyRadiusSpawn;
     private void Awake() {
         _moneyRadiusSpawn = GetComponent<MoneyRadiusSpawn>();
     }
@@ -43,12 +50,17 @@ public class MoneyCube : MonoBehaviour {
 
         Material[] mats = rend.materials;
 
-        foreach (int id in moneyMaterialSlots)
-            mats[id].mainTextureScale = finalTiling;
-        if (_editSpecialBadTexture) {
-            mats[_indexSpecialBadTexture].mainTextureScale = finalTiling * _sideTextureMultiplier;
+        foreach (int id in moneyMaterialSlots) {
+            Vector2 tiling = finalTiling;
+
+            if (id == _upSideMaterialSlot) {
+                tiling.x = Mathf.Min(tiling.x, _upSideTiling.x);
+                tiling.y = Mathf.Min(tiling.y, _upSideTiling.y);
+            }
+
+            mats[id].mainTextureScale = tiling;
         }
-        
+
         rend.materials = mats;
     }
 
