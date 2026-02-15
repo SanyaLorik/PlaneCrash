@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using SanyaBeerExtension;
@@ -12,8 +13,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private PairedValue<float> _timeToStay;
     
-    [SerializeField] private Transform _moneyCube;
-    [SerializeField] private Transform _betZoneCube;
+    [SerializeField] private List<Transform> _pointsToWalks;
     
     [Header("Партиклы")]
     [SerializeField] private JumpParticlesController _jumpParticlesController;
@@ -148,6 +148,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         _landParticleController.Play();
     }
 
+    
 
     private Vector3 ChooseNextTarget() {
         float rv = Random.value;
@@ -155,16 +156,16 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
             return _playerMovement.transform.position;
 
         // Иначе выбираем случайный куб
-        return Random.value > 0.5f ? GetTargetPointNearCube(_moneyCube) : GetTargetPointNearCube(_betZoneCube);
+        return GetTargetPoint(_pointsToWalks[Random.Range(0, _pointsToWalks.Count)]);
     }
     
-    private Vector3 GetTargetPointNearCube(Transform cube) {
-        Vector3 size = cube.localScale;
+    private Vector3 GetTargetPoint(Transform point) {
+        Vector3 size = point.localScale;
 
         float offsetX = Random.Range(-size.x/2f - 2f, size.x/2f + 2f);
         float offsetZ = Random.Range(-size.z/2f - 2f, size.z/2f + 2f);
 
-        Vector3 target = cube.position + new Vector3(offsetX, 0f, offsetZ);
+        Vector3 target = point.position + new Vector3(offsetX, 0f, offsetZ);
 
         NavMeshHit hit;
         if (NavMesh.SamplePosition(target, out hit, 1f, NavMesh.AllAreas)) {
@@ -172,7 +173,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         }
 
         // Если не нашли на навмеш, просто центр куба
-        return cube.position;
+        return point.position;
     }
 
     

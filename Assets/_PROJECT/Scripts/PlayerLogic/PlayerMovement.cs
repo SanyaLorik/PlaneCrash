@@ -201,7 +201,7 @@ public class PlayerMovement : FlightObject {
         float checkDist = moveStep.magnitude + _config.WallOffset;
 
         // === STEP LOGIC ===
-        Vector3 lowOrigin  = Rb.position + Vector3.up * 0.05f;
+        Vector3 lowOrigin  = Rb.position + Vector3.up * _lowOriginMultiplier;
         Vector3 highOrigin = Rb.position + Vector3.up * _config.StepHeight;
 
         bool hitLow = Physics.Raycast(
@@ -231,6 +231,8 @@ public class PlayerMovement : FlightObject {
         // если hitLow && hitHigh - это стена, никуда не идём
         WalkRotate(move);
     }
+
+    [SerializeField] private float _lowOriginMultiplier;
 
 
     private void WalkRotate(Vector3 move) {
