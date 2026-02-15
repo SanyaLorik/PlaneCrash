@@ -5,11 +5,11 @@ public class MagnetUpgrade : UpgradeBase {
     
     protected override void ApplyUpgrade() {
         _bank.Buy(_currentPrice);
-        _playerStats.UpdateMagnetLevel();
         Debug.Log("Покупка MagniteUpgrade: " + _playerStats.MagnetLevel);
         
         _currentPrice *= UpgradeInfo.PriceMultiplier;
         _level++;
+        _playerStats.UpdateMagnetLevel(_level);
 
         UpdateVisual();
         CheckColor();
@@ -28,8 +28,11 @@ public class MagnetUpgrade : UpgradeBase {
 
     protected override void LoadLevel() {
         UpgradeInfo = _config.MagneteUpgrade;
-        _currentPrice = UpgradeInfo.StartPrice;
+        _level = _gameSave.GetSave.GetUpgradeLevel(UpgradeInfo.Id);
         _playerStats.UpdateMagnetLevel(_level, false);
+        
+        _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
+        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, _level);
         UpdateVisual();
     }
 }

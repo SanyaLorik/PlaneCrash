@@ -1,15 +1,24 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.iOS;
 
 
 [Serializable]
 public struct UpgradeInfo {
+    public UpgradeType UpgradeType;
+    public int Id;
     public float K;
     public float BaseValue;
     public float StartPrice;
     public float PriceMultiplier;
+}
+
+[Serializable]
+public enum UpgradeType {
+    Multiplier,
+    Magnet,
+    Lucky,
+    Predict,
+    Defence
 }
 
 
@@ -20,7 +29,5 @@ public class UpgradeConfig : ScriptableObject {
     public UpgradeInfo MagneteUpgrade;
     public UpgradeInfo DefenceUpgrade;
     public UpgradeInfo PredictionUpgrade;
-
-
     public float MagneteSizeGrowSpeed;
 }

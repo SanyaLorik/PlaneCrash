@@ -13,26 +13,36 @@ MonoBehaviour:
   m_Name: UpgradeConfig
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeConfig
   XMultiplierUpgrade:
+    UpgradeType: 0
+    Id: 0
     K: 1.1
     BaseValue: 1
-    StartPrice: 2
+    StartPrice: 500
     PriceMultiplier: 2
   LuckyUpgrade:
+    UpgradeType: 2
+    Id: 2
     K: 1.1
     BaseValue: 5
-    StartPrice: 2
+    StartPrice: 500
     PriceMultiplier: 2
   MagneteUpgrade:
+    UpgradeType: 1
+    Id: 1
     K: 1.1
     BaseValue: 1
-    StartPrice: 1
+    StartPrice: 500
     PriceMultiplier: 1
   DefenceUpgrade:
+    UpgradeType: 4
+    Id: 3
     K: 1
     BaseValue: 0
-    StartPrice: 2
+    StartPrice: 500
     PriceMultiplier: 2
   PredictionUpgrade:
+    UpgradeType: 3
+    Id: 4
     K: 20
     BaseValue: 40
     StartPrice: 500

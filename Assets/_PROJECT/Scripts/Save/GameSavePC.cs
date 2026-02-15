@@ -27,13 +27,39 @@ public class GameSavePC : GameSaveBase {
         return pet.Count;
     }
     
+    public int AddNewUpgrade(int id) {
+        bool exist = Upgrades.Any(upgrade => upgrade.Id == id);
+        if (!exist) {
+            Upgrades.Add(new UpgradeData() {
+                Id = id,
+                Level = 1,
+            });
+            Debug.Log(1);
+            return 1;
+        }
+        var upgrade = Upgrades.First(upgrade => upgrade.Id == id);
+        upgrade.Level++;
+        Debug.Log(upgrade.Level);
+        return upgrade.Level;
+    }
+
+    public int GetUpgradeLevel(int id) {
+        bool exist = Upgrades.Any(upgrade => upgrade.Id == id);
+        if (exist) {
+            return Upgrades.First(upgrade => upgrade.Id == id).Level;
+        }
+        return 1;
+    }
+        
+    
+    
 }
 
 
 [Serializable]
 public class UpgradeData {
-    public int Level = 1;
     public int Id = 0;
+    public int Level = 1;
 }
 
 

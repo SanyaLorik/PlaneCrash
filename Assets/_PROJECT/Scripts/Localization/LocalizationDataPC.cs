@@ -35,6 +35,7 @@ public class LocalizationDataPC : LocalizationData {
     
     public TutorTranslate[]  TutorTranslates;
     public RangName[]  RangName;
+    public UpgradeName[]  UpgradeName;
     public string[] BotsPhrases;
     
     
@@ -66,6 +67,15 @@ public class LocalizationDataPC : LocalizationData {
         return null;
     }
     
+    public string GetUpgradeName(UpgradeType type) {
+        foreach (var upgradeName in UpgradeName) {
+            if (type == upgradeName.Type) {
+                return upgradeName.Name;
+            }
+        }
+        return string.Empty;
+    }
+    
     
 }
 
@@ -88,4 +98,14 @@ public class RangName {
     public int Id;
     public string Name;
 }
+
+
+[Serializable]
+public class UpgradeName {
+    public UpgradeType Type;
+    public string Name;
+}
+
+
+
 

@@ -5,7 +5,6 @@ public class LuckyUpgrade : UpgradeBase {
     protected override void ApplyUpgrade() {
         _bank.Buy(_currentPrice);
         
-        _playerStats.UpdateLuckyLevel();
         Debug.Log("Покупка LuckyUpgrade: " + _playerStats.LuckyLevel);
         
         
@@ -13,6 +12,7 @@ public class LuckyUpgrade : UpgradeBase {
         
         _currentPrice *= UpgradeInfo.PriceMultiplier;
         _level++;
+        _playerStats.UpdateLuckyLevel(_level);
 
         UpdateVisual();
         CheckColor();
@@ -24,14 +24,17 @@ public class LuckyUpgrade : UpgradeBase {
             _upgradesCalculator.GetLuckyByLevel(), 
             _upgradesCalculator.GetLuckyByLevel(false), 
             _currentPrice,  
-            "", 
+            "м", 
             false);
     }
 
     protected override void LoadLevel() {
         UpgradeInfo = _config.LuckyUpgrade;
-        _currentPrice = UpgradeInfo.StartPrice;
+        _level = _gameSave.GetSave.GetUpgradeLevel(UpgradeInfo.Id);
         _playerStats.UpdateLuckyLevel(_level, false);
+        
+        _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
+        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, _level);
         UpdateVisual();
     }
 }

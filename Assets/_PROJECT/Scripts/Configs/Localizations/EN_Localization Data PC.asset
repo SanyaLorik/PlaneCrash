@@ -85,6 +85,17 @@ MonoBehaviour:
     Name: Diamond
   - Id: 5
     Name: Legend
+  UpgradeName:
+  - Type: 0
+    Name: Multiplier
+  - Type: 1
+    Name: Magnet
+  - Type: 2
+    Name: Lucky
+  - Type: 3
+    Name: Predict
+  - Type: 4
+    Name: Defence
   BotsPhrases:
   - hey
   - hey there

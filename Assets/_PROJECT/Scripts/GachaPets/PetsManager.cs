@@ -28,6 +28,7 @@ public class PetsManager : MonoBehaviour {
     
     private Dictionary<PetItemConfig, int> _petToCountDict = new();
     public List<InstancePets> PetsInstances { get; private set; } = new();
+    public List<InstancePets> PetsInstancesForBots { get; private set; } = new();
 
     private void Start() {
         LoadDataToDict();
@@ -62,13 +63,14 @@ public class PetsManager : MonoBehaviour {
         for (int i = 0; i < randomSelection.Count; i++) {
             PetItemConfig pet = randomSelection[i];
             GameObject instance = Instantiate(pet.Prefab, points[i].position, Quaternion.identity, points[i]);
-            PetsInstances.Add(new InstancePets {
+            PetsInstancesForBots.Add(new InstancePets {
                 PetInstance = instance,
                 PetInfo = pet
             });
             if (Random.value >= _chanceToSpawnBotPet) break;
             yield return null;
         }
+        PetsInstancesForBots.Clear();
     }
 
 

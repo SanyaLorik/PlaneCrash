@@ -7,11 +7,14 @@ using Zenject;
 
 public class UpgradeItemVisual : MonoBehaviour {
     private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
-    [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _levelVisual;
     [SerializeField] private TMP_Text _xCurrentVisual;
     [SerializeField] private TMP_Text _xNextVisual;
+    
     [SerializeField] private TMP_Text _priceVisual;
+    
+    
+    [SerializeField] private TMP_Text _titleVisual;
     [SerializeField] private float _brightnessMultiply = 5f;
 
     private Material _triggerObjectMat;
@@ -25,7 +28,10 @@ public class UpgradeItemVisual : MonoBehaviour {
         _triggerObjectMat.EnableKeyword("_EMISSION");
     }
 
-
+    public void SetNameText(string text) {
+        _titleVisual.text = text;
+    }
+    
     public void UpdateData(int level, float xCurrent, float xNext, float price, string mesure, bool needRound) {
         // Debug.Log($"level {level} xCurrent {xCurrent} xNext {xNext} price {price}");
         _levelVisual.text = level.ToString();
@@ -40,17 +46,19 @@ public class UpgradeItemVisual : MonoBehaviour {
     }
 
     public void SetRed() {
-        _triggerObjectMat.color = Color.red;
-        Color emission = Color.red * _brightnessMultiply; // множитель яркости
-        _triggerObjectMat.SetColor(EmissionColor, emission);
-        // Debug.Log("Установка красным");
+        // _triggerObjectMat.color = Color.red;
+        // Color emission = Color.red * _brightnessMultiply; // множитель яркости
+        // _triggerObjectMat.SetColor(EmissionColor, emission);
+        // // Debug.Log("Установка красным");
+        _priceVisual.color = Color.red;
     }
     
     public void SetGreen() {
-        _triggerObjectMat.color = Color.green;
-        Color emission = Color.green * _brightnessMultiply; // множитель яркости
-        _triggerObjectMat.SetColor(EmissionColor, emission);
-        // Debug.Log("Установка зеленым");
+        // _triggerObjectMat.color = Color.green;
+        // Color emission = Color.green * _brightnessMultiply; // множитель яркости
+        // _triggerObjectMat.SetColor(EmissionColor, emission);
+        // // Debug.Log("Установка зеленым");
+        _priceVisual.color = Color.white;
     }
 
 }

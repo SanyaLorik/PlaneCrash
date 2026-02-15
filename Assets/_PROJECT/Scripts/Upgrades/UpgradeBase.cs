@@ -2,13 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Architecture_M;
-using UnityEngine;
+using UnityEngine;using UnityEngine.InputSystem.iOS;
 using Zenject;
+
+
+
+
 
 public abstract class UpgradeBase : MonoBehaviour {
     [SerializeField] private ParticleSystem _particleSystem;
-    [SerializeField] protected int _id;
     [SerializeField] private DelayedTrigger _delayedTrigger;
+    [SerializeField] protected UpgradeType UpgradeType;
     
     
     
@@ -24,9 +28,9 @@ public abstract class UpgradeBase : MonoBehaviour {
     
     [Inject] protected UpgradeConfig _config;
     [Inject] protected UpgradesCalculator _upgradesCalculator;
-    [Inject] private PlayerVisual _playerVsual;
-    [Inject] IGameSave<GameSavePC> _gameSave;
-    
+    [Inject] protected PlayerVisual _playerVisual;
+    [Inject] protected IGameSave<GameSavePC> _gameSave;
+    [Inject] protected LocalizationDataPC _localization;
     
     
     [Inject]
@@ -36,19 +40,8 @@ public abstract class UpgradeBase : MonoBehaviour {
         _bank.BankChanged += BankOnBankChanged;
     }
 
-    protected void Awake() {
+    protected void Start() {
         _visual = GetComponent<UpgradeItemVisual>();
-        bool exist = _gameSave.GetSave.Upgrades.Any(upgrade => upgrade.Id == _id);
-        if (!exist) {
-            _gameSave.GetSave.Upgrades.Add(new UpgradeData {
-                Id = _id,
-                Level = 1,
-            });
-            _gameSave.Save();
-        }
-        else {
-            _level = _gameSave.GetSave.Upgrades.First(upgrade => upgrade.Id == _id).Level;
-        }
         LoadLevel();
     }
 
@@ -61,12 +54,9 @@ public abstract class UpgradeBase : MonoBehaviour {
     protected void CheckColor() {
         if (_bank.CanBuy(_currentPrice)) {
             _visual.SetGreen();
-            _particleSystem.Play();
-            
             return;
         }
         _visual.SetRed();
-        _particleSystem.Stop();
     }
 
     private void OnTriggerEnter(Collider collider) {
@@ -85,9 +75,9 @@ public abstract class UpgradeBase : MonoBehaviour {
     private void TryBuy() {
         if (_bank.CanBuy(_currentPrice)) {
             ApplyUpgrade();
-            var upgrade = _gameSave.GetSave.Upgrades.First(upgrade => upgrade.Id == _id);
-            upgrade.Level = _level;
-            _playerVsual.SetBought();
+            _particleSystem.Play();
+            _level = _gameSave.GetSave.AddNewUpgrade(UpgradeInfo.Id);
+            _playerVisual.SetBought();
             _gameSave.Save();
         }
         else {
