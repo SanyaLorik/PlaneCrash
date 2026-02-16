@@ -84,7 +84,6 @@ public class PetsManager : MonoBehaviour {
         _petToCountDict[pet] = count;
         _gameSave.Save();
         if (CheckPetsNeedUpdate(pet)) {
-            BuyPet?.Invoke();
             UpdatePets();
         }
     }
@@ -127,6 +126,8 @@ public class PetsManager : MonoBehaviour {
                 PetInfo = pet
             });
         }
+        BuyPet?.Invoke();
+        
     }
 
     private List<PetItemConfig> GetBestPets(Dictionary<PetItemConfig, int> petToCountDict) {
