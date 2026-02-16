@@ -35,18 +35,18 @@ public class RangVisual : MonoBehaviour {
         _playerBank = playerBank;
         _playerBank.BankChanged += PlayerBankOnBankChanged;
 
-        SetPlanes();
+        
     }
     
     private void Start() {
         CalculateMaxMoney();
         CalculateX();
-
         InstanceRangs();
-        
+        SetPlanes();
     }
 
     private void SetPlanes() {
+        Debug.Log("Установка рангов");
         foreach (var rang in _config.Rangs) {
             float planeY = _moneyCube.GetCubeHeight(rang.Money) - _moneyCubeBottomPoint.position.y;
             Vector3 position = new Vector3(_planesParent.transform.position.x, planeY, _planesParent.transform.position.z);

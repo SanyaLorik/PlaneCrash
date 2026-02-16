@@ -39,18 +39,16 @@ public class RewardManager : MonoBehaviour {
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private LocalizationDataPC _localization;
     [Inject] private NumberFormatter _formatter;
-    
     [Inject]
-    public void Init(PlayerStateManager playerStateManager, PlayerMovement playerMovement, IPlayerStatsReadOnly playerStats, ZoneManager zoneManager) {
+    public void Init(PlayerStateManager playerStateManager, PlayerMovement playerMovement, ZoneManager zoneManager) {
         _zoneManager = zoneManager;
         _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += OnStateChange;
         _playerMovement =  playerMovement;
-
     }
 
-    
-    
+  
+
     private void Start() {
         _backButton.onClick.AddListener(RewardAnimation);
         _finalCavasPosition = _canvasBody.anchoredPosition;
@@ -124,7 +122,7 @@ public class RewardManager : MonoBehaviour {
             $"{_formatter.ValuteFormatter(reward)}"
         );
         
-        // Множитель дистанции
+        // Множитель BuisnessBirds and Апгрейда
         _upgradeMultiplier.text = string.Format(
             _localization.UpgradeMultiplierTemplate,
             $"{_upgradesCalculator.GetUpgradeMultiplierByLevel():F2}"

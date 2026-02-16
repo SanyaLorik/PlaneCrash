@@ -1,56 +1,111 @@
+using System;
+using Architecture_M;
 using DG.Tweening;
 using NaughtyAttributes;
-using SanyaBeerExtension;
 using TMPro;
-using Unity.Mathematics.Geometry;
 using UnityEngine;
 using Zenject;
 
+[Serializable]
+public enum MoneyCubeType {
+    PlayerBank,
+    Bet
+}
+
+
 public class MoneyCube : MonoBehaviour {
-    [SerializeField] private Renderer rend;
+    [SerializeField] private MoneyCubeType _moneyCubeType;
+    [SerializeField, HideIf(nameof(IsBetCube))] private TMP_Text _cubeText;
+    [SerializeField] private Transform _bottomPoint; // точка низа куба
 
-    [SerializeField] private float tileWorldSize = 1f;
-    [SerializeField] private Vector2 tilingRatio = new Vector2(5f, 11f); // форма пачек
-    [SerializeField] private int[] moneyMaterialSlots = {0, 1}; // какие материалы — деньги
+    [Header("Настройка размеров ")]
+    [SerializeField] private float _scaleDivider = 2f; 
+    
+    
 
-
-    [SerializeField] private Transform _bottomPoint; // точка, на которой должен стоять низ куба
-    [SerializeField] private float _maxSide = 7f; 
+    [Header("Настройка размеров ")]
+    [SerializeField] private float _maxSide = 5f; 
     [SerializeField] private float _baseSide = 1f;
     [SerializeField] private float _baseAmount = 10000f;
-    [SerializeField] private TMP_Text _textCount;
     
+    
+    [Header("Настройка всего тайлинга ")]
+    [SerializeField] private Renderer _rend;
+    [SerializeField] private float _tileWorldSize = 1f;
+    [SerializeField] private Vector2 _tilingRatio = new Vector2(5f, 11f); // тайлинг пачек
+    [Header("Слоты кроме верхнего")]
+    [SerializeField] private int[] _moneyMaterialSlots = {0, 1}; // какие материалы — деньги
     
     [Header("Настройка верхнего тайлинга")]
     [SerializeField] private Vector2 _upSideTiling;
     [SerializeField] private int _upSideMaterialSlot;
+    [SerializeField] private MoneyRadiusSpawn _moneyRadiusSpawn;
    
-    
+    private bool IsBetCube => _moneyCubeType == MoneyCubeType.Bet;
    
-    
-    
-    
-    [Inject] private NumberFormatter _formatter; 
 
-    private MoneyRadiusSpawn _moneyRadiusSpawn;
-    private void Awake() {
-        _moneyRadiusSpawn = GetComponent<MoneyRadiusSpawn>();
+    [Inject] private NumberFormatter _formatter; 
+    [Inject] private LocalizationDataPC _localization; 
+    [Inject] IGameSave<GameSavePC> _gameSave;
+
+
+    private void Start() {
+        SetMoneyAmount(_gameSave.GetSave.Money);
     }
 
+    public float GetCubeHeight(float amount) {
+        Transform realTransform = transform; // сохраним временно
+        
+        Vector3 newScale = NewScale(amount);
+        transform.localScale = newScale;
+
+        if (_bottomPoint != null) {
+            Bounds b = _rend.bounds;
+            float deltaY = _bottomPoint.position.y - b.min.y;
+            transform.position += new Vector3(0, deltaY, 0);
+        }
+        float height = _rend.bounds.max.y;
+        transform.position = realTransform.position;
+        transform.localScale = realTransform.localScale;
+        return height;
+    }
+    
+    
+    public void SetMoneyAmount(float amount, bool updateMiniMoney = true) {
+        
+        
+        Vector3 newScale = NewScale(amount);
+        
+        transform.localScale = newScale;
+
+        if (_bottomPoint != null) {
+            Bounds b = _rend.bounds;
+            float deltaY = _bottomPoint.position.y - b.min.y;
+            transform.position += new Vector3(0, deltaY, 0);
+        }
+
+        if (updateMiniMoney) {
+            UpdateSpawnRadius();
+        }
+        UpdateTiling();
+        SetCubeHeighVisual();
+    }
+    
+    
     private void UpdateTiling() {
         Vector3 size = transform.localScale;
 
-        float baseX = size.x / tileWorldSize;
-        float baseY = size.y / tileWorldSize;
+        float baseX = size.x / _tileWorldSize;
+        float baseY = size.y / _tileWorldSize;
 
         Vector2 finalTiling = new Vector2(
-            Mathf.Round(baseX * tilingRatio.x),
-            Mathf.Round(baseY * tilingRatio.y)
+            Mathf.Round(baseX * _tilingRatio.x),
+            Mathf.Round(baseY * _tilingRatio.y)
         );
 
-        Material[] mats = rend.materials;
+        Material[] mats = _rend.materials;
 
-        foreach (int id in moneyMaterialSlots) {
+        foreach (int id in _moneyMaterialSlots) {
             Vector2 tiling = finalTiling;
 
             if (id == _upSideMaterialSlot) {
@@ -61,45 +116,17 @@ public class MoneyCube : MonoBehaviour {
             mats[id].mainTextureScale = tiling;
         }
 
-        rend.materials = mats;
+        _rend.materials = mats;
     }
 
-    public float GetCubeHeight(float amount) {
-        Transform realTransform = transform; // сохраним временно
-        
-        Vector3 newScale = NewScale(amount);
-        transform.localScale = newScale;
-
-        if (_bottomPoint != null) {
-            Bounds b = rend.bounds;
-            float deltaY = _bottomPoint.position.y - b.min.y;
-            transform.position += new Vector3(0, deltaY, 0);
-        }
-        float height = rend.bounds.max.y;
-        transform.position = realTransform.position;
-        transform.localScale = realTransform.localScale;
-        return height;
-    }
     
-    private Tween _tween;
-    public void SetMoneyAmount(float amount, bool updateMiniMoney = true) {
-        _textCount.text = _formatter.ValuteFormatter(amount);
-        
-        
-        Vector3 newScale = NewScale(amount);
-        
-        transform.localScale = newScale;
+    
+    
 
-        if (_bottomPoint != null) {
-            Bounds b = rend.bounds;
-            float deltaY = _bottomPoint.position.y - b.min.y;
-            transform.position += new Vector3(0, deltaY, 0);
+    private void SetCubeHeighVisual() {
+        if (!IsBetCube) {
+            _cubeText.text = _formatter.ValuteFormatter(transform.localScale.y / _scaleDivider);
         }
-
-        if (updateMiniMoney) {
-            UpdateSpawnRadius();
-        }
-        UpdateTiling();
     }
 
     private Vector3 NewScale(float amount) {

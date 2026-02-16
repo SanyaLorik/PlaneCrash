@@ -42,6 +42,9 @@ public class TasksManager : MonoBehaviour {
     [SerializeField] private TMP_Text _tableTitle;
     
     
+    [SerializeField] private DelayedTrigger _delayedTrigger;
+    
+    
     // Инфа по заданию и росту
     private readonly Dictionary<TaskType, TaskInfo> _taskTypeToInfoDictionary = new ();
     private readonly Dictionary<TaskType, TaskVisual> _taskTypeToVisualDictionary = new ();
@@ -91,6 +94,12 @@ public class TasksManager : MonoBehaviour {
     private void OnTriggerEnter(Collider collider) {
         if (collider.TryGetComponent(out PlayerMovement player)) {
             UpdateCompleteTasks();
+        }
+    }
+    
+    private void OnTriggerExit(Collider collider) {
+        if (collider.TryGetComponent(out PlayerMovement player)) {
+            _delayedTrigger.CancelTriggerAction();
         }
     }
 
@@ -189,7 +198,8 @@ public class TasksManager : MonoBehaviour {
         bool taskComplete = false;
         foreach (var taskVisual in _taskTypeToVisualDictionary) {
             if (_taskTypeToVisualDictionary[taskVisual.Key].TaskIsComplete) {
-                RefreshCompleteTask(taskVisual.Key);
+                _delayedTrigger.DelayedTriggerAction(() => RefreshCompleteTask(taskVisual.Key));
+                
                 taskComplete = true;
             }
         }

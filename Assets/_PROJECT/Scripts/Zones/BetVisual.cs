@@ -16,14 +16,16 @@ public class BetVisual : MonoBehaviour {
     private PlayerBank _bank;
     private ZoneManager _zoneManager;
     private IPlayerStatsReadOnly _playerStats;
+    private PetsManager _petsManager; 
     
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private NumberFormatter _formatter; 
     [Inject] private LocalizationDataPC _localization; 
+    
 
     
     [Inject]
-    public void Init(PlayerBank bank, PlayerStateManager playerStateManager, IPlayerStatsReadOnly playerStats, ZoneManager zoneManager) {
+    public void Init(PlayerBank bank, PlayerStateManager playerStateManager, IPlayerStatsReadOnly playerStats, ZoneManager zoneManager, PetsManager petsManager) {
         _zoneManager = zoneManager;
         _zoneManager.ChooseBet += ShowBet;
         _zoneManager.ChooseMultiplier += ShowMultiplier;
@@ -34,17 +36,26 @@ public class BetVisual : MonoBehaviour {
         _playerStateManager.ChangeState += OnChangeState;
         _playerStats = playerStats;
         _playerStats.ChangeStats += PlayerStatsOnChangeStats;
+
+        _petsManager = petsManager;
+        _petsManager.BuyPet += PetsManagerOnBuyPet;
+    }
+
+    private void PetsManagerOnBuyPet() {
+        Debug.Log("Новые питомцы!");
+        PlayerStatsOnChangeStats();
     }
 
     private void PlayerStatsOnChangeStats() {
         _playerXMultiplyer.text = string.Format(
             _localization.UpgradeMultiplierTemplate,
-            $"{_upgradesCalculator.GetUpgradeMultiplierByLevel():F2}"
+            $"{_upgradesCalculator.GetUpgradeMultiplierByLevel(true, true):F2}"
         );
     }
 
     private void Start() {
         PlayerStatsOnChangeStats();
+        OnChangeState(PlayerState.Walking);
     }
 
     private void OnChangeState(PlayerState state) {

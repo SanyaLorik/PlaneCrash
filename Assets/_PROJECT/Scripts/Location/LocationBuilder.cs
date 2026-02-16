@@ -178,7 +178,7 @@ public class LocationBuilder : MonoBehaviour {
         
         _lastEnd = module.End.position;
         module.GenerateProps();
-        Debug.Log("Создани модуля в " + module.transform.position.z);
+        // Debug.Log("Создани модуля в " + module.transform.position.z);
     }
     
 

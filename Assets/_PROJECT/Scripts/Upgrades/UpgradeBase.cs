@@ -13,6 +13,7 @@ public abstract class UpgradeBase : MonoBehaviour {
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private DelayedTrigger _delayedTrigger;
     [SerializeField] protected UpgradeType UpgradeType;
+    [SerializeField] protected UpgradeItemVisual _visual;
     
     
     
@@ -21,7 +22,6 @@ public abstract class UpgradeBase : MonoBehaviour {
     
     protected int _level = 1;
     protected float _currentPrice;
-    protected UpgradeItemVisual _visual;
     protected IPlayerStatsWritable _playerStats;
     protected PlayerBank _bank;
     
@@ -41,7 +41,6 @@ public abstract class UpgradeBase : MonoBehaviour {
     }
 
     protected void Start() {
-        _visual = GetComponent<UpgradeItemVisual>();
         LoadLevel();
     }
 

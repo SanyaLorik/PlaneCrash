@@ -31,8 +31,8 @@ public class TutorialCompiller : MonoBehaviour {
         foreach (var mission in _missions) {
             _diContainer.QueueForInject(mission);
         }
+        
         _isInjected = true;
-        _flightStopper.ActiveSelf();
     }
     
 
@@ -45,8 +45,10 @@ public class TutorialCompiller : MonoBehaviour {
     private async UniTaskVoid StartTutorial() {
         await UniTask.WaitWhile(() => !_isInjected);
         _lineToObjects.TutorialModeEnable();
+        _flightStopper.ActiveSelf();
         for (var i = 0; i < _missions.Count; i++) {
-            if (i  == _idMissionToAllowFlight) {
+            Debug.Log("Mission ID = " + i);
+            if (i == _idMissionToAllowFlight) {
                 _flightStopper.DisactiveSelf();
             }
             await _missions[i].RunAsync();

@@ -37,6 +37,7 @@ public class ZoneManager : MonoBehaviour {
 
     private void Start() {
         _moneyCube.SetMoneyAmount(0);
+        
     }
 
 

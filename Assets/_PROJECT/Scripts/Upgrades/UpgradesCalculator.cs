@@ -8,7 +8,19 @@ public class UpgradesCalculator {
     [Inject] private IPlayerStatsReadOnly _playerStats;
     [Inject] private UpgradeConfig _config;
     [Inject] private PetsManager _petsManager;
+
+
+    [Inject]
+    private void Init(PetsManager petsManager) {
+        _petsManager = petsManager;
+        petsManager.BuyPet += PetsManagerOnBuyPet;
+    }
+
     
+    private void PetsManagerOnBuyPet() {
+        _needRecalculate = true;
+    }
+
 
     public float GetLuckyByLevel(bool thisLevel = true) {
         if (thisLevel) {
@@ -18,11 +30,11 @@ public class UpgradesCalculator {
     }
 
 
-    public float GetUpgradeMultiplierByLevel(bool thisLevel = true) {
+    public float GetUpgradeMultiplierByLevel(bool thisLevel = true, bool forceUpdate = false) {
         if (thisLevel) {
-            return _config.XMultiplierUpgrade.BaseValue * Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel-1) * GetPetMultiplyer();;
+            return _config.XMultiplierUpgrade.BaseValue * Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel-1) * GetPetMultiplier(forceUpdate);
         }
-        return _config.XMultiplierUpgrade.BaseValue * Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel) * GetPetMultiplyer();;
+        return _config.XMultiplierUpgrade.BaseValue * Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel) * GetPetMultiplier(forceUpdate);
     } 
     
 
@@ -62,13 +74,20 @@ public class UpgradesCalculator {
         return _playerStats.DefenceLevel;
     }
 
-    private float GetPetMultiplyer() {
-        float multiplayer = 1f;
-        foreach (var pet in _petsManager.PetsInstances) {
-            multiplayer *= pet.PetInfo.Modifier;
+    private bool _needRecalculate = true;
+    private float _petMultiplier;
+    private float GetPetMultiplier(bool forceUpdate = false) {
+        Debug.Log(_needRecalculate + " " + forceUpdate);
+        if (!_needRecalculate && !forceUpdate) {
+            return _petMultiplier;
         }
-        Debug.Log($"{_petsManager.PetsInstances.Count} pets multiplayer = {multiplayer}");
-        return multiplayer;
+        _petMultiplier = 1f;
+        foreach (var pet in _petsManager.PetsInstances) {
+            _petMultiplier *= pet.PetInfo.Modifier;
+        }
+        Debug.Log($"{_petsManager.PetsInstances.Count} pets multiplayer = {_petMultiplier}");
+        _needRecalculate = false;
+        return _petMultiplier;
     }
 
 

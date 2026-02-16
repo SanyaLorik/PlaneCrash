@@ -34,8 +34,8 @@ public class CameraOrbitalController : MonoBehaviour {
             _allowRotation = false;
         }
 
-        else {
-            _cinemachineDecollider.enabled = true;
+        else if(state == PlayerState.Grounded || state == PlayerState.Cruisered){
+            // _cinemachineDecollider.enabled = true;
             _allowRotation = true;
         }
     }
@@ -89,6 +89,7 @@ public class CameraOrbitalController : MonoBehaviour {
         Cursor.visible = true;
     }
     
+    
     private void OrbitCamera() {
         // Читаем дельту движения мыши
         Vector2 delta = _mouse.delta.ReadValue();
@@ -101,12 +102,15 @@ public class CameraOrbitalController : MonoBehaviour {
         _orbitalFollow.HorizontalAxis.Value += mouseX;
         _orbitalFollow.VerticalAxis.Value -= mouseY; // Инвертируем Y
         
+ 
         // Ограничения
         _orbitalFollow.VerticalAxis.Value = Mathf.Clamp(
             _orbitalFollow.VerticalAxis.Value,
             _orbitalFollow.VerticalAxis.Range.x,
             _orbitalFollow.VerticalAxis.Range.y
         );
+        
+       
     }
 
     [SerializeField] private float _maxZoom;
