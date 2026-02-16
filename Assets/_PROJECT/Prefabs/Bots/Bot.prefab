@@ -380,12 +380,15 @@ MonoBehaviour:
   _eblaning: 1
   _rotationSpeed: 5
   _timeToStay:
-    <From>k__BackingField: 6
-    <To>k__BackingField: 10
+    <From>k__BackingField: 3
+    <To>k__BackingField: 5
   _pointsToWalks: []
   _jumpParticlesController: {fileID: 1011767767924799366}
   _landParticleController: {fileID: 2706502204186433788}
   _walkingParticles: {fileID: 4653993950270494915}
+  _timeToJumpSecDiapasone:
+    <From>k__BackingField: 1
+    <To>k__BackingField: 4
   _jumpDuration: 1
 --- !u!114 &5651165803298450137
 MonoBehaviour:

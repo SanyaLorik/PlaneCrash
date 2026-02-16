@@ -1,0 +1,177 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1942147768408261640
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1668935998703359361, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668935998703359361, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668935998703359361, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668935998703359361, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668935998703359361, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668935998703359361, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668935998703359361, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668935998703359361, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668935998703359361, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668935998703359361, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4498811110346982220, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_Name
+      value: GachaPetStation_Money
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 167416182329536836, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4847244946915308003}
+  m_SourcePrefab: {fileID: 100100000, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+--- !u!1 &1774749461737485644 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 167416182329536836, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 1942147768408261640}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4847244946915308003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774749461737485644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059ed70c5064bda4680b1052ae23f8e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetStationView
+  _customTrigger: {fileID: 8167487909902531408}
+  _config: {fileID: 11400000, guid: a73016fac212ae848bc2f961d7c05749, type: 2}
+  _views:
+  - Icon: {fileID: 8295886332293016883}
+    Percentage: {fileID: 5286433917716556443}
+  - Icon: {fileID: 4849863181421468639}
+    Percentage: {fileID: 1915300042472955500}
+  - Icon: {fileID: 7671147284828582648}
+    Percentage: {fileID: 4730296813239321622}
+  _price: {fileID: 6832071324852101383}
+--- !u!114 &1915300042472955500 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 29104241644591716, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 1942147768408261640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &4730296813239321622 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6581596310762160158, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 1942147768408261640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &4849863181421468639 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6466546487191248855, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 1942147768408261640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &5286433917716556443 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6029979848344645267, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 1942147768408261640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &6832071324852101383 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4909910641486849295, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 1942147768408261640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &7671147284828582648 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8108316429027260144, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 1942147768408261640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &8167487909902531408 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7758395808831209304, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 1942147768408261640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d66d662139f20144b91e62d9e231e22e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DelayedTrigger
+--- !u!114 &8295886332293016883 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7625453646051617083, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 1942147768408261640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image

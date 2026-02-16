@@ -77,7 +77,7 @@ public class PetsManager : MonoBehaviour {
     }
 
 
-    public void DoPurchase(PetItemConfig petItem) {
+    public void AddPet(PetItemConfig petItem) {
         // Сохранить 
         int count = _gameSave.GetSave.AddNewPet(petItem.Id);
         var pet = GetPetItemById(petItem.Id);

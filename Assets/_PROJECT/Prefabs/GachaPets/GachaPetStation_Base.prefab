@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7311945126393319392}
   - component: {fileID: 523663320656926010}
   - component: {fileID: 3280654325035896421}
-  - component: {fileID: 5389097151296323551}
   m_Layer: 1
   m_Name: TriggerForBuy
   m_TagString: Untagged
@@ -113,29 +112,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5389097151296323551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 167416182329536836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e98d00a223becb1429e88fedd2479f15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PetStationView
-  _petStationType: 1
-  _customTrigger: {fileID: 7758395808831209304}
-  _config: {fileID: 11400000, guid: a73016fac212ae848bc2f961d7c05749, type: 2}
-  _views:
-  - Icon: {fileID: 7625453646051617083}
-    Percentage: {fileID: 6029979848344645267}
-  - Icon: {fileID: 6466546487191248855}
-    Percentage: {fileID: 29104241644591716}
-  - Icon: {fileID: 8108316429027260144}
-    Percentage: {fileID: 6581596310762160158}
-  _price: {fileID: 4909910641486849295}
 --- !u!1 &277810023351264591
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,15 +179,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 30%
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
+  m_sharedMaterial: {fileID: 2830636965969884548, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294769916
+  m_fontColor: {r: 0.98742133, g: 0.98742133, b: 0.98742133, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -380,9 +356,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5626750603098381794}
   - {fileID: 2716447184520814809}
   - {fileID: 3859912563661736101}
+  - {fileID: 5626750603098381794}
   m_Father: {fileID: 1668935998703359361}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -554,7 +530,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1668935998703359361}
   m_Layer: 0
-  m_Name: GachaPetStation
+  m_Name: GachaPetStation_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -648,8 +624,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
+  m_sharedMaterial: {fileID: 2830636965969884548, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -785,15 +761,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 30,333%
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
+  m_sharedMaterial: {fileID: 2830636965969884548, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294769916
+  m_fontColor: {r: 0.98742133, g: 0.98742133, b: 0.98742133, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1226,15 +1202,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 30%
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
+  m_sharedMaterial: {fileID: 2830636965969884548, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294769916
+  m_fontColor: {r: 0.98742133, g: 0.98742133, b: 0.98742133, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1599,17 +1575,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76489bb24cbbdc646baddb3c0b48623a, type: 3}
---- !u!114 &7758395808831209304 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2605908281447598857, guid: 76489bb24cbbdc646baddb3c0b48623a, type: 3}
-  m_PrefabInstance: {fileID: 5728948332054557777}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d66d662139f20144b91e62d9e231e22e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DelayedTrigger
 --- !u!4 &8205753433616284470 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4495121714141613927, guid: 76489bb24cbbdc646baddb3c0b48623a, type: 3}
