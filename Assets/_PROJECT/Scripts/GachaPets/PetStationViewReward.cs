@@ -4,11 +4,14 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class PetStationViewReward : PetStationViewBase {
     [SerializeField] private int _timeToWaitSec;
     [SerializeField] private TMP_Text _timeToWaitText;
     [SerializeField] private Image _clock;
+
+    [Inject] private LocalizationDataPC _localization;
 
     private CancellationTokenSource _tokenSource;
 
@@ -26,7 +29,8 @@ public class PetStationViewReward : PetStationViewBase {
         while (!token.IsCancellationRequested && elapsedTimeSec < _timeToWaitSec) {
             await UniTask.WaitForSeconds(1, cancellationToken:token);
             elapsedTimeSec += 1;
-            _timeToWaitText.text = (_timeToWaitSec - elapsedTimeSec) + "сек";
+            ///_timeToWaitText.text = (_timeToWaitSec - elapsedTimeSec) + "сек";
+            _timeToWaitText.text = _localization.GetPrettyTime(_timeToWaitSec - elapsedTimeSec);
             _clock.fillAmount = (float)elapsedTimeSec / _timeToWaitSec;
         }
         _timeToWaitText.text = "Заберите питомца!";
