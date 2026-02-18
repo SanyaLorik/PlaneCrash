@@ -13,6 +13,7 @@ public class  LevelBounds : MonoBehaviour {
     [SerializeField] private Transform _cruisePoint;
     [field: SerializeField] public float MaxY {get; private set; }
     [field: SerializeField] public Transform PlayerSpawnPoint { get; private set; }
+    [field: SerializeField] public Transform BetZonePosition { get; private set; }
 
     
     

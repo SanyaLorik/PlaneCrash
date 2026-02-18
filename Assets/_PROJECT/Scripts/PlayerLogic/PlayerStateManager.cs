@@ -19,11 +19,14 @@ public class PlayerStateManager : MonoBehaviour {
     
 
     [field: SerializeField] public PlayerState CurrentState { get; private set; } = PlayerState.Walking;
+    public PlayerState BeforeState { get; private set; } = PlayerState.Walking;
 
     public void ChangePlayerState(PlayerState newState) {
         if (CurrentState == newState) {
             return;
         }
+
+        BeforeState = CurrentState;
         CurrentState = newState;
         if (newState  == PlayerState.Flight) {
             StartFlightPositionZ = transform.position.z;

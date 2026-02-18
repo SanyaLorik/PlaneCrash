@@ -31,7 +31,7 @@ public class LineToObjects : MonoBehaviour {
         _playerStateManager  = playerStateManager;
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
         _zoneManager = zoneManager;
-        _zoneManager.ChooseBet += ChooseBetStep;
+        _zoneManager.ChooseMultiplier += ChooseMultiplier;
     }
     
     
@@ -124,7 +124,7 @@ public class LineToObjects : MonoBehaviour {
     }
 
 
-    private void ChooseBetStep(float obj) {
+    private void ChooseMultiplier(float obj) {
         if(_tutorialStarted) return;
         HideArrow();
     }
@@ -138,6 +138,7 @@ public class LineToObjects : MonoBehaviour {
         }
         _arrowInBoost = true;
         _currentShowLine++;
+        Debug.LogWarning("установка игроку буста " + _player.TargetPos);
         SetTarget(_player.TargetPos);
         SetBoosterPose();
     }

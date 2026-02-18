@@ -64,9 +64,7 @@ public class ZoneManager : MonoBehaviour {
             CruiserSpawnDistance);
         
         _cruiser.position = newCruiserSpawnPos;
-        Debug.Log($"Крейсер на {DistanceToCruise}м");
-        Debug.Log($"Реальная точка в {CruiserSpawnDistance}м");
-        Debug.Log($"Игрок стартанул в {_playerStateManager.StartFlightPositionZ}м");
+
         
         newCruiserSpawnPos = _levelBounds.RecalculateCruiserY();
         _moneyCube.SetMoneyAmount(BetAmount * BetMultiplier);

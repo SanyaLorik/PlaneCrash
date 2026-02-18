@@ -138,12 +138,11 @@ public class BoostSpawner : MonoBehaviour {
             _playerMovement.SetBooster(_curves[0], _falseWays[0][0].transform.position); 
             return;
         }
-        if (_trueWaysBeforeZone.Count != 0) {
-            _playerMovement.SetBooster(_curves[0], _trueWaysBeforeZone[0][0].transform.position); 
-        }
-        else {
-            _playerMovement.SetBooster(_curves[0], _trueWaysAfterZone[0][0].transform.position); 
-        }
+
+        _playerMovement.SetBooster(_curves[0],
+            _trueWaysBeforeZone.Count != 0
+                ? _trueWaysBeforeZone[0][0].transform.position
+                : _trueWaysAfterZone[0][0].transform.position);
     }
 
 

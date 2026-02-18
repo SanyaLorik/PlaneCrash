@@ -97,8 +97,13 @@ public class RewardManager : MonoBehaviour {
             $"{_formatter.ValuteFormatter(_zoneManager.BetAmount)}"
         );
     }
+
     
     private void ShowDistanceReward() {
+        if (_playerStateManager.BeforeState == PlayerState.Walking) {
+            _playerMovement.TpPlayerInBetZone();
+            return;
+        }
         if (_playerStateManager.CurrentPlayerDistance <= 0) {
             // Игрок не полетел а сьебался с карты
             _playerMovement.TpPlayerInSpawn();

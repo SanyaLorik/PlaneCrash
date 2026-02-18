@@ -48,7 +48,6 @@ public class TutorialCompiller : MonoBehaviour {
         _lineToObjects.TutorialModeEnable();
         _flightStopper.ActiveSelf();
         for (var i = 0; i < _missions.Count; i++) {
-            Debug.Log("Mission ID = " + i);
             if (i == _idMissionToAllowFlight) {
                 _flightStopper.DisactiveSelf();
             }

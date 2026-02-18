@@ -1282,7 +1282,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 13009732}
-  m_Layer: 1
+  m_Layer: 0
   m_Name: PointForStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1494,10 +1494,9 @@ GameObject:
   m_Component:
   - component: {fileID: 15732383}
   - component: {fileID: 15732384}
-  - component: {fileID: 15732386}
-  - component: {fileID: 15732385}
   - component: {fileID: 15732387}
-  m_Layer: 1
+  - component: {fileID: 15732386}
+  m_Layer: 0
   m_Name: PixelBlackWhite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1579,27 +1578,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!65 &15732385
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 15732382}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.06904043, y: 0.2781855, z: 20.118368}
-  m_Center: {x: -0.0054799644, y: -0.0014991198, z: -5.957896}
 --- !u!114 &15732386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23928,6 +23906,37 @@ Transform:
   - {fileID: 2620956832296666519}
   m_Father: {fileID: 699255799}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &634211727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 634211728}
+  m_Layer: 0
+  m_Name: PointForTeleportPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &634211728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634211727}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.27, y: 7.3, z: 0.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2047429316}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &634868337
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26260,6 +26269,7 @@ MonoBehaviour:
   _cruisePoint: {fileID: 1820414630}
   <MaxY>k__BackingField: 60
   <PlayerSpawnPoint>k__BackingField: {fileID: 1134289479}
+  <BetZonePosition>k__BackingField: {fileID: 634211728}
 --- !u!114 &699255801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43037,7 +43047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InputInstaller
   _mobileInputViewPrefab: {fileID: 3967064296492133266, guid: cc9e6dd412bf9004683139a19bb58739, type: 3}
   _mobileContainer: {fileID: 158810032041061673}
-  _platformDebugType: 2
+  _platformDebugType: 1
 --- !u!114 &1010846159 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7141693887849043031, guid: fe1d462fbb1ee624aa9823a89581ca43, type: 3}
@@ -87033,6 +87043,7 @@ Transform:
   - {fileID: 643381878}
   - {fileID: 509778402}
   - {fileID: 1257200828}
+  - {fileID: 634211728}
   m_Father: {fileID: 633086274}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2048660190

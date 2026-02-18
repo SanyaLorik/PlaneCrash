@@ -12,7 +12,6 @@ public class PlayerMovement : FlightObject {
     [SerializeField] private float _smoothTime = 0.3f;
     [SerializeField] private int _currentLifesCount;
     [SerializeField] private JumpParticlesController _jumpParticlesController;
-    [SerializeField] private List<LayerMask> _jumpLayerMasks;
 
 
     
@@ -80,6 +79,12 @@ public class PlayerMovement : FlightObject {
     public void TpPlayerInSpawn() {
         _stateManager.ChangePlayerState(PlayerState.Walking);
         transform.position = _levelBounds.PlayerSpawnPoint.position;
+        Rb.linearVelocity = Vector3.zero;
+        _visual.TeleportParticles();
+    }
+    
+    public void TpPlayerInBetZone() {
+        transform.position = _levelBounds.BetZonePosition.position;
         Rb.linearVelocity = Vector3.zero;
         _visual.TeleportParticles();
     }
@@ -266,7 +271,7 @@ public class PlayerMovement : FlightObject {
     private void FlightLogic() {
         Vector3 newPos =  transform.position;
         if (IsBombed) {
-            newPos.y -= _config.FallingSpeed * 25f * Time.fixedDeltaTime;
+            newPos.y -= _config.FallingSpeed * 5f * Time.fixedDeltaTime;
             transform.position = newPos;
             return;
         }
