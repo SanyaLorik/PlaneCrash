@@ -5791,29 +5791,13 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1594249895903170219, guid: 3586518634cc1614b8a76eb1a53ceb79, type: 3}
-      propertyPath: m_fontSize
-      value: 104
-      objectReference: {fileID: 0}
-    - target: {fileID: 1594249895903170219, guid: 3586518634cc1614b8a76eb1a53ceb79, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 1594249895903170219, guid: 3586518634cc1614b8a76eb1a53ceb79, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 2345198179832644023, guid: 3586518634cc1614b8a76eb1a53ceb79, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 2345198179832644023, guid: 3586518634cc1614b8a76eb1a53ceb79, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 3250301700935660193, guid: 3586518634cc1614b8a76eb1a53ceb79, type: 3}
       propertyPath: m_Name
       value: AlertAd
+      objectReference: {fileID: 0}
+    - target: {fileID: 3250301700935660193, guid: 3586518634cc1614b8a76eb1a53ceb79, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4143868910614005877, guid: 3586518634cc1614b8a76eb1a53ceb79, type: 3}
       propertyPath: m_Pivot.x
