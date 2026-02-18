@@ -43,6 +43,7 @@ public class TasksManager : MonoBehaviour {
     
     
     [SerializeField] private DelayedTrigger _delayedTrigger;
+    [SerializeField] private Transform _getTasksRewardTrigger;
     
     
     // Инфа по заданию и росту
@@ -68,6 +69,7 @@ public class TasksManager : MonoBehaviour {
     [Inject] private NumberFormatter _formatter; 
     [Inject] private LocalizationDataPC _localization; 
     [Inject] private UpgradesCalculator _upgradesCalculator;
+    [Inject] private LineToObjects _lineToObjects;
 
 
     [Inject]
@@ -92,15 +94,15 @@ public class TasksManager : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider collider) {
-        if (collider.TryGetComponent(out PlayerMovement player)) {
-            UpdateCompleteTasks();
-        }
+        if (!collider.TryGetComponent(out PlayerMovement _)) return;
+        UpdateCompleteTasksByTrigger();
+        
     }
     
     private void OnTriggerExit(Collider collider) {
-        if (collider.TryGetComponent(out PlayerMovement player)) {
+        if (!collider.TryGetComponent(out PlayerMovement _)) return;
             _delayedTrigger.CancelTriggerAction();
-        }
+        
     }
 
     public bool NeedToGetReward() {
@@ -122,6 +124,10 @@ public class TasksManager : MonoBehaviour {
         if (state == PlayerState.Grounded || state == PlayerState.Cruisered) {
             _tokenSource?.Cancel();
             // Debug.Log($"Игрок перестал лететь, сейчас счет {_playerDistance}");
+        }
+
+        if (state == PlayerState.Walking) {
+            CheckToNeedLine();
         }
         
     }
@@ -194,24 +200,19 @@ public class TasksManager : MonoBehaviour {
 
     
 
-    private void UpdateCompleteTasks() {
-        bool taskComplete = false;
+    private void UpdateCompleteTasksByTrigger() {
         foreach (var taskVisual in _taskTypeToVisualDictionary) {
             if (_taskTypeToVisualDictionary[taskVisual.Key].TaskIsComplete) {
                 _delayedTrigger.DelayedTriggerAction(() => RefreshCompleteTask(taskVisual.Key));
-                
-                taskComplete = true;
             }
         }
-        if (taskComplete) {
-            _taskCompletePS.Play();
-        }
+       
     }
 
 
 
     private void RefreshCompleteTask(TaskType taskType) {
-        // Обновляем даные
+        // Обновляем данные
         
         TaskInfo taskInfo = _taskTypeToInfoDictionary[taskType];
         TaskVisual taskVisual = _taskTypeToVisualDictionary[taskType];
@@ -231,8 +232,14 @@ public class TasksManager : MonoBehaviour {
         if (playerValue >= taskInfo.FullValue) {
             taskVisual.SetTaskCompleteVisual();
         }
+        _taskCompletePS.Play();
+        CheckToNeedLine();
     }
-    
+
+    public void CheckToNeedLine() {
+        _lineToObjects.SetTarget(NeedToGetReward() ? _getTasksRewardTrigger.position : Vector3.zero);
+    }
+
     private void CreateTaskInfoDictionary() {
         foreach (var task in _tasksInfo) {
             if (_taskTypeToInfoDictionary.ContainsKey(task.TaskType)) {

@@ -1,19 +1,18 @@
-    using Cysharp.Threading.Tasks.Triggers;
-    using Unity.Cinemachine;
-    using Unity.VisualScripting;
-    using UnityEngine;
+using Unity.Cinemachine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
 public class CameraOrbitalController : MonoBehaviour {
 
     [SerializeField] private CinemachineCamera _cinemachineCamera;
-    [SerializeField] private CinemachineDecollider _cinemachineDecollider;
     [SerializeField] private float _sensitivity = 0.1f;
+    [SerializeField] private Transform _walkPoint;
+    [SerializeField] private Transform _flightPoint;
     
     [SerializeField] private CinemachineOrbitalFollow _orbitalFollow;
     private Mouse _mouse;
-    private bool _isOrbiting = false;
+    private bool _isOrbiting;
 
     private PlayerStateManager _playerStateManager;
 
@@ -29,15 +28,23 @@ public class CameraOrbitalController : MonoBehaviour {
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Flight) {
             // Вырубить
-            _cinemachineDecollider.enabled = false;
             SetDefaultRotation();
             _allowRotation = false;
+            SetWalkPoint(false);
         }
 
         else if(state == PlayerState.Grounded || state == PlayerState.Cruisered){
-            // _cinemachineDecollider.enabled = true;
             _allowRotation = true;
+            SetWalkPoint(true);
         }
+    }
+
+    private void SetWalkPoint(bool setWalk) {
+        if (setWalk) {
+            _cinemachineCamera.Follow = _walkPoint;
+            return;
+        }
+        _cinemachineCamera.Follow = _flightPoint;
     }
 
 

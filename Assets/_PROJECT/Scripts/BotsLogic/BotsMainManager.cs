@@ -104,7 +104,7 @@ public class BotsMainManager : IInitializable, IDisposable {
             SetFlightRandomBot();
         }
 
-        else {
+        else if(state == PlayerState.Walking) {
             CheckFloatingBots();
         }
     }

@@ -77,7 +77,6 @@ public class UpgradesCalculator {
     private bool _needRecalculate = true;
     private float _petMultiplier;
     private float GetPetMultiplier(bool forceUpdate = false) {
-        Debug.Log(_needRecalculate + " " + forceUpdate);
         if (!_needRecalculate && !forceUpdate) {
             return _petMultiplier;
         }

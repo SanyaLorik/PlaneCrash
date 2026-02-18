@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -10,8 +11,10 @@ public class PlayerMovement : FlightObject {
     [SerializeField] private float _smoothTime = 0.3f;
     [SerializeField] private int _currentLifesCount;
     [SerializeField] private JumpParticlesController _jumpParticlesController;
+    [SerializeField] private List<LayerMask> _jumpLayerMasks;
 
 
+    
     public Rigidbody Rb { get; private set; } 
     public Transform Transform  => transform;
 
@@ -75,6 +78,7 @@ public class PlayerMovement : FlightObject {
 
     
     public void TpPlayerInSpawn() {
+        _stateManager.ChangePlayerState(PlayerState.Walking);
         transform.position = _levelBounds.PlayerSpawnPoint.position;
         Rb.linearVelocity = Vector3.zero;
         _visual.TeleportParticles();
@@ -150,24 +154,39 @@ public class PlayerMovement : FlightObject {
     }
     
 
-    private bool _secondJumpAllowed = true;
     public void OnJump(InputAction.CallbackContext context) {
         if (!context.performed || _stateManager.CurrentState != PlayerState.Walking) return;     // реагируем только на нажатие
         
-        Vector3 origin = transform.position;
         
-        if (Physics.Raycast(origin, Vector3.down,  0.1f, _config.FloorMask)) {
-            Rb.AddForce(Vector3.up * _config.JumpForce, ForceMode.Impulse);
-            _secondJumpAllowed = true;
-            _jumpParticlesController.Play();
-        }
-        else if (_secondJumpAllowed) {
+        if (_jumpsUsed == 0) {
             Rb.linearVelocity = new Vector3(Rb.linearVelocity.x, 0f, Rb.linearVelocity.z);
-            Rb.AddForce(Vector3.up * _config.SecondJumpForce, ForceMode.Impulse);
-            _secondJumpAllowed = false;
+            DoJump(_config.JumpForce);
             _jumpParticlesController.Play();
+            _jumpsUsed = 1;
+        }
+        else if (_jumpsUsed == 1) {
+            Rb.linearVelocity = new Vector3(Rb.linearVelocity.x, 0f, Rb.linearVelocity.z);
+            DoJump(_config.SecondJumpForce);
+            _jumpParticlesController.Play();
+            _jumpsUsed = 2;
         }
     }
+
+    private void DoJump(float force) {
+        Rb.AddForce(Vector3.up * force, ForceMode.Impulse);
+    }
+
+    private int _jumpsUsed;
+    private void OnCollisionEnter(Collision collision) {
+        foreach (var contact in collision.contacts) {
+            if (contact.normal.y > 0.5f) {
+                _jumpsUsed = 0;
+                break;
+            }
+        }
+    }
+    
+    
 
     private void Walk() {
         // усиленная гравитация
@@ -205,14 +224,13 @@ public class PlayerMovement : FlightObject {
             moveDir,
             out RaycastHit lowHit,
             checkDist,
-            _config.FloorMask
-        );
+            Physics.DefaultRaycastLayers,
+            QueryTriggerInteraction.Ignore);
 
         bool hitHigh = Physics.Raycast(
             highOrigin,
             moveDir,
-            checkDist,
-            _config.FloorMask
+            checkDist
         );
 
         if (hitLow && !hitHigh) {
@@ -294,9 +312,9 @@ public class PlayerMovement : FlightObject {
         TargetPos = nextBoost;
         float distance = Vector3.Distance(_initialPos, TargetPos);
         SegmentDuration = distance / _config.SpeedForce; 
-        SetBoost?.Invoke();
         ObjectGetAllow = false;
         StartCoroutine(ObjectAllowCooldown());
+        SetBoost?.Invoke();
     }
 
     private IEnumerator ObjectAllowCooldown() {

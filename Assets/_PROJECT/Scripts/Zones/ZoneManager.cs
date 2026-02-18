@@ -49,17 +49,13 @@ public class ZoneManager : MonoBehaviour {
 
 
     public void ChangeMultiplier(float newMultiplier) {
-        if (newMultiplier < 0) {
-            Debug.Log("Множитель не может быть < 0");
-            return;
-        }
         BetMultiplier = newMultiplier;
 
         if (newMultiplier == 0) {
             return;
         }
 
-        CruiserSpawnDistance = BetMultiplier * _cruiserBaseSpawnDistance + _playerStateManager.StartFlightPosition;
+        CruiserSpawnDistance = BetMultiplier * _cruiserBaseSpawnDistance + _playerStateManager.StartFlightPositionZ;
         DistanceToCruise = BetMultiplier * _cruiserBaseSpawnDistance;
         
         Vector3 newCruiserSpawnPos = new Vector3(
@@ -70,7 +66,7 @@ public class ZoneManager : MonoBehaviour {
         _cruiser.position = newCruiserSpawnPos;
         Debug.Log($"Крейсер на {DistanceToCruise}м");
         Debug.Log($"Реальная точка в {CruiserSpawnDistance}м");
-        Debug.Log($"Игрок стартанул в {_playerStateManager.StartFlightPosition}м");
+        Debug.Log($"Игрок стартанул в {_playerStateManager.StartFlightPositionZ}м");
         
         newCruiserSpawnPos = _levelBounds.RecalculateCruiserY();
         _moneyCube.SetMoneyAmount(BetAmount * BetMultiplier);

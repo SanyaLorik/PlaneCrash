@@ -99,6 +99,11 @@ public class RewardManager : MonoBehaviour {
     }
     
     private void ShowDistanceReward() {
+        if (_playerStateManager.CurrentPlayerDistance <= 0) {
+            // Игрок не полетел а сьебался с карты
+            _playerMovement.TpPlayerInSpawn();
+            return;
+        }
         ShowRewardWindow();
         float reward = _playerStateManager.CurrentPlayerDistance 
                        *

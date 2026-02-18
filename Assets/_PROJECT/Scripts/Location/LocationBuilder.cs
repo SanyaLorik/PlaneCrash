@@ -154,8 +154,6 @@ public class LocationBuilder : MonoBehaviour {
                 oldestModule = createdModule;
             }
         }
-        Debug.Log($"Удаление {oldestModule.transform.position.z} всего модулей {_createdModules.Count}");
-        Debug.Log($"Удаление {oldestModule.transform.position.z}");
 
         oldestModule.HideObjects();
         _poolManager.ReturnObjectToPool(oldestModule.gameObject, PoolType.LocationObject);

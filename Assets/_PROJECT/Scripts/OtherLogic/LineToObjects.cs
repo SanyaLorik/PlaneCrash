@@ -5,45 +5,72 @@ using Zenject;
 
 public class LineToObjects : MonoBehaviour {
     [SerializeField] private int _countTimesShowLine;
-    [SerializeField] private Transform _getTasksRewardTrigger;
     [SerializeField] private Transform _posForBoost; // -2.76
     [SerializeField] private Transform _posForSpawn; // - 3.33
-
+    [SerializeField] private LineRenderer _lineRenderer;
+    [SerializeField] private float _speed = 1f;
     
     private Vector3 _target;
     private bool _tutorialStarted;
+    private float _offset;
     
     
-    
-    private LineRenderer _lineRenderer;
     private PlayerStateManager _playerStateManager;
     private PlayerMovement _player;
-    private TasksManager _tasksManager;
     private ZoneManager _zoneManager;
+    private bool _arrowInBoost;
 
-    
-    
+    [Inject] private TasksManager _tasksManager;
+
+ 
 
     [Inject]
-    private void Init(PlayerMovement player, PlayerStateManager playerStateManager, TasksManager tasksManager, ZoneManager zoneManager) {
+    private void Init(PlayerMovement player, PlayerStateManager playerStateManager, ZoneManager zoneManager) {
         _player = player;
         _player.SetBoost += PlayerOnSetBoost;
         _playerStateManager  = playerStateManager;
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
-        _tasksManager = tasksManager;
         _zoneManager = zoneManager;
-        _zoneManager.ChooseBet += ZoneManagerStep;
-        _zoneManager.ChooseMultiplier += ZoneManagerStep;
+        _zoneManager.ChooseBet += ChooseBetStep;
     }
     
     
     private void Awake() {
-        _lineRenderer = GetComponent<LineRenderer>();
-        gameObject.DisactiveSelf();
+        SetSpawnPose();
+    }
+    
+    private void Update() {
+        if (_target != Vector3.zero) {
+            // Обновляем позиции линии
+            _lineRenderer.SetPosition(0, transform.position); // от игрока
+            _lineRenderer.SetPosition(1, _target); // до цели
+            if (_player.transform.position.z > _target.z && _arrowInBoost) {
+                ForceHideArrow();
+            }
+            _offset += Time.deltaTime * _speed;
+            _lineRenderer.material.mainTextureOffset = new Vector2(_offset, 0);
+        }
+    }
+    
+    private void PlayerStateManagerOnChangeState(PlayerState state) {
+        if (state == PlayerState.Walking) {
+            if (_arrowInBoost) {
+                _arrowInBoost = false;
+            }
+            if (!_tasksManager.NeedToGetReward()) {
+                HideArrow();
+            }
+            SetSpawnPose();
+        }
+
+        else if (state == PlayerState.Cruisered || state == PlayerState.Grounded) {
+            HideArrow();
+        }
     }
 
     // Метод для изменения цели
     public void SetTarget(Vector3 newTarget) {
+        Debug.Log("SetTarget: " + newTarget);
         if (_tutorialStarted && !_arrowInBoost) {
             return;
         }
@@ -53,11 +80,9 @@ public class LineToObjects : MonoBehaviour {
             gameObject.ActiveSelf();
         }
         else {
-            gameObject.DisactiveSelf();
-            
+            HideArrow();
         }
     }
-
 
 
     public void TutorialModeEnable() {
@@ -66,76 +91,55 @@ public class LineToObjects : MonoBehaviour {
     
     public void TutorialModeDisable() {
         _tutorialStarted = false;
-        SetTarget(Vector3.zero);
+        if (!_tasksManager.NeedToGetReward()) {
+            HideArrow();
+        }
     }
     
     public void SetTargetTutorial(Vector3 newTarget) {
         _target = newTarget;
         _lineRenderer.enabled = (_target != Vector3.zero);
         gameObject.ActiveSelf();
+        ResetOffset();
     }
 
     public void HideArrow() {
-        _target = Vector3.zero;
-        gameObject.DisactiveSelf();
-    }
-    
-    private void ZoneManagerStep(float obj) {
         if(_tutorialStarted) return;
+        Debug.Log("HideArrow");
         _target = Vector3.zero;
         gameObject.DisactiveSelf();
+        ResetOffset();
+    }
+    
+    public void ForceHideArrow() {
+        Debug.Log("ForceHideArrow");
+        _target = Vector3.zero;
+        gameObject.DisactiveSelf();
+        ResetOffset();
     }
 
-    
-    private void PlayerStateManagerOnChangeState(PlayerState state) {
-        if (state == PlayerState.Walking) {
-            if (_arrowInBoost) {
-                _arrowInBoost = false;
-                SetTarget(Vector3.zero);
-            }
-            gameObject.ActiveSelf();
-            SetSpawnPose();
-            if (_tasksManager.NeedToGetReward()) {
-                SetTarget(_getTasksRewardTrigger.position);
-            }
-            else if(!_tutorialStarted) {
-                gameObject.DisactiveSelf();
-            }
-        }
+    private void ResetOffset() {
+        _offset = 0f; // сброс
+        _lineRenderer.material.mainTextureOffset = Vector2.zero;
+    }
 
-        if (state == PlayerState.Cruisered || state == PlayerState.Grounded) {
-            SetTarget(Vector3.zero);
-        }
+
+    private void ChooseBetStep(float obj) {
+        if(_tutorialStarted) return;
+        HideArrow();
     }
 
     private int _currentShowLine;
     private void PlayerOnSetBoost() {
+        Debug.Log("PlayerOnSetBoost");
         if (_currentShowLine == _countTimesShowLine) {
-            SetTarget(Vector3.zero);
-            gameObject.DisactiveSelf();
+            HideArrow();
             return;
         }
         _arrowInBoost = true;
         _currentShowLine++;
         SetTarget(_player.TargetPos);
         SetBoosterPose();
-        if (!gameObject.activeSelf) {
-            gameObject.ActiveSelf();
-        }
-        
-    }
-
-    private bool _arrowInBoost;
-    private void Update() {
-        if (_target != Vector3.zero) {
-            // Обновляем позиции линии
-            _lineRenderer.SetPosition(0, transform.position); // от игрока
-            _lineRenderer.SetPosition(1, _target); // до цели
-            if (_player.transform.position.z > _target.z && _arrowInBoost) {
-                Debug.Log("Офаем стрелку");
-                _target = Vector3.zero;
-            }
-        }
     }
     
 

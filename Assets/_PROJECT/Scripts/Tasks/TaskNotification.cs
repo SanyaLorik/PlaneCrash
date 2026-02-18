@@ -14,6 +14,10 @@ public class TaskNotification : MonoBehaviour {
     
     [SerializeField] private RectTransform _panel;
     [SerializeField] private RectTransform _canvas;
+    
+    
+    [SerializeField] private RectTransform _screenPosition;
+    [SerializeField] private RectTransform _edgePosition;
 
 
     [SerializeField] private float _timeToShow;

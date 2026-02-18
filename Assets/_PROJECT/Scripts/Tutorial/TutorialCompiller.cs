@@ -26,6 +26,7 @@ public class TutorialCompiller : MonoBehaviour {
         _gameSave = gameSave;
         if (_gameSave.GetSave.TutorialPassed) {
             _flightStopper.DisactiveSelf();
+            _lineToObjects.TutorialModeDisable();
             return;
         }
         foreach (var mission in _missions) {

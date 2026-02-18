@@ -19,9 +19,9 @@ public class BetAccumulation : MonoBehaviour  {
     public void Init(ZoneManager zoneManager) {
         _zoneManager = zoneManager;
     }
-    
-    
-    public void StopAccumulate() {
+
+
+    private void StopAccumulate() {
         if (_accumulateCTS == null) return;
         _accumulateCTS.Cancel();
         _accumulateCTS.Dispose();
@@ -41,11 +41,12 @@ public class BetAccumulation : MonoBehaviour  {
         if (collider.gameObject.TryGetComponent(out PlayerBank bank)) {
             StopAccumulate();
             _accumulateCTS = new CancellationTokenSource();
-            AccumulateBet(_accumulateCTS.Token, bank);
+            AccumulateBet(_accumulateCTS.Token, bank).Forget();
         }    
     }
 
     private void OnTriggerExit(Collider collider) {
+        if (!collider.gameObject.TryGetComponent(out PlayerMovement _)) return;
         StopAccumulate();
     }
 

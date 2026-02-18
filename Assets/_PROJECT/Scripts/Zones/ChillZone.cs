@@ -12,12 +12,15 @@ public class ChillZone : MonoBehaviour {
         _playerStateManager = playerStateManager;
     }
     
+    [Inject] TasksManager _tasksManager;
+    
     
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
             _zoneManager.ChangeMultiplier(0);
             _zoneManager.ChangeBet(0);
             _playerStateManager.ChangePlayerState(PlayerState.Walking);
+            _tasksManager.CheckToNeedLine();
         }    
     }
     

@@ -19,7 +19,6 @@ public class PlayerConfig : ScriptableObject {
     [field: SerializeField] public float JumpForce { get; private set; }
     [field: SerializeField] public float SecondJumpForce { get; private set; }
     [field: SerializeField] public float WallOffset { get; private set; }
-    [field: SerializeField] public LayerMask FloorMask { get; private set; }
     [field: SerializeField] public float GravityScale { get; private set; } = 2f;
     [field: SerializeField] public float StepHeight { get; private set; } = 0.3f;
 }

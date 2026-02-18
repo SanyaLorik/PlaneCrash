@@ -104,7 +104,7 @@ public class BoostSpawner : MonoBehaviour {
             // Тут тоже подумать до куда он может лететь, 
             Vector3 newFalsePosition = CalculateMinEndPosition();
             newFalsePosition.z = Random.Range(newFalsePosition.z, cruiserPosition.z+100f);
-            _falseWays.Add(SpawnBoostWays(_playerStateManager.StartFlightPosition, newFalsePosition, _falseBoostPrefab, false));
+            _falseWays.Add(SpawnBoostWays(_playerStateManager.StartFlightPositionZ, newFalsePosition, _falseBoostPrefab, false));
         }
 
         
@@ -126,7 +126,7 @@ public class BoostSpawner : MonoBehaviour {
                 _trueWaysAfterZone[Random.Range(0, _trueWaysAfterZone.Count)][0].transform.position 
                 : 
                 cruiserPosition;
-            _trueWaysBeforeZone.Add(SpawnBoostWays(_playerStateManager.StartFlightPosition, endPosition, _boostPrefab, true));
+            _trueWaysBeforeZone.Add(SpawnBoostWays(_playerStateManager.StartFlightPositionZ, endPosition, _boostPrefab, true));
         }
     }
 

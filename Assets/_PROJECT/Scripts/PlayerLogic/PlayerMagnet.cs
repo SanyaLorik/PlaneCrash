@@ -34,6 +34,8 @@ public class PlayerMagnet : MonoBehaviour {
         _upgradesCalculator = upgradesCalculator;
         _playerStateManager = playerStateManager;
         _playerStats = playerStats;
+        _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
+        _playerStats.ChangeStats += PlayerStatsOnChangeStats;
     }
 
 
@@ -41,10 +43,6 @@ public class PlayerMagnet : MonoBehaviour {
     private Vector3 _defaultColliderSize;
 
 
-    private void OnEnable() {
-        _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
-        _playerStats.ChangeStats += PlayerStatsOnChangeStats;
-    }
 
     private void Start() {
         CalculateColliderMaxScale();

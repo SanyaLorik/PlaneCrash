@@ -1,98 +1,38 @@
 using System;
 using UnityEngine;
-using UnityEngine.Scripting;
-using Zenject;
 
 public class PlayerStateManager : MonoBehaviour {
-    [SerializeField] LayerMask _groundMask;
-    [SerializeField] LayerMask _cruiserMask;
-    [SerializeField] LayerMask _floorMask;
-    [SerializeField] private float _distanceCheck = 0.1f;
-    [SerializeField] private Renderer _floor;
     [SerializeField] private ParticleSystem _particleSystem;
-    [SerializeField] private Transform _playerFootPoint;
     [SerializeField] private JumpParticlesController _jumpParticlesController;
     [SerializeField] private Transform _startFlightPoint;
 
-    private LevelBounds _levelBounds;
-    
     public event Action<PlayerState> ChangeState;
-    public event Action LandedInSpawn;
     
-    
-    public float StartFlightPosition { get; private set; }
+    public float StartFlightPositionZ { get; private set; }
 
     private void Awake() {
-        StartFlightPosition = _startFlightPoint.position.z;
+        StartFlightPositionZ = _startFlightPoint.position.z;
     }
-
-
-    [Inject]
-    public void Init(LevelBounds  levelBounds) {
-        _levelBounds = levelBounds;
-    }
-    
     
     public float CurrentPlayerDistance
-        => CurrentState == PlayerState.Walking ? 0f : transform.position.z - StartFlightPosition;
+        => CurrentState == PlayerState.Walking ? 0f : transform.position.z - StartFlightPositionZ;
     
 
-    public PlayerState CurrentState { get; private set; } = PlayerState.Walking;
-    
-    private void Update() {
-        CheckGround();
-        FloorCheck();
-    }
-
+    [field: SerializeField] public PlayerState CurrentState { get; private set; } = PlayerState.Walking;
 
     public void ChangePlayerState(PlayerState newState) {
+        if (CurrentState == newState) {
+            return;
+        }
         CurrentState = newState;
         if (newState  == PlayerState.Flight) {
-            StartFlightPosition = transform.position.z;
-            // Debug.Log("StartFlightPosition " + transform.position.z);
+            StartFlightPositionZ = transform.position.z;
         }
-
-        if (newState  == PlayerState.Grounded) {
-            // Debug.Log("EndFlightPosition " + transform.position.z);
-        }
-        Debug.Log("CurrentPlayerDistance: " + CurrentPlayerDistance);
-        
-        ChangeState?.Invoke(CurrentState);
-        
-    }
-
-    private void CheckGround() {
-        if (CurrentState == PlayerState.Cruisered || CurrentState == PlayerState.Grounded) {
-            return;
-        }
-        Vector3 origin = transform.position;
- 
-        if (Physics.Raycast(origin, Vector3.down,  _distanceCheck, _cruiserMask)) {
-            // Debug.Log("Попали!");
-            // Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinY}, игрок в {transform.position.y}" );
-            ChangePlayerState(PlayerState.Cruisered);
-            return;
-        }
-        if (transform.position.y <= _levelBounds.MinY + _distanceCheck) {
-            // Debug.Log("Упали");
-            // Debug.Log($"_levelBounds.MinimumY = {_levelBounds.MinY}, игрок в {transform.position.y}" );
-            ChangePlayerState(PlayerState.Grounded);
-            return;
-        }
-    }
-
-
-    private bool _wasOnFloor;
-    private void FloorCheck() {
-        Vector3 feetPoint = _playerFootPoint.position;
-        
-        bool isOnFloor = Physics.Raycast(feetPoint, Vector3.down, _floorMask);
-
-        if (isOnFloor && !_wasOnFloor) {
-            LandedInSpawn?.Invoke();
+        else if (newState  == PlayerState.Walking) {
             _jumpParticlesController.Play();
         }
 
-        _wasOnFloor = isOnFloor;
+        Debug.Log("CurrentPlayerState: " + CurrentState);
+        ChangeState?.Invoke(CurrentState);
     }
 }
