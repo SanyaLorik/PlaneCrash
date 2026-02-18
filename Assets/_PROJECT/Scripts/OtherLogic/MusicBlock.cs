@@ -1,68 +1,72 @@
 using System;
 using System.Collections;
-using Cysharp.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
 
 public class MusicBlock  : MonoBehaviour {
+    private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private string _compositionName;
-    [SerializeField] private Color _tileColor;
     [SerializeField] private float _brightnessMultiplier;
     [SerializeField] private float _durationToShade;
 
+    
     private Material _mat;
-    private Color _brightnessColor;
-    
-    
+    private Color _baseColor;
+    private Coroutine _shadeRoutine;
+    private float _currentEmission = 1f;
+
     private void Awake() {
         _mat = GetComponent<Renderer>().material;
-        _mat.color = _tileColor;
-        _brightnessColor = AdjustBrightness();
+
+        // берём базовый цвет прямо из материала
+        _baseColor = _mat.color;
+
+        // включаем emission
+        _mat.EnableKeyword("_EMISSION");
+
+        // стартовое значение
+        SetEmission(1f);
     }
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.TryGetComponent(out PlayerMovement _)) {
             _audioSource.Play();
             Debug.Log("Проигрывание " + _compositionName);
-            if (_shadeRoutine != null) {
-                StopCoroutine(_shadeRoutine);
-            }
-            _shadeRoutine = StartCoroutine(ChangeColorRoutine(_brightnessColor));
+
+            if (_shadeRoutine != null) StopCoroutine(_shadeRoutine);
+            _shadeRoutine = StartCoroutine(ChangeEmissionRoutine(_brightnessMultiplier));
         }
     }
-
 
     private void OnTriggerExit(Collider other) {
-        if (_shadeRoutine != null) {
-            StopCoroutine(_shadeRoutine);
-        }
-        _shadeRoutine = StartCoroutine(ChangeColorRoutine(_tileColor));
+        if (_shadeRoutine != null) StopCoroutine(_shadeRoutine);
+        _shadeRoutine = StartCoroutine(ChangeEmissionRoutine(1f));
     }
 
-    private Coroutine _shadeRoutine;
-    private IEnumerator ChangeColorRoutine(Color target) {
-        Color start = _mat.color;
+    private void SetEmission(float intensity) {
+        _currentEmission = intensity;
+        _mat.SetColor(EmissionColor, _baseColor * intensity);
+    }
 
+    private IEnumerator ChangeEmissionRoutine(float targetIntensity) {
+        float start = _currentEmission;
         float t = 0f;
 
+
+        Debug.Log("targetIntensity = " + targetIntensity);
+        Debug.Log("start " + start);
         while (t < _durationToShade) {
             t += Time.deltaTime;
             float progress = t / _durationToShade;
-            _mat.color = Color.Lerp(start, target, progress);
+
+            float intensity = Mathf.Lerp(start, targetIntensity, progress);
+            SetEmission(intensity);
+
             yield return null;
         }
+        Debug.Log("Intensity = " + targetIntensity);
 
-        _mat.color = target;
+        SetEmission(targetIntensity);
     }
-    private Color AdjustBrightness() {
-        Color.RGBToHSV(_tileColor, out float h, out float s, out float v);
-
-        v *= _brightnessMultiplier;
-        v = Mathf.Clamp01(v);
-
-        return Color.HSVToRGB(h, s, v);
-    }
-    
     
 }

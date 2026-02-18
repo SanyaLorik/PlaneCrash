@@ -19,6 +19,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
     [SerializeField] private JumpParticlesController _jumpParticlesController;
     [SerializeField] private JumpParticlesController _landParticleController;
     [SerializeField] private DualLegParticles _walkingParticles;
+    [Range(0,1), SerializeField] private float _botChanceToJump = 0.85f; 
     
     
     
@@ -92,8 +93,8 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         while (!token.IsCancellationRequested) {
             
             Vector3 target = ChooseNextTarget();
-
             _agent.SetDestination(target);
+            
             await UniTask.Yield();
             Jump(token).Forget();
 
@@ -109,10 +110,11 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
     }
 
     private async UniTask Jump(CancellationToken token) {
+        if (Random.value > _botChanceToJump) return;
         await UniTask.WaitUntil(() => !_agent.pathPending && _agent.hasPath, cancellationToken: token);
             
         float startPathLength = _agent.remainingDistance;
-        float jumpLength = startPathLength / Random.Range(1.5f, 5f);
+        float jumpLength = startPathLength / Random.Range(1.5f, 2f);
 
         await UniTask.WaitUntil(() => 
                 !_agent.pathPending &&
@@ -120,9 +122,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
                 _agent.remainingDistance > _agent.stoppingDistance, 
             cancellationToken: token);
 
-        FakeJump(token);
-        
-        await UniTask.Delay(200, cancellationToken: token);
+        FakeJump(token).Forget();
     }
     
     [SerializeField] private float _jumpDuration;
