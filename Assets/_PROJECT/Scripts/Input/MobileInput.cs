@@ -12,12 +12,20 @@ public class MobileInput : MobileInputBase<MobileInputView>, IOrbitalRotationInp
 
     public override void Enable()
     {
+        inputView.JumpButton.onClick.AddListener(OnInvokedJump);
+
         inputView.Enable();
     }
 
     public override void Disable()
     {
+        inputView.JumpButton.onClick.RemoveListener(OnInvokedJump);
+
         inputView.Disable();
     }
 
+    private void OnInvokedJump()
+    {
+        InvokeJump();
+    }
 }
