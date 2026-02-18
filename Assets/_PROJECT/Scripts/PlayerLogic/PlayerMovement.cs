@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Architecture_M;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,7 +20,7 @@ public class PlayerMovement : FlightObject {
     public Transform Transform  => transform;
 
 
-    public Vector2 MoveInput {get; private set; }
+    public Vector2 MoveInput => _inputDirection2.Direction2;
     private float _currentRoll;
     private float _rollVelocity;
     public bool IsBusted {get; private set; }
@@ -35,9 +36,8 @@ public class PlayerMovement : FlightObject {
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private PlayerStateManager _stateManager;
     [Inject] private LevelBounds _levelBounds;
-    [Inject] private IPlayerStatsReadOnly _playerStats;
-    [Inject] private PlayerMovement _playerMovement;
     [Inject] private PlayerVisual _visual;
+    [Inject] private IInputDirection2 _inputDirection2;
     
     [Inject]
     public void Init(PlayerConfig config, PlayerStateManager stateManager, LevelBounds levelBounds, IPlayerStatsReadOnly playerStats) {
@@ -51,7 +51,7 @@ public class PlayerMovement : FlightObject {
         Rb = GetComponent<Rigidbody>();
         Rb.useGravity = true;
     }
-    
+
     private void Start() {
         OnChangeSpaceRotation(PlayerState.Walking);
         TpPlayerInSpawn();
@@ -148,12 +148,7 @@ public class PlayerMovement : FlightObject {
     
         transform.localRotation = TargetPosRot;
     }
-
-    public void OnMove(InputAction.CallbackContext context) {
-        MoveInput = context.ReadValue<Vector2>();
-    }
     
-
     public void OnJump(InputAction.CallbackContext context) {
         if (!context.performed || _stateManager.CurrentState != PlayerState.Walking) return;     // реагируем только на нажатие
         
