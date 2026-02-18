@@ -42422,7 +42422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InputInstaller
   _mobileInputViewPrefab: {fileID: 3967064296492133266, guid: cc9e6dd412bf9004683139a19bb58739, type: 3}
   _mobileContainer: {fileID: 158810032041061673}
-  _platformDebugType: 2
+  _platformDebugType: 0
 --- !u!114 &1010846159 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7141693887849043031, guid: fe1d462fbb1ee624aa9823a89581ca43, type: 3}
@@ -77955,7 +77955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a82cc89c730489e4c9db29ab247713c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.AdInstaller
-  _alertAd: {fileID: 0}
+  _alertAd: {fileID: 158810032041061674}
   _advertisingMonetization: {fileID: 7884425874105686572, guid: 1bf00c072a644e0469bd1eb8c8dff897, type: 3}
 --- !u!1 &1846869855
 GameObject:
@@ -90978,10 +90978,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main_Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 948091186554398511, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1423390717221546912, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -91082,6 +91078,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3983256139157778820, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -91092,6 +91092,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5535116416261689858, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
   m_PrefabInstance: {fileID: 158810032041061672}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &158810032041061674 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4647382479948993075, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523b312e96c51e246996412beab12357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.AlertAd
 --- !u!33 &224454532292145677
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &651827299359692403
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2196814701615523321}
+  - component: {fileID: 8661980592685411831}
+  m_Layer: 0
+  m_Name: DeviceTypeProviderMirra
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2196814701615523321
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651827299359692403}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9166033850420844382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8661980592685411831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651827299359692403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7a77bf7b1936b4d9397b45e4b35585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.DeviceInstaller
+  _deviceTypeProvider: {fileID: 7269842792459414505, guid: 3d0f6f19f01519d40992e1a2270e3ff1, type: 3}
 --- !u!1 &1481030713078459587
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,6 +79,7 @@ Transform:
   - {fileID: 1767170793234386892}
   - {fileID: 2299117414762224517}
   - {fileID: 5743804057535003212}
+  - {fileID: 2196814701615523321}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6634558047515281937
@@ -54,6 +100,7 @@ MonoBehaviour:
   - {fileID: 4600151043953983026}
   - {fileID: 3633859116935372308}
   - {fileID: 7665023540870364988}
+  - {fileID: 8661980592685411831}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
