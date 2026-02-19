@@ -10,6 +10,8 @@ public class GameSavePC : GameSaveBase {
     public List<UpgradeData> Upgrades = new ();
     public List<PetsData> Pets = new ();
     public bool TutorialPassed = false;
+    public int CountBatutJumps = 0;
+    public int CountBaskets = 0;
 
 
 

@@ -17,7 +17,7 @@ public class TaskNotification : MonoBehaviour {
     
     
     [SerializeField] private RectTransform _screenPosition;
-    [SerializeField] private RectTransform _edgePosition;
+    [SerializeField] private RectTransform _behindScreenPosition;
 
 
     [SerializeField] private float _timeToShow;
@@ -26,16 +26,13 @@ public class TaskNotification : MonoBehaviour {
     
     
 
-    private Vector2 _shownPos;
-    private Vector2 _hiddenPos;
     private bool _notifIsShowed;
     
     [Inject] private LocalizationDataPC _localization;
     
     
     private void Awake() {
-        CachePositions();
-        _panel.anchoredPosition = _hiddenPos; // сразу прячем
+        _panel.anchoredPosition = _behindScreenPosition.anchoredPosition; // сразу прячем
     }
 
     private void Start() {
@@ -64,27 +61,18 @@ public class TaskNotification : MonoBehaviour {
         
         
     private void Show() {
-        _panel.DOAnchorPos(_shownPos, _duration)
+        _panel.DOAnchorPos(_screenPosition.anchoredPosition, _duration)
             .SetEase(Ease.OutBack)
             .OnComplete(() => _notifIsShowed = true);
     }
 
     private void Hide() {
-        _panel.DOAnchorPos(_hiddenPos, _duration)
+        _panel.DOAnchorPos(_behindScreenPosition.anchoredPosition, _duration)
             .SetEase(Ease.InBack)
             .OnComplete(() => _notifIsShowed = false);
         
     }
     
-    private void CachePositions() {
-        // Логика получения значения за экраном 
-        _shownPos = _panel.anchoredPosition;
-        float hideX = _canvas.rect.width / 2f + _panel.rect.width;
-        _hiddenPos = new Vector2(hideX, _shownPos.y);
-        
-        _shownPos = _panel.anchoredPosition;
-    }
-
     
     
 }

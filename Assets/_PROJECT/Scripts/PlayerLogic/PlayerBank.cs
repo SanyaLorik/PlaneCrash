@@ -30,7 +30,6 @@ public class PlayerBank : MonoBehaviour {
         _playerCapital = _gameSave.GetSave.Money;
         BankChanged?.Invoke(PlayerCapital);
     }
-    
  
 
     private void OnBankChanged(float obj) {
@@ -38,8 +37,6 @@ public class PlayerBank : MonoBehaviour {
         _cube.SetMoneyAmount(_playerCapital);
         _gameSave.Save();
     }
-
-    
 
 
     public void AddMoney(float amount) {

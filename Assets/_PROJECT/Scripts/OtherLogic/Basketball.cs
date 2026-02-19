@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Architecture_M;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
@@ -9,6 +11,7 @@ using Random = UnityEngine.Random;
 
 
 public class Basketball : MonoBehaviour {
+    [SerializeField] private TMP_Text _scoreText;
     
     [SerializeField] private Transform _parentBall;
     [SerializeField] private PhysicsMaterial _lowBounceMaterial;
@@ -52,8 +55,10 @@ public class Basketball : MonoBehaviour {
         _hoopPosition = _hoop.position;
         _currentReward = _rewardForScore;
     }
-    
-    
+
+    private void Start() {
+        _scoreText.text = _gameSave.GetSave.CountBaskets.ToString();
+    }
 
     private void FixedUpdate() {
         _rb.AddForce(
@@ -168,9 +173,14 @@ public class Basketball : MonoBehaviour {
         
     } 
     
+    [Inject] protected IGameSave<GameSavePC> _gameSave;
+    
     private void GetMoneyReward() {
         print("Награда за попадание: " + _rewardForScore);
         _bank.AddMoney(_currentReward * _upgradesCalculator.GetUpgradeMultiplierByLevel());
+        _gameSave.GetSave.CountBaskets++;
+        _scoreText.text = _gameSave.GetSave.CountBaskets.ToString();
+        
         _money2dSpawner.SpawnOneMoneyInPoint(transform.position);
         _confettiSpawner.SpawnConfetti();
         _currentReward+= _rewardForScore;
