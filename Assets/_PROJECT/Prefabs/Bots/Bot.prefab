@@ -331,7 +331,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3132117011218670306}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.96
+  m_Radius: 2
   m_Speed: 8
   m_Acceleration: 8
   avoidancePriority: 50
@@ -361,10 +361,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.019947, y: 4.2008095, z: 1.3827591}
-  m_Center: {x: -0.006368637, y: 1.9419518, z: 0.19137955}
+  m_Size: {x: 2.2236671, y: 0.27692223, z: 1.3827591}
+  m_Center: {x: 0.09549141, y: 3.99011, z: 0.19137955}
 --- !u!114 &4953838891042978542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,9 +386,7 @@ MonoBehaviour:
   _jumpParticlesController: {fileID: 1011767767924799366}
   _landParticleController: {fileID: 2706502204186433788}
   _walkingParticles: {fileID: 4653993950270494915}
-  _timeToJumpSecDiapasone:
-    <From>k__BackingField: 1
-    <To>k__BackingField: 4
+  _botChanceToJump: 0.85
   _jumpDuration: 1
 --- !u!114 &5651165803298450137
 MonoBehaviour:

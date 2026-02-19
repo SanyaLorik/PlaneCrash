@@ -71,25 +71,32 @@ public class Basketball : MonoBehaviour {
     
     
     private void OnTriggerEnter(Collider collider) {
-        if (collider.TryGetComponent(out PlayerMovement player) || collider.TryGetComponent(out BotStateManager bot)) {
+        if (collider.TryGetComponent(out PlayerMovement _)) {
             if(_allowToCick){
                 _allowToCick = false;
                 SetBouncy(false);
-                KickBall();
+                KickBall(false);
+            }
+        }
+        if (collider.TryGetComponent(out BotStateManager _)) {
+            if(_allowToCick){
+                _allowToCick = false;
+                SetBouncy(false);
+                KickBall(true);
             }
         }
     }
 
-    private void KickBall() {
+    private void KickBall(bool botKicked) {
         if (Random.value < _chanceToGoal) {
-            ThrowInHoopAsync(_hoopPosition, true).Forget();
+            ThrowInHoopAsync(_hoopPosition, !botKicked).Forget();
         }
         else {
-            ThrowInHoopAsync(GetShieldPosition()).Forget();;
+            ThrowInHoopAsync(GetShieldPosition(), false).Forget();;
         }
     }
 
-    private async UniTask ThrowInHoopAsync(Vector3 position, bool isRewarded = false) {
+    private async UniTask ThrowInHoopAsync(Vector3 position, bool isRewarded) {
         float distance = Vector3.Distance(_parentBall.position, position);
         float timeToFlight = distance / _ballSpeed;
         Debug.Log("Дистанция до кольца: " + distance);

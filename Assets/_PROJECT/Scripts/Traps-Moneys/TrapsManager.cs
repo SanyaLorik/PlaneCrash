@@ -175,7 +175,7 @@ public class TrapsManager : MonoBehaviour {
         
         
         foreach (var boost in _boosts) {
-            if(Random.value < _chanseToSpawnFakeTrap) continue;
+            if(Random.value > _chanseToSpawnFakeTrap) continue;
             if (boost.transform.position.z > endZCoord) continue;
             if (boost.hasTrap) continue;
 

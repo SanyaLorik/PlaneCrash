@@ -57,14 +57,20 @@ public class TorpedoSpawn : MonoBehaviour {
         if (Random.value > _chanseToSpawn || _currentHitPoint.z < _boostSpawner.MinDistance) {
             return;
         }
-        // Debug.Log("PlayerOnSetBoost");
-
+        float spawnX;
+        if (!_tutorialCompiller.TutorialPassed) {
+            float sign = Random.value > 0.5f ? -1 : 1;
+            spawnX = _currentHitPoint.x + Random.Range(10, 20) * sign;
+            _currentHitPoint.x = spawnX;
+        }
+        else {
+            spawnX = _currentHitPoint.x;
+        }
         float spawnY = _levelBounds.MinY;
-        float sign = Random.value > 0.5f ? -1 : 1;
-        float spawnX = _tutorialCompiller.TutorialPassed ?  _currentHitPoint.x : _currentHitPoint.x + Random.Range(10, 20) * sign;
         
         Vector3 spawnPos = new Vector3(spawnX, spawnY, _currentHitPoint.z);
-
+        
+        
         ShowWarning(spawnPos);
         
 
@@ -80,13 +86,13 @@ public class TorpedoSpawn : MonoBehaviour {
         // Когда ее запустить чтоб она попала в нужную точку одновременно с игроком
         float fireTime = progressFire * _player.SegmentDuration;
 
-        StartCoroutine(WaitForTorpedaRoutine(fireTime, spawnPos));
+        StartCoroutine(WaitForTorpedaRoutine(fireTime, _currentHitPoint, spawnPos));
 
     }
 
-    private IEnumerator WaitForTorpedaRoutine(float time, Vector3 spawnPos) {
+    private IEnumerator WaitForTorpedaRoutine(float time, Vector3 predictedHitPoint, Vector3 spawnPos) {
         yield return new WaitForSeconds(time);
-        SpawnTorpedo(spawnPos);
+        SpawnTorpedo(predictedHitPoint, spawnPos);
     }
 
 
@@ -121,11 +127,11 @@ public class TorpedoSpawn : MonoBehaviour {
     
     
 
-    private void SpawnTorpedo(Vector3 spawnPos) {
-        Debug.Log("Spawn Torpedo:  " + spawnPos);
+    private void SpawnTorpedo(Vector3 predictedHitPoint, Vector3 spawnPos) {
+        Debug.Log("Spawn Torpedo:  " + predictedHitPoint);
         Torpedo torpedo = Instantiate(_torpedoPrefab, spawnPos, Quaternion.identity);
         Torpedo tScript = torpedo.GetComponent<Torpedo>();
-        tScript.Launch(spawnPos, _torpedoPrefab.Speed);
+        tScript.Launch(predictedHitPoint, _torpedoPrefab.Speed);
     }
     
     

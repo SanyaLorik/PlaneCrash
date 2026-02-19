@@ -20,7 +20,7 @@ public class Torpedo : MonoBehaviour {
 
     public void Launch(Vector3 targetPoint, float speed) {
         _targetPoint = targetPoint;
-        _targetPoint.y += 50f; // просто пусть выше летит
+        _targetPoint.y += 100f; // просто пусть выше летит
         Speed = speed;
         StartCoroutine(TorpedaFlightAsync());
     }

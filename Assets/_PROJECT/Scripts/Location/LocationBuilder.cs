@@ -62,7 +62,8 @@ public class LocationBuilder : MonoBehaviour {
             _tokenSource?.Cancel();
             // За спиной игрока все удаляем
             
-            _deletePoint = Mathf.Max(_playerMovement.Transform.position.z, _distanceToSpawn);
+            // - _distanceToDestroyOld добавил проверим чтоб не делитилось слишком близко
+            _deletePoint = Mathf.Max(_playerMovement.Transform.position.z-_distanceToDestroyOld, _distanceToSpawn);
             if (!Mathf.Approximately(_deletePoint, _distanceToSpawn)) {
                 HideCreationsBeforePlayerFall();
                 _lastEnd = _firstPoint.position;
