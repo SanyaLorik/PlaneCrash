@@ -95,7 +95,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
             Vector3 target = ChooseNextTarget();
             _agent.SetDestination(target);
             
-            await UniTask.Yield();
+            await UniTask.WaitUntil(() => !_agent.pathPending && _agent.hasPath, cancellationToken: token);
             Jump(token).Forget();
 
             await UniTask.WaitUntil(() => 
@@ -111,8 +111,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
 
     private async UniTask Jump(CancellationToken token) {
         if (Random.value > _botChanceToJump) return;
-        await UniTask.WaitUntil(() => !_agent.pathPending && _agent.hasPath, cancellationToken: token);
-            
+        
         float startPathLength = _agent.remainingDistance;
         float jumpLength = startPathLength / Random.Range(1.5f, 2f);
 
