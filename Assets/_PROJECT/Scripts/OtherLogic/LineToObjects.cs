@@ -70,7 +70,6 @@ public class LineToObjects : MonoBehaviour {
 
     // Метод для изменения цели
     public void SetTarget(Vector3 newTarget) {
-        Debug.Log("SetTarget: " + newTarget);
         if (_tutorialStarted && !_arrowInBoost) {
             return;
         }
@@ -131,14 +130,12 @@ public class LineToObjects : MonoBehaviour {
 
     private int _currentShowLine;
     private void PlayerOnSetBoost() {
-        Debug.Log("PlayerOnSetBoost");
         if (_currentShowLine == _countTimesShowLine) {
             HideArrow();
             return;
         }
         _arrowInBoost = true;
         _currentShowLine++;
-        Debug.LogWarning("установка игроку буста " + _player.TargetPos);
         SetTarget(_player.TargetPos);
         SetBoosterPose();
     }

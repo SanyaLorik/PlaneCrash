@@ -71,7 +71,6 @@ public class TrapsManager : MonoBehaviour {
 
     private void Awake() {
         _trapPositionCalculator = GetComponent<TrapPositionCalculator>();
-        CheckPercentCorrect();
         SerializeDict();
     }
 
@@ -105,7 +104,6 @@ public class TrapsManager : MonoBehaviour {
 
     private async UniTask SpawnAllTrapsAsync() {
         
-        // Мне нужна ловушка типа X
         
         // Начиная с зоны _zonesInfo[0] 
         await SpawnFakeTraps();
@@ -118,23 +116,23 @@ public class TrapsManager : MonoBehaviour {
 
     
     private async UniTask SpawnMoveTraps(ZoneInfo zone) {
-        float safeZone = _boostsSpawner.CalculateFalseTargetDistance();
-        
-        
-        float startZCoord = Mathf.Max(_zoneManager.DistanceToCruise * zone.PercentageStart, safeZone);
-        float endZCoord = _zoneManager.DistanceToCruise * (zone.PercentageEnd);
+        float safeZoneZ = _boostsSpawner.MinDistance;
 
-        if (startZCoord >= endZCoord) {
-            Debug.LogWarning($"Сейф дистанция дольше зоны {zone.ZoneName} ловушек на ней немаэ ");
+        float startZCoord = _zoneManager.DistanceToCruise * zone.PercentageStart;
+        float endZCoord = _zoneManager.DistanceToCruise * zone.PercentageEnd;
+        
+        if (safeZoneZ > startZCoord && safeZoneZ < endZCoord) {
+            startZCoord = safeZoneZ;
         }
-        // Debug.Log($"Спавн зоны {zone.ZoneName} будет в диапазоне: ({startZCoord}:{endZCoord})");
+        else if (safeZoneZ > endZCoord) {
+            Debug.LogWarning($"Зона {zone.ZoneName} скип");
+            return;
+        }
+        
+
 
         int chunks = zone.ChunksCount;
-
         List<ChunkDistance> chunksDiapasone = GetChunksDistances(chunks, startZCoord, endZCoord);
-
-        
-        // В каждой зоне zone.EnemiesPerChunk ловушэк
         
         
         foreach (var diapasone in chunksDiapasone) {
@@ -144,8 +142,6 @@ public class TrapsManager : MonoBehaviour {
             }
             
             float distance = diapasone.Z2 - diapasone.Z1;
-            // Debug.Log("Дистанция зоны: " + distance);
-            // Debug.Log("Кол-во ловушек: " + enemiesCount);
             
             for (int i = 0; i < enemiesCount; i++) {
                 TrapController trap = GetRandomMovableTrap();
@@ -158,14 +154,10 @@ public class TrapsManager : MonoBehaviour {
                 Vector3 _trapPosition = new Vector3(x, y, z);
                 
                 
-                // TrapController trapInstance = Instantiate(trap, _trapPosition, Quaternion.identity);
                 TrapController trapInstance = _poolManager.Spawn<TrapController>(trap.gameObject, _trapPosition, PoolType.Trap);
-                // trapInstance.gameObject.transform.SetParent(_parentForTraps);
                 
                 trapInstance.Init(_boostsSpawner, _levelBounds);
                 trapInstance.StartMoveTrap();
-                
-                
                 
                 _сreatedTraps.Add(trapInstance);
                 await UniTask.WaitForEndOfFrame();
@@ -177,9 +169,11 @@ public class TrapsManager : MonoBehaviour {
     
     private async UniTask SpawnFakeTraps() {
         // _trapObject
-        float endZCoord = _zoneManager.DistanceToCruise * (_zonesInfo[0].PercentageEnd);
-        endZCoord = Math.Max(endZCoord, _boostsSpawner.CalculateFalseTargetDistance());
+        float endZCoord = _zoneManager.DistanceToCruise * _zonesInfo[0].PercentageEnd;
+        endZCoord = Math.Max(endZCoord, _boostsSpawner.MinDistance);
 
+        
+        
         foreach (var boost in _boosts) {
             if(Random.value < _chanseToSpawnFakeTrap) continue;
             if (boost.transform.position.z > endZCoord) continue;
@@ -254,20 +248,6 @@ public class TrapsManager : MonoBehaviour {
 
     private void GetAllBoost() {
         _boosts = _boostsSpawner.GetAllBoosts();
-        // Debug.Log("Кол-во бустов: " + _boosts.Count);
     }
-
-    
-    private void CheckPercentCorrect() {
-        // float sum = 0f;
-        // foreach (var info in _zonesInfo) {
-        //     sum += info.PercentageStart;
-        // }
-        // if (sum > 1f) {
-        //     Debug.LogWarning("Сумма процентов > 100");
-        // }
-        // Debug.Log(sum);
-    }
-    
     
 }

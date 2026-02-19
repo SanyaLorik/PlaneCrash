@@ -114,13 +114,13 @@ public class LocationBuilder : MonoBehaviour {
 
     private float _deletePoint;
     private void HideCreationsBeforePlayerFall() {
-        Debug.Log($"Удаляем все штуки ДО {_deletePoint} их {_createdModules.Count} шт");
+        // Debug.Log($"Удаляем все штуки ДО {_deletePoint} их {_createdModules.Count} шт");
 
         for (int i = _createdModules.Count - 1; i >= 0; i--) {
             var module = _createdModules[i];
 
             if (module.End.position.z < _deletePoint) {
-                Debug.Log("module.End.position.z = " + module.End.position.z);
+                // Debug.Log("module.End.position.z = " + module.End.position.z);
 
                 module.HideObjects();
                 _poolManager.ReturnObjectToPool(module.gameObject, PoolType.LocationObject);
@@ -132,7 +132,7 @@ public class LocationBuilder : MonoBehaviour {
 
     
     private void HideCreationsAfterPlayerFall() {
-        Debug.Log($"Удаляем все штуки после {_deletePoint}");
+        // Debug.Log($"Удаляем все штуки после {_deletePoint}");
 
         for (int i = _createdModules.Count - 1; i >= 0; i--) {
             var module = _createdModules[i];

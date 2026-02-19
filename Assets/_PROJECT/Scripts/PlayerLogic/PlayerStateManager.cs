@@ -29,7 +29,10 @@ public class PlayerStateManager : MonoBehaviour {
         BeforeState = CurrentState;
         CurrentState = newState;
         if (newState  == PlayerState.Flight) {
-            StartFlightPositionZ = transform.position.z;
+            if (StartFlightPositionZ == 0) {
+                StartFlightPositionZ = transform.position.z;
+            }
+            Debug.Log("StartFlightPositionZ : " + StartFlightPositionZ );
         }
         else if (newState  == PlayerState.Walking) {
             _jumpParticlesController.Play();

@@ -50,12 +50,23 @@ public class BoostSpawner : MonoBehaviour {
     [Inject] ObjectPoolManager _objectPoolManager;
     
     [Inject] private DiContainer _container;
+    
     [Inject]
-    public void Init(IPlayerStatsReadOnly playerStats) {
+    private void Init(IPlayerStatsReadOnly playerStats) {
         _playerStats =  playerStats;
-        _playerStats.ChangeStats += PlayerStatsOnChangeStats;
+        _playerStats.ChangeStats += RecalculateSafeDistance;
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
-        PlayerStatsOnChangeStats();
+    }
+    
+    private float CalculateFalseTargetLength() {
+        // Debug.Log($"CalculateFalseTargetDistance: MinimumFlightTime = {_upgradesCalculator.GetLuckyByLevel()}");
+        float speed = _playerMovement.PlayerSpeed;
+        float z = speed * _upgradesCalculator.GetLuckyByLevel();
+        // Debug.Log($"Минимальная точка падения {z}м. ");
+        if (z < BoostDistance.From) {
+            Debug.LogWarning("Задано ооочень маленькое значение для зоны 45 секунд");
+        }
+        return z;
     }
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
@@ -64,9 +75,10 @@ public class BoostSpawner : MonoBehaviour {
         }
     }
 
-    private void PlayerStatsOnChangeStats() {
-        MinDistance = CalculateFalseTargetDistance();
+    private void RecalculateSafeDistance() {
+        MinDistance = CalculateFalseTargetLength() + _playerStateManager.StartFlightPositionZ;
         MoveVisualZone();
+        Debug.Log($"MinDistance = {CalculateFalseTargetLength()} + {_playerStateManager.StartFlightPositionZ}");
     }
 
 
@@ -91,7 +103,7 @@ public class BoostSpawner : MonoBehaviour {
         _cruiserPosition = cruiserPosition;
         MinimumFlightTimeIsBig = false;
         ClearAllBoosts();
-        
+        RecalculateSafeDistance();
         /* Акт в 5 этюдах:
         1. Самое легкое фейк бусты - каждый раз мы спавним просто цепочки до (minDist, cruiser-someValue) 
         2. Спавн в зоне выхода n2 правильных входов в бусты + некст до крейсера
@@ -185,7 +197,7 @@ public class BoostSpawner : MonoBehaviour {
     
     
     private void MoveVisualZone() {
-        Vector3 zonePos =  _zoneSpawn.position;
+        Vector3 zonePos = _zoneSpawn.position;
         zonePos.z = MinDistance;
         _zoneSpawn.position = zonePos;
     }
@@ -297,16 +309,7 @@ public class BoostSpawner : MonoBehaviour {
     }
 
 
-    public float CalculateFalseTargetDistance() {
-        // Debug.Log($"CalculateFalseTargetDistance: MinimumFlightTime = {_upgradesCalculator.GetLuckyByLevel()}");
-        float speed = _playerMovement.PlayerSpeed;
-        float z = speed * _upgradesCalculator.GetLuckyByLevel();
-        // Debug.Log($"Минимальная точка падения {z}м. ");
-        if (z < BoostDistance.From) {
-            Debug.LogWarning("Задано ооочень маленькое значение для зоны 45 секунд");
-        }
-        return z;
-    }
+  
     
     private Vector3 CalculateMinEndPosition() {
         Debug.Log("Подсчет позиции сейф зоны");

@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Narrator : MonoBehaviour {
+    [SerializeField] private GameObject _canvas;
     [SerializeField] private TMP_Text _text;
     [SerializeField] private RectTransform _girlImage;
     [SerializeField] private Image[] _backgrounds;
@@ -46,6 +47,9 @@ public class Narrator : MonoBehaviour {
     }
 
 
+    public void ActiveCanvas(bool state) {
+        _canvas.SetActive(state);
+    }
 
     public void SetTextWithNarattor(string text, float speakTimeAnimation) {
         _text.text = text;
@@ -86,7 +90,7 @@ public class Narrator : MonoBehaviour {
         );
         foreach (var background in _backgrounds) {
             seq.Join(
-                background.DOFade(0.9f, _durationTextShow)
+                background.DOFade(1f, _durationTextShow)
             );
         }
         seq.Join(

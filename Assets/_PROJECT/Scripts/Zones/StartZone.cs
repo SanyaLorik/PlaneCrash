@@ -4,17 +4,11 @@ using Zenject;
 
 public class StartZone : MonoBehaviour {
     
-    private BoostSpawner _boostSpawner;
-    
-    
-    [Inject]
-    public void Init(BoostSpawner boostSpawner) {
-        _boostSpawner = boostSpawner;
-    }
-    
-    
+    [Inject] private BoostSpawner _boostSpawner;
+
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerStateManager stateManager)) {
+            // Бусты уже готовы на этапе выбора множителя
             _boostSpawner.SpawnEntranceBoost();
             stateManager.ChangePlayerState(PlayerState.Flight);
         }    

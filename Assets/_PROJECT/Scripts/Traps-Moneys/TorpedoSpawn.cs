@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using SanyaBeerExtension;
 using UnityEngine;
@@ -30,6 +31,7 @@ public class TorpedoSpawn : MonoBehaviour {
     private PlayerStateManager _stateManager;
     [Inject] private LevelBounds _levelBounds;
     [Inject] private BoostSpawner _boostSpawner;
+    [Inject] TutorialCompiller _tutorialCompiller;
     
     
     [Inject]
@@ -49,8 +51,6 @@ public class TorpedoSpawn : MonoBehaviour {
         }
     }
 
-
-    private Vector3 _spawnPos;
     private void PlayerOnSetBoost() {
         float playerProgress = Random.Range(_diapasoneSpawnProgress.From, _diapasoneSpawnProgress.To);
         _currentHitPoint = _player.GetPlayerPositionAt(playerProgress);
@@ -60,8 +60,12 @@ public class TorpedoSpawn : MonoBehaviour {
         // Debug.Log("PlayerOnSetBoost");
 
         float spawnY = _levelBounds.MinY;
-        _spawnPos = new Vector3(_currentHitPoint.x, spawnY, _currentHitPoint.z);
-        ShowWarning();
+        float sign = Random.value > 0.5f ? -1 : 1;
+        float spawnX = _tutorialCompiller.TutorialPassed ?  _currentHitPoint.x : _currentHitPoint.x + Random.Range(10, 20) * sign;
+        
+        Vector3 spawnPos = new Vector3(spawnX, spawnY, _currentHitPoint.z);
+
+        ShowWarning(spawnPos);
         
 
         // Время долета до точки у торпеды
@@ -75,17 +79,24 @@ public class TorpedoSpawn : MonoBehaviour {
         
         // Когда ее запустить чтоб она попала в нужную точку одновременно с игроком
         float fireTime = progressFire * _player.SegmentDuration;
-        
-        Invoke(nameof(SpawnTorpedo), fireTime);
+
+        StartCoroutine(WaitForTorpedaRoutine(fireTime, spawnPos));
+
+    }
+
+    private IEnumerator WaitForTorpedaRoutine(float time, Vector3 spawnPos) {
+        yield return new WaitForSeconds(time);
+        SpawnTorpedo(spawnPos);
     }
 
 
     private GameObject _circleObject;
     private GameObject _rocketWarnObject;
-    private void ShowWarning() {
+    private void ShowWarning(Vector3 spawnPos) {
+        Debug.Log("ShowWarning:  " + spawnPos);
         if (_circleObject != null) {
-            _circleObject.transform.position = _spawnPos;
-            _rocketWarnObject.transform.position = _spawnPos;
+            _circleObject.transform.position = spawnPos;
+            _rocketWarnObject.transform.position = spawnPos;
             if (!_circleObject.activeSelf) {
                 _circleObject.ActiveSelf();
                 _rocketWarnObject.ActiveSelf();
@@ -93,8 +104,8 @@ public class TorpedoSpawn : MonoBehaviour {
             return;
         }
 
-        _circleObject = Instantiate(_circlePrefab, _spawnPos, Quaternion.identity);
-        _rocketWarnObject = Instantiate(_rocketWarning.gameObject, _spawnPos, Quaternion.identity);
+        _circleObject = Instantiate(_circlePrefab, spawnPos, Quaternion.identity);
+        _rocketWarnObject = Instantiate(_rocketWarning.gameObject, spawnPos, Quaternion.identity);
         // Вращаем бесконечно вокруг Y
         _circleObject.transform.DORotate(new Vector3(0, 360f, 0), 360f / _rotationSpeed, RotateMode.FastBeyond360)
             .SetLoops(-1, LoopType.Restart)
@@ -110,10 +121,11 @@ public class TorpedoSpawn : MonoBehaviour {
     
     
 
-    private void SpawnTorpedo() {
-        Torpedo torpedo = Instantiate(_torpedoPrefab, _spawnPos, Quaternion.identity);
+    private void SpawnTorpedo(Vector3 spawnPos) {
+        Debug.Log("Spawn Torpedo:  " + spawnPos);
+        Torpedo torpedo = Instantiate(_torpedoPrefab, spawnPos, Quaternion.identity);
         Torpedo tScript = torpedo.GetComponent<Torpedo>();
-        tScript.Launch(_currentHitPoint, _torpedoPrefab.Speed);
+        tScript.Launch(spawnPos, _torpedoPrefab.Speed);
     }
     
     

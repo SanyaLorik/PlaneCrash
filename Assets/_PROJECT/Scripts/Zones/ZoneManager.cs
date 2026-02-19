@@ -21,24 +21,14 @@ public class ZoneManager : MonoBehaviour {
     public float CruiserSpawnDistance { get; private set; } 
     public float DistanceToCruise { get; private set; } 
 
-    private LevelBounds _levelBounds;
-    private BoostSpawner _boostSpawner;
-
-    
+    [Inject] private LevelBounds _levelBounds;
+    [Inject] private BoostSpawner _boostSpawner;
     [Inject] private PlayerStateManager _playerStateManager;
-    
-    [Inject]
-    public void Init(BoostSpawner boostSpawner, LevelBounds levelBounds) {
-        _boostSpawner = boostSpawner;
-        _levelBounds = levelBounds;
-    }
-    
-
 
     private void Start() {
         _moneyCube.SetMoneyAmount(0);
-        
     }
+
 
 
     public void ChangeBet(float newBet) {
@@ -49,6 +39,7 @@ public class ZoneManager : MonoBehaviour {
 
 
     public void ChangeMultiplier(float newMultiplier) {
+        if (_playerStateManager.CurrentState == PlayerState.Flight) return;
         BetMultiplier = newMultiplier;
 
         if (newMultiplier == 0) {

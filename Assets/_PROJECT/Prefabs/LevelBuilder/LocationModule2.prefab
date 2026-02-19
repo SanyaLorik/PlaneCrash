@@ -201,6 +201,7 @@ GameObject:
   - component: {fileID: 639383668550150164}
   - component: {fileID: 9093598253959000199}
   - component: {fileID: 7898724777729532793}
+  - component: {fileID: 7382006338616308232}
   - component: {fileID: 2933953238802234310}
   m_Layer: 3
   m_Name: Floor
@@ -321,6 +322,27 @@ MonoBehaviour:
   _objectsToSpawn:
   - {fileID: 8958818999718805066, guid: a5148b3a1e0e98b4fad02663f753c852, type: 3}
   - {fileID: 8543363836139201828, guid: d4a8113eb4d53384eb2fdc3f584060b1, type: 3}
+--- !u!65 &7382006338616308232
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4371252999543496662}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2933953238802234310
 MonoBehaviour:
   m_ObjectHideFlags: 0
