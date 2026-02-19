@@ -37,15 +37,15 @@ public class PlayerMovement : FlightObject {
     [Inject] private LevelBounds _levelBounds;
     [Inject] private PlayerVisual _visual;
     [Inject] private IInputDirection2 _inputDirection2;
+    [Inject] private IInputJumping _inputJumping;
     
-    [Inject]
-    public void Init(PlayerConfig config, PlayerStateManager stateManager, LevelBounds levelBounds, IPlayerStatsReadOnly playerStats) {
-        _stateManager =  stateManager;
+
+    private void OnEnable() {
         _stateManager.ChangeState += OnChangeSpaceRotation;
+        _inputJumping.OnJumped += OnJump;
     }
-    
-    
-    
+
+
     private void Awake() {
         Rb = GetComponent<Rigidbody>();
         Rb.useGravity = true;
@@ -154,8 +154,8 @@ public class PlayerMovement : FlightObject {
         transform.localRotation = TargetPosRot;
     }
     
-    public void OnJump(InputAction.CallbackContext context) {
-        if (!context.performed || _stateManager.CurrentState != PlayerState.Walking) return;     // реагируем только на нажатие
+    public void OnJump() {
+        if (_stateManager.CurrentState != PlayerState.Walking) return;     // реагируем только на нажатие
         
         
         if (_jumpsUsed == 0) {
