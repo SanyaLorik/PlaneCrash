@@ -1,10 +1,13 @@
+using Architecture_M;
 using System;
 using UnityEngine;
-using Architecture_M;
-using Unity.VisualScripting;
 
 [CreateAssetMenu(menuName = "Architecture_M/Localization/Game Localization PC")]
-public class LocalizationDataPC : LocalizationData {
+public class LocalizationDataPC : LocalizationData 
+{
+    [field: Header("Статический текст")]
+    [field: SerializeField] public StaticTranslation<string>[] StaticTranslates { get; private set; }
+
     [Header("Для  больших чисел")]
     public string[] Suffixies = {"", "K", "M", "B", "T"};
     
@@ -105,7 +108,3 @@ public class UpgradeName {
     public UpgradeType Type;
     public string Name;
 }
-
-
-
-
