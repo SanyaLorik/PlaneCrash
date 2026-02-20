@@ -1,4 +1,5 @@
 ﻿<Solution>
+  <Project Path="Unity.PlasticSCM.Editor.csproj" />
   <Project Path="NaughtyAttributes.Test.csproj" />
   <Project Path="Zenject.csproj" />
   <Project Path="NaughtyAttributes.Core.csproj" />
@@ -16,7 +17,9 @@
   <Project Path="Assembly-CSharp-firstpass.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="UniTask.TextMeshPro.csproj" />
+  <Project Path="Unity.CollabProxy.Editor.csproj" />
   <Project Path="CustomPlayButton.Editor.csproj" />
   <Project Path="UniTask.Editor.csproj" />
   <Project Path="UniTask.DOTween.csproj" />
+  <Project Path="Unity.PlasticSCM.Editor.Entities.csproj" />
 </Solution>
