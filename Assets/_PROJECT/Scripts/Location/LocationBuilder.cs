@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using NaughtyAttributes;
 using Zenject;
 
 
@@ -23,14 +21,19 @@ public class LocationBuilder : MonoBehaviour {
     private float _nextSpawnDistance;
     private float _nextDestroyDistance;
     
+    private PlayerStateManager _playerStateManager;
+    
+     
+    private List<LocationModule> _createdModulesActive = new ();
+    private List<LocationModule> _createdModulesResetBuffer = new ();
+    
+    private CancellationTokenSource _tokenSource;
+    
     
     
     [Inject] private ObjectPoolManager _poolManager;
     [Inject] private PlayerMovement _playerMovement;
     [Inject] private DiContainer _diContainer;
-
-    private PlayerStateManager _playerStateManager;
-
     [Inject] LocalizationDataPC _localizationDataPC;
     
     
@@ -42,18 +45,28 @@ public class LocationBuilder : MonoBehaviour {
     }
 
     private void Awake() {
-        _deletePoint = _distanceToSpawn; // берем в 2 раза больше просто чтоб при первом спавне не исчезало
-        _lastEnd = _firstPoint.position;
-        RespawnStartingLocation();
+        StartInitAsync().Forget();
     }
 
 
-    private CancellationTokenSource _tokenSource;
+    private async UniTask StartInitAsync() {
+        _deletePoint = _distanceToSpawn;
+        _lastEnd = _firstPoint.position;
+        
+        _tokenSource = new CancellationTokenSource();
+        await SpawnStartDistanceAsync(_tokenSource.Token);
+        
+        _createdModulesActive.AddRange(_createdModulesResetBuffer);
+        _createdModulesResetBuffer.Clear();
+    }
+
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Flight) {
             _nextSpawnDistance = (_playerMovement.Transform.position.z + _distanceToSpawnNew);
             _nextDestroyDistance =  _distanceToSpawn;
+            
+            _tokenSource?.Cancel();
             _tokenSource = new CancellationTokenSource();
             ConstructRoutine(_tokenSource.Token).Forget();
         }
@@ -62,22 +75,22 @@ public class LocationBuilder : MonoBehaviour {
             _tokenSource?.Cancel();
             // За спиной игрока все удаляем
             
-            // - _distanceToDestroyOld добавил проверим чтоб не делитилось слишком близко
-            _deletePoint = Mathf.Max(_playerMovement.Transform.position.z-_distanceToDestroyOld, _distanceToSpawn);
+            _deletePoint = Mathf.Max(_playerMovement.Transform.position.z, _distanceToSpawn);
+            // игрок перелетел спавн
             if (!Mathf.Approximately(_deletePoint, _distanceToSpawn)) {
-                HideCreationsBeforePlayerFall();
-                _lastEnd = _firstPoint.position;
-                // Спавн на спавненском
                 RespawnStartingLocation();
             }
         }
         else if (state == PlayerState.Walking && !Mathf.Approximately(_deletePoint, _distanceToSpawn)) {
-            HideCreationsAfterPlayerFall();
+            HideCreations();
+            _createdModulesActive.AddRange(_createdModulesResetBuffer);
+            _createdModulesResetBuffer.Clear();
         }
 
     }
 
     private void RespawnStartingLocation() {
+        _lastEnd = _firstPoint.position;
         _tokenSource?.Cancel();
         _tokenSource = new CancellationTokenSource();
         SpawnStartDistanceAsync(_tokenSource.Token).Forget();
@@ -91,14 +104,14 @@ public class LocationBuilder : MonoBehaviour {
                 return;
             float playerZ = _playerMovement.Transform.position.z;
             
-            if (playerZ > _nextSpawnDistance) {
+            if (playerZ > _nextSpawnDistance && !token.IsCancellationRequested) {
                 _nextSpawnDistance += _distanceToSpawnNew;
-                SpawnNext();
+                SpawnNext(_createdModulesActive);
             }
 
             if (playerZ > _nextDestroyDistance) {
                 _nextDestroyDistance += _distanceToDestroyOld;
-                if (_createdModules.Count > 0) {
+                if (_createdModulesActive.Count > 0 && !token.IsCancellationRequested) {
                     HideOldestModule();
                 }
             }
@@ -107,50 +120,34 @@ public class LocationBuilder : MonoBehaviour {
     }
 
     private async UniTask SpawnStartDistanceAsync(CancellationToken token) {
-        while (_lastEnd.z < _distanceToSpawn) {
-            SpawnNext();
+        Debug.LogWarning("SpawnStartDistanceAsync");
+        while (_lastEnd.z < _distanceToSpawn && !token.IsCancellationRequested) {
+            SpawnNext(_createdModulesResetBuffer);
             await UniTask.Yield(token);
         }
     }
 
     private float _deletePoint;
-    private void HideCreationsBeforePlayerFall() {
-        // Debug.Log($"Удаляем все штуки ДО {_deletePoint} их {_createdModules.Count} шт");
-
-        for (int i = _createdModules.Count - 1; i >= 0; i--) {
-            var module = _createdModules[i];
-
-            if (module.End.position.z < _deletePoint) {
-                // Debug.Log("module.End.position.z = " + module.End.position.z);
-
-                module.HideObjects();
-                _poolManager.ReturnObjectToPool(module.gameObject, PoolType.LocationObject);
-
-                _createdModules.RemoveAt(i);
-            }
-        }
-    }
+    
 
     
-    private void HideCreationsAfterPlayerFall() {
-        // Debug.Log($"Удаляем все штуки после {_deletePoint}");
+    private void HideCreations() {
+        Debug.LogWarning("HideCreationsAfterPlayerFall");
 
-        for (int i = _createdModules.Count - 1; i >= 0; i--) {
-            var module = _createdModules[i];
+        for (int i = _createdModulesActive.Count - 1; i >= 0; i--) {
+            var module = _createdModulesActive[i];
+            module.HideObjects();
+            _poolManager.ReturnObjectToPool(module.gameObject, PoolType.LocationObject);
 
-            if (module.End.position.z >= _deletePoint) {
-                module.HideObjects();
-                _poolManager.ReturnObjectToPool(module.gameObject, PoolType.LocationObject);
-
-                _createdModules.RemoveAt(i);
-            }
+            _createdModulesActive.RemoveAt(i);
         }
     }
 
 
     private void HideOldestModule() {
-        LocationModule oldestModule = _createdModules[0];
-        foreach (var createdModule in _createdModules) {
+        Debug.Log("HideOldestModule");
+        LocationModule oldestModule = _createdModulesActive[0];
+        foreach (var createdModule in _createdModulesActive) {
             if (createdModule.transform.position.z < oldestModule.transform.position.z) {
                 oldestModule = createdModule;
             }
@@ -158,17 +155,17 @@ public class LocationBuilder : MonoBehaviour {
 
         oldestModule.HideObjects();
         _poolManager.ReturnObjectToPool(oldestModule.gameObject, PoolType.LocationObject);
-        _createdModules.Remove(oldestModule);
+        _createdModulesActive.Remove(oldestModule);
     }
     
     
-    
-    private List<LocationModule> _createdModules = new ();
-    private void SpawnNext() {
+   
+    private void SpawnNext(List<LocationModule> list) {
+        Debug.Log("SpawnNext");
         var prefab = _buildingModulesPrefabs[Random.Range(0, _buildingModulesPrefabs.Count)];
         
         LocationModule module = _poolManager.Spawn<LocationModule>(prefab.gameObject, Vector3.zero, PoolType.LocationObject);
-        _createdModules.Add(module);
+        list.Add(module);
         module.Init(_diContainer);
         
         // Offset

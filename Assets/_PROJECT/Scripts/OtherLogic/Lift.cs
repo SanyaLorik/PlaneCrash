@@ -26,7 +26,7 @@ public class Lift : MonoBehaviour {
         bank.BankChanged += BankOnBankChanged;
     }
 
-    private void BankOnBankChanged(float amount) {
+    private void BankOnBankChanged(long amount) {
         CalculateMoneyDistance();
         
     }

@@ -1,16 +1,19 @@
-using System;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
 public class RangVisual : MonoBehaviour {
-    [SerializeField] private Image _currentLevel;
-    [SerializeField] private Image _recordLevel;
-    [SerializeField] private RectTransform _barWidth;
-    [SerializeField] private RectTransform _playerIcon;
-    [SerializeField] private RangUnit _rangPrefab;
+    [SerializeField] private RectTransform _currentImageRt;
+    [SerializeField] private RectTransform _recordImageRt;
 
+    
+    [SerializeField] private RectTransform _barWidth;
+    [SerializeField] private RectTransform _pointerIcon;
+    [SerializeField] private RectTransform _recordPointerIcon;
+    
+    [SerializeField] private RangUnit[] _rangPrefabs;
+
+    [Header("Поверхности")]
     [SerializeField] private GameObject _planePrefab;
     [SerializeField] private Transform _planesParent;
     [SerializeField] private Transform _moneyCubeBottomPoint;
@@ -22,27 +25,30 @@ public class RangVisual : MonoBehaviour {
     
     private float _maxMoney;
     private float _xStart;
-    private float _xMax;
+    private float _parentWidth;
     private float _yPos;
     
-    private PlayerBank _playerBank;
+    [Inject] private PlayerBank _playerBank;
     [Inject] private RangConfig _config;
     [Inject] private MoneyCube _moneyCube;
     [Inject] private LocalizationDataPC _localization;
+    [Inject] private NumberFormatter _formatter;
 
-    [Inject]
-    public void Init(PlayerBank playerBank) {
-        _playerBank = playerBank;
+
+
+    private void OnEnable() {
         _playerBank.BankChanged += PlayerBankOnBankChanged;
-
-        
     }
-    
+
+
     private void Start() {
         CalculateMaxMoney();
         CalculateX();
         InstanceRangs();
         SetPlanes();
+        
+        PlayerBankOnBankChanged(_playerBank.PlayerCapital);
+        UpdateRecord();
     }
 
     private void SetPlanes() {
@@ -51,53 +57,64 @@ public class RangVisual : MonoBehaviour {
             float planeY = _moneyCube.GetCubeHeight(rang.Money) - _moneyCubeBottomPoint.position.y;
             Vector3 position = new Vector3(_planesParent.transform.position.x, planeY, _planesParent.transform.position.z);
             // Debug.Log($"Для ранга: {rang.Name} высота будет: {planeY}");
-            GameObject plane = Instantiate(_planePrefab, position, Quaternion.identity, _planesParent);
+            Instantiate(_planePrefab, position, Quaternion.identity, _planesParent);
             // plane.transform.position = position;
         }
         
     }
     
-    
-
-
     private void InstanceRangs() {
-        foreach (var rang in _config.Rangs) {
+        for (var i = 0; i < _config.Rangs.Count; i++) {
+            var rang = _config.Rangs[i];
             float rangPercent = rang.Money / _maxMoney;
-            
-            float rangXPos = Mathf.Lerp(_xStart, _xMax, rangPercent);
-            
-            
-            RangUnit rangInstance = Instantiate(_rangPrefab, _barWidth);
-            RectTransform rt = rangInstance.GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(rangXPos, 0f);
-            
-            rangInstance.SetData(_localization.GetRangName(rang.Id), rang.Sprite);
+
+            float rangXPos = Mathf.Lerp(_xStart, _parentWidth, rangPercent);
+            Debug.Log(i + " = " + rangXPos );
+            _rangPrefabs[i].ChangeRectTransform(rangXPos);
+            _rangPrefabs[i].SetData(_formatter.ValuteFormatter(rang.Money), rang.Sprite);
         }
     }
     
     
-    private void PlayerBankOnBankChanged(float amount) {
-        if (amount > _record) {
-            _record =  amount;
-            _recordLevel.fillAmount = GetFillAmount(_record);
+    private void PlayerBankOnBankChanged(long amount) {
+        float percent = Mathf.Clamp01(amount / _maxMoney);
+        
+        // Текущий
+        MovePointerByPercent(percent, _pointerIcon);
+        MoveByPercent(percent, _currentImageRt);
+
+        // Рекорд
+        if (amount > _playerBank.PlayerRecord) {
+            UpdateRecord();
         }
+    }
 
-        float percent = GetFillAmount(amount);
-        _currentLevel.fillAmount = percent;
-        float rangXPos = Mathf.Lerp(_xStart, _xMax, percent);
-        _playerIcon.anchoredPosition = new Vector2(rangXPos, _playerIcon.anchoredPosition.y);
+    private void UpdateRecord() {
+        float percent = Mathf.Clamp01(_playerBank.PlayerRecord / _maxMoney);
+        MovePointerByPercent(percent, _recordPointerIcon);
+        MoveByPercent(percent, _recordImageRt);
+    }
 
-        // А еще игрока сдвигать относительно продвижения зеленого fillAmount
+
+    private void MovePointerByPercent(float percentForCurrent, RectTransform iconRect) {
+        float xPosForPointer = Mathf.Lerp(_xStart, _parentWidth, percentForCurrent);
+        iconRect.anchoredPosition = new Vector2(xPosForPointer, iconRect.anchoredPosition.y);
+    }
+
+
+    private void MoveByPercent(float percent, RectTransform  rectTransform) {
+        rectTransform.offsetMax = new Vector2(-_parentWidth * (1f - percent), 0);
     }
 
 
 #region Helpers
-    private float GetFillAmount(float money) => Mathf.Clamp01(money / _maxMoney);
 
     private void CalculateX() {
-        float barWidth = _barWidth.rect.width;
-        _xStart = -barWidth * 0.5f;
-        _xMax = barWidth * 0.5f;
+        _xStart = 0f;
+        _parentWidth = _barWidth.rect.width;
+        Debug.Log($"_barWidth.rect.width = {_barWidth.rect.width}");
+        Debug.Log($"_xStart = {_xStart}");
+        Debug.Log($"_parentWidth = {_parentWidth}");
     }
 
 
@@ -109,8 +126,6 @@ public class RangVisual : MonoBehaviour {
             }
         }
     }
-    
-    
     
 #endregion
 }

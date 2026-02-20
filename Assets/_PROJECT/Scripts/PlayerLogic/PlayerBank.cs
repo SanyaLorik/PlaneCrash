@@ -9,68 +9,72 @@ using Zenject;
 
 public class PlayerBank : MonoBehaviour {
     
-    [SerializeField] private TMP_Text _playerCapitalVisual;
+    [SerializeField] private TMP_Text PlayerCapitalVisual;
     [SerializeField] private MoneyCube _cube;
-    private float _playerCapital;
     
     
-    public event Action<float> BankChanged;
-    public event Action<float> MoneyCollect;
-    public float PlayerCapital { get => _playerCapital;  }
+    public event Action<long> BankChanged;
+    public event Action<int> MoneyCollect;
+
+    public long PlayerCapital {
+        get => _gameSave.GetSave.Money;
+        private set => _gameSave.GetSave.Money = value;
+    }
+
+    public long PlayerRecord {
+        get => _gameSave.GetSave.RecordMoney; 
+        private set => _gameSave.GetSave.RecordMoney = value;
+    }
 
     [Inject] IGameSave<GameSavePC> _gameSave;
     
     private void Start() {
         BankChanged += OnBankChanged;
-        LoadPlayerMoney();
+        OnBankChanged(PlayerCapital);
     }
 
-    
-    private void LoadPlayerMoney() {
-        _playerCapital = _gameSave.GetSave.Money;
-        BankChanged?.Invoke(PlayerCapital);
-    }
- 
-
-    private void OnBankChanged(float obj) {
-        _gameSave.GetSave.Money = (long)obj;
-        _cube.SetMoneyAmount(_playerCapital);
+    private void OnBankChanged(long amount) {
+        _gameSave.GetSave.Money = amount;
+        _cube.SetMoneyAmount(PlayerCapital);
         _gameSave.Save();
     }
 
 
-    public void AddMoney(float amount) {
+    public void AddMoney(double amount) {
         if (amount < 0) return;
-        _playerCapital += amount;
-        BankChanged?.Invoke(_playerCapital);
+        PlayerCapital += (long)amount;
+        if (PlayerRecord < PlayerCapital) {
+            PlayerRecord = PlayerCapital;
+        }
+        BankChanged?.Invoke(PlayerCapital);
     }
     
     
-    public void AddFlightMoney(float amount) {
+    public void AddFlightMoney(int amount) {
         if (amount < 0) return;
-        _playerCapital += amount;
+        PlayerCapital += amount;
         MoneyCollect?.Invoke(amount);
     }
     
     
     
-    public void Buy(float amount) {
-        if (amount > _playerCapital) return;
-        _playerCapital -= amount;
-        BankChanged?.Invoke(_playerCapital);
+    public void Buy(double amount) {
+        if (amount > PlayerCapital) return;
+        PlayerCapital -= (long)amount;
+        BankChanged?.Invoke(PlayerCapital);
     }
 
 
-    public bool CanBuy(float amount) =>
-        _playerCapital >= amount;
+    public bool CanBuy(double amount) =>
+        PlayerCapital >= amount;
     
     public void GiveMeYourFuckingMoneyNigga(float amount) {
-        if (amount > _playerCapital) {
+        if (amount > PlayerCapital) {
             Debug.LogWarning("Как ты сука поставил денег больше чем у тебя было");
-            _playerCapital = 0;
+            PlayerCapital = 0;
         }
-        _playerCapital -= amount;
-        BankChanged?.Invoke(_playerCapital);
+        PlayerCapital -= (long)amount;
+        BankChanged?.Invoke(PlayerCapital);
     }
     
 

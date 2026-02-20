@@ -31,7 +31,7 @@ public class UpgradesCalculator {
 
 
     public float GetUpgradeMultiplierByLevel(bool thisLevel = true, bool forceUpdate = false) {
-        if (thisLevel) {
+        if (thisLevel) { 
             return _config.XMultiplierUpgrade.BaseValue * Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel-1) * GetPetMultiplier(forceUpdate);
         }
         return _config.XMultiplierUpgrade.BaseValue * Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel) * GetPetMultiplier(forceUpdate);

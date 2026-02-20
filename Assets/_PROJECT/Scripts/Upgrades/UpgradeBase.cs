@@ -21,7 +21,7 @@ public abstract class UpgradeBase : MonoBehaviour {
     
     
     protected int _level = 1;
-    protected float _currentPrice;
+    protected double _currentPrice;
     protected IPlayerStatsWritable _playerStats;
     protected PlayerBank _bank;
     
@@ -46,7 +46,7 @@ public abstract class UpgradeBase : MonoBehaviour {
 
 
 
-    private void BankOnBankChanged(float playerCapital) {
+    private void BankOnBankChanged(long playerCapital) {
         CheckColor();
     }
 

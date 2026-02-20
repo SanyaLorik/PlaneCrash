@@ -96,7 +96,8 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
             _agent.SetDestination(target);
             
             await UniTask.WaitUntil(() => !_agent.pathPending && _agent.hasPath, cancellationToken: token);
-            Jump(token).Forget();
+            Jump(token).Forget(
+                );
 
             await UniTask.WaitUntil(() => 
                 !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance,

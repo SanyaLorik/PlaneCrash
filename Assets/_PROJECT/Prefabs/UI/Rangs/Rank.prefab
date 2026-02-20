@@ -29,7 +29,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2290127627120577366}
   m_Father: {fileID: 3832585572106649089}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -105,12 +106,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3832585572106649089}
+  m_Father: {fileID: 4515283086980336121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -48}
-  m_SizeDelta: {x: 0, y: 96}
+  m_AnchoredPosition: {x: 0, y: -8.000053}
+  m_SizeDelta: {x: 76, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &385115717778466198
 CanvasRenderer:
@@ -159,6 +160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3832585572106649089}
+  - component: {fileID: 7407601953730010754}
   m_Layer: 0
   m_Name: Rank
   m_TagString: Untagged
@@ -179,7 +181,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4515283086980336121}
-  - {fileID: 2290127627120577366}
   - {fileID: 1945863523967075808}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -188,6 +189,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 188.3953}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7407601953730010754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245046147904293456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0125967e8c4e3a42a8b73880e99dfb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RangUnit
+  _moneyText: {fileID: 3400499869889942470}
+  _img: {fileID: 8652614789921273849}
+  _rt: {fileID: 3832585572106649089}
 --- !u!1 &8957942616777356569
 GameObject:
   m_ObjectHideFlags: 0

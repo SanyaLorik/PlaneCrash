@@ -32,7 +32,7 @@ public class UpgradeItemVisual : MonoBehaviour {
         _titleVisual.text = text;
     }
     
-    public void UpdateData(int level, float xCurrent, float xNext, float price, string mesure, bool needRound) {
+    public void UpdateData(int level, float xCurrent, float xNext, double price, string mesure, bool needRound) {
         // Debug.Log($"level {level} xCurrent {xCurrent} xNext {xNext} price {price}");
         _levelVisual.text = level.ToString();
         _priceVisual.text = _formatter.ValuteFormatter(price);

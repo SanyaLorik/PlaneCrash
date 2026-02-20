@@ -89,9 +89,9 @@ public class BotFlight : FlightObject, IBotBehaviour {
     }
     
     private async UniTaskVoid BotFlightCycleAsync(CancellationToken token) {
-        float currentY = 2000f;
         // Чуть выше пола
-        float minY = _levelBounds.MinY + 10f;
+        float minY = _levelBounds.MinY+2f; // чуть выше шоб рост
+        float currentY = minY+1;
         Debug.Log("Бот в " + transform.position.y);
         Debug.Log("minY = " + minY);
         while (currentY > minY && !token.IsCancellationRequested) {

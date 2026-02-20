@@ -66,7 +66,7 @@ public class BetVisual : MonoBehaviour {
     }
 
 
-    private void OnChangeBank(float capital) {
+    private void OnChangeBank(long capital) {
 
         _playerBank.text = string.Format(
             _localization.PlayerBalanceTemplate,

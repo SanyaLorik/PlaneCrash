@@ -73,7 +73,7 @@ public class RewardManager : MonoBehaviour {
         _betMultiplier.ActiveSelf();
         _bet.ActiveSelf();
         
-        float reward = 
+        double reward = 
             _upgradesCalculator.GetUpgradeMultiplierByLevel() 
             *
             (_zoneManager.BetAmount * _zoneManager.BetMultiplier) 
@@ -110,9 +110,9 @@ public class RewardManager : MonoBehaviour {
             return;
         }
         ShowRewardWindow();
-        float reward = _playerStateManager.CurrentPlayerDistance 
+        long reward = (long)(_playerStateManager.CurrentPlayerDistance 
                        *
-                       _upgradesCalculator.GetUpgradeMultiplierByLevel();
+                       _upgradesCalculator.GetUpgradeMultiplierByLevel());
         
         _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.BetAmount);
         _playerBank.AddMoney(reward);
@@ -123,7 +123,7 @@ public class RewardManager : MonoBehaviour {
         _bet.DisactiveSelf();
     }
 
-    private void ShowBaseReward(float reward, bool cruisered) {
+    private void ShowBaseReward(double reward, bool cruisered) {
      
         
         // Выигрышь

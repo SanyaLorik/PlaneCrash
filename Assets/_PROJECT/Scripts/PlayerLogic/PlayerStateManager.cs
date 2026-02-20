@@ -3,7 +3,7 @@ using Architecture_M;
 using UnityEngine;
 using Zenject;
 
-public class PlayerStateManager : MonoBehaviour {
+public class PlayerStateManager : MonoBehaviour{
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private JumpParticlesController _jumpParticlesController;
     [SerializeField] private Transform _startFlightPoint;
@@ -26,6 +26,8 @@ public class PlayerStateManager : MonoBehaviour {
     [field: SerializeField] public PlayerState CurrentState { get; private set; } = PlayerState.Walking;
     public PlayerState BeforeState { get; private set; } = PlayerState.Walking;
 
+    
+    
     public void ChangePlayerState(PlayerState newState) {
         if (CurrentState == newState) {
             return;
@@ -51,4 +53,6 @@ public class PlayerStateManager : MonoBehaviour {
         Debug.Log("CurrentPlayerState: " + CurrentState);
         ChangeState?.Invoke(CurrentState);
     }
+
+
 }
