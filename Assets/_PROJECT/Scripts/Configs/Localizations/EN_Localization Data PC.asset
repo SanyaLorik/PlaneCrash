@@ -19,6 +19,39 @@ MonoBehaviour:
   <SecondTime>k__BackingField: s
   <AdsInterstitial>k__BackingField: 
   <LabelProgressNarrator>k__BackingField: 
+  <StaticTranslates>k__BackingField:
+  - <Id>k__BackingField: ad_in_text
+    <Data>k__BackingField: Ads in
+  - <Id>k__BackingField: zone_upgrade
+    <Data>k__BackingField: Upgrade zone
+  - <Id>k__BackingField: start_text
+    <Data>k__BackingField: Start
+  - <Id>k__BackingField: start_in_shadow
+    <Data>k__BackingField: Fly!
+  - <Id>k__BackingField: prize_money
+    <Data>k__BackingField: Prize money
+  - <Id>k__BackingField: money_height
+    <Data>k__BackingField: 'Height '
+  - <Id>k__BackingField: tower_money
+    <Data>k__BackingField: Money tower
+  - <Id>k__BackingField: lift
+    <Data>k__BackingField: Lift
+  - <Id>k__BackingField: parkour
+    <Data>k__BackingField: Parkour
+  - <Id>k__BackingField: top_player
+    <Data>k__BackingField: Top-players
+  - <Id>k__BackingField: top_donater
+    <Data>k__BackingField: Top-donaters
+  - <Id>k__BackingField: mini_game
+    <Data>k__BackingField: Mini-games
+  - <Id>k__BackingField: trampoline
+    <Data>k__BackingField: Trampolines
+  - <Id>k__BackingField: score
+    <Data>k__BackingField: 'Score:'
+  - <Id>k__BackingField: basketball
+    <Data>k__BackingField: Basketball
+  - <Id>k__BackingField: music
+    <Data>k__BackingField: Music
   Suffixies:
   - 
   - K
@@ -31,9 +64,10 @@ MonoBehaviour:
   RewardTemplate: 'Reward: ${0}'
   UpgradeMultiplierTemplate: 'Reward Multiplier: x{0}'
   FlightResultTitle: Result
-  FlightComebackButton: Come back
+  FlightComebackButton: Back!
   PlayerBalanceTemplate: 'Balance: {0}'
   OpenButton: Open!
+  TakeAPet: Take a pet!
   TaskCompletedNotification: Task complete!
   CollectRewardNotification: Collect reward
   TaskTableTitle: Tasks
@@ -72,19 +106,6 @@ MonoBehaviour:
     Phrase: "You can upgrade your character. Let\u2019s boost your distance reward."
   - Id: 10
     Phrase: You can also earn money in mini-games. Good luck out there!
-  RangName:
-  - Id: 0
-    Name: Noob
-  - Id: 1
-    Name: Loh
-  - Id: 2
-    Name: Yeban
-  - Id: 3
-    Name: Petuh
-  - Id: 4
-    Name: Diamond
-  - Id: 5
-    Name: Legend
   UpgradeName:
   - Type: 0
     Name: Multiplier

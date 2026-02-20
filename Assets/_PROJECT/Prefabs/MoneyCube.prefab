@@ -4846,7 +4846,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8077793226379734792}
   - component: {fileID: 744897865116897679}
-  - component: {fileID: 4951356058960082027}
   m_Layer: 0
   m_Name: MoneyCube
   m_TagString: Untagged
@@ -4884,35 +4883,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e9c60f5f0c28640bd154649c63ab89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyCube
-  rend: {fileID: 8722436505426731718}
-  tileWorldSize: 3
-  tilingRatio: {x: 5, y: 20}
-  moneyMaterialSlots: 000000000100000003000000
+  _moneyCubeType: 0
+  _cubeText: {fileID: 0}
   _bottomPoint: {fileID: 0}
+  _scaleDivider: 2
   _maxSide: 7
-  _baseSide: 1
-  _textCount: {fileID: 0}
   _baseAmount: 1000
---- !u!114 &4951356058960082027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8784285958262203841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c83caa0cbf9b2544cae5028ed26c888d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MoneyRadiusSpawn
-  _spawnRadius: 10
-  _spawnCount: 60
-  _spawnObject: {fileID: 1115384096084246601, guid: 477970b972ecc474890b72e4472c6673, type: 3}
-  _bottomPoint: {fileID: 0}
-  _yCorrection: -0.05
-  _minDistance: 1
-  _countLevels: 3
-  _newLevelProll: 0.54
+  _rend: {fileID: 8722436505426731718}
+  _tileWorldSize: 5
+  _tilingRatio: {x: 5, y: 10}
+  _moneyMaterialSlots: 00000000010000000200000003000000
+  _upSideTiling: {x: 5, y: 10}
+  _upSideMaterialSlot: 0
+  _moneyRadiusSpawn: {fileID: 0}
 --- !u!1001 &6096965321556198467
 PrefabInstance:
   m_ObjectHideFlags: 0

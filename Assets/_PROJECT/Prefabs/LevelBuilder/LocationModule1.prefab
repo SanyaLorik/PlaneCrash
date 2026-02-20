@@ -200,9 +200,9 @@ GameObject:
   - component: {fileID: 6944889848934752112}
   - component: {fileID: 639383668550150164}
   - component: {fileID: 9093598253959000199}
-  - component: {fileID: 7898724777729532793}
   - component: {fileID: 1866460481962283604}
   - component: {fileID: 7140410793547470455}
+  - component: {fileID: 7898724777729532793}
   m_Layer: 3
   m_Name: Floor
   m_TagString: Untagged
@@ -303,25 +303,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7898724777729532793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4371252999543496662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5763d773b5673b047828052b9e431253, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LocationZone
-  _locationType: 0
-  _spawnPointCount: 2
-  _minPointDistance: 20
-  _renderer: {fileID: 639383668550150164}
-  _objectsToSpawn:
-  - {fileID: 8958818999718805066, guid: a5148b3a1e0e98b4fad02663f753c852, type: 3}
-  - {fileID: 8543363836139201828, guid: d4a8113eb4d53384eb2fdc3f584060b1, type: 3}
 --- !u!65 &1866460481962283604
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -356,6 +337,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStateChanger
   _playerState: 2
+--- !u!114 &7898724777729532793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4371252999543496662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5763d773b5673b047828052b9e431253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocationZone
+  _locationType: 0
+  _spawnPointCount: 2
+  _minPointDistance: 20
+  _renderer: {fileID: 639383668550150164}
+  _objectsToSpawn:
+  - {fileID: 8958818999718805066, guid: a5148b3a1e0e98b4fad02663f753c852, type: 3}
+  - {fileID: 8543363836139201828, guid: d4a8113eb4d53384eb2fdc3f584060b1, type: 3}
 --- !u!1 &7126111813579267747
 GameObject:
   m_ObjectHideFlags: 0

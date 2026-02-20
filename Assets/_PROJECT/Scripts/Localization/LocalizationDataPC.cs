@@ -25,6 +25,7 @@ public class LocalizationDataPC : LocalizationData
     [Header("UI")]
     public string PlayerBalanceTemplate;
     public string OpenButton;
+    public string TakeAPet;
    
     
     [Header("Tasks")]

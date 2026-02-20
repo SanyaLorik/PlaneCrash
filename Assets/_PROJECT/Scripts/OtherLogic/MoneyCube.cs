@@ -1,6 +1,5 @@
 using System;
 using Architecture_M;
-using DG.Tweening;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -25,8 +24,8 @@ public class MoneyCube : MonoBehaviour {
 
     [Header("Настройка размеров ")]
     [SerializeField] private float _maxSide = 5f; 
-    [SerializeField] private float _baseSide = 1f;
-    [SerializeField] private float _baseAmount = 10000f;
+    private float _baseSide = 1f;
+    [SerializeField] private float _baseAmount = 100000;
     
     
     [Header("Настройка всего тайлинга ")]
@@ -39,7 +38,6 @@ public class MoneyCube : MonoBehaviour {
     [Header("Настройка верхнего тайлинга")]
     [SerializeField] private Vector2 _upSideTiling;
     [SerializeField] private int _upSideMaterialSlot;
-    [SerializeField] private MoneyRadiusSpawn _moneyRadiusSpawn;
    
     private bool IsBetCube => _moneyCubeType == MoneyCubeType.Bet;
    
@@ -71,7 +69,7 @@ public class MoneyCube : MonoBehaviour {
     }
     
     
-    public void SetMoneyAmount(float amount, bool updateMiniMoney = true) {
+    public void SetMoneyAmount(float amount) {
         
         
         Vector3 newScale = NewScale(amount);
@@ -84,9 +82,6 @@ public class MoneyCube : MonoBehaviour {
             transform.position += new Vector3(0, deltaY, 0);
         }
 
-        if (updateMiniMoney) {
-            UpdateSpawnRadius();
-        }
         UpdateTiling();
         SetCubeHeighVisual();
     }
@@ -107,9 +102,9 @@ public class MoneyCube : MonoBehaviour {
 
         foreach (int id in _moneyMaterialSlots) {
             Vector2 tiling = finalTiling;
-
+            tiling.x = Mathf.Min(tiling.x, _upSideTiling.x);
+            
             if (id == _upSideMaterialSlot) {
-                tiling.x = Mathf.Min(tiling.x, _upSideTiling.x);
                 tiling.y = Mathf.Min(tiling.y, _upSideTiling.y);
             }
 
@@ -152,10 +147,5 @@ public class MoneyCube : MonoBehaviour {
         return newScale;
     }
 
-
-    // Прокину здесь чтоб не создавать еще ссылок
-    private void UpdateSpawnRadius() {
-        _moneyRadiusSpawn.SpawnMoney();
-    }
 
 }

@@ -34,7 +34,7 @@ public class ZoneManager : MonoBehaviour {
     public void ChangeBet(float newBet) {
         BetAmount = newBet;
         ChooseBet?.Invoke(BetAmount);
-        _moneyCube.SetMoneyAmount(BetAmount,false);
+        _moneyCube.SetMoneyAmount(BetAmount);
     }
 
 

@@ -10,7 +10,7 @@ public class PetStationViewPurchase : PetStationViewBase {
     }
 
 
-    protected override void AddPet() {
+    protected override void TryAddPet() {
         Debug.Log("Buy pet");
         PetChance pet = GetRandomPet(_config);
         _bank.GiveMeYourFuckingMoneyNigga(_config.Price);

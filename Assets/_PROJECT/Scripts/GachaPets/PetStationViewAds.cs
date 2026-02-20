@@ -1,7 +1,10 @@
+using System;
+using Architecture_M;
+using MirraSDK_M;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Zenject;
 
 
 public class PetStationViewAds : PetStationViewBase {
@@ -11,6 +14,7 @@ public class PetStationViewAds : PetStationViewBase {
     [SerializeField] private TMP_Text _countTextVisual;
     [SerializeField] private Image _rewardProgress;
     
+    [Inject] private AdvertisingMonetizationMirra _advertisingMonetizationMirra;
     
 
     private void Awake() {
@@ -18,11 +22,29 @@ public class PetStationViewAds : PetStationViewBase {
         _rewardProgress.fillAmount = (float)_showedReward / _countToShowReward;
     }
 
-    
 
 
-    protected override void AddPet() {
-        // Просмотрел рекламу допустим
+    protected override void TryAddPet() {
+        _advertisingMonetizationMirra.InvokeRewarded(
+            null,
+            (isSuccess) => AddPetByReward(isSuccess)
+        );
+        
+            
+        // 1. Обычный метод
+        bool MyMethod(bool value) {
+            Debug.Log(value);
+            return true;
+        }
+
+        // 2. Создаем делегат, указывающий на этот метод
+        Func<bool, bool> myDelegate1 = MyMethod;
+
+
+    }
+
+    private void AddPetByReward(bool success) {
+        if(!success) return;
         _showedReward++;
         Debug.Log($"Reward pet count = {_showedReward} / {_countToShowReward}");
         if (_showedReward == _countToShowReward) {
@@ -37,6 +59,5 @@ public class PetStationViewAds : PetStationViewBase {
     }
 
 
-    
    
 }

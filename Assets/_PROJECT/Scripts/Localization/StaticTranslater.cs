@@ -1,3 +1,4 @@
+using System;
 using Architecture_M;
 using System.Linq;
 using TMPro;
@@ -13,13 +14,16 @@ public class StaticTranslater : MonoBehaviour
 
     private void Start()
     {
-        foreach (var translation in _localization.StaticTranslates)
+        foreach (var text in _texts)    
         {
-            StaticTranslation<TextMeshProUGUI>? text = _texts.FirstOrDefault(i => i.Id == translation.Id);
-            if (text.HasValue == false)
-                Debug.LogError($"Нет перевода для {translation.Id}");
+            var translation = _localization.StaticTranslates.FirstOrDefault(i => i.Id == text.Id);
+            if (string.IsNullOrEmpty(translation.Id) || translation.Data == null)
+            {
+                Debug.LogError($"Нет перевода для {text.Id}");
+                continue;
+            }
 
-            text.Value.Data.text = translation.Data;
+            text.Data.text = translation.Data;
         }
     }
 }

@@ -40,10 +40,10 @@ public abstract class PetStationViewBase : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider) {
         if (!collider.TryGetComponent(out PlayerMovement _)) return;
-        _customTrigger.DelayedTriggerAction(AddPet);
+        _customTrigger.DelayedTriggerAction(TryAddPet);
     }
 
-    protected abstract void AddPet();
+    protected abstract void TryAddPet();
 
     protected void OnTriggerExit(Collider collider) {
         if (!collider.TryGetComponent(out PlayerMovement _)) return;

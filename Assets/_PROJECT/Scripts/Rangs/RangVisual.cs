@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using Zenject;
 
 public class RangVisual : MonoBehaviour {
+    [SerializeField] private float _offsetPointer;
+    
+    
     [SerializeField] private RectTransform _currentImageRt;
     [SerializeField] private RectTransform _recordImageRt;
 
@@ -17,10 +20,6 @@ public class RangVisual : MonoBehaviour {
     [SerializeField] private GameObject _planePrefab;
     [SerializeField] private Transform _planesParent;
     [SerializeField] private Transform _moneyCubeBottomPoint;
-
-    
-    [Header("Рекорд игрока")]
-    [SerializeField] private float _record;
 
     
     private float _maxMoney;
@@ -97,7 +96,7 @@ public class RangVisual : MonoBehaviour {
 
 
     private void MovePointerByPercent(float percentForCurrent, RectTransform iconRect) {
-        float xPosForPointer = Mathf.Lerp(_xStart, _parentWidth, percentForCurrent);
+        float xPosForPointer = Mathf.Lerp(_xStart, _parentWidth, percentForCurrent) + _offsetPointer;
         iconRect.anchoredPosition = new Vector2(xPosForPointer, iconRect.anchoredPosition.y);
     }
 

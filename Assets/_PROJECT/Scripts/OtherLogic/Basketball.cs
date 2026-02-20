@@ -131,9 +131,7 @@ public class Basketball : MonoBehaviour {
 
     private Vector3 newPos;
     private Vector3 GetShieldPosition() {
-        Debug.Log("Shield x: " + _shieldRenderer.bounds.max.x);
-        Debug.Log("Shield y: " + _shieldRenderer.bounds.max.y);
-        Debug.Log("Shield z: " + _shieldRenderer.bounds.max.z);
+     
 
         float z = _shieldRenderer.bounds.max.z;
         float y = Random.Range(_shieldRenderer.bounds.max.y,  _shieldRenderer.bounds.min.y);

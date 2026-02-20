@@ -33,13 +33,13 @@ public class PetStationViewReward : PetStationViewBase {
             _timeToWaitText.text = _localization.GetPrettyTime(_timeToWaitSec - elapsedTimeSec);
             _clock.fillAmount = (float)elapsedTimeSec / _timeToWaitSec;
         }
-        _timeToWaitText.text = "Заберите питомца!";
+        _timeToWaitText.text = _localization.TakeAPet;
 
         _clock.fillAmount = 1;
         _allowToGetPet = true;
     }
     
-    protected override void AddPet() {
+    protected override void TryAddPet() {
         if(!_allowToGetPet) return;
         _allowToGetPet = false;
         PetChance pet = GetRandomPet(_config);
