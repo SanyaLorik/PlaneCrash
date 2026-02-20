@@ -4997,6 +4997,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8066096831445469979}
+  - component: {fileID: 3279072477883441698}
   m_Layer: 0
   m_Name: 'Sale '
   m_TagString: Untagged
@@ -5025,6 +5026,25 @@ RectTransform:
   m_AnchoredPosition: {x: -22.099976, y: -19.800003}
   m_SizeDelta: {x: 150, y: 52}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3279072477883441698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6069808217043957134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626e96b019042a5449e993f7cf077282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.ScaleDownUpAnimation
+  _entity:
+    <Source>k__BackingField: {fileID: 8066096831445469979}
+    <Duration>k__BackingField: 2
+    <Ease>k__BackingField: 1
+  _upScale: {x: 1, y: 1, z: 1}
+  _downScale: {x: 0.75, y: 0.75, z: 0.75}
+  _isAutoStart: 1
 --- !u!1 &6168248558157403854
 GameObject:
   m_ObjectHideFlags: 0
