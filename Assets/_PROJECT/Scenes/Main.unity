@@ -99412,9 +99412,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4109782693967564644, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: m_Parameters.textureScale.x
+      value: -0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4109782693967564644, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6118585621648156233, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340109053958694179, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340109053958694179, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.12
       objectReference: {fileID: 0}
     - target: {fileID: 8507378300416399302, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: _image

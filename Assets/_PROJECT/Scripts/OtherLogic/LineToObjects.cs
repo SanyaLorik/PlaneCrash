@@ -33,8 +33,7 @@ public class LineToObjects : MonoBehaviour {
         _zoneManager = zoneManager;
         _zoneManager.ChooseMultiplier += ChooseMultiplier;
     }
-    
-    
+
     private void Awake() {
         SetSpawnPose();
     }
