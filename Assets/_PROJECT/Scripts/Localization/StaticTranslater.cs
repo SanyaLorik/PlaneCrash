@@ -1,3 +1,4 @@
+using Architecture_M;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class StaticTranslater : MonoBehaviour
     [SerializeField] private StaticTranslation<TextMeshProUGUI>[] _texts;
 
     [Inject] private LocalizationDataPC _localization;
+    [Inject] private IInputActivity a;
 
     private void Start()
     {
