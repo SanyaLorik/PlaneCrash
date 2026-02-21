@@ -35,6 +35,9 @@ public class LocalizationDataPC : LocalizationData
     public TaskTranslate[]  TaskTranslates;
     
     
+    [Header("Обращение к игроку в таблице лидерборда")]
+    public string You;
+    
     
     
     public TutorTranslate[]  TutorTranslates;
