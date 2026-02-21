@@ -50629,27 +50629,27 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 8.023905
-      outSlope: 8.023905
+      value: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.4985104
-      value: 5
-      inSlope: 0.023834229
-      outSlope: 0.023834229
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 1
-      inSlope: -7.9762363
-      outSlope: -7.9762363
+      value: 0
+      inSlope: -2
+      outSlope: -2
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -50662,17 +50662,17 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -11.988097
-      outSlope: -11.988097
+      inSlope: -4
+      outSlope: -4
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.50049645
-      value: -5
-      inSlope: 0.01191473
-      outSlope: 0.01191473
+      time: 0.5
+      value: -1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -50680,8 +50680,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 12.011927
-      outSlope: 12.011927
+      inSlope: 4
+      outSlope: 4
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -50690,11 +50690,11 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _jumpHeight:
-    <From>k__BackingField: 600
-    <To>k__BackingField: 200
+    <From>k__BackingField: 100
+    <To>k__BackingField: 50
   _countMoneyAfterFlight: 30
   _spawnTimeDiapasone: 0.07
-  _spawnRadius: 400
+  _spawnRadius: 50
   _playerSpawnPoint: {fileID: 305762387}
   PlayAnimation: 0
 --- !u!1 &1062123084
