@@ -23,9 +23,6 @@ public class PetOpenView : MonoBehaviour {
     
     [Header("Анимации")]
     [SerializeField] private float _scaleDuration;
-    [SerializeField] private RectTransform _lightningRT;
-    [SerializeField] private Image _lightningImage;
-    [SerializeField] private float _lighRotationSpeed;
     
     private CancellationTokenSource _tokenSource;
     
@@ -50,10 +47,7 @@ public class PetOpenView : MonoBehaviour {
         _petIcon.sprite = pet.PetItemConfig.Sprite;
         _petIconRT.localScale = Vector3.zero;
         _petEggRT.localScale = Vector3.one;
-        _lightningRT.DisactiveSelf();
         _openButtonRT.localScale = Vector3.one;
-        _lightningImage.color = _petStatusColorConfig.GetColorByStatus(pet.PetItemConfig.PetStatus);
-        _lightningRT.DisactiveSelf();
     }
 
     private void OpenLogic() {
@@ -91,18 +85,12 @@ public class PetOpenView : MonoBehaviour {
         _openSequence.Join(
             _openButtonRT.
                 DOScale(Vector3.zero, _scaleDuration)
-                .OnComplete(() => _lightningRT.ActiveSelf())
         );
         _openSequence.Append(
             _petIconRT
                 .DOScale(Vector3.one, _scaleDuration)
                 .SetEase(Ease.OutCubic)
                 .OnComplete(CloseWindow)
-        );
-        _openSequence.Join(
-            _lightningRT.DORotate(new Vector3(0f, 0f, 360f), _lighRotationSpeed, RotateMode.FastBeyond360)
-                .SetEase(Ease.Linear)
-                .SetSpeedBased(true)
         );
     }
     
