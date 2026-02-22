@@ -80,16 +80,27 @@ MonoBehaviour:
   _customTrigger: {fileID: 8167487909902531408}
   _config: {fileID: 11400000, guid: a73016fac212ae848bc2f961d7c05749, type: 2}
   _views:
-  - Icon: {fileID: 8295886332293016883}
+  - Icon: {fileID: 2311657664068310838}
     Percentage: {fileID: 5286433917716556443}
-  - Icon: {fileID: 4849863181421468639}
-    Percentage: {fileID: 1915300042472955500}
-  - Icon: {fileID: 7671147284828582648}
-    Percentage: {fileID: 4730296813239321622}
+  - Icon: {fileID: 4271923757909558658}
+    Percentage: {fileID: 3468699952139674139}
+  - Icon: {fileID: 9090098422527280730}
+    Percentage: {fileID: 2981146873246374393}
   _price: {fileID: 6832071324852101383}
---- !u!114 &1915300042472955500 stripped
+--- !u!114 &2311657664068310838 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 29104241644591716, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4244446382352700222, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 1942147768408261640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &2981146873246374393 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3723575651707854321, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
   m_PrefabInstance: {fileID: 1942147768408261640}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -98,9 +109,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!114 &4730296813239321622 stripped
+--- !u!114 &3468699952139674139 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6581596310762160158, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3085151701850252819, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
   m_PrefabInstance: {fileID: 1942147768408261640}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -109,9 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!114 &4849863181421468639 stripped
+--- !u!114 &4271923757909558658 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6466546487191248855, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2430546443191878026, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
   m_PrefabInstance: {fileID: 1942147768408261640}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -142,17 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!114 &7671147284828582648 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8108316429027260144, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
-  m_PrefabInstance: {fileID: 1942147768408261640}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!114 &8167487909902531408 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7758395808831209304, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
@@ -164,9 +164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d66d662139f20144b91e62d9e231e22e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DelayedTrigger
---- !u!114 &8295886332293016883 stripped
+--- !u!114 &9090098422527280730 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7625453646051617083, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7265820503038296658, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
   m_PrefabInstance: {fileID: 1942147768408261640}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

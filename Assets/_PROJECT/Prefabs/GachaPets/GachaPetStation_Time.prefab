@@ -497,11 +497,55 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1043654223892148454}
   m_SourcePrefab: {fileID: 100100000, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+--- !u!114 &346227125227903112 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4244446382352700222, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 4479189108845136822}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &974337249448842823 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3723575651707854321, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 4479189108845136822}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &1511502911425392037 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3085151701850252819, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 4479189108845136822}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!224 &1989329419507493743 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2716447184520814809, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
   m_PrefabInstance: {fileID: 4479189108845136822}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2274968583354829372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2430546443191878026, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 4479189108845136822}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &4358234166796761842 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 167416182329536836, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
@@ -522,12 +566,12 @@ MonoBehaviour:
   _customTrigger: {fileID: 6161519274859967726}
   _config: {fileID: 11400000, guid: a73016fac212ae848bc2f961d7c05749, type: 2}
   _views:
-  - Icon: {fileID: 0}
+  - Icon: {fileID: 346227125227903112}
     Percentage: {fileID: 7892431327836497189}
-  - Icon: {fileID: 0}
-    Percentage: {fileID: 0}
-  - Icon: {fileID: 0}
-    Percentage: {fileID: 0}
+  - Icon: {fileID: 2274968583354829372}
+    Percentage: {fileID: 1511502911425392037}
+  - Icon: {fileID: 6556158601807415780}
+    Percentage: {fileID: 974337249448842823}
   _timeToWaitSec: 10
   _timeToWaitText: {fileID: 8794060530709475001}
   _clock: {fileID: 0}
@@ -547,6 +591,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7604684193717913225, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
   m_PrefabInstance: {fileID: 4479189108845136822}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6556158601807415780 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7265820503038296658, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 4479189108845136822}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!114 &7892431327836497189 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6029979848344645267, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}

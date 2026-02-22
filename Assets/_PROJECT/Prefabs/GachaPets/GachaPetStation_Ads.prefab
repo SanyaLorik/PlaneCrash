@@ -667,6 +667,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &3584766222581224028 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7265820503038296658, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 6154948043345809422}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!224 &4387499278529549959 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7604684193717913225, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
@@ -703,12 +714,56 @@ MonoBehaviour:
   _customTrigger: {fileID: 4522070612895575894}
   _config: {fileID: 11400000, guid: a73016fac212ae848bc2f961d7c05749, type: 2}
   _views:
-  - Icon: {fileID: 0}
+  - Icon: {fileID: 8038232495408268080}
     Percentage: {fileID: 487530172443295389}
-  - Icon: {fileID: 0}
-    Percentage: {fileID: 0}
-  - Icon: {fileID: 0}
-    Percentage: {fileID: 0}
+  - Icon: {fileID: 8417735395971060100}
+    Percentage: {fileID: 9203789193940383261}
+  - Icon: {fileID: 3584766222581224028}
+    Percentage: {fileID: 7405616469390380543}
   _countToShowReward: 3
   _countTextVisual: {fileID: 4230094583807584953}
   _rewardProgress: {fileID: 4926305285400507042}
+--- !u!114 &7405616469390380543 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3723575651707854321, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 6154948043345809422}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &8038232495408268080 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4244446382352700222, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 6154948043345809422}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &8417735395971060100 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2430546443191878026, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 6154948043345809422}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &9203789193940383261 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3085151701850252819, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 6154948043345809422}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
