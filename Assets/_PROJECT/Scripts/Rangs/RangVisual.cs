@@ -68,7 +68,6 @@ public class RangVisual : MonoBehaviour {
             float rangPercent = rang.Money / _maxMoney;
 
             float rangXPos = Mathf.Lerp(_xStart, _parentWidth, rangPercent);
-            Debug.Log(i + " = " + rangXPos );
             _rangPrefabs[i].ChangeRectTransform(rangXPos);
             _rangPrefabs[i].SetData(_formatter.ValuteFormatter(rang.Money), rang.Sprite);
         }

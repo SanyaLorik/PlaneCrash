@@ -9,13 +9,12 @@ public class ZoneManager : MonoBehaviour {
     [SerializeField] private float _cruiserBaseSpawnDistance; // условно 500 или 1к за 1х
     [SerializeField] private PairedValue<float> _cruiserSpawnDistanceX;
     [SerializeField] private MoneyCube _moneyCube;
-    
-    
+
     
     public event Action<float> ChooseMultiplier;
     public event Action<float> ChooseBet;
-    
-    public float BetMultiplier { get; private set; }
+
+    public float BetMultiplier { get; private set; } = 1f;
     public float BetAmount { get; private set; }
     
     public float CruiserSpawnDistance { get; private set; } 
@@ -43,6 +42,7 @@ public class ZoneManager : MonoBehaviour {
         BetMultiplier = newMultiplier;
 
         if (newMultiplier == 0) {
+            BetMultiplier = 1f;
             return;
         }
 

@@ -38,9 +38,6 @@ public class TasksManager : MonoBehaviour {
     [SerializeField] private TaskNotification _taskNotification;
     [SerializeField] private ParticleSystem _taskCompletePS;
     
-    [Header("Заголовок таблицы")]
-    [SerializeField] private TMP_Text _tableTitle;
-    
     
     [SerializeField] private DelayedTrigger _delayedTrigger;
     [SerializeField] private Transform _getTasksRewardTrigger;
@@ -135,7 +132,7 @@ public class TasksManager : MonoBehaviour {
     
     // ========== Обработчики заданий ==========
     private async UniTask PlayerFlightAsync(CancellationToken token, Transform playerTransform) {
-        float startDistance = playerTransform.position.z; // откуда игрок начал лететь
+        float startDistance = _playerStateManager.CurrentPlayerDistance(); // откуда игрок начал лететь
         
         TaskInfo taskInfo = _taskTypeToInfoDictionary[TaskType.Distance];
         TaskVisual taskVisual = _taskTypeToVisualDictionary[TaskType.Distance];
@@ -260,7 +257,6 @@ public class TasksManager : MonoBehaviour {
     
     
     private void TableInitialize() {
-        _tableTitle.text = _localization.TaskTableTitle;
         foreach (var taskVisual in _taskTypeToVisualDictionary) {
             TaskInfo taskInfo = _taskTypeToInfoDictionary[taskVisual.Key];
             _taskTypeToVisualDictionary[taskVisual.Key].SetTaskLocalizationText();

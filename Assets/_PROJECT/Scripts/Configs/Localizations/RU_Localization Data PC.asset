@@ -52,23 +52,16 @@ MonoBehaviour:
     <Data>k__BackingField: "\u0411\u0430\u0441\u043A\u0435\u0442\u0431\u043E\u043B"
   - <Id>k__BackingField: music
     <Data>k__BackingField: "\u0421\u0432\u043E\u044F \u043C\u0443\u0437\u044B\u043A\u0430!"
+  - <Id>k__BackingField: task_reward
+    <Data>k__BackingField: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430:"
+  - <Id>k__BackingField: tasks
+    <Data>k__BackingField: "\u0417\u0410\u0414\u0410\u041D\u0418\u042F"
   Suffixies:
   - 
   - K
   - M
   - B
   - T
-  DistanceTemplate: "\u0414\u0438\u0441\u0442\u0430\u043D\u0446\u0438\u044F: {0}
-    \u043C."
-  BetMultiplierTemplate: "\u041C\u043D\u043E\u0436\u0438\u0442\u0435\u043B\u044C
-    \u0441\u0442\u0430\u0432\u043A\u0438: x{0}"
-  BetAmountTemplate: "\u0421\u0442\u0430\u0432\u043A\u0430: {0}$"
-  RewardTemplate: "\u0412\u044B\u0438\u0433\u0440\u044B\u0448: {0}$"
-  UpgradeMultiplierTemplate: "\u041C\u043D\u043E\u0436\u0438\u0442\u0435\u043B\u044C
-    \u0432\u044B\u0438\u0433\u0440\u044B\u0448\u0430: {0}"
-  FlightResultTitle: "\u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442"
-  FlightComebackButton: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F"
-  PlayerBalanceTemplate: "\u0411\u0430\u043B\u0430\u043D\u0441: {0}"
   OpenButton: "\u041E\u0442\u043A\u0440\u044B\u0442\u044C!"
   TakeAPet: "\u0417\u0430\u0431\u0435\u0440\u0438\u0442\u0435 \u043F\u0438\u0442\u043E\u043C\u0446\u0430!"
   TaskCompletedNotification: "\u0417\u0430\u0434\u0430\u0447\u0430 \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D\u0430
@@ -84,6 +77,8 @@ MonoBehaviour:
     TaskText: "\u0421\u043E\u0431\u0440\u0430\u0442\u044C {0} \u043C\u043E\u043D\u0435\u0442."
   - Type: 3
     TaskText: "\u041F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C {0} \u043C\u043E\u043D\u0435\u0442."
+  Meters: "\u043C"
+  You: 
   TutorTranslates:
   - Id: 0
     Phrase: "\u041F\u0440\u0438\u0432\u0435\u0442! \u0421\u0435\u0439\u0447\u0430\u0441

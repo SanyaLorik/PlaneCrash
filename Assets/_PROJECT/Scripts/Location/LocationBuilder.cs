@@ -161,7 +161,6 @@ public class LocationBuilder : MonoBehaviour {
     
    
     private void SpawnNext(List<LocationModule> list) {
-        Debug.Log("SpawnNext");
         var prefab = _buildingModulesPrefabs[Random.Range(0, _buildingModulesPrefabs.Count)];
         
         LocationModule module = _poolManager.Spawn<LocationModule>(prefab.gameObject, Vector3.zero, PoolType.LocationObject);

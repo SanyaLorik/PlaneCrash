@@ -140,8 +140,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3173188427346089078}
   - {fileID: 1010286007094176072}
+  - {fileID: 3173188427346089078}
   m_Father: {fileID: 2198165812465537236}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -214,9 +214,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041F\u0440\u043E\u043B\u0435\u0442\u0435\u0442\u044C 100\u043A \u043C\u0435\u0442\u0440\u043E\u0432\u041F\u0440\u043E\u043B\u0435\u0442\u0435\u0442\u044C
-    100\u043A \u043C\u0435\u0442\u0440\u043E\u0432\u041F\u0440\u043E\u043B\u0435\u0442\u0435\u0442\u044C
-    100\u043A \u043C\u0435\u0442\u0440\u043E\u0432"
+  m_text: "\u041F\u0440\u043E\u043B\u0435\u0442\u0435\u0442\u044C 100\u043A \u043C\u0435\u0442\u0440\u043E\u0432\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
   m_sharedMaterial: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
@@ -243,7 +241,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 95
+  m_fontSize: 144.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -484,6 +482,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3717312035405765528}
+  - component: {fileID: 5477144496590673906}
   m_Layer: 0
   m_Name: Task_1
   m_TagString: Untagged
@@ -516,6 +515,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 586.8}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5477144496590673906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2814607350219220884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0935a71e3780254cb5a7dc268ad66ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaskVisual
+  _rewardMoneyText: {fileID: 167954077002503834}
+  _taskText: {fileID: 5952752095694433090}
+  _completeImg: {fileID: 1049898372476568461}
+  _parentRectTransform: {fileID: 1694953585329754342}
+  _progressRectTransform: {fileID: 6521805443175360646}
+  <TaskType>k__BackingField: 0
 --- !u!1 &3097955806146951349
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,7 +1095,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7795201656667459824}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1086,8 +1103,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -475.8, y: 0}
-  m_SizeDelta: {x: -951.5, y: 0}
+  m_AnchoredPosition: {x: -0.9749756, y: 0}
+  m_SizeDelta: {x: -2.0500183, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4761394917403058500
 CanvasRenderer:

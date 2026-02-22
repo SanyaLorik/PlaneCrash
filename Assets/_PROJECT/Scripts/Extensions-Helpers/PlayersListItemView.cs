@@ -18,7 +18,7 @@ public class PlayersListItemView : MonoBehaviour {
     
     
     public void SetPlayerListData(int place, string playerName, string value) {
-         _playerPlace.text = _formatter.ValuteFormatter(place);
+         _playerPlace.text = _formatter.ValuteFormatterInteger(place);
          _playerNameText.text = playerName;
          _valueText.text = value;
     }

@@ -141,9 +141,6 @@ public class PetsManager : MonoBehaviour {
             .Take(_maxPetCount)
             .ToList();
 
-        for (var i = 0; i < topPets.Count; i++) {
-            Debug.Log($"Питомец {i+1} modifier = {topPets[i].Modifier}");
-        }
         return topPets;
     }
 }

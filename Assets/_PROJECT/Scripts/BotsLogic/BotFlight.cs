@@ -92,17 +92,11 @@ public class BotFlight : FlightObject, IBotBehaviour {
         // Чуть выше пола
         float minY = _levelBounds.MinY+2f; // чуть выше шоб рост
         float currentY = minY+1;
-        Debug.Log("Бот в " + transform.position.y);
-        Debug.Log("minY = " + minY);
         while (currentY > minY && !token.IsCancellationRequested) {
             FlightLogic();
             currentY = transform.position.y;
             await UniTask.WaitForFixedUpdate(token);
         }
-        Debug.Log("Выход из цикла полёта: ");
-        Debug.Log("Бот в " + transform.position.y);
-        Debug.Log("minY = " + minY);
-        
         // Чутка подождать пока полежит
         await BotIsFalledAsync(token);
     }

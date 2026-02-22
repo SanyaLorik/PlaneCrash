@@ -12,18 +12,8 @@ public class LocalizationDataPC : LocalizationData
     public string[] Suffixies = {"", "K", "M", "B", "T"};
     
     
-    [Header("Результат полёта")]
-    public string DistanceTemplate;
-    public string BetMultiplierTemplate;
-    public string BetAmountTemplate;
-    public string RewardTemplate;
-    public string UpgradeMultiplierTemplate;
-    public string FlightResultTitle;
-    public string FlightComebackButton;
-    
     
     [Header("UI")]
-    public string PlayerBalanceTemplate;
     public string OpenButton;
     public string TakeAPet;
    
@@ -33,6 +23,13 @@ public class LocalizationDataPC : LocalizationData
     public string CollectRewardNotification;
     public string TaskTableTitle;
     public TaskTranslate[]  TaskTranslates;
+    
+    
+    
+    [Header("Tasks")]
+    public string Meters;
+    
+    
     
     
     [Header("Обращение к игроку в таблице лидерборда")]

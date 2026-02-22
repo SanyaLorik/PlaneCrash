@@ -7,27 +7,19 @@ using Zenject;
 
 public class RewardManager : MonoBehaviour {
     [SerializeField] private GameObject _canvas;
-    [SerializeField] private CanvasGroup _canvasAlphaGroup;
     [SerializeField] private RectTransform _canvasBody;
-    [SerializeField] private PlayerBank _playerBank;
     
     [SerializeField] private TMP_Text _distanceText;
-    [SerializeField] private TMP_Text _bet;
-    [SerializeField] private TMP_Text _betMultiplier;
-    [SerializeField] private TMP_Text _upgradeMultiplier;
     [SerializeField] private TMP_Text _rewardText;
 
-    [Header("UI элементы")]
-    [SerializeField] private TMP_Text _titleText;
-    [SerializeField] private TMP_Text _buttonText;
-    
-    
-    [SerializeField] private float _distanceRewardDivide = 2f;
     [SerializeField] private Button _backButton;
+    [SerializeField] private RectTransform _behindScreenCavasPosition; 
+    
+    
+    [SerializeField] private float _canvasHideSpeed; 
+    
+    private Vector2 _screenCavasPosition; 
 
-
-    private Vector2 _startCavasPosition; 
-    private Vector2 _finalCavasPosition; 
 
     private bool _inAnimation => _animation != null && _animation.active;
     private Sequence _animation;
@@ -36,6 +28,8 @@ public class RewardManager : MonoBehaviour {
     private PlayerMovement _playerMovement;
     private ZoneManager _zoneManager;
     
+    
+    [Inject] private PlayerBank _playerBank;
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private LocalizationDataPC _localization;
     [Inject] private NumberFormatter _formatter;
@@ -51,103 +45,54 @@ public class RewardManager : MonoBehaviour {
 
     private void Start() {
         _backButton.onClick.AddListener(RewardAnimation);
-        _finalCavasPosition = _canvasBody.anchoredPosition;
-        _startCavasPosition = new Vector2(_finalCavasPosition.x, -Screen.height/2);
-
-        _canvasBody.anchoredPosition = _startCavasPosition;
-        _titleText.text = _localization.FlightResultTitle;
-        _buttonText.text = _localization.FlightComebackButton;
+        _screenCavasPosition = _canvasBody.anchoredPosition;
+        _canvasBody.anchoredPosition = _behindScreenCavasPosition.anchoredPosition;
+        _canvas.ActiveSelf();
     }
 
     private void OnStateChange(PlayerState state) {
         if (state == PlayerState.Cruisered) {
-            ShowCruiserReward();
+            ShowReward(true);
         }
         else if (state == PlayerState.Grounded) {
-            ShowDistanceReward();
+            ShowReward(false);
         }
     }
 
-    private void ShowCruiserReward() {
-        ShowRewardWindow();
-        _betMultiplier.ActiveSelf();
-        _bet.ActiveSelf();
-        
-        double reward = 
-            _upgradesCalculator.GetUpgradeMultiplierByLevel() 
-            *
-            (_zoneManager.BetAmount * _zoneManager.BetMultiplier) 
-            + 
-            _zoneManager.DistanceToCruise; 
-        
-                
-        _playerBank.AddMoney(reward);
-
-        ShowBaseReward(reward, true);
-        
-        // Множитель ставки
-        _betMultiplier.text = string.Format(
-            _localization.BetMultiplierTemplate,
-            $"{_zoneManager.BetMultiplier}"
-        );
-        
-        // Ставка
-        _bet.text = string.Format(
-            _localization.BetAmountTemplate,
-            $"{_formatter.ValuteFormatter(_zoneManager.BetAmount)}"
-        );
-    }
-
-    
-    private void ShowDistanceReward() {
+    private void ShowReward(bool cruisered) {
         if (_playerStateManager.BeforeState == PlayerState.Walking) {
             _playerMovement.TpPlayerInBetZone();
             return;
         }
-        if (_playerStateManager.CurrentPlayerDistance <= 0) {
-            // Игрок не полетел а сьебался с карты
-            _playerMovement.TpPlayerInSpawn();
-            return;
+        ShowRewardWindowAnimation();
+        double reward;
+        if (cruisered) {
+            reward = 
+                _upgradesCalculator.GetUpgradeMultiplierByLevel() 
+                *
+                (_zoneManager.BetAmount * _zoneManager.BetMultiplier) 
+                + 
+                _playerStateManager.CurrentPlayerDistance(); 
         }
-        ShowRewardWindow();
-        long reward = (long)(_playerStateManager.CurrentPlayerDistance 
-                       *
-                       _upgradesCalculator.GetUpgradeMultiplierByLevel());
+        else {
+            reward = 
+                _playerStateManager.CurrentPlayerDistance() 
+                *
+                _upgradesCalculator.GetUpgradeMultiplierByLevel();
+            _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.BetAmount);
+            
+        }
         
-        _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.BetAmount);
         _playerBank.AddMoney(reward);
-        
-        ShowBaseReward(reward, false);
-
-        _betMultiplier.DisactiveSelf();
-        _bet.DisactiveSelf();
+        ShowBaseRewardVisual(reward);
     }
 
-    private void ShowBaseReward(double reward, bool cruisered) {
-     
-        
+
+    private void ShowBaseRewardVisual(double reward) {
         // Выигрышь
-        _rewardText.text = string.Format(
-            _localization.RewardTemplate,
-            $"{_formatter.ValuteFormatter(reward)}"
-        );
+        _distanceText.text = _playerStateManager.CurrentPlayerDistance() + _localization.Meters;
+        _rewardText.text = _formatter.ValuteFormatter(reward);
         
-        // Множитель BuisnessBirds and Апгрейда
-        _upgradeMultiplier.text = string.Format(
-            _localization.UpgradeMultiplierTemplate,
-            $"{_upgradesCalculator.GetUpgradeMultiplierByLevel():F2}"
-        );
-        if (cruisered) {
-            _distanceText.text = string.Format(
-                _localization.DistanceTemplate,
-                $"{_zoneManager.DistanceToCruise:F0}"
-            );
-            return;
-        }
-        _distanceText.text = string.Format(
-            _localization.DistanceTemplate,
-            $"{_playerStateManager.CurrentPlayerDistance:F0}"
-        );
     }
 
     private void RewardAnimation() {
@@ -162,21 +107,24 @@ public class RewardManager : MonoBehaviour {
         _playerMovement.TpPlayerInSpawn();
     }
 
-    private void ShowRewardWindow() {
+    
+    private void ShowRewardWindowAnimation() {
+        _canvas.ActiveSelf();
         _animation =  DOTween.Sequence();
         _animation
-            .Append(_canvasAlphaGroup.DOFade(1, 1f).From(0))
-            .Join(_canvasBody.DOAnchorPos(_finalCavasPosition, 0.6f).From(_startCavasPosition))
-            .Append(_backButton.transform.DOScale(1, 0.5f).From(0).SetEase(Ease.OutBounce));
+            .Append(_canvasBody.DOAnchorPos(_screenCavasPosition, _canvasHideSpeed))
+            .Append(_backButton.transform.DOScale(1, _canvasHideSpeed).From(0).SetEase(Ease.OutBounce));
+        // _canvas.ActiveSelf();
     }
 
     
     private void HideRewardWindow() {
-        Sequence animation =  DOTween.Sequence();
+        _animation =  DOTween.Sequence();
 
-        animation
-            .Append(_canvasAlphaGroup.DOFade(0, 0.6f).From(1))
-            .Join(_canvasBody.DOAnchorPos(_startCavasPosition, 0.6f).From(_finalCavasPosition));
+        _animation
+            .Append(_canvasBody.DOAnchorPos(_behindScreenCavasPosition.anchoredPosition, _canvasHideSpeed))
+            .OnComplete(() => _canvas.DisactiveSelf());
+
     }
 
     private void OnDestroy() {

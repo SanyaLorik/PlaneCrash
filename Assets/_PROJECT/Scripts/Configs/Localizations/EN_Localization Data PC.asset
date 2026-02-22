@@ -52,20 +52,16 @@ MonoBehaviour:
     <Data>k__BackingField: Basketball
   - <Id>k__BackingField: music
     <Data>k__BackingField: Music
+  - <Id>k__BackingField: task_reward
+    <Data>k__BackingField: 'Reward:'
+  - <Id>k__BackingField: tasks
+    <Data>k__BackingField: TASKS
   Suffixies:
   - 
   - K
   - M
   - B
   - T
-  DistanceTemplate: 'Distance: {0} m'
-  BetMultiplierTemplate: 'Bet multiplier: x{0}'
-  BetAmountTemplate: 'Bet: ${0}'
-  RewardTemplate: 'Reward: ${0}'
-  UpgradeMultiplierTemplate: 'Reward Multiplier: x{0}'
-  FlightResultTitle: Result
-  FlightComebackButton: Back!
-  PlayerBalanceTemplate: 'Balance: {0}'
   OpenButton: Open!
   TakeAPet: Take a pet!
   TaskCompletedNotification: Task complete!
@@ -80,6 +76,8 @@ MonoBehaviour:
     TaskText: Collect {0} coins.
   - Type: 3
     TaskText: Place {0} coins.
+  Meters: m
+  You: 
   TutorTranslates:
   - Id: 0
     Phrase: Hi! Let me show you how things work here.

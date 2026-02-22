@@ -10,6 +10,7 @@ public class PlayerStateManager : MonoBehaviour{
 
     
     [Inject] private IInterstitialDelaying  _interstitialDelaying;
+    [Inject] private ZoneManager _zoneManager;
     
     public event Action<PlayerState> ChangeState;
     
@@ -18,9 +19,15 @@ public class PlayerStateManager : MonoBehaviour{
     private void Awake() {
         StartFlightPositionZ = _startFlightPoint.position.z;
     }
-    
-    public float CurrentPlayerDistance
-        => CurrentState == PlayerState.Walking ? 0f : transform.position.z - StartFlightPositionZ;
+
+    public int CurrentPlayerDistance() {
+        return CurrentState switch {
+            PlayerState.Walking => 0,
+            PlayerState.Cruisered => (int)_zoneManager.DistanceToCruise,
+            _ => (int)(transform.position.z - _startFlightPoint.position.z)
+        };
+
+    }
     
 
     [field: SerializeField] public PlayerState CurrentState { get; private set; } = PlayerState.Walking;
@@ -46,7 +53,7 @@ public class PlayerStateManager : MonoBehaviour{
             _interstitialDelaying.EnableTimer();
             if (newState  == PlayerState.Walking) {
                 _jumpParticlesController.Play();
-            }    
+            }
         }
         
 

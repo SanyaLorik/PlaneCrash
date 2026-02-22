@@ -29,7 +29,6 @@ public class NumberFormatter {
 
         double scaled = value / Math.Pow(1000, tier);
 
-        // Оставляем максимум 2 знака после запятой
         string formatted = scaled.ToString("0");
 
         return formatted + _localizationDataPC.Suffixies[tier];

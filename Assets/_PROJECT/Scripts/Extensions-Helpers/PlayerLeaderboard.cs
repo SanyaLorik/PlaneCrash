@@ -99,12 +99,7 @@ public class PlayerLeaderboard : MonoBehaviour {
         int index = (int)Mathf.Lerp(_zeroMoneyIndex, _playerLists.Length-1, percent);
         _playerLists[^1].SetPlayerListData(index, _localization.You, _formatter.ValuteFormatterInteger(_playerBank.PlayerCapital));
     }
-    
 
-    
-    
-    
-    
     
     private void GetFilesStrings() {
         _ruMaleFirst = LoadFile("PlayerNames/ru_male_first");
@@ -144,11 +139,9 @@ public class PlayerLeaderboard : MonoBehaviour {
         }
         
         
-        Debug.Log("Имя + фамилия: " + name);
         if (name.Length > _maxCharsName) {
             name = AddNumbersInName(name);
         }
-        Debug.Log("Новое с цифрами: " + name);
         return name;
     }
 

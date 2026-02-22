@@ -1,59 +1,55 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using Architecture_M;
+using SanyaBeerExtension;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 public class ScoreVisual : MonoBehaviour {
     [SerializeField] private GameObject _canvas;
-    [SerializeField] private TMP_Text _flightTime;
-    [SerializeField] private TMP_Text _totalDistanceText;
     
-    [SerializeField] private TMP_Text _currentDistanceText;
     
-    [SerializeField] private Image _progressBar;
+    [SerializeField] private RectTransform _currentProgressBar;
+    [SerializeField] private RectTransform _recordProgressBar;
     
-    [SerializeField] private RectTransform _progressBarRt;
-    [SerializeField] private RectTransform _pointer;
+    [SerializeField] private RectTransform _finishPointer;
+    [SerializeField] private RectTransform _currentPointer;
+    [SerializeField] private RectTransform _recordPointer;
     
-    private PlayerStateManager _playerStateManager;
+    [SerializeField] private TextMeshProUGUI _currentDistanceText;
+    [SerializeField] private TextMeshProUGUI _recordDistanceText;
+    [SerializeField] private TextMeshProUGUI _finishDistanceText;
+    [SerializeField] private float _pointerOffset;
     
-    private float _startProgressX;
-    private float _endProgressX;
-    private float _pointY;
+    [Header("Настройка слайдеров")]
+    [SerializeField] private RectTransform _parentRectTransform;
     
+    private float _xEnd;
+    
+    
+    [Inject] private PlayerStateManager _playerStateManager;
     [Inject] private ZoneManager _zoneManager;
+    [Inject] private LocalizationDataPC _localization;
+    [Inject] private IGameSave<GameSavePC> _saver;
     
     [Inject]
-    public void Init(PlayerStateManager playerStateManager) {
-        _playerStateManager = playerStateManager;
+    public void OnEnable() {
         _playerStateManager.ChangeState += OnPlayerStateChange;
     }
     
 
     private void Start() {
+        _xEnd = _parentRectTransform.rect.width;
         SetDefault();
-        CalculateBounds();
-        _pointer.anchoredPosition = new Vector2(_startProgressX, _pointY);
-    }
-
-    private void CalculateBounds() {
-        float barWidth = _progressBarRt.rect.width;
-        float barHeight = _progressBarRt.rect.height;
-        float pointerHeight = _pointer.rect.height;
-        
-        _startProgressX = -barWidth * 0.5f;
-        _endProgressX = barWidth * 0.5f;
-        _pointY = (-barHeight-pointerHeight) * 0.5f;
     }
     
 
+ 
     private void OnPlayerStateChange(PlayerState state) {
         if (state == PlayerState.Flight) {
-            _canvas.SetActive(true);
-            _cruiserDistanceZ = _zoneManager.DistanceToCruise;
+            _canvas.ActiveSelf();
+            Debug.Log("OnPlayerStateChange вызывает FlightScoreLogic");
             FlightScoreLogic();
         }
         else if (state == PlayerState.Grounded) {
@@ -75,50 +71,91 @@ public class ScoreVisual : MonoBehaviour {
     
     
     private Coroutine _flightRoutine;
-    private float _cruiserDistanceZ;
-    
+    private float _maxDistance;
     private void FlightScoreLogic() {
-        _totalDistanceText.text = _cruiserDistanceZ + "m";
+        Debug.Log("FlightScoreLogic");
+        UpdateRecordText(_saver.GetSave.RecordDistance);
+        
+        _finishDistanceText.text = _zoneManager.DistanceToCruise +  _localization.Meters;
+        _maxDistance = MathF.Max(_zoneManager.DistanceToCruise, _saver.GetSave.RecordDistance);
+        if (Mathf.Approximately(_zoneManager.DistanceToCruise, _saver.GetSave.RecordDistance)) {
+            _finishDistanceText.text = string.Empty;
+        }
+        Debug.Log(_zoneManager.DistanceToCruise + " " + _saver.GetSave.RecordDistance);
+
+        
+        SetPointerWithOffset(_finishPointer, _zoneManager.DistanceToCruise/_maxDistance);
+        SetFillAmount(_recordProgressBar, _recordPointer, _saver.GetSave.RecordDistance/_maxDistance);
+       
         _flightRoutine = StartCoroutine(ShowDistanceRoutine());
     }
 
     private IEnumerator ShowDistanceRoutine() {
-        float timer = 0f;
         while (_playerStateManager.CurrentState == PlayerState.Flight) {
-            float progress = _playerStateManager.CurrentPlayerDistance / _cruiserDistanceZ;
-            _progressBar.fillAmount = progress;
-
-            // Visual
-            float newX = Mathf.Lerp(_startProgressX, _endProgressX, progress);
-            Vector3 newPosition = _pointer.anchoredPosition;
-            newPosition.x = newX;
-            _pointer.anchoredPosition = newPosition;
+            // Это процент полета но он не пойдет в SetFillAmount т.к там 100 процентов - конец
+            float progress = _playerStateManager.CurrentPlayerDistance() / _maxDistance;
             
-            _currentDistanceText.text = $"{_playerStateManager.CurrentPlayerDistance:F2}m";
-            // _flightTime.text = $"Время полёта: {timer:F2}c";
-            
-            timer += Time.deltaTime;
+            SetFillAmount(_currentProgressBar, _currentPointer, progress);
+            _currentDistanceText.text = $"{(int)_playerStateManager.CurrentPlayerDistance()}{_localization.Meters}";
             yield return null; 
         }
+
+        if (_playerStateManager.CurrentPlayerDistance() > _saver.GetSave.RecordDistance) {
+            _saver.GetSave.RecordDistance = (int)_playerStateManager.CurrentPlayerDistance();
+            _saver.Save();
+            Debug.Log("ShowDistanceRoutine вызывает UpdateRecordText");
+            UpdateRecordText(_saver.GetSave.RecordDistance);
+        }
+        _canvas.DisactiveSelf();
+        
     }
 
+    private void UpdateRecordText(int distance) {
+        Debug.Log("Отображен рекорд");
+        if (_saver.GetSave.RecordDistance != 0 && !_recordProgressBar.gameObject.activeSelf) {
+            _recordProgressBar.ActiveSelf();
+            _recordPointer.ActiveSelf();
+        }
+        else if(_saver.GetSave.RecordDistance == 0) {
+            _recordProgressBar.DisactiveSelf();
+            _recordPointer.DisactiveSelf();
+            return;
+        }
+        Debug.Log("12");
+        _recordDistanceText.text = distance + _localization.Meters;
+    }
+
+    private void SetFillAmount(RectTransform rectTransform, RectTransform rectPointer, float percent) {
+        rectTransform.offsetMax = new Vector2(GetXPoseByPercent(percent), 0);
+        SetPointer(rectPointer, percent);
+    }
+    
+    private void SetPointer(RectTransform pointer, float percent) {
+        Vector2 newPointerPos = new Vector2(_xEnd * percent, pointer.anchoredPosition.y);
+        pointer.anchoredPosition = newPointerPos;
+    }
+    
+    private void SetPointerWithOffset(RectTransform pointer, float percent) {
+        Vector2 newPointerPos = new Vector2(_xEnd * percent + _pointerOffset, pointer.anchoredPosition.y);
+        pointer.anchoredPosition = newPointerPos;
+    }
+
+    private float GetXPoseByPercent(float percent) {
+        return -_xEnd * (1f - percent);
+    }
+
+
     private void SetDefault() {
-        float newX = _startProgressX;
-        Vector3 newPosition = _pointer.anchoredPosition;
-        newPosition.x = newX;
-        // Или можно убывает типо 
-        _progressBar.fillAmount = 0;
+        SetFillAmount(_currentProgressBar, _currentPointer, 0);
         _canvas.SetActive(false);
     }
 
     private void SetMaxProgress() {
-        _progressBar.fillAmount = 1f;
-        float newX = _endProgressX;
-        Vector3 newPosition = _pointer.anchoredPosition;
-        newPosition.x = newX;
-        _pointer.anchoredPosition = newPosition;
-        _currentDistanceText.text = $"{Math.Round(_cruiserDistanceZ)}m";
+        SetFillAmount(_currentProgressBar, _currentPointer, 1);
+        _currentDistanceText.text = $"{Math.Round(_zoneManager.DistanceToCruise)}m";
     }
 
+ 
+    
 
 }

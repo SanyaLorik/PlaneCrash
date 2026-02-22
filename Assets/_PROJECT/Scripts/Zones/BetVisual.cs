@@ -1,45 +1,46 @@
+using System;
+using SanyaBeerExtension;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
 public class BetVisual : MonoBehaviour {
-    [SerializeField] private TMP_Text _playerBank;
-    [SerializeField] private TMP_Text _playerBetVisual;
-    [SerializeField] private TMP_Text _xMultiplyVisual;
-    [SerializeField] private TMP_Text _rewardVisual;
-    [SerializeField] private TMP_Text _distanceVisual;
+    [SerializeField] private TMP_Text _playerBankText;
+    [SerializeField] private TMP_Text _playerBetText;
+    [SerializeField] private TMP_Text _rewardText;
     
-    [Header("Player Stats")]
-    [SerializeField] private TMP_Text _playerXMultiplyer;
     
-    private PlayerStateManager _playerStateManager;
-    private PlayerBank _bank;
-    private ZoneManager _zoneManager;
-    private IPlayerStatsReadOnly _playerStats;
-    private PetsManager _petsManager; 
+    [SerializeField] private GameObject _betAndRewardCanvas;
+    [SerializeField] private GameObject _mainCanvas;
     
+    
+    [Inject] private PlayerStateManager _playerStateManager;
+    [Inject] private ZoneManager _zoneManager;
+    [Inject] private IPlayerStatsReadOnly _playerStats;
+    [Inject] private PetsManager _petsManager; 
+    [Inject] private PlayerBank _bank;
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private NumberFormatter _formatter; 
-    [Inject] private LocalizationDataPC _localization; 
-    
+    [Inject] private LocalizationDataPC _localization;
 
-    
-    [Inject]
-    public void Init(PlayerBank bank, PlayerStateManager playerStateManager, IPlayerStatsReadOnly playerStats, ZoneManager zoneManager, PetsManager petsManager) {
-        _zoneManager = zoneManager;
+
+    private void OnEnable() {
+        _bank.BankChanged += OnChangeBank;
         _zoneManager.ChooseBet += ShowBet;
         _zoneManager.ChooseMultiplier += ShowMultiplier;
-        
-        _bank = bank;
-        _bank.BankChanged += OnChangeBank;
-        _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += OnChangeState;
-        _playerStats = playerStats;
         _playerStats.ChangeStats += PlayerStatsOnChangeStats;
-
-        _petsManager = petsManager;
         _petsManager.BuyPet += PetsManagerOnBuyPet;
     }
+
+    private void Start() {
+        _betAndRewardCanvas.DisactiveSelf();
+        _playerBankText.text = _formatter.ValuteFormatter(_bank.PlayerCapital);
+    }
+  
+
+
 
     private void PetsManagerOnBuyPet() {
         Debug.Log("Новые питомцы!");
@@ -47,75 +48,54 @@ public class BetVisual : MonoBehaviour {
     }
 
     private void PlayerStatsOnChangeStats() {
-        _playerXMultiplyer.text = string.Format(
-            _localization.UpgradeMultiplierTemplate,
-            $"{_upgradesCalculator.GetUpgradeMultiplierByLevel(true, true):F2}"
-        );
+        // Обновление вывода текста множителя где-то было 
+        // text = string.Format(
+        //     _localization.UpgradeMultiplierTemplate,
+        //     $"{_upgradesCalculator.GetUpgradeMultiplierByLevel(true, true):F2}"
+        // );
     }
 
-    private void Start() {
-        PlayerStatsOnChangeStats();
-        OnChangeState(PlayerState.Walking);
-    }
+ 
 
     private void OnChangeState(PlayerState state) {
-        _playerBetVisual.text = "";
-        _xMultiplyVisual.text = "";
-        _rewardVisual.text = "";
-        _distanceVisual.text = "";
+        _betAndRewardCanvas.DisactiveSelf();
+        if (state == PlayerState.Flight) {
+            _mainCanvas.DisactiveSelf();
+        }
+        else if(!_mainCanvas.activeSelf) {
+            _mainCanvas.ActiveSelf();
+        }
     }
 
 
     private void OnChangeBank(long capital) {
-
-        _playerBank.text = string.Format(
-            _localization.PlayerBalanceTemplate,
-            $"{_formatter.ValuteFormatter(capital)}"
-        );
-
+        _playerBankText.text = _formatter.ValuteFormatter(capital);
     }
 
     private void ShowBet(float bet) {
-        _playerBetVisual.text = string.Format(
-            _localization.BetAmountTemplate,
-            $"{_formatter.ValuteFormatter(bet)}"
-        );
-        
-        _xMultiplyVisual.text = "";
-        _rewardVisual.text = "";
-        _distanceVisual.text = "";
-
+        _playerBetText.text = _formatter.ValuteFormatter(bet);
+        _rewardText.text = _formatter.ValuteFormatter(_zoneManager.BetAmount);
+        if (bet == 0 && _betAndRewardCanvas.activeSelf) {
+            _betAndRewardCanvas.DisactiveSelf();
+        }
+        else if (bet > 0 && !_betAndRewardCanvas.activeSelf) {
+            _betAndRewardCanvas.ActiveSelf();
+        }
     }
     
-    private void ShowMultiplier(float multiplyer) {
-        _xMultiplyVisual.text = string.Format(
-            _localization.BetMultiplierTemplate,
-            $"{multiplyer}"
-        );
-        
-        _rewardVisual.text = string.Format(
-            _localization.RewardTemplate,
-            $"{_formatter.ValuteFormatter(_zoneManager.BetAmount *  multiplyer)}"
-        );
-        
-        _distanceVisual.text = string.Format(
-            _localization.DistanceTemplate,
-            $"{_zoneManager.DistanceToCruise}"
-        );
-        
+    private void ShowMultiplier(float multiplier) {
+        _rewardText.text = _formatter.ValuteFormatter(_zoneManager.BetAmount * multiplier);
     }
 
     
     
     private void OnDisable() {
-        if (_zoneManager != null) {
-            _zoneManager.ChooseBet -= ShowBet;
-            _zoneManager.ChooseMultiplier -= ShowMultiplier;
-        }
         _bank.BankChanged -= OnChangeBank;
+        _zoneManager.ChooseBet -= ShowBet;
+        _zoneManager.ChooseMultiplier -= ShowMultiplier;
         _playerStateManager.ChangeState -= OnChangeState;
+        _playerStats.ChangeStats -= PlayerStatsOnChangeStats;
+        _petsManager.BuyPet -= PetsManagerOnBuyPet;
     }
-
-    
     
 }

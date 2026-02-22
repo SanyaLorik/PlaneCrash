@@ -99,7 +99,6 @@ public class TorpedoSpawn : MonoBehaviour {
     private GameObject _circleObject;
     private GameObject _rocketWarnObject;
     private void ShowWarning(Vector3 spawnPos) {
-        Debug.Log("ShowWarning:  " + spawnPos);
         if (_circleObject != null) {
             _circleObject.transform.position = spawnPos;
             _rocketWarnObject.transform.position = spawnPos;
@@ -128,7 +127,6 @@ public class TorpedoSpawn : MonoBehaviour {
     
 
     private void SpawnTorpedo(Vector3 predictedHitPoint, Vector3 spawnPos) {
-        Debug.Log("Spawn Torpedo:  " + predictedHitPoint);
         Torpedo torpedo = Instantiate(_torpedoPrefab, spawnPos, Quaternion.identity);
         Torpedo tScript = torpedo.GetComponent<Torpedo>();
         tScript.Launch(predictedHitPoint, _torpedoPrefab.Speed);

@@ -8,6 +8,7 @@ using UnityEngine;
 public class GameSavePC : GameSaveBase {
     public long Money = 0;
     public long RecordMoney = 0;
+    public int RecordDistance = 0;
     public List<UpgradeData> Upgrades = new ();
     public List<PetsData> Pets = new ();
     public bool TutorialPassed = false;
