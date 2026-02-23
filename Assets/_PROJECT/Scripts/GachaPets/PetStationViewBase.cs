@@ -35,15 +35,19 @@ public abstract class PetStationViewBase : MonoBehaviour {
     protected void Start() {
         _divider = ChanceSum(_config.Pets);
         Initialize();
+        StartInit();
     }
 
 
     private void OnTriggerEnter(Collider collider) {
         if (!collider.TryGetComponent(out PlayerMovement _)) return;
-        _customTrigger.DelayedTriggerAction(TryAddPet);
+        if (AllowToGetPet) {
+            _customTrigger.DelayedTriggerAction(AddPet);
+        }
     }
 
-    protected abstract void TryAddPet();
+    protected abstract void AddPet();
+    protected virtual void StartInit(){}
 
     protected void OnTriggerExit(Collider collider) {
         if (!collider.TryGetComponent(out PlayerMovement _)) return;
@@ -54,10 +58,11 @@ public abstract class PetStationViewBase : MonoBehaviour {
     protected void Initialize() {
         for (int i = 0; i < _config.Pets.Length; i++) {
             _views[i].Icon.sprite = _config.Pets[i].PetItemConfig.Sprite;
-            _views[i].Percentage.text = $"{_config.Pets[i].Chance / _divider * 100f:0.#}  %";
+            _views[i].Percentage.text = $"{_config.Pets[i].Chance / _divider * 100f:#0}  %";
         }
     }
-    
+
+    protected bool AllowToGetPet = true;
 
     protected PetChance GetRandomPet(PetStationConfig config) {
         float random = Random.Range(0f, _divider);
@@ -72,7 +77,7 @@ public abstract class PetStationViewBase : MonoBehaviour {
         return config.Pets[^1];
     }
 
-    
+
 
     protected float ChanceSum(PetChance[] pets) {
         float sum = 0f;

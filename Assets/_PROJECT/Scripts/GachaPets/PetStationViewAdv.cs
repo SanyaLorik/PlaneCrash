@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using Zenject;
 
 
-public class PetStationViewAds : PetStationViewBase {
+public class PetStationViewAdv : PetStationViewBase {
 
     [Header("Тип станции")]
     [SerializeField] private int _countToShowReward;
@@ -16,18 +16,16 @@ public class PetStationViewAds : PetStationViewBase {
     [SerializeField] private RectTransform _rewardProgressParent;
     
     [Inject] private AdvertisingMonetizationMirra _advertisingMonetizationMirra;
-    [Inject] private FillAmounthMover _fillAmounthMover;
+    [Inject] private RectTransformHelper _fillAmounthMover;
     
 
-    private new void Start() {
+    
+    protected override void StartInit() {
         _countTextVisual.text = $"{_showedReward} / {_countToShowReward}";
         _fillAmounthMover.SetFillAmount(_rewardProgress, _rewardProgressParent,  0);
     }
 
-    
-
-
-    protected override void TryAddPet() {
+    protected override void AddPet() {
         _advertisingMonetizationMirra.InvokeRewarded(
             null,
             (isSuccess) => 

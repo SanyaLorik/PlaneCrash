@@ -16,7 +16,7 @@ public class HelpInstaller: MonoInstaller {
         Container.Bind<ObjectPoolManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<TutorialCompiller>().FromComponentInHierarchy().AsSingle();
         Container.Bind<NumberFormatter>().AsSingle();
-        Container.Bind<FillAmounthMover>().AsSingle();
+        Container.Bind<RectTransformHelper>().AsSingle();
         
         
     }

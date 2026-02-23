@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Architecture_M;
-using UnityEngine;using UnityEngine.InputSystem.iOS;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 
@@ -14,6 +13,7 @@ public abstract class UpgradeBase : MonoBehaviour {
     [SerializeField] private DelayedTrigger _delayedTrigger;
     [SerializeField] protected UpgradeType UpgradeType;
     [SerializeField] protected UpgradeItemVisual _visual;
+    [SerializeField] protected TMP_Text _levelTextInSkills;
     
     
     
@@ -42,6 +42,7 @@ public abstract class UpgradeBase : MonoBehaviour {
 
     protected void Start() {
         LoadLevel();
+        CheckColor();
     }
 
 
@@ -53,15 +54,18 @@ public abstract class UpgradeBase : MonoBehaviour {
     protected void CheckColor() {
         if (_bank.CanBuy(_currentPrice)) {
             _visual.SetGreen();
+            _delayedTrigger.SetAvailable();
             return;
         }
         _visual.SetRed();
+        _delayedTrigger.SetUnvailable();
     }
 
     private void OnTriggerEnter(Collider collider) {
         if (!collider.TryGetComponent(out PlayerMovement _)) return;
-
-        _delayedTrigger.DelayedTriggerAction(TryBuy); 
+        if (_bank.CanBuy(_currentPrice)) {
+            _delayedTrigger.DelayedTriggerAction(Buy); 
+        }
     }
 
     
@@ -71,7 +75,7 @@ public abstract class UpgradeBase : MonoBehaviour {
         _delayedTrigger.CancelTriggerAction();
     }
     
-    private void TryBuy() {
+    private void Buy() {
         if (_bank.CanBuy(_currentPrice)) {
             ApplyUpgrade();
             _particleSystem.Play();
@@ -79,12 +83,11 @@ public abstract class UpgradeBase : MonoBehaviour {
             _playerVisual.SetBought();
             _gameSave.Save();
         }
-        else {
-            Debug.LogWarning("Не хватает срэдств(");
-        }
     }
 
-
+    protected void UpdateLevelInLeft(int level) {
+        _levelTextInSkills.text = level.ToString();
+    }
 
 
     protected abstract void ApplyUpgrade();

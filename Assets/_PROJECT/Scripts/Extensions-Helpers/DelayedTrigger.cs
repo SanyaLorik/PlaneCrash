@@ -1,10 +1,8 @@
 using System.Threading;
-using _PROJECT.Scripts.Helpers;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Cysharp.Threading.Tasks;
-using SanyaBeerExtension;
 
 
 public class DelayedTrigger : MonoBehaviour {

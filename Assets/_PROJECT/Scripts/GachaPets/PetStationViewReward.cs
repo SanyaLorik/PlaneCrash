@@ -13,21 +13,21 @@ public class PetStationViewReward : PetStationViewBase {
     [SerializeField] private RectTransform _parentRectTransform;
 
     [Inject] private LocalizationDataPC _localization;
-    [Inject] private FillAmounthMover _fillAmounthMover;
+    [Inject] private RectTransformHelper _fillAmounthMover;
 
     private CancellationTokenSource _tokenSource;
 
     private void Awake() {
         StartNewWaitCycle();
     }
-
-    private bool _allowToGetPet;
-
+    
 
     
     private async UniTask WaitForRewardAsync(CancellationToken token) {
         int elapsedTimeSec = 0;
         _fillAmounthMover.SetFillAmount(_clockRectTransform, _parentRectTransform, 0);
+        _customTrigger.SetUnvailable();
+        AllowToGetPet = false;
         while (!token.IsCancellationRequested && elapsedTimeSec < _timeToWaitSec) {
             await UniTask.WaitForSeconds(1, cancellationToken:token);
             elapsedTimeSec += 1;
@@ -35,15 +35,16 @@ public class PetStationViewReward : PetStationViewBase {
             float percent = (float)elapsedTimeSec / _timeToWaitSec;
             _fillAmounthMover.SetFillAmount(_clockRectTransform, _parentRectTransform, percent);
         }
+        _customTrigger.SetAvailable();
         _timeToWaitText.text = _localization.TakeAPet;
 
         _fillAmounthMover.SetFillAmount(_clockRectTransform, _parentRectTransform, 1);
-        _allowToGetPet = true;
+        AllowToGetPet = true;
     }
     
-    protected override void TryAddPet() {
-        if(!_allowToGetPet) return;
-        _allowToGetPet = false;
+    protected override void AddPet() {
+        if(!AllowToGetPet) return;
+        AllowToGetPet = false;
         PetChance pet = GetRandomPet(_config);
         _petsManager.AddPet(pet.PetItemConfig);
         _petOpenView.ShowOpenPetView(pet);

@@ -26,6 +26,8 @@ public class LuckyUpgrade : UpgradeBase {
             _currentPrice,  
             "м", 
             false);
+        UpdateLevelInLeft(_level);
+        
     }
 
     protected override void LoadLevel() {

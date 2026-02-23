@@ -26,6 +26,9 @@ public class CameraOrbitalController : MonoBehaviour {
     }
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
+        if (state == PlayerState.TrampolineJumping) {
+            return;
+        }
         if (state == PlayerState.Flight) {
             // Вырубить
             SetDefaultRotation();
@@ -33,7 +36,7 @@ public class CameraOrbitalController : MonoBehaviour {
             SetWalkPoint(false);
         }
 
-        else if(state == PlayerState.Grounded || state == PlayerState.Cruisered){
+        else if(state != PlayerState.Grounded && state != PlayerState.Cruisered){
             _allowRotation = true;
             SetWalkPoint(true);
         }

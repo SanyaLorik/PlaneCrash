@@ -1,28 +1,40 @@
 {
-    "Money": 2092185,
-    "RecordMoney": 7500000,
-    "RecordDistance": 1707,
+    "Money": 5504102,
+    "RecordMoney": 7000000,
+    "RecordDistance": 4000,
     "Upgrades": [
         {
             "Id": 0,
-            "Level": 7
+            "Level": 2
+        },
+        {
+            "Id": 1,
+            "Level": 2
+        },
+        {
+            "Id": 3,
+            "Level": 2
+        },
+        {
+            "Id": 4,
+            "Level": 2
         }
     ],
     "Pets": [
         {
             "Id": 2,
-            "Count": 5
+            "Count": 35
         },
         {
             "Id": 0,
-            "Count": 3
+            "Count": 13
         },
         {
             "Id": 1,
-            "Count": 1
+            "Count": 21
         }
     ],
     "TutorialPassed": true,
-    "CountBatutJumps": 54,
-    "CountBaskets": 6
+    "CountBatutJumps": 57,
+    "CountBaskets": 7
 }

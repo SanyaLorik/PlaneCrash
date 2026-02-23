@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Architecture_M;
-using Unity.Collections;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -28,7 +27,7 @@ public class PetsManager : MonoBehaviour {
     
     private Dictionary<PetItemConfig, int> _petToCountDict = new();
     public List<InstancePets> PetsInstances { get; private set; } = new();
-    public List<InstancePets> PetsInstancesForBots { get; private set; } = new();
+    private List<InstancePets> PetsInstancesForBots { get; set; } = new();
 
 
     public event Action BuyPet;

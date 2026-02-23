@@ -40,7 +40,7 @@ public class TaskNotification : MonoBehaviour {
         yield return new WaitForSeconds(_timeToShow);
         Hide();
         _notifCoroutine = null;
-        _canvas.DisactiveSelf();
+        
     }
         
     private void Show() {
@@ -53,7 +53,8 @@ public class TaskNotification : MonoBehaviour {
     private void Hide() {
         _panel.DOAnchorPos(_behindScreenPosition.anchoredPosition, _duration)
             .SetEase(Ease.InBack)
-            .OnComplete(() => _notifIsShowed = false);
+            .OnComplete(_canvas.DisactiveSelf);
+        _notifIsShowed = false;
     }
     
     

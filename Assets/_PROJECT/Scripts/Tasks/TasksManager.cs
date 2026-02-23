@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
-using TMPro;
 using UnityEngine;
 using Zenject;
 

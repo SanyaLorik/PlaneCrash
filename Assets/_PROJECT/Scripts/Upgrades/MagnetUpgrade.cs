@@ -24,6 +24,8 @@ public class MagnetUpgrade : UpgradeBase {
             _currentPrice,
             "",
             false);
+        UpdateLevelInLeft(_level);
+        
     }
 
     protected override void LoadLevel() {

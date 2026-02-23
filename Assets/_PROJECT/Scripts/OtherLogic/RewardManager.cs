@@ -1,4 +1,8 @@
+using System.Threading;
+using _PROJECT.Scripts.Helpers;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using MirraSDK_M;
 using SanyaBeerExtension;
 using TMPro;
 using UnityEngine;
@@ -7,47 +11,58 @@ using Zenject;
 
 public class RewardManager : MonoBehaviour {
     [SerializeField] private GameObject _canvas;
-    [SerializeField] private RectTransform _canvasBody;
+    [SerializeField] private RectTransform _container;
     
     [SerializeField] private TMP_Text _distanceText;
     [SerializeField] private TMP_Text _rewardText;
+    [SerializeField] private TMP_Text _rewardText2x;
 
     [SerializeField] private Button _backButton;
-    [SerializeField] private RectTransform _behindScreenCavasPosition; 
+    [SerializeField] private Button _backButton2x;
+    [SerializeField] private RectTransform _outScreenCavasPoint; 
     
     
-    [SerializeField] private float _canvasHideSpeed; 
-    
-    private Vector2 _screenCavasPosition; 
+    [SerializeField] private float _canvasShowSpeed;
+    [SerializeField] private float _timeToHideBackButton = 2f;
+    [Header("ЫЗЫ для анимации")]
+    [SerializeField] private Ease _hideCanvasEase;
+    [SerializeField] private Ease _showCanvasEase;
+
+    private float _yInScreenPosition; 
+    private float _yOutScreenPosition; 
 
 
     private bool _inAnimation => _animation != null && _animation.active;
     private Sequence _animation;
+    private CancellationTokenSource _tokenSource;
     
-    private PlayerStateManager _playerStateManager;
-    private PlayerMovement _playerMovement;
-    private ZoneManager _zoneManager;
+    [Inject] private PlayerStateManager _playerStateManager;
+    [Inject] private PlayerMovement _playerMovement;
+    [Inject] private ZoneManager _zoneManager;
     
     
     [Inject] private PlayerBank _playerBank;
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private LocalizationDataPC _localization;
     [Inject] private NumberFormatter _formatter;
-    [Inject]
-    public void Init(PlayerStateManager playerStateManager, PlayerMovement playerMovement, ZoneManager zoneManager) {
-        _zoneManager = zoneManager;
-        _playerStateManager = playerStateManager;
+    [Inject] private RectTransformHelper _rtHelper;
+    [Inject] private AdvertisingMonetizationMirra _advertisingMonetizationMirra;
+    
+    
+    
+    public void OnEnable() {
         _playerStateManager.ChangeState += OnStateChange;
-        _playerMovement =  playerMovement;
     }
 
   
 
     private void Start() {
-        _backButton.onClick.AddListener(RewardAnimation);
-        _screenCavasPosition = _canvasBody.anchoredPosition;
-        _canvasBody.anchoredPosition = _behindScreenCavasPosition.anchoredPosition;
-        _canvas.ActiveSelf();
+        _backButton.onClick.AddListener(() => Reward(false));
+        _backButton2x.onClick.AddListener(Reward2x);
+        _yInScreenPosition = _container.anchoredPosition.y;
+        _yOutScreenPosition = _rtHelper.GetYBottomScreen(_container, _outScreenCavasPoint);
+        _container.anchoredPosition = new Vector2(_container.anchoredPosition.x, _yOutScreenPosition);
+        _canvas.DisactiveSelf();
     }
 
     private void OnStateChange(PlayerState state) {
@@ -59,15 +74,15 @@ public class RewardManager : MonoBehaviour {
         }
     }
 
+    double _reward;
     private void ShowReward(bool cruisered) {
         if (_playerStateManager.BeforeState == PlayerState.Walking) {
             _playerMovement.TpPlayerInBetZone();
             return;
         }
         ShowRewardWindowAnimation();
-        double reward;
         if (cruisered) {
-            reward = 
+            _reward = 
                 _upgradesCalculator.GetUpgradeMultiplierByLevel() 
                 *
                 (_zoneManager.BetAmount * _zoneManager.BetMultiplier) 
@@ -75,16 +90,14 @@ public class RewardManager : MonoBehaviour {
                 _playerStateManager.CurrentPlayerDistance(); 
         }
         else {
-            reward = 
+            _reward = 
                 _playerStateManager.CurrentPlayerDistance() 
                 *
                 _upgradesCalculator.GetUpgradeMultiplierByLevel();
             _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.BetAmount);
             
         }
-        
-        _playerBank.AddMoney(reward);
-        ShowBaseRewardVisual(reward);
+        ShowBaseRewardVisual(_reward);
     }
 
 
@@ -92,40 +105,65 @@ public class RewardManager : MonoBehaviour {
         // Выигрышь
         _distanceText.text = _playerStateManager.CurrentPlayerDistance() + _localization.Meters;
         _rewardText.text = _formatter.ValuteFormatter(reward);
-        
+        _rewardText2x.text = _formatter.ValuteFormatter(reward*2);
     }
 
-    private void RewardAnimation() {
-        Sequence buttonPop =  DOTween.Sequence();
-        buttonPop
-            .Append(_backButton.transform.DOScale(1.2f, 0.2f).From(1f).SetEase(Ease.OutBounce))
-            .Append(_backButton.transform.DOScale(1f, 0.2f).From(1.2f).SetEase(Ease.OutBounce));
-        
-        
-        HideRewardWindow();
+    private void Reward(bool doubleReward) {
+        int multiplier = doubleReward ? 2 : 1;
+        _playerBank.AddMoney(_reward * multiplier);
+        Debug.LogWarning("Занос бабок " + _reward * multiplier);
+        HideRewardWindowAnimation();
         _playerStateManager.ChangePlayerState(PlayerState.Walking);
         _playerMovement.TpPlayerInSpawn();
+    }
+    
+    private void Reward2x() {
+        _advertisingMonetizationMirra.InvokeRewarded(
+            null,
+            (isSuccess) => 
+            {
+                if (isSuccess) {
+                    Reward(true);
+                }
+            }
+        );
+       
     }
 
     
     private void ShowRewardWindowAnimation() {
         _canvas.ActiveSelf();
-        _animation =  DOTween.Sequence();
-        _animation
-            .Append(_canvasBody.DOAnchorPos(_screenCavasPosition, _canvasHideSpeed))
-            .Append(_backButton.transform.DOScale(1, _canvasHideSpeed).From(0).SetEase(Ease.OutBounce));
-        // _canvas.ActiveSelf();
+        _backButton.DisactiveSelf();
+        _container
+            .DOAnchorPosY(_yInScreenPosition, _canvasShowSpeed)
+            .SetEase(_showCanvasEase)
+            .OnComplete(ShowWithDelayBackButton);
     }
-
     
-    private void HideRewardWindow() {
-        _animation =  DOTween.Sequence();
-
-        _animation
-            .Append(_canvasBody.DOAnchorPos(_behindScreenCavasPosition.anchoredPosition, _canvasHideSpeed))
-            .OnComplete(() => _canvas.DisactiveSelf());
+    
+    private void HideRewardWindowAnimation() {
+        _container.
+            DOAnchorPosY(_yOutScreenPosition, _canvasShowSpeed)
+            .SetEase(_hideCanvasEase)
+            .OnComplete(_canvas.DisactiveSelf);
 
     }
+
+    private void ShowWithDelayBackButton() {
+        _tokenSource?.Cancel();
+        _tokenSource = new CancellationTokenSource();
+        UniTaskHelper.TimerAction(
+            _timeToHideBackButton,
+            BackButtonAnimation,
+            _tokenSource.Token
+        ).Forget();
+    }
+
+    private void BackButtonAnimation() {
+        _backButton.ActiveSelf();
+        _backButton.transform.DOScale(1, _canvasShowSpeed).From(0).SetEase(Ease.OutBounce);
+    }
+    
 
     private void OnDestroy() {
         if (_inAnimation) {

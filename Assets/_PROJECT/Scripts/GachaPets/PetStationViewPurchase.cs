@@ -9,8 +9,32 @@ public class PetStationViewPurchase : PetStationViewBase {
         _price.text = _formatter.ValuteFormatter(_config.Price);
     }
 
+    private void OnEnable() {
+        _bank.BankChanged += BankOnBankChanged;
+    }
 
-    protected override void TryAddPet() {
+    private void BankOnBankChanged(long obj) {
+        CheckAvailable();
+    }
+    
+
+    protected override void StartInit() {
+        CheckAvailable();
+    }
+
+    private void CheckAvailable() {
+        if (_bank.PlayerCapital < _config.Price) {
+            _customTrigger.SetUnvailable();
+            AllowToGetPet = false;
+        }
+        else {
+            _customTrigger.SetAvailable();
+            AllowToGetPet = true;
+        }
+    }
+    
+
+    protected override void AddPet() {
         Debug.Log("Buy pet");
         PetChance pet = GetRandomPet(_config);
         _bank.GiveMeYourFuckingMoneyNigga(_config.Price);

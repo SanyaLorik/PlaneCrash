@@ -27,7 +27,6 @@ public class BoostSpawner : MonoBehaviour {
     [Header("До и после зоны кол-во бустов, From > To")]
     [SerializeField] private PairedValue<int> _countTrueWays;
     [SerializeField] private int _countFalseWays;
-    [SerializeField] private Transform _zoneSpawn;
     
     [SerializeField] private bool _setPlayerFalseWay;
     
@@ -77,7 +76,6 @@ public class BoostSpawner : MonoBehaviour {
 
     private void RecalculateSafeDistance() {
         MinDistance = CalculateFalseTargetLength() + _playerStateManager.StartFlightPositionZ;
-        MoveVisualZone();
         Debug.Log($"MinDistance = {CalculateFalseTargetLength()} + {_playerStateManager.StartFlightPositionZ}");
     }
 
@@ -193,13 +191,6 @@ public class BoostSpawner : MonoBehaviour {
 
         Debug.LogWarning("Буста не нашли(, летим к крейсеру");
         _playerMovement.SetBooster(_rightBoosts[^2].randomTrajectory, _cruiserPosition);
-    }
-    
-    
-    private void MoveVisualZone() {
-        Vector3 zonePos = _zoneSpawn.position;
-        zonePos.z = MinDistance;
-        _zoneSpawn.position = zonePos;
     }
 
 

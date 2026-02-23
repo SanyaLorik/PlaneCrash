@@ -25,7 +25,6 @@ public class LocationBuilder : MonoBehaviour {
     
      
     private List<LocationModule> _createdModulesActive = new ();
-    private List<LocationModule> _createdModulesResetBuffer = new ();
     
     private CancellationTokenSource _tokenSource;
     
@@ -45,46 +44,28 @@ public class LocationBuilder : MonoBehaviour {
     }
 
     private void Awake() {
-        StartInitAsync().Forget();
+        RespawnStartingLocation();
     }
 
 
-    private async UniTask StartInitAsync() {
-        _deletePoint = _distanceToSpawn;
-        _lastEnd = _firstPoint.position;
-        
-        _tokenSource = new CancellationTokenSource();
-        await SpawnStartDistanceAsync(_tokenSource.Token);
-        
-        _createdModulesActive.AddRange(_createdModulesResetBuffer);
-        _createdModulesResetBuffer.Clear();
-    }
 
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Flight) {
             _nextSpawnDistance = (_playerMovement.Transform.position.z + _distanceToSpawnNew);
-            _nextDestroyDistance =  _distanceToSpawn;
+            _nextDestroyDistance = _distanceToSpawn;
             
             _tokenSource?.Cancel();
             _tokenSource = new CancellationTokenSource();
             ConstructRoutine(_tokenSource.Token).Forget();
         }
         else if (state == PlayerState.Grounded || state == PlayerState.Cruisered) {
-            // Чуть чуть сзади именно что
             _tokenSource?.Cancel();
-            // За спиной игрока все удаляем
-            
-            _deletePoint = Mathf.Max(_playerMovement.Transform.position.z, _distanceToSpawn);
-            // игрок перелетел спавн
-            if (!Mathf.Approximately(_deletePoint, _distanceToSpawn)) {
-                RespawnStartingLocation();
-            }
         }
-        else if (state == PlayerState.Walking && !Mathf.Approximately(_deletePoint, _distanceToSpawn)) {
+        else if (state == PlayerState.Walking) {
             HideCreations();
-            _createdModulesActive.AddRange(_createdModulesResetBuffer);
-            _createdModulesResetBuffer.Clear();
+            _createdModulesActive.Clear();
+            RespawnStartingLocation();
         }
 
     }
@@ -122,13 +103,11 @@ public class LocationBuilder : MonoBehaviour {
     private async UniTask SpawnStartDistanceAsync(CancellationToken token) {
         Debug.LogWarning("SpawnStartDistanceAsync");
         while (_lastEnd.z < _distanceToSpawn && !token.IsCancellationRequested) {
-            SpawnNext(_createdModulesResetBuffer);
+            SpawnNext(_createdModulesActive);
             await UniTask.Yield(token);
         }
     }
 
-    private float _deletePoint;
-    
 
     
     private void HideCreations() {

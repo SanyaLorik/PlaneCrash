@@ -30,6 +30,8 @@ public class MultiplyUpgrade : UpgradeBase {
             _currentPrice,  
             "x", 
             false);
+        UpdateLevelInLeft(_level);
+        
     }
 
     protected override void LoadLevel() {

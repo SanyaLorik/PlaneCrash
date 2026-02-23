@@ -18,7 +18,7 @@ public class TaskVisual : MonoBehaviour {
     
     [Inject] private NumberFormatter _formatter;
     [Inject] private LocalizationDataPC _localization;
-    [Inject] private FillAmounthMover _fillAmounthMover;
+    [Inject] private RectTransformHelper _fillAmounthMover;
 
     
     public void SetTaskLocalizationText() {

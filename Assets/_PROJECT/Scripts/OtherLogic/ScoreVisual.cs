@@ -30,7 +30,7 @@ public class ScoreVisual : MonoBehaviour {
     [Inject] private ZoneManager _zoneManager;
     [Inject] private LocalizationDataPC _localization;
     [Inject] private IGameSave<GameSavePC> _saver;
-    [Inject] private FillAmounthMover _fillAmounthMover;
+    [Inject] private RectTransformHelper _fillAmounthMover;
     
     [Inject]
     public void OnEnable() {

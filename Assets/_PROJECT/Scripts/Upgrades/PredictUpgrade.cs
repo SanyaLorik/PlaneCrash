@@ -24,6 +24,8 @@ public class PredictUpgrade : UpgradeBase {
             _currentPrice,
             "м",
             true);
+        UpdateLevelInLeft(_level);
+        
     }
 
     protected override void LoadLevel() {

@@ -23,16 +23,13 @@ public class RangVisual : MonoBehaviour {
 
     
     private float _maxMoney;
-    private float _xStart;
-    private float _parentWidth;
-    private float _yPos;
     
     [Inject] private PlayerBank _playerBank;
     [Inject] private RangConfig _config;
     [Inject] private MoneyCube _moneyCube;
     [Inject] private LocalizationDataPC _localization;
     [Inject] private NumberFormatter _formatter;
-    [Inject] private FillAmounthMover _fillAmounthMover;
+    [Inject] private RectTransformHelper _fillAmounthMover;
 
 
 
@@ -66,10 +63,10 @@ public class RangVisual : MonoBehaviour {
         for (var i = 0; i < _config.Rangs.Count; i++) {
             var rang = _config.Rangs[i];
             float rangPercent = rang.Money / _maxMoney;
-
-            float rangXPos = Mathf.Lerp(_xStart, _parentWidth, rangPercent);
-            _rangPrefabs[i].ChangeRectTransform(rangXPos);
+            float xEnd = _fillAmounthMover.CalculateXEnd(_barWidth);
+            _fillAmounthMover.SetPointer(_rangPrefabs[i]._rt, rangPercent, xEnd);
             _rangPrefabs[i].SetData(_formatter.ValuteFormatter(rang.Money), rang.Sprite);
+            
         }
     }
     

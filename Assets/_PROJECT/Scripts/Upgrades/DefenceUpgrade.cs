@@ -24,6 +24,7 @@ public class DefenceUpgrade : UpgradeBase {
             _currentPrice,
             "шт",
             true);
+        UpdateLevelInLeft(_level);
         
     }
 

@@ -36,10 +36,10 @@ public class GameSavePC : GameSaveBase {
         if (!exist) {
             Upgrades.Add(new UpgradeData() {
                 Id = id,
-                Level = 1,
+                Level = 2,
             });
-            Debug.Log(1);
-            return 1;
+            Debug.Log(2);
+            return 2;
         }
         var upgrade = Upgrades.First(upgrade => upgrade.Id == id);
         upgrade.Level++;
