@@ -1,5 +1,7 @@
+using SanyaBeerExtension;
 using System.Collections.Generic;
-using UnityEditor.Rendering;using UnityEngine;
+using UnityEditor.Rendering;
+using UnityEngine;
 using Zenject;
 
 
@@ -10,24 +12,25 @@ public class LocationModule: MonoBehaviour {
     
     [Header("Обьекты")]
     [SerializeField] private List<LocationZone> _zones;
+    [SerializeField] private MaterialApplier[] _materialAppliers;
 
-
-    public void Init(DiContainer diContainer) {
-        foreach (var zone in _zones) {
+    public void Init(DiContainer diContainer)
+    {
+        foreach (var zone in _zones)
             diContainer.Inject(zone);
-        }
-
     } 
     
-    public void GenerateProps() {
-        foreach (var zone in _zones) {
+    public void GenerateProps() 
+    {
+        foreach (var zone in _zones)
             zone.GenerateProps();
-        }
+
+        _materialAppliers.ForEach(i => i.ApplyRandomMaterial());
     }
 
-    public void HideObjects() {
-        foreach (var zone in _zones) {
+    public void HideObjects() 
+    {
+        foreach (var zone in _zones) 
             zone.HideObjects();
-        }
     }
 }
