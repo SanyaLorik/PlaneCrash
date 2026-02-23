@@ -10,6 +10,9 @@ using SanyaBeerExtension;
 public class DelayedTrigger : MonoBehaviour {
     [SerializeField] private float _duration = 2f;
     [SerializeField] private Image _progress;
+    [SerializeField] private Image _notAvailableImage;
+    [SerializeField] private Color _notAvailableColor;
+    [SerializeField] private Color _availableColor;
     
     private CancellationTokenSource _tokenSource;
 
@@ -23,6 +26,14 @@ public class DelayedTrigger : MonoBehaviour {
     public void CancelTriggerAction() {
         _tokenSource?.Cancel();
         _progress.fillAmount = 1f;
+    }
+    
+    public void SetUnvailable() {
+        _notAvailableImage.color = _notAvailableColor;
+    }
+
+    public void SetAvailable() {
+        _notAvailableImage.color = _availableColor;
     }
 
     private async UniTask ProgressVisual(CancellationToken token, Action action) {

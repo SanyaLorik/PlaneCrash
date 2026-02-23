@@ -32,6 +32,7 @@ public class RangVisual : MonoBehaviour {
     [Inject] private MoneyCube _moneyCube;
     [Inject] private LocalizationDataPC _localization;
     [Inject] private NumberFormatter _formatter;
+    [Inject] private FillAmounthMover _fillAmounthMover;
 
 
 
@@ -42,7 +43,6 @@ public class RangVisual : MonoBehaviour {
 
     private void Start() {
         CalculateMaxMoney();
-        CalculateX();
         InstanceRangs();
         SetPlanes();
         
@@ -78,8 +78,7 @@ public class RangVisual : MonoBehaviour {
         float percent = Mathf.Clamp01(amount / _maxMoney);
         
         // Текущий
-        MovePointerByPercent(percent, _pointerIcon);
-        MoveByPercent(percent, _currentImageRt);
+        _fillAmounthMover.SetFillAmountWithPointer(_currentImageRt, _barWidth, _pointerIcon, percent, _offsetPointer);
 
         // Рекорд
         if (amount > _playerBank.PlayerRecord) {
@@ -89,32 +88,11 @@ public class RangVisual : MonoBehaviour {
 
     private void UpdateRecord() {
         float percent = Mathf.Clamp01(_playerBank.PlayerRecord / _maxMoney);
-        MovePointerByPercent(percent, _recordPointerIcon);
-        MoveByPercent(percent, _recordImageRt);
-    }
-
-
-    private void MovePointerByPercent(float percentForCurrent, RectTransform iconRect) {
-        float xPosForPointer = Mathf.Lerp(_xStart, _parentWidth, percentForCurrent) + _offsetPointer;
-        iconRect.anchoredPosition = new Vector2(xPosForPointer, iconRect.anchoredPosition.y);
-    }
-
-
-    private void MoveByPercent(float percent, RectTransform  rectTransform) {
-        rectTransform.offsetMax = new Vector2(-_parentWidth * (1f - percent), 0);
+        _fillAmounthMover.SetFillAmountWithPointer(_recordImageRt, _barWidth, _recordPointerIcon, percent, _offsetPointer);
     }
 
 
 #region Helpers
-
-    private void CalculateX() {
-        _xStart = 0f;
-        _parentWidth = _barWidth.rect.width;
-        Debug.Log($"_barWidth.rect.width = {_barWidth.rect.width}");
-        Debug.Log($"_xStart = {_xStart}");
-        Debug.Log($"_parentWidth = {_parentWidth}");
-    }
-
 
     private void CalculateMaxMoney() {
         _maxMoney = _config.Rangs[^1].Money;

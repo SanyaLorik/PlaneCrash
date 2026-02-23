@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Architecture_M;
 using Cysharp.Threading.Tasks;
 using SanyaBeerExtension;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -23,6 +22,7 @@ public class TutorialCompiller : MonoBehaviour {
     [Inject] private DiContainer _diContainer;
     [Inject] private LineToObjects _lineToObjects;
     [Inject] private PlayerStateManager _stateManager;
+    [Inject] private IInterstitialDelaying  _interstitialDelaying;
     
     
     [Inject]
@@ -57,6 +57,7 @@ public class TutorialCompiller : MonoBehaviour {
 
     private async UniTaskVoid StartTutorial() {
         await UniTask.WaitWhile(() => !_isInjected);
+        _interstitialDelaying.DisableTimer();
         _lineToObjects.TutorialModeEnable();
         for (var i = 0; i < _missions.Count; i++) {
             Debug.Log(i);
@@ -93,5 +94,6 @@ public class TutorialCompiller : MonoBehaviour {
         _gameSave.GetSave.TutorialPassed = true;
         _multiplierBlock.DisactiveSelf();
         _gameSave.Save();
+        _interstitialDelaying.EnableTimer();
     }
 }

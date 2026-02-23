@@ -1,4 +1,3 @@
-using System;
 using SanyaBeerExtension;
 using UnityEngine;
 using Zenject;
@@ -9,6 +8,8 @@ public class LineToObjects : MonoBehaviour {
     [SerializeField] private Transform _posForSpawn; // - 3.33
     [SerializeField] private LineRenderer _lineRenderer;
     [SerializeField] private float _speed = 1f;
+    [SerializeField] private PairedValue<AnimationCurve> _sizeDiapasoneCurves;
+    [SerializeField] private PairedValue<Vector2> _tileDiapasone;
     
     private Vector3 _target;
     private bool _tutorialStarted;
@@ -53,13 +54,13 @@ public class LineToObjects : MonoBehaviour {
     
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Walking) {
+            SetSpawnPose();
             if (_arrowInBoost) {
                 _arrowInBoost = false;
             }
             if (!_tasksManager.NeedToGetReward()) {
                 HideArrow();
             }
-            SetSpawnPose();
         }
 
         else if (state == PlayerState.Cruisered || state == PlayerState.Grounded) {
@@ -133,20 +134,26 @@ public class LineToObjects : MonoBehaviour {
             HideArrow();
             return;
         }
+        SetBoosterPose();
         _arrowInBoost = true;
         _currentShowLine++;
         SetTarget(_player.TargetPos);
-        SetBoosterPose();
     }
     
 
 
     private void SetBoosterPose() {
         transform.localPosition = _posForBoost.localPosition;
+        _lineRenderer.widthCurve = _sizeDiapasoneCurves.To;
+        _lineRenderer.material.mainTextureScale = new Vector2(_tileDiapasone.To.x, _tileDiapasone.To.y);
+        Debug.Log("Изменение SetBoosterPose");
     }
     
     private void SetSpawnPose() {
         transform.localPosition = _posForSpawn.localPosition;
+        _lineRenderer.widthCurve = _sizeDiapasoneCurves.From;
+        _lineRenderer.material.mainTextureScale = new Vector2(_tileDiapasone.From.x, _tileDiapasone.From.y);
+        Debug.Log("Изменение SetSpawnPose");
     }
        
     

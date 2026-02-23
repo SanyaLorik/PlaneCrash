@@ -88,6 +88,7 @@ public class TasksManager : MonoBehaviour {
 
     private void Start() {
         TableInitialize();
+        _delayedTrigger.SetUnvailable();
     }
 
     private void OnTriggerEnter(Collider collider) {
@@ -105,9 +106,11 @@ public class TasksManager : MonoBehaviour {
     public bool NeedToGetReward() {
         foreach (var taskInfo in _taskTypeToVisualDictionary) {
             if (taskInfo.Value.TaskIsComplete) {
+                _delayedTrigger.SetAvailable();
                 return true;
             }
         }
+        _delayedTrigger.SetUnvailable();
         return false;
     }
 

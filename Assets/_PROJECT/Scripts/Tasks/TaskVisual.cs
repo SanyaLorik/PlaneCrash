@@ -18,6 +18,7 @@ public class TaskVisual : MonoBehaviour {
     
     [Inject] private NumberFormatter _formatter;
     [Inject] private LocalizationDataPC _localization;
+    [Inject] private FillAmounthMover _fillAmounthMover;
 
     
     public void SetTaskLocalizationText() {
@@ -34,31 +35,13 @@ public class TaskVisual : MonoBehaviour {
 
     public void UpdateTaskScoreVisual(float currentValue, float fullValue) {
         float percent = currentValue / fullValue;
-        Debug.Log(percent);
-        SetFillAmount(percent);
-    }
-    
-    
-    private void SetFillAmount(float percent) {
-        _progressRectTransform.offsetMax = new Vector2(GetXPoseByPercent(percent), 0);
-        Debug.Log(GetXPoseByPercent(percent));
-        
+        _fillAmounthMover.SetFillAmount(_progressRectTransform, _parentRectTransform, percent);
     }
 
-    private float GetXPoseByPercent(float percent) {
-        float _xEnd = _parentRectTransform.rect.width;
-        if (_xEnd < 0) {
-            Debug.LogError("_xEnd < 0, Force UPDATE" );
-            Canvas.ForceUpdateCanvases();
-            _xEnd = _parentRectTransform.rect.width;
-            Debug.LogError("_xEnd = " + _xEnd);
-        }
-        return -_xEnd * (1f - percent);
-    }
-
+    
     public void SetTaskCompleteVisual() {
         _completeImg.ActiveSelf();
-        SetFillAmount(1);
+        _fillAmounthMover.SetFillAmount(_progressRectTransform, _parentRectTransform, 1);
         TaskIsComplete = true;
     }
 

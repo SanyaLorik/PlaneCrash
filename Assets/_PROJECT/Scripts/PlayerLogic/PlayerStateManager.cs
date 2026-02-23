@@ -11,6 +11,7 @@ public class PlayerStateManager : MonoBehaviour{
     
     [Inject] private IInterstitialDelaying  _interstitialDelaying;
     [Inject] private ZoneManager _zoneManager;
+    [Inject] private TutorialCompiller _tutorialCompiller;
     
     public event Action<PlayerState> ChangeState;
     
@@ -50,7 +51,9 @@ public class PlayerStateManager : MonoBehaviour{
             Debug.Log("StartFlightPositionZ : " + StartFlightPositionZ );
         }
         else {
-            _interstitialDelaying.EnableTimer();
+            if (_tutorialCompiller.TutorialPassed) {
+                _interstitialDelaying.EnableTimer();
+            }
             if (newState  == PlayerState.Walking) {
                 _jumpParticlesController.Play();
             }

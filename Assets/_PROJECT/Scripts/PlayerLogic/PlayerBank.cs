@@ -8,8 +8,6 @@ using UnityEngine;
 using Zenject;
 
 public class PlayerBank : MonoBehaviour {
-    
-    [SerializeField] private TMP_Text PlayerCapitalVisual;
     [SerializeField] private MoneyCube _cube;
     
     

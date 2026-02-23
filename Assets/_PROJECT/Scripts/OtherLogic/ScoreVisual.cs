@@ -9,7 +9,6 @@ using Zenject;
 public class ScoreVisual : MonoBehaviour {
     [SerializeField] private GameObject _canvas;
     
-    
     [SerializeField] private RectTransform _currentProgressBar;
     [SerializeField] private RectTransform _recordProgressBar;
     
@@ -25,13 +24,13 @@ public class ScoreVisual : MonoBehaviour {
     [Header("Настройка слайдеров")]
     [SerializeField] private RectTransform _parentRectTransform;
     
-    private float _xEnd;
     
     
     [Inject] private PlayerStateManager _playerStateManager;
     [Inject] private ZoneManager _zoneManager;
     [Inject] private LocalizationDataPC _localization;
     [Inject] private IGameSave<GameSavePC> _saver;
+    [Inject] private FillAmounthMover _fillAmounthMover;
     
     [Inject]
     public void OnEnable() {
@@ -40,7 +39,6 @@ public class ScoreVisual : MonoBehaviour {
     
 
     private void Start() {
-        _xEnd = _parentRectTransform.rect.width;
         SetDefault();
     }
     
@@ -83,9 +81,14 @@ public class ScoreVisual : MonoBehaviour {
         }
         Debug.Log(_zoneManager.DistanceToCruise + " " + _saver.GetSave.RecordDistance);
 
+
+        // Move Finish
+        float percent = _zoneManager.DistanceToCruise/_maxDistance;
+        float xEnd = _fillAmounthMover.CalculateXEnd(_parentRectTransform);
+        _fillAmounthMover.SetPointer(_finishPointer, percent, xEnd, _pointerOffset);
         
-        SetPointerWithOffset(_finishPointer, _zoneManager.DistanceToCruise/_maxDistance);
-        SetFillAmount(_recordProgressBar, _recordPointer, _saver.GetSave.RecordDistance/_maxDistance);
+        percent = _saver.GetSave.RecordDistance / _maxDistance;
+        _fillAmounthMover.SetFillAmountWithPointer(_recordProgressBar, _parentRectTransform, _recordPointer, percent);
        
         _flightRoutine = StartCoroutine(ShowDistanceRoutine());
     }
@@ -93,9 +96,8 @@ public class ScoreVisual : MonoBehaviour {
     private IEnumerator ShowDistanceRoutine() {
         while (_playerStateManager.CurrentState == PlayerState.Flight) {
             // Это процент полета но он не пойдет в SetFillAmount т.к там 100 процентов - конец
-            float progress = _playerStateManager.CurrentPlayerDistance() / _maxDistance;
-            
-            SetFillAmount(_currentProgressBar, _currentPointer, progress);
+            float percent = _playerStateManager.CurrentPlayerDistance() / _maxDistance;
+            _fillAmounthMover.SetFillAmountWithPointer(_currentProgressBar, _parentRectTransform, _currentPointer, percent);
             _currentDistanceText.text = $"{(int)_playerStateManager.CurrentPlayerDistance()}{_localization.Meters}";
             yield return null; 
         }
@@ -111,7 +113,6 @@ public class ScoreVisual : MonoBehaviour {
     }
 
     private void UpdateRecordText(int distance) {
-        Debug.Log("Отображен рекорд");
         if (_saver.GetSave.RecordDistance != 0 && !_recordProgressBar.gameObject.activeSelf) {
             _recordProgressBar.ActiveSelf();
             _recordPointer.ActiveSelf();
@@ -121,37 +122,18 @@ public class ScoreVisual : MonoBehaviour {
             _recordPointer.DisactiveSelf();
             return;
         }
-        Debug.Log("12");
         _recordDistanceText.text = distance + _localization.Meters;
     }
-
-    private void SetFillAmount(RectTransform rectTransform, RectTransform rectPointer, float percent) {
-        rectTransform.offsetMax = new Vector2(GetXPoseByPercent(percent), 0);
-        SetPointer(rectPointer, percent);
-    }
     
-    private void SetPointer(RectTransform pointer, float percent) {
-        Vector2 newPointerPos = new Vector2(_xEnd * percent, pointer.anchoredPosition.y);
-        pointer.anchoredPosition = newPointerPos;
-    }
-    
-    private void SetPointerWithOffset(RectTransform pointer, float percent) {
-        Vector2 newPointerPos = new Vector2(_xEnd * percent + _pointerOffset, pointer.anchoredPosition.y);
-        pointer.anchoredPosition = newPointerPos;
-    }
-
-    private float GetXPoseByPercent(float percent) {
-        return -_xEnd * (1f - percent);
-    }
 
 
     private void SetDefault() {
-        SetFillAmount(_currentProgressBar, _currentPointer, 0);
+        _fillAmounthMover.SetFillAmountWithPointer(_currentProgressBar, _parentRectTransform, _currentPointer, 0);
         _canvas.SetActive(false);
     }
 
     private void SetMaxProgress() {
-        SetFillAmount(_currentProgressBar, _currentPointer, 1);
+        _fillAmounthMover.SetFillAmountWithPointer(_currentProgressBar, _parentRectTransform, _currentPointer, 1);
         _currentDistanceText.text = $"{Math.Round(_zoneManager.DistanceToCruise)}m";
     }
 

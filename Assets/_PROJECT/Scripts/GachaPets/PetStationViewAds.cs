@@ -12,39 +12,34 @@ public class PetStationViewAds : PetStationViewBase {
     [Header("Тип станции")]
     [SerializeField] private int _countToShowReward;
     [SerializeField] private TMP_Text _countTextVisual;
-    [SerializeField] private Image _rewardProgress;
+    [SerializeField] private RectTransform _rewardProgress;
+    [SerializeField] private RectTransform _rewardProgressParent;
     
     [Inject] private AdvertisingMonetizationMirra _advertisingMonetizationMirra;
+    [Inject] private FillAmounthMover _fillAmounthMover;
     
 
-    private void Awake() {
+    private new void Start() {
         _countTextVisual.text = $"{_showedReward} / {_countToShowReward}";
-        _rewardProgress.fillAmount = (float)_showedReward / _countToShowReward;
+        _fillAmounthMover.SetFillAmount(_rewardProgress, _rewardProgressParent,  0);
     }
 
+    
 
 
     protected override void TryAddPet() {
         _advertisingMonetizationMirra.InvokeRewarded(
             null,
-            (isSuccess) => AddPetByReward(isSuccess)
+            (isSuccess) => 
+            {
+                if (isSuccess) {
+                    AddPetByReward();
+                }
+            }
         );
-        
-            
-        // 1. Обычный метод
-        bool MyMethod(bool value) {
-            Debug.Log(value);
-            return true;
-        }
-
-        // 2. Создаем делегат, указывающий на этот метод
-        Func<bool, bool> myDelegate1 = MyMethod;
-
-
     }
 
-    private void AddPetByReward(bool success) {
-        if(!success) return;
+    private void AddPetByReward() {
         _showedReward++;
         Debug.Log($"Reward pet count = {_showedReward} / {_countToShowReward}");
         if (_showedReward == _countToShowReward) {
@@ -55,9 +50,7 @@ public class PetStationViewAds : PetStationViewBase {
             _showedReward = 0;
         }
         _countTextVisual.text = $"{_showedReward} / {_countToShowReward}";
-        _rewardProgress.fillAmount = (float)_showedReward / _countToShowReward;
+        float percent = (float)_showedReward / _countToShowReward;
+        _fillAmounthMover.SetFillAmount(_rewardProgress, _rewardProgressParent,  percent);
     }
-
-
-   
 }
