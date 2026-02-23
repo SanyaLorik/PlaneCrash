@@ -57,6 +57,7 @@ public class RewardManager : MonoBehaviour {
   
 
     private void Start() {
+        _canvas.ActiveSelf();
         _backButton.onClick.AddListener(() => Reward(false));
         _backButton2x.onClick.AddListener(Reward2x);
         _yInScreenPosition = _container.anchoredPosition.y;

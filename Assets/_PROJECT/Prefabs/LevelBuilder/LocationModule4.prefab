@@ -2636,7 +2636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LocationZone
   _locationType: 1
-  _spawnPointCount: 7
+  _spawnPointCount: 0
   _minPointDistance: 20
   _renderer: {fileID: 7211156018314072832}
   _objectsToSpawn:
@@ -5804,7 +5804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LocationZone
   _locationType: 2
-  _spawnPointCount: 7
+  _spawnPointCount: 0
   _minPointDistance: 20
   _renderer: {fileID: 3541065546855406519}
   _objectsToSpawn:
