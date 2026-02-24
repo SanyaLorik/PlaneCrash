@@ -32,6 +32,7 @@ public class Money2dSpawner : MonoBehaviour {
     [Inject] private PlayerStateManager _playerStateManager;
     [Inject] private PlayerBank _bank;
     [Inject] private NumberFormatter _formatter;
+    [Inject] private RectTransformHelper _rtHelper;
     
     
     private void OnEnable() {
@@ -42,14 +43,14 @@ public class Money2dSpawner : MonoBehaviour {
 
     private void BankPlus(long money) {
         NewMoneyView newMoneyView = GetBankOpertionViewInPool();
-        newMoneyView.transform.position = GetPointAroundPlayer();;
+        newMoneyView.transform.position = GetPointAroundPlayerSpiral();;
         newMoneyView.PlusMoney(_formatter.ValuteFormatter(money));
         StartCoroutine(HideBankOpertionView(newMoneyView));
     }
     
     private void BankMinus(long money) {
         NewMoneyView newMoneyView = GetBankOpertionViewInPool();
-        newMoneyView.transform.position = GetPointAroundPlayer();;
+        newMoneyView.transform.position = GetPointAroundPlayerSpiral();;
         newMoneyView.MinusMoney(_formatter.ValuteFormatter(money));
         StartCoroutine(HideBankOpertionView(newMoneyView));
     }
@@ -196,13 +197,41 @@ public class Money2dSpawner : MonoBehaviour {
         Vector3 screenPos = Camera.main.WorldToScreenPoint(_playerSpawnPoint.transform.position);
         Vector2 point = new Vector2(offset.x + screenPos.x, offset.y + screenPos.y);
 
-        float padding = 50f; // чтобы текст не упирался в край
+        float padding = 100f; // чтобы текст не упирался в край
 
         point.x = Mathf.Clamp(point.x, padding, Screen.width - padding);
         point.y = Mathf.Clamp(point.y, padding, Screen.height - padding);
 
         return point;
     }
+    
+    
+    private float _lastAngle = 0f;
+    private float _angleStep = 60f; // шаг в градусах
+    private Vector2 GetPointAroundPlayerSpiral() {
+        float radius = _playerStateManager.CurrentState == PlayerState.TrampolineJumping
+            ? _spawnRadius * _trampolineMultiplierRadius
+            : _spawnRadius;
+    
+        // Увеличиваем угол с каждым спавном
+        _lastAngle += _angleStep;
+        if (_lastAngle >= 360f) _lastAngle -= 360f;
+    
+        float angle = _lastAngle * Mathf.Deg2Rad;
+        float r = radius * 0.8f; // не используем весь радиус, чтобы было предсказуемо
+    
+        float x = Mathf.Cos(angle) * r;
+        float y = Mathf.Sin(angle) * r;
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(_playerSpawnPoint.transform.position);
+        Vector2 point = new Vector2(x + screenPos.x, y + screenPos.y);
+    
+        float padding = 100f;
+
+        point = _rtHelper.ClampByScreenVector(padding, point);
+        return point;
+    }
+    
+   
     
     
 }

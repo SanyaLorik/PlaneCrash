@@ -23,7 +23,6 @@ public class PetOpenView : MonoBehaviour {
     [Header("Кнопка")]
     [SerializeField] private Button _openButton;
     [SerializeField] private RectTransform _openButtonRT;
-    [SerializeField] private TMP_Text _openButtonText;
 
     [Header("Анимации")] 
     [SerializeField] private float _scaleDuration = 1.5f;
@@ -52,7 +51,6 @@ public class PetOpenView : MonoBehaviour {
 
 
     private void Start() {
-        _openButtonText.text = _localization.OpenButton;
         _openButton.onClick.AddListener(OpenAnimation);
         _canvas.ActiveSelf();
         _yBottomScreen = _fillAmounthMover.GetYBottomScreen(_container, _pointerToHide);

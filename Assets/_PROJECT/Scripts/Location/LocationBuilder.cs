@@ -55,12 +55,12 @@ public class LocationBuilder : MonoBehaviour {
             _nextSpawnDistance = (_playerMovement.Transform.position.z + _distanceToSpawnNew);
             _nextDestroyDistance = _distanceToSpawn;
             
-            _tokenSource?.Cancel();
+            DisposeToken();
             _tokenSource = new CancellationTokenSource();
             ConstructRoutine(_tokenSource.Token).Forget();
         }
         else if (state == PlayerState.Grounded || state == PlayerState.Cruisered) {
-            _tokenSource?.Cancel();
+            DisposeToken();
         }
         else if (state == PlayerState.Walking) {
             HideCreations();
@@ -72,7 +72,7 @@ public class LocationBuilder : MonoBehaviour {
 
     private void RespawnStartingLocation() {
         _lastEnd = _firstPoint.position;
-        _tokenSource?.Cancel();
+        DisposeToken();
         _tokenSource = new CancellationTokenSource();
         SpawnStartDistanceAsync(_tokenSource.Token).Forget();
     }
@@ -124,17 +124,13 @@ public class LocationBuilder : MonoBehaviour {
 
 
     private void HideOldestModule() {
-        Debug.Log("HideOldestModule");
-        LocationModule oldestModule = _createdModulesActive[0];
-        foreach (var createdModule in _createdModulesActive) {
-            if (createdModule.transform.position.z < oldestModule.transform.position.z) {
-                oldestModule = createdModule;
-            }
-        }
-
+        if (_createdModulesActive.Count == 0) return;
+    
+        LocationModule oldestModule = _createdModulesActive[0]; // Первый = самый старый
+        _createdModulesActive.RemoveAt(0); // Удаляем из списка сразу
+    
         oldestModule.HideObjects();
         _poolManager.ReturnObjectToPool(oldestModule.gameObject, PoolType.LocationObject);
-        _createdModulesActive.Remove(oldestModule);
     }
     
     
@@ -155,5 +151,15 @@ public class LocationBuilder : MonoBehaviour {
         // Debug.Log("Создани модуля в " + module.transform.position.z);
     }
     
+    
+    
+    private void OnDestroy() {
+        DisposeToken();
+        _playerStateManager.ChangeState -= PlayerStateManagerOnChangeState;
+    }
 
+    private void DisposeToken() {
+        _tokenSource?.Cancel();
+        _tokenSource?.Dispose();
+    }
 }

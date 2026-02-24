@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using SanyaBeerExtension;
 using TMPro;
 using Unity.VisualScripting;
@@ -6,13 +7,21 @@ using UnityEngine;
 using Zenject;
 
 public class BetVisual : MonoBehaviour {
+    [Header("Animation")]
+    [SerializeField] private Ease _hideEase = Ease.InBack;
+    [SerializeField] private Ease _showEase = Ease.OutBack;
+    [SerializeField] private float _showDuration = 1f;
+    [SerializeField] private RectTransform _outScreenPointer;
+    
+    
+    private float _inScreenPoseY;
+    private float _outScreenPoseY;
+    
+    
     [SerializeField] private TMP_Text _playerBankText;
     [SerializeField] private TMP_Text _playerBetText;
     [SerializeField] private TMP_Text _rewardText;
-    
-    
-    [SerializeField] private GameObject _betAndRewardCanvas;
-    [SerializeField] private GameObject _mainCanvas;
+    [SerializeField] private RectTransform _betAndRewardContainer;
     
     
     [Inject] private PlayerStateManager _playerStateManager;
@@ -23,6 +32,7 @@ public class BetVisual : MonoBehaviour {
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private NumberFormatter _formatter; 
     [Inject] private LocalizationDataPC _localization;
+    [Inject] private RectTransformHelper _rtHelper;
 
 
     private void OnEnable() {
@@ -30,41 +40,39 @@ public class BetVisual : MonoBehaviour {
         _zoneManager.ChooseBet += ShowBet;
         _zoneManager.ChooseMultiplier += ShowMultiplier;
         _playerStateManager.ChangeState += OnChangeState;
-        _playerStats.ChangeStats += PlayerStatsOnChangeStats;
-        _petsManager.BuyPet += PetsManagerOnBuyPet;
     }
 
     private void Start() {
-        _betAndRewardCanvas.DisactiveSelf();
+        _betAndRewardContainer.ActiveSelf();
+        _inScreenPoseY = _betAndRewardContainer.anchoredPosition.y;
+        _outScreenPoseY = _rtHelper.GetYUnderScreen(_betAndRewardContainer, _outScreenPointer);
         _playerBankText.text = _formatter.ValuteFormatter(_bank.PlayerCapital);
+        _betAndRewardContainer.anchoredPosition = new Vector2(_betAndRewardContainer.anchoredPosition.x, _outScreenPoseY);
+        _betAndRewardContainer.DisactiveSelf();
     }
   
 
-
-
-    private void PetsManagerOnBuyPet() {
-        Debug.Log("Новые питомцы!");
-        PlayerStatsOnChangeStats();
-    }
-
-    private void PlayerStatsOnChangeStats() {
-        // Обновление вывода текста множителя где-то было 
-        // text = string.Format(
-        //     _localization.UpgradeMultiplierTemplate,
-        //     $"{_upgradesCalculator.GetUpgradeMultiplierByLevel(true, true):F2}"
-        // );
-    }
-
- 
-
     private void OnChangeState(PlayerState state) {
-        _betAndRewardCanvas.DisactiveSelf();
-        if (state == PlayerState.Flight) {
-            _mainCanvas.DisactiveSelf();
-        }
-        else if(!_mainCanvas.activeSelf) {
-            _mainCanvas.ActiveSelf();
-        }
+        // ANIMATE 
+        HideBetAndRewardCanvas();
+    }
+
+    private void HideBetAndRewardCanvas() {
+        Debug.Log("HideBetAndRewardCanvas");
+        _betAndRewardContainer.DOKill();
+        _betAndRewardContainer.
+            DOAnchorPosY(_outScreenPoseY, _showDuration)
+            .SetEase(_hideEase)
+            .OnComplete(_betAndRewardContainer.DisactiveSelf);
+    }
+    
+    private void ShowBetAndRewardCanvas() {
+        Debug.Log("ShowBetAndRewardCanvas");
+        
+        _betAndRewardContainer.ActiveSelf();
+        _betAndRewardContainer.DOKill();
+        _betAndRewardContainer.DOAnchorPosY(_inScreenPoseY, _showDuration)
+            .SetEase(_showEase);
     }
 
 
@@ -75,11 +83,11 @@ public class BetVisual : MonoBehaviour {
     private void ShowBet(float bet) {
         _playerBetText.text = _formatter.ValuteFormatter(bet);
         _rewardText.text = _formatter.ValuteFormatter(_zoneManager.BetAmount);
-        if (bet == 0 && _betAndRewardCanvas.activeSelf) {
-            _betAndRewardCanvas.DisactiveSelf();
+        if (bet == 0 && _betAndRewardContainer.gameObject.activeSelf) {
+            HideBetAndRewardCanvas();
         }
-        else if (bet > 0 && !_betAndRewardCanvas.activeSelf) {
-            _betAndRewardCanvas.ActiveSelf();
+        else if (bet > 0 && !_betAndRewardContainer.gameObject.activeSelf) {
+            ShowBetAndRewardCanvas();
         }
     }
     
@@ -94,8 +102,6 @@ public class BetVisual : MonoBehaviour {
         _zoneManager.ChooseBet -= ShowBet;
         _zoneManager.ChooseMultiplier -= ShowMultiplier;
         _playerStateManager.ChangeState -= OnChangeState;
-        _playerStats.ChangeStats -= PlayerStatsOnChangeStats;
-        _petsManager.BuyPet -= PetsManagerOnBuyPet;
     }
     
 }

@@ -7,8 +7,6 @@ using UnityEngine;
 using Zenject;
 
 public class ScoreVisual : MonoBehaviour {
-    [SerializeField] private GameObject _canvas;
-    
     [SerializeField] private RectTransform _currentProgressBar;
     [SerializeField] private RectTransform _recordProgressBar;
     
@@ -46,7 +44,6 @@ public class ScoreVisual : MonoBehaviour {
  
     private void OnPlayerStateChange(PlayerState state) {
         if (state == PlayerState.Flight) {
-            _canvas.ActiveSelf();
             Debug.Log("OnPlayerStateChange вызывает FlightScoreLogic");
             FlightScoreLogic();
         }
@@ -108,8 +105,6 @@ public class ScoreVisual : MonoBehaviour {
             Debug.Log("ShowDistanceRoutine вызывает UpdateRecordText");
             UpdateRecordText(_saver.GetSave.RecordDistance);
         }
-        _canvas.DisactiveSelf();
-        
     }
 
     private void UpdateRecordText(int distance) {
@@ -129,7 +124,6 @@ public class ScoreVisual : MonoBehaviour {
 
     private void SetDefault() {
         _fillAmounthMover.SetFillAmountWithPointer(_currentProgressBar, _parentRectTransform, _currentPointer, 0);
-        _canvas.SetActive(false);
     }
 
     private void SetMaxProgress() {

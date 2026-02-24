@@ -36,6 +36,22 @@ public class RectTransformHelper {
     } 
     
     
+    public float GetYUnderScreen(RectTransform container, RectTransform pointer) {
+        Canvas.ForceUpdateCanvases();
+       // return -container.parent.GetComponent<RectTransform>().rect.height / 2 - container.rect.height / 2;
+       Vector3 worldPos = pointer.position;
+       // Конвертируем в локальные координаты родителя container
+       Vector3 localPos = container.parent.InverseTransformPoint(worldPos);
+       // Вычисляем смещение для pivot контейнера
+       localPos.y += container.rect.height * (1 - container.pivot.y);
+       return localPos.y;
+    } 
+    
+    public Vector2 ClampByScreenVector(float padding, Vector2 point) {
+        point.x = Mathf.Clamp(point.x, padding, Screen.width - padding);
+        point.y = Mathf.Clamp(point.y, padding, Screen.height - padding);
+        return point;
+    }
 
     private float GetXPoseByPercent(float percent, float xEnd, RectTransform parent) {
         if (xEnd < 0) {
