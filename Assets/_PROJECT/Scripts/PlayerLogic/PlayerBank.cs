@@ -12,17 +12,40 @@ public class PlayerBank : MonoBehaviour {
     
     
     public event Action<long> BankChanged;
+    public event Action<long> BankNewMoneyPlus;
+    public event Action<long> BankNewMoneyMinus;
     public event Action<int> MoneyCollect;
 
     public long PlayerCapital {
         get => _gameSave.GetSave.Money;
         private set => _gameSave.GetSave.Money = value;
     }
-
     public long PlayerRecord {
         get => _gameSave.GetSave.RecordMoney; 
         private set => _gameSave.GetSave.RecordMoney = value;
     }
+
+    private void ChangeMoney(long newMoney, bool save = true) {
+        PlayerCapital += newMoney;
+
+        if (PlayerCapital < 0)
+            PlayerCapital = 0;
+
+        if (PlayerRecord < PlayerCapital)
+            PlayerRecord = PlayerCapital;
+
+        BankChanged?.Invoke(PlayerCapital);
+        
+        if (newMoney > 0)
+            BankNewMoneyPlus?.Invoke(newMoney);
+        else if (newMoney < 0)
+            BankNewMoneyMinus?.Invoke(Math.Abs(newMoney));
+
+        if (save)
+            _gameSave.Save();
+    }
+    
+
 
     [Inject] IGameSave<GameSavePC> _gameSave;
     
@@ -39,27 +62,20 @@ public class PlayerBank : MonoBehaviour {
 
 
     public void AddMoney(double amount) {
-        if (amount < 0) return;
-        PlayerCapital += (long)amount;
-        if (PlayerRecord < PlayerCapital) {
-            PlayerRecord = PlayerCapital;
-        }
-        BankChanged?.Invoke(PlayerCapital);
+        if (amount <= 0) return;
+        ChangeMoney((long)amount);
     }
     
     
     public void AddFlightMoney(int amount) {
-        if (amount < 0) return;
-        PlayerCapital += amount;
+        if (amount <= 0) return;
         MoneyCollect?.Invoke(amount);
+        ChangeMoney(amount, false);
     }
-    
-    
-    
+
     public void Buy(double amount) {
-        if (amount > PlayerCapital) return;
-        PlayerCapital -= (long)amount;
-        BankChanged?.Invoke(PlayerCapital);
+        if (!CanBuy(amount)) return;
+        ChangeMoney((long)-amount);
     }
 
 
@@ -73,7 +89,6 @@ public class PlayerBank : MonoBehaviour {
         }
         PlayerCapital -= (long)amount;
         BankChanged?.Invoke(PlayerCapital);
+        BankNewMoneyMinus?.Invoke((long)amount);
     }
-    
-
 }

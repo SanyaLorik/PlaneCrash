@@ -75,12 +75,15 @@ public class RewardManager : MonoBehaviour {
         }
     }
 
-    double _reward;
+    private double _reward;
+    private bool _isCruisered;
     private void ShowReward(bool cruisered) {
         if (_playerStateManager.BeforeState == PlayerState.Walking) {
             _playerMovement.TpPlayerInBetZone();
             return;
         }
+
+        _isCruisered = cruisered;
         ShowRewardWindowAnimation();
         if (cruisered) {
             _reward = 
@@ -95,7 +98,6 @@ public class RewardManager : MonoBehaviour {
                 _playerStateManager.CurrentPlayerDistance() 
                 *
                 _upgradesCalculator.GetUpgradeMultiplierByLevel();
-            _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.BetAmount);
             
         }
         ShowBaseRewardVisual(_reward);
@@ -112,10 +114,15 @@ public class RewardManager : MonoBehaviour {
     private void Reward(bool doubleReward) {
         int multiplier = doubleReward ? 2 : 1;
         _playerBank.AddMoney(_reward * multiplier);
+        if (!_isCruisered) {
+            _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.BetAmount);
+        }
+        
+        
+        _playerMovement.TpPlayerInSpawn();
+        _playerStateManager.ChangePlayerState(PlayerState.Walking);
         Debug.LogWarning("Занос бабок " + _reward * multiplier);
         HideRewardWindowAnimation();
-        _playerStateManager.ChangePlayerState(PlayerState.Walking);
-        _playerMovement.TpPlayerInSpawn();
     }
     
     private void Reward2x() {

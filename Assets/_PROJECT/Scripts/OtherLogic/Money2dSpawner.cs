@@ -14,25 +14,47 @@ public class Money2dSpawner : MonoBehaviour {
     [SerializeField] private float _animationDuration;
     [SerializeField] private List<AnimationCurve> _trajectories;
     [SerializeField] private PairedValue<float> _jumpHeight;
+    [SerializeField] private NewMoneyView _newMoneyView;
 
     [SerializeField] private float _countMoneyAfterFlight;
     [Range(0, 1), SerializeField] private float _spawnTimeDiapasone;
     [SerializeField] private float _spawnRadius;
+    [SerializeField] private float _trampolineMultiplierRadius;
     [SerializeField] private Transform _playerSpawnPoint;
-    
-    
-    private Queue<RectTransform> _moneyPool = new ();
+    [SerializeField] private float _showBankOpertionDuration = 2f;
 
-    private PlayerStateManager _playerStateManager;
+    private Queue<RectTransform> _moneyPool = new ();
+    private Queue<NewMoneyView> _bankOpertaionViewPool = new ();
+
     private bool _isFlightBefore = false;
+
     
-    [Inject]
-    private void Init(PlayerStateManager playerStateManager) {
-        _playerStateManager = playerStateManager;
+    [Inject] private PlayerStateManager _playerStateManager;
+    [Inject] private PlayerBank _bank;
+    [Inject] private NumberFormatter _formatter;
+    
+    
+    private void OnEnable() {
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
+        _bank.BankNewMoneyPlus += BankPlus;
+        _bank.BankNewMoneyMinus += BankMinus;
     }
 
+    private void BankPlus(long money) {
+        NewMoneyView newMoneyView = GetBankOpertionViewInPool();
+        newMoneyView.transform.position = GetPointAroundPlayer();;
+        newMoneyView.PlusMoney(_formatter.ValuteFormatter(money));
+        StartCoroutine(HideBankOpertionView(newMoneyView));
+    }
     
+    private void BankMinus(long money) {
+        NewMoneyView newMoneyView = GetBankOpertionViewInPool();
+        newMoneyView.transform.position = GetPointAroundPlayer();;
+        newMoneyView.MinusMoney(_formatter.ValuteFormatter(money));
+        StartCoroutine(HideBankOpertionView(newMoneyView));
+    }
+
+
     private void Awake() {
         for (int i = 0; i < _poolSize; i++) {
             RectTransform icon = Instantiate(_iconPrefab, _parentForMoney);
@@ -41,13 +63,6 @@ public class Money2dSpawner : MonoBehaviour {
             _moneyPool.Enqueue(icon);
         }
         
-    }
-    
-    public void SpawnOneMoneyNearPlayer() {
-        RectTransform icon = GetIconFromPool();
-        icon.ActiveSelf();
-        icon.position = GetPointAroundPlayer();
-        StartCoroutine(MoneyAnimationRoutine(icon));
     }
     
     
@@ -74,15 +89,6 @@ public class Money2dSpawner : MonoBehaviour {
     }
 
 
-    public bool PlayAnimation = false;
-    private void OnValidate() {
-        if (PlayAnimation) {
-            StartCoroutine(AfterFlightAnimationRoutine());
-            PlayAnimation =  false;
-        }
-    }
-
-
     private IEnumerator AfterFlightAnimationRoutine() {
         Debug.Log("AfterFlightAnimationRoutine");
         float spawnedMoney = 0;
@@ -97,10 +103,6 @@ public class Money2dSpawner : MonoBehaviour {
             yield return new WaitForSeconds(_spawnTimeDiapasone);
         }
     }
-
-
-
-
 
 
     private IEnumerator MoneyAnimationRoutine(RectTransform icon) {
@@ -132,7 +134,13 @@ public class Money2dSpawner : MonoBehaviour {
         // Жёстко фиксируем конец
         icon.position = end;
 
-        ReturnToPool(icon);
+        MoneyReturnToPool(icon);
+    }
+    
+    private IEnumerator HideBankOpertionView(NewMoneyView newMoneyView) {
+        yield return new WaitForSeconds(_showBankOpertionDuration);
+        newMoneyView.DisactiveSelf();
+        _bankOpertaionViewPool.Enqueue(newMoneyView);
     }
 
     
@@ -144,7 +152,15 @@ public class Money2dSpawner : MonoBehaviour {
         return Instantiate(_iconPrefab, _parentForMoney);
     }
     
-    private void ReturnToPool(RectTransform icon) {
+    private NewMoneyView GetBankOpertionViewInPool() {
+        if (_bankOpertaionViewPool.Count > 0)
+            return _bankOpertaionViewPool.Dequeue();
+
+        // если не хватило — создаём ещё
+        return Instantiate(_newMoneyView, _parentForMoney);
+    }
+    
+    private void MoneyReturnToPool(RectTransform icon) {
         ResetRect(icon);
         icon.DisactiveSelf();
         _moneyPool.Enqueue(icon);
@@ -157,11 +173,11 @@ public class Money2dSpawner : MonoBehaviour {
     }
     
     
-    private Vector2 GetRandomPointInCircle() {
+    private Vector2 GetRandomPointInCircle(float radius) {
         float angle = Random.Range(0f, Mathf.PI * 2f);
 
         // Корень — чтобы точки были равномерно, а не кучей в центре
-        float r = Mathf.Sqrt(Random.value) * _spawnRadius;
+        float r = Mathf.Sqrt(Random.value) * radius;
 
         float x = Mathf.Cos(angle) * r;
         float y = Mathf.Sin(angle) * r;
@@ -170,10 +186,22 @@ public class Money2dSpawner : MonoBehaviour {
     }
     
     private Vector2 GetPointAroundPlayer() {
-        Vector2 offset = GetRandomPointInCircle();
+        float radius = _playerStateManager.CurrentState == PlayerState.TrampolineJumping
+            ? _spawnRadius * _trampolineMultiplierRadius
+            : _spawnRadius;
+
+        Vector2 offset = GetRandomPointInCircle(radius);
+
 
         Vector3 screenPos = Camera.main.WorldToScreenPoint(_playerSpawnPoint.transform.position);
-        return new Vector2(offset.x + screenPos.x, offset.y + screenPos.y);
+        Vector2 point = new Vector2(offset.x + screenPos.x, offset.y + screenPos.y);
+
+        float padding = 50f; // чтобы текст не упирался в край
+
+        point.x = Mathf.Clamp(point.x, padding, Screen.width - padding);
+        point.y = Mathf.Clamp(point.y, padding, Screen.height - padding);
+
+        return point;
     }
     
     
