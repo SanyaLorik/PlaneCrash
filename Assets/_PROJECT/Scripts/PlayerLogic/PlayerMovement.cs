@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using Architecture_M;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 
 public class PlayerMovement : FlightObject {
@@ -30,7 +28,12 @@ public class PlayerMovement : FlightObject {
     public float PlayerSpeed => _config.SpeedForce;
     public float JumpHeight => _config.JumpHeight;
     public event Action SetBoost;
-    
+    public event Action OnJumpPressed;
+    public event Action OnDoubleJumpPressed;
+    public event Action<bool> OnRunningStateChanged;
+
+    public bool IsRunning { get; private set; }
+
     [Inject] private PlayerConfig _config;
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private PlayerStateManager _stateManager;
@@ -162,11 +165,13 @@ public class PlayerMovement : FlightObject {
             Rb.linearVelocity = new Vector3(Rb.linearVelocity.x, 0f, Rb.linearVelocity.z);
             DoJump(_config.JumpForce);
             _jumpParticlesController.Play();
+            OnJumpPressed?.Invoke();
             _jumpsUsed = 1;
         }
         else if (_jumpsUsed == 1) {
             Rb.linearVelocity = new Vector3(Rb.linearVelocity.x, 0f, Rb.linearVelocity.z);
             DoJump(_config.SecondJumpForce);
+            OnDoubleJumpPressed?.Invoke();
             _jumpParticlesController.Play();
             _jumpsUsed = 2;
         }
@@ -207,7 +212,14 @@ public class PlayerMovement : FlightObject {
             camRight   * MoveInput.x +
             camForward * MoveInput.y;
 
-        if (move.sqrMagnitude < 0.001f)
+        bool hasInput = move.sqrMagnitude > 0.001f;
+        
+        if (hasInput != IsRunning) {
+            IsRunning = hasInput;
+            OnRunningStateChanged?.Invoke(IsRunning);
+        }
+        
+        if (!hasInput)
             return;
 
         Vector3 moveDir  = move.normalized;

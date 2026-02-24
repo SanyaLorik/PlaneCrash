@@ -18,6 +18,7 @@ public class PlayerStateManager : MonoBehaviour{
     [Inject] private TutorialCompiller _tutorialCompiller;
     
     public event Action<PlayerState> ChangeState;
+    public event Action FlooredInChillZone;
     
     public float StartFlightPositionZ { get; private set; }
 
@@ -44,6 +45,11 @@ public class PlayerStateManager : MonoBehaviour{
     
     
     public void ChangePlayerState(PlayerState newState) {
+        if (newState == PlayerState.Walking) {
+            FlooredInChillZone?.Invoke();
+            _jumpParticlesController.Play();
+        }
+        
         if (CurrentState == newState) {
             return;
         }
