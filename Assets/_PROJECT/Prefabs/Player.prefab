@@ -633,6 +633,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59bbfe41d5447f441979f35f62bfba87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundChecker
+  _flightCanvasContainerShow: {fileID: 0}
+  _flightCanvasContainerHide: {fileID: 0}
   _particleSystem: {fileID: 234800033622285724}
   _jumpParticlesController: {fileID: 6264034760640425629}
   _startFlightPoint: {fileID: 0}
@@ -762,6 +764,7 @@ GameObject:
   - component: {fileID: 1831430836419787008}
   - component: {fileID: 5342033890877039375}
   - component: {fileID: 8507378300416399302}
+  - component: {fileID: 6631807936447355006}
   m_Layer: 9
   m_Name: PlayerVisual
   m_TagString: Untagged
@@ -854,6 +857,28 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _smoothFactor: 0.8
+--- !u!95 &6631807936447355006
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3117147139523042434}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: c167389ca670c4947a5368aa56beee1b, type: 3}
+  m_Controller: {fileID: 9100000, guid: abc3037e9a6aaba4fb9da10fa497a5f6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3547334196295812551
 GameObject:
   m_ObjectHideFlags: 0
@@ -2109,11 +2134,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c167389ca670c4947a5368aa56beee1b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c167389ca670c4947a5368aa56beee1b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.51
+      value: 2.13
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c167389ca670c4947a5368aa56beee1b, type: 3}
       propertyPath: m_LocalRotation.w
