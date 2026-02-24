@@ -12,17 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8978e082e9b54cd4c8bd57cba93c2b1a, type: 3}
   m_Name: PlayerConfig
   m_EditorClassIdentifier: Assembly-CSharp::PlayerConfig
-  <SpeedForce>k__BackingField: 70
-  <WalkSpeed>k__BackingField: 15
+  <SpeedForce>k__BackingField: 45
+  <WalkSpeed>k__BackingField: 10
   <FallingSpeed>k__BackingField: 10
   <JumpHeight>k__BackingField: 8
   <MaxRotate>k__BackingField: 30
-  <RotateSpeed>k__BackingField: 20
-  <JumpForce>k__BackingField: 15
-  <SecondJumpForce>k__BackingField: 22
+  <RotateSpeed>k__BackingField: 16
+  <JumpForce>k__BackingField: 12
+  <SecondJumpForce>k__BackingField: 16
   <WallOffset>k__BackingField: 1
-  <FloorMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 1
   <GravityScale>k__BackingField: 4
   <StepHeight>k__BackingField: 0.8
