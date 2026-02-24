@@ -919,6 +919,76 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &4286600955520907799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1471720505805362266}
+  - component: {fileID: 505904034054120078}
+  - component: {fileID: 1772312789619786911}
+  m_Layer: 0
+  m_Name: Skin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1471720505805362266
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4286600955520907799}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6800782332782997029}
+  m_Father: {fileID: 6879757548382232001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &505904034054120078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4286600955520907799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0cf562cb01e0204c827e751293d54bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.RotatingAroundAnimation
+  _entity:
+    <Source>k__BackingField: {fileID: 1471720505805362266}
+    <Duration>k__BackingField: 24
+    <Ease>k__BackingField: 1
+  _endAngleValue: {x: 0, y: 360, z: 0}
+  _isAutoStart: 1
+--- !u!114 &1772312789619786911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4286600955520907799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ef453bd566c8c4f9091dd0d7f7d74e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingAsOffsetAnimation
+  _entity:
+    <Source>k__BackingField: {fileID: 1471720505805362266}
+    <Duration>k__BackingField: 4
+    <Ease>k__BackingField: 1
+  _offset: {x: 0, y: 0.2, z: 0}
+  _isAutoStart: 1
 --- !u!1 &4622408194486898692
 GameObject:
   m_ObjectHideFlags: 0
@@ -1349,7 +1419,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6800782332782997029}
+  - {fileID: 1471720505805362266}
   - {fileID: 73193893308367712}
   - {fileID: 455733472831660423}
   - {fileID: 5971252801279265027}
@@ -1817,7 +1887,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 6879757548382232001}
+    m_TransformParent: {fileID: 1471720505805362266}
     m_Modifications:
     - target: {fileID: -8877168297311501082, guid: 429f1f1c2812a0947a31a5b8f244a276, type: 3}
       propertyPath: m_CastShadows
@@ -1877,11 +1947,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 429f1f1c2812a0947a31a5b8f244a276, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2
+      value: 0.20000029
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 429f1f1c2812a0947a31a5b8f244a276, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 429f1f1c2812a0947a31a5b8f244a276, type: 3}
       propertyPath: m_LocalRotation.w
