@@ -16,11 +16,22 @@ public class PlayerStateManager : MonoBehaviour{
     [Inject] private IInterstitialDelaying  _interstitialDelaying;
     [Inject] private ZoneManager _zoneManager;
     [Inject] private TutorialCompiller _tutorialCompiller;
+    [Inject] private PlayerMovement _playerMovement;
     
     public event Action<PlayerState> ChangeState;
-    public event Action FlooredInChillZone;
     
     public float StartFlightPositionZ { get; private set; }
+
+
+    private void OnEnable() {
+        _playerMovement.Floored += PlayerMovementOnFloored;
+    }
+
+    
+    // ДАДА он еще партиклы вызывает я даун забейте
+    private void PlayerMovementOnFloored() {
+        _jumpParticlesController.Play();
+    }
 
     private void Awake() {
         StartFlightPositionZ = _startFlightPoint.position.z;
@@ -45,10 +56,7 @@ public class PlayerStateManager : MonoBehaviour{
     
     
     public void ChangePlayerState(PlayerState newState) {
-        if (newState == PlayerState.Walking) {
-            FlooredInChillZone?.Invoke();
-            _jumpParticlesController.Play();
-        }
+
         
         if (CurrentState == newState) {
             return;
@@ -75,7 +83,6 @@ public class PlayerStateManager : MonoBehaviour{
         
         if (newState == PlayerState.Walking) {
             SetWalkingCanvas();
-            _jumpParticlesController.Play();
         }
         else if (newState == PlayerState.Cruisered || newState == PlayerState.Grounded) {
             SetGroundedCanvas();

@@ -31,6 +31,8 @@ public class PlayerMovement : FlightObject {
     public event Action OnJumpPressed;
     public event Action OnDoubleJumpPressed;
     public event Action<bool> OnRunningStateChanged;
+    public event Action Floored;
+
 
     public bool IsRunning { get; private set; }
 
@@ -186,6 +188,7 @@ public class PlayerMovement : FlightObject {
         foreach (var contact in collision.contacts) {
             if (contact.normal.y > 0.5f) {
                 _jumpsUsed = 0;
+                Floored?.Invoke();
                 break;
             }
         }
