@@ -4073,10 +4073,7 @@ MonoBehaviour:
   _spawnPointCount: 0
   _minPointDistance: 20
   _renderer: {fileID: 8090342180403876427}
-  _objectsToSpawn:
-  - {fileID: 8789573633155582020, guid: 24e8df05d68f13342ab855f5f99a2144, type: 3}
-  - {fileID: 8789573633155582020, guid: 2f4d9f09063b8d74bae2b58d87e49ca2, type: 3}
-  - {fileID: 8789573633155582020, guid: e9b4fb12bd148b348a4e62e78b9dd3de, type: 3}
+  _objectsToSpawn: []
 --- !u!1 &4236975045019916390
 GameObject:
   m_ObjectHideFlags: 0
@@ -6292,10 +6289,7 @@ MonoBehaviour:
   _spawnPointCount: 0
   _minPointDistance: 20
   _renderer: {fileID: 5365885451539380325}
-  _objectsToSpawn:
-  - {fileID: 8789573633155582020, guid: 24e8df05d68f13342ab855f5f99a2144, type: 3}
-  - {fileID: 8789573633155582020, guid: 2f4d9f09063b8d74bae2b58d87e49ca2, type: 3}
-  - {fileID: 8789573633155582020, guid: e9b4fb12bd148b348a4e62e78b9dd3de, type: 3}
+  _objectsToSpawn: []
 --- !u!1 &7290109361554107582
 GameObject:
   m_ObjectHideFlags: 0

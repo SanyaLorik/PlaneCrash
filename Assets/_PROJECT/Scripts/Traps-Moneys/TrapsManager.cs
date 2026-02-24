@@ -124,7 +124,6 @@ public class TrapsManager : MonoBehaviour {
             startZCoord = safeZoneZ;
         }
         else if (safeZoneZ > endZCoord) {
-            Debug.LogWarning($"Зона {zone.ZoneName} скип");
             return;
         }
         

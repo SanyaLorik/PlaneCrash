@@ -32,11 +32,13 @@ public class LocationZone : MonoBehaviour {
 
     // Мб снизить нагрузку 
     public void GenerateProps() {
+        if (_objectsToSpawn.Count == 0) return;
         _bounds = _renderer.bounds;
         GeneratePoints(_bounds, _spawnPointCount, _minPointDistance);
     }
 
     public void HideObjects() {
+        if (_objectsToSpawn.Count == 0) return;
         foreach (var obj in _objects) {
             _poolManager.ReturnObjectToPool(obj, PoolType.Props);
         }
