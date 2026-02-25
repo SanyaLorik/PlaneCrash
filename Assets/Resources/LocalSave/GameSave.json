@@ -1,15 +1,32 @@
 {
-    "Money": 36434497,
-    "RecordMoney": 36591279,
+    "Money": 12961,
+    "RecordMoney": 13075,
     "RecordDistance": 4000,
     "Upgrades": [],
     "Pets": [
         {
             "Id": 1,
+            "Count": 2
+        },
+        {
+            "Id": 2,
+            "Count": 2
+        },
+        {
+            "Id": 0,
             "Count": 1
         }
     ],
+    "Skins": [
+        {
+            "Id": "kissie_skin"
+        },
+        {
+            "Id": "freddy_skin"
+        }
+    ],
+    "SkinWearId": "freddy_skin",
     "TutorialPassed": true,
-    "CountBatutJumps": 504,
-    "CountBaskets": 24
+    "CountBatutJumps": 516,
+    "CountBaskets": 26
 }

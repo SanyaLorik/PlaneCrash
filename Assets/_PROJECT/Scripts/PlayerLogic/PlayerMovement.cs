@@ -12,6 +12,7 @@ public class PlayerMovement : FlightObject {
     [SerializeField] private JumpParticlesController _jumpParticlesController;
 
 
+    private Vector3 _modelDefaultRotation;
     
     public Rigidbody Rb { get; private set; } 
     public Transform Transform  => transform;
@@ -46,7 +47,7 @@ public class PlayerMovement : FlightObject {
     
 
     private void OnEnable() {
-        _stateManager.ChangeState += OnChangeSpaceRotation;
+        _stateManager.ChangeState += ChangeSpaceRotation;
         _inputJumping.OnJumped += OnJump;
     }
 
@@ -57,8 +58,9 @@ public class PlayerMovement : FlightObject {
     }
 
     private void Start() {
-        OnChangeSpaceRotation(PlayerState.Walking);
+        ChangeSpaceRotation(PlayerState.Walking);
         TpPlayerInSpawn();
+        _modelDefaultRotation = _transformForRotate.localEulerAngles;
     }
 
     
@@ -116,16 +118,17 @@ public class PlayerMovement : FlightObject {
     }
 
 
-    private void OnChangeSpaceRotation(PlayerState playerState) {
+    private void ChangeSpaceRotation(PlayerState playerState) {
         _tokenSource = new CancellationTokenSource();
         if (playerState == PlayerState.Flight) {
             ResetLifes();
             IsBombed = false;
-            RotateLocalXAsync(-25, playerState, _tokenSource.Token).Forget();
+            RotateLocalXAsync(30, playerState, _tokenSource.Token).Forget();
             Rb.useGravity = false;
         }
         else if(playerState == PlayerState.Grounded || playerState == PlayerState.Cruisered){
-            RotateLocalXAsync(-80, playerState, _tokenSource.Token).Forget();
+            RotateLocalXAsync(0, playerState, _tokenSource.Token).Forget();
+            SetModelRotation(_modelDefaultRotation);
             Rb.useGravity = true;
         }
     }
@@ -168,12 +171,14 @@ public class PlayerMovement : FlightObject {
             DoJump(_config.JumpForce);
             _jumpParticlesController.Play();
             OnJumpPressed?.Invoke();
+            Debug.Log("OnJumpPressed?.Invoke();");
             _jumpsUsed = 1;
         }
         else if (_jumpsUsed == 1) {
             Rb.linearVelocity = new Vector3(Rb.linearVelocity.x, 0f, Rb.linearVelocity.z);
             DoJump(_config.SecondJumpForce);
             OnDoubleJumpPressed?.Invoke();
+            Debug.Log("OnDoubleJumpPressed?.Invoke();");
             _jumpParticlesController.Play();
             _jumpsUsed = 2;
         }
@@ -335,10 +340,11 @@ public class PlayerMovement : FlightObject {
     private IEnumerator ObjectAllowCooldown() {
         yield return new WaitForSeconds(_getObjectsCooldownSeconds);
         ObjectGetAllow = true;
-    } 
+    }
 
-  
 
+    [SerializeField] private Transform _transformForRotate;
+    
     private void VisualRotate() {
         float targetRoll = -MoveInput.x * _config.MaxRotate;
 
@@ -348,12 +354,16 @@ public class PlayerMovement : FlightObject {
             ref _rollVelocity,
             _smoothTime // время сглаживания
         );
-
-        Vector3 euler = transform.localEulerAngles;
-        euler.z = _currentRoll;
-        transform.localEulerAngles = euler;
+        Vector3 euler = _transformForRotate.localEulerAngles;
+        SetModelRotation(euler);
     }
 
+    private void SetModelRotation(Vector3 euler) {
+        euler.y = _currentRoll;
+        _transformForRotate.localEulerAngles = euler;
+    }
+    
+    
 
     public Vector3 GetPlayerPositionAt(float t) {
         // t ∈ [0..1], прогресс по кривой

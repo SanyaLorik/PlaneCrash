@@ -95,7 +95,6 @@ public class PlayerLeaderboard : MonoBehaviour {
         
         _playerLists[^1].SetColor(_playerColor);
         float percent = (float) _playerBank.PlayerCapital / _playerLists[^1].MoneyAmount;
-        Debug.Log($"{_playerLists[^1].MoneyAmount} / {_playerBank.PlayerCapital}");
         int index = (int)Mathf.Lerp(_zeroMoneyIndex, _playerLists.Length-1, percent);
         _playerLists[^1].SetPlayerListData(index, _localization.You, _formatter.ValuteFormatterInteger(_playerBank.PlayerCapital));
     }

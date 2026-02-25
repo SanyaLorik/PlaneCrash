@@ -4,6 +4,7 @@ using Zenject;
 public class PlayerInstaller : MonoInstaller {
     [SerializeField] private PlayerConfig _playerConfig;
     [SerializeField] private UpgradeConfig _upgradesConfig;
+    [SerializeField] private SkinItemConfig[] _skinItemConfigs;
     
     
     public override void InstallBindings() {
@@ -21,10 +22,19 @@ public class PlayerInstaller : MonoInstaller {
         Container.Bind<LineToObjects>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<TasksManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<PlayerVisual>().FromComponentInHierarchy().AsSingle().NonLazy();
+        BindSkins();
     }
 
     private void BindPlayerStats() {
         Container.BindInterfacesAndSelfTo<PlayerStats>().AsSingle().NonLazy();
+    }
+    
+    private void BindSkins() {
+        Container.Bind<PlayerSkinWear>().FromComponentInHierarchy().AsSingle().NonLazy();
+        
+        Container.Bind<SkinItemConfig[]>()
+            .FromInstance(_skinItemConfigs)
+            .AsSingle();
     }
     
     private void BindUpgrades() {

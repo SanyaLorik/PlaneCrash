@@ -27,11 +27,15 @@ public class DelayedTrigger : MonoBehaviour {
     }
     
     public void SetUnvailable() {
-        _notAvailableImage.color = _notAvailableColor;
+        if (_notAvailableImage.color != _notAvailableColor) {
+            _notAvailableImage.color = _notAvailableColor;
+        }
     }
 
     public void SetAvailable() {
-        _notAvailableImage.color = _availableColor;
+        if (_notAvailableImage.color != _availableColor) {
+            _notAvailableImage.color = _availableColor;
+        }
     }
 
     private async UniTask ProgressVisual(CancellationToken token, Action action) {

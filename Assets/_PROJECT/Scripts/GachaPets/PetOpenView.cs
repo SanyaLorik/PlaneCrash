@@ -57,7 +57,6 @@ public class PetOpenView : MonoBehaviour {
         _yInScreen = _container.anchoredPosition.y;
         _container.anchoredPosition = new Vector2(_container.anchoredPosition.x, _yBottomScreen);
         _canvas.DisactiveSelf();
-        Debug.Log($"_yInScreen = {_yInScreen}, _yBottomScreen = {_yBottomScreen}");
     }
     
     public void ShowOpenPetView(PetChance pet) {

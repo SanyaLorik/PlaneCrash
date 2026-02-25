@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 574521ec4f253c14787606935d6a4966, type: 3}
+  m_Name: Freddy_SkinItem
+  m_EditorClassIdentifier: Assembly-CSharp::SkinItem
+  <Id>k__BackingField: freddy_skin
+  <Price>k__BackingField: 100
+  <SkinPrefab>k__BackingField: {fileID: 6844721808799665314, guid: 53ee6a9d98fe23d4eb3ce35bc5706c5c, type: 3}
+  <Avatar>k__BackingField: {fileID: 9000000, guid: 0c7b92e58a110a9429f8d85feafbb982, type: 3}

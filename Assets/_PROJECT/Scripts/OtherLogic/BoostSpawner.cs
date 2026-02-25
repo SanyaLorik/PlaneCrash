@@ -81,7 +81,7 @@ public class BoostSpawner : MonoBehaviour {
 
 
     public Boost GetRandomFirstBoost(float trueChance) {
-        if (Random.value > trueChance) {
+        if (Random.value > trueChance && _falseWays.Count > 0) {
             return _falseWays[Random.Range(0, _falseWays.Count)][0];
         }
         return _trueWaysBeforeZone[Random.Range(0, _trueWaysBeforeZone.Count)][0];

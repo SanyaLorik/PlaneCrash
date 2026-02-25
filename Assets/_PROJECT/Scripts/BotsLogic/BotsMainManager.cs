@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
+using SanyaBeerExtension;
 using UnityEngine;
 using Zenject;
 using IInitializable = Zenject.IInitializable;
@@ -11,6 +12,7 @@ using Random = UnityEngine.Random;
 
 public class BotsMainManager : IInitializable, IDisposable {
     private readonly List<BotStateManager> _bots;
+    private readonly SkinItemConfig[] _skins;
     private readonly PlayerStateManager _playerStateManager;
     private readonly BotsManagerConfig _config;
 
@@ -21,8 +23,9 @@ public class BotsMainManager : IInitializable, IDisposable {
     
 
     [Inject]
-    public BotsMainManager(List<BotStateManager> bots, PlayerStateManager playerStateManager, BotsManagerConfig config) {
+    public BotsMainManager(List<BotStateManager> bots, PlayerStateManager playerStateManager, BotsManagerConfig config, SkinItemConfig[] skins) {
         _bots = bots;
+        _skins = skins;
         _config = config;
         _playerStateManager = playerStateManager;
         _playerStateManager.ChangeState += PlayerOnChangeState;
@@ -33,6 +36,9 @@ public class BotsMainManager : IInitializable, IDisposable {
     public void Initialize() {
         _tokenSource = new CancellationTokenSource();
         BotSpeakCycleAsync(_tokenSource.Token).Forget();
+        foreach (var bot in _bots) {
+            bot.SetBotSkin(_skins.GetRandomElement());
+        }
     }
 
     private async UniTask BotSpeakCycleAsync(CancellationToken token) {

@@ -104,14 +104,14 @@ public class LineToObjects : MonoBehaviour {
 
     public void HideArrow() {
         if(_tutorialStarted) return;
-        Debug.Log("HideArrow");
+        // Debug.Log("HideArrow");
         _target = Vector3.zero;
         gameObject.DisactiveSelf();
         ResetOffset();
     }
     
     public void ForceHideArrow() {
-        Debug.Log("ForceHideArrow");
+        // Debug.Log("ForceHideArrow");
         _target = Vector3.zero;
         gameObject.DisactiveSelf();
         ResetOffset();

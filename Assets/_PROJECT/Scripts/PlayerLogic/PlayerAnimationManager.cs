@@ -27,11 +27,13 @@ public class PlayerAnimationManager : MonoBehaviour {
     }
 
     private void FirstJumpAnimation() {
+        Debug.Log("FirstJumpAnimation");
         _animator.SetTrigger(Jump);
     }
     
     
     private void SecondJumpAnimation() {
+        Debug.Log("SecondJumpAnimation");
         _animator.SetTrigger(DoubleJump);
     }
 
@@ -40,4 +42,14 @@ public class PlayerAnimationManager : MonoBehaviour {
     private void StateManagerOnChangeState(PlayerState obj) {
         // FLIGHT ANIMATION IN DEV...
     }
+    
+    
+    private void OnDisable() {
+        _stateManager.ChangeState += StateManagerOnChangeState;
+        // _stateManager.FlooredInChillZone += () => PlayerMovementOnRunningStateChanged(false);
+        _playerMovement.OnJumpPressed += FirstJumpAnimation;
+        _playerMovement.OnDoubleJumpPressed += SecondJumpAnimation;
+        _playerMovement.OnRunningStateChanged += PlayerMovementOnRunningStateChanged;
+    }
+    
 }

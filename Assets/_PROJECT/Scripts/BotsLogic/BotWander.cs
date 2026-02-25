@@ -23,8 +23,11 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
     
     
     
-    private NavMeshAgent _agent;
+    public Action<bool> OnStartWandering;
+    public Action OnJump;
     
+    
+    private NavMeshAgent _agent;
     private PlayerMovement _playerMovement;
     private PlayerStateManager _playerStateManager;
     private PlayerConfig _playerConfig;
@@ -76,11 +79,13 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
             if (_agent.enabled && _agent.velocity.sqrMagnitude > 0.05f) {
                 if (!_walkingParticles.IsPlaying) {
                     _walkingParticles.Play();
+                OnStartWandering?.Invoke(true);
                 }
             }
             else {
                 if (_walkingParticles.IsPlaying) {
                     _walkingParticles.Stop();
+                    OnStartWandering?.Invoke(false);
                 }
             }
 
@@ -131,7 +136,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         float t = 0f;
 
         _jumpParticlesController.Play();
-
+        OnJump?.Invoke();
         while (t < _jumpDuration) {
             t += Time.deltaTime;
             float normalized = t / _jumpDuration;

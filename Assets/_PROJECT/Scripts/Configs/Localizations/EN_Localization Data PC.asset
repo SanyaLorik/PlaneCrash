@@ -62,7 +62,7 @@ MonoBehaviour:
   - M
   - B
   - T
-  OpenButton: Open!
+  IsWeared: Selected
   TakeAPet: Take a pet!
   TaskCompletedNotification: Task complete!
   CollectRewardNotification: Collect reward
@@ -132,3 +132,8 @@ MonoBehaviour:
   - been here long?
   - you come here often?
   - you new here?
+  SkinNameTranslates:
+  - Id: kissie_skin
+    Name: Kissie
+  - Id: freddy_skin
+    Name: Freddy

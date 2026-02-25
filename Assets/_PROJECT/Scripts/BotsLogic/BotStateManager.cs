@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -11,6 +10,8 @@ public enum BotState {
 
 public class BotStateManager : MonoBehaviour {
     [SerializeField] private List<Transform> _petsPoints;
+    [SerializeField] private Transform _skinParent;
+    [SerializeField] private BotAnimator _botAnimator;
     
     private BotFlight _botFlight;
     private BotWander _botWander;
@@ -20,7 +21,7 @@ public class BotStateManager : MonoBehaviour {
 
     public BotState State { get; private set; }
     public Rigidbody Rb { get; private set; }
-    
+
     
     [Inject] private PetsManager _petsManager;
     
@@ -56,6 +57,12 @@ public class BotStateManager : MonoBehaviour {
     
     public void PlayerInSpawn() {
         _botFlight.GoToFall();
+    }
+
+    public void SetBotSkin(SkinItemConfig skinItemConfig) {
+        Instantiate(skinItemConfig.SkinPrefab, _skinParent);
+        _botAnimator.SetModel(skinItemConfig);
+        _botAnimator.InitAnimator(_botFlight, _botWander);
     }
 
     public void SetBotSpeak() {

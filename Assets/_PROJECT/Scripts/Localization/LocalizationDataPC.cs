@@ -14,7 +14,7 @@ public class LocalizationDataPC : LocalizationData
     
     
     [Header("UI")]
-    public string OpenButton;
+    public string IsWeared;
     public string TakeAPet;
    
     
@@ -28,6 +28,7 @@ public class LocalizationDataPC : LocalizationData
     
     [Header("Tasks")]
     public string Meters;
+
     
     
     
@@ -40,7 +41,18 @@ public class LocalizationDataPC : LocalizationData
     public TutorTranslate[]  TutorTranslates;
     public UpgradeName[]  UpgradeName;
     public string[] BotsPhrases;
+    public SkinName[]  SkinNameTranslates;
     
+    
+    
+    public string GetSkinName(string id) {
+        foreach (var skinNameTranslate in SkinNameTranslates) {
+            if (skinNameTranslate.Id == id) {
+                return skinNameTranslate.Name;
+            }
+        }
+        return null;
+    }
     
     public string GetPhrase(int id) {
         foreach (var tutorTranslate in TutorTranslates) {
@@ -92,5 +104,13 @@ public class TaskTranslate {
 [Serializable]
 public class UpgradeName {
     public UpgradeType Type;
+    public string Name;
+}
+
+
+
+[Serializable]
+public class SkinName {
+    public string Id;
     public string Name;
 }

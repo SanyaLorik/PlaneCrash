@@ -3,9 +3,7 @@ using System.Collections;
 using System.Threading;
 using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.iOS;
 using Zenject;
 
 public class DualLegParticles : MonoBehaviour {
@@ -16,7 +14,25 @@ public class DualLegParticles : MonoBehaviour {
     
 
     [Inject] private PlayerMovement _playerMovement;
+    
     private CancellationTokenSource _tokenSource;
+
+    private bool _allowToPlay = true;
+    
+    private void OnEnable() {
+        _playerMovement.OnJumpPressed += PlayerMovementOnOnJumpPressed;
+        _playerMovement.OnDoubleJumpPressed += PlayerMovementOnOnJumpPressed;
+        _playerMovement.Floored += PlayerMovementOnFloored;
+    }
+
+    private void PlayerMovementOnFloored() {
+        _allowToPlay = true;
+    }
+
+    private void PlayerMovementOnOnJumpPressed() {
+        _allowToPlay = false;
+    }
+
 
     private void Awake() {
         _emission = _ps.emission;
@@ -53,11 +69,11 @@ public class DualLegParticles : MonoBehaviour {
         while (!token.IsCancellationRequested) {
             Vector2 move = _playerMovement.MoveInput;
 
-            if (move == Vector2.zero && IsPlaying) {
+            if (move == Vector2.zero && IsPlaying || !_allowToPlay) {
                 IsPlaying = false;
                 StopRunning();
             }
-            else if (move != Vector2.zero && !IsPlaying) {
+            else if (move != Vector2.zero && !IsPlaying && _allowToPlay) {
                 IsPlaying = true;
                 StartRunning();
             }
