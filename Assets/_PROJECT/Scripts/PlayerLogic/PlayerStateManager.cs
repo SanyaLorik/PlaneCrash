@@ -28,7 +28,6 @@ public class PlayerStateManager : MonoBehaviour{
     }
 
     
-    // ДАДА он еще партиклы вызывает я даун забейте
     private void PlayerMovementOnFloored() {
         _jumpParticlesController.Play();
     }

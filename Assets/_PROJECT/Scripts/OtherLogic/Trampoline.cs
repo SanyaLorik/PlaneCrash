@@ -44,17 +44,12 @@ public class Trampoline : MonoBehaviour {
         if (collider.TryGetComponent(out PlayerMovement player)) {
             Debug.Log("Прыжок!");
             _playerStateManager.ChangePlayerState(PlayerState.TrampolineJumping);
-            player.Rb.linearVelocity = Vector3.zero;
-            SetJump(player.Rb);
+            _jumpForceCurrent *= _jumpMultiplier;
+            player.AddVerticalImpulse(_jumpForceCurrent);
             StartCoroutine(JumpPlusBabki(player.Transform));
         }
     }
 
-    private void SetJump(Rigidbody rb) {
-        rb.AddForce(Vector3.up * _jumpForceCurrent, ForceMode.Impulse);
-        _jumpForceCurrent *= _jumpMultiplier;
-        Debug.Log(_jumpForceCurrent);
-    }
 
     private IEnumerator JumpPlusBabki(Transform player) {
         float startY = player.position.y;
