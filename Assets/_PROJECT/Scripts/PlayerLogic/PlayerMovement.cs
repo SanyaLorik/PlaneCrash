@@ -12,7 +12,7 @@ public class PlayerMovement : FlightObject {
     [SerializeField] private JumpParticlesController _jumpParticlesController;
 
 
-    private Vector3 _modelDefaultRotation;
+    private Quaternion _defaultModelRotation;
     
     public Rigidbody Rb { get; private set; } 
     public Transform Transform  => transform;
@@ -60,7 +60,7 @@ public class PlayerMovement : FlightObject {
     private void Start() {
         ChangeSpaceRotation(PlayerState.Walking);
         TpPlayerInSpawn();
-        _modelDefaultRotation = _transformForRotate.localEulerAngles;
+        _defaultModelRotation = _transformForRotate.localRotation;
     }
 
     
@@ -128,10 +128,15 @@ public class PlayerMovement : FlightObject {
         }
         else if(playerState == PlayerState.Grounded || playerState == PlayerState.Cruisered){
             RotateLocalXAsync(0, playerState, _tokenSource.Token).Forget();
-            SetModelRotation(_modelDefaultRotation);
+            ResetModelRotation();
             Rb.useGravity = true;
         }
     }
+    
+    private void ResetModelRotation() {
+        _transformForRotate.localRotation = _defaultModelRotation;
+    }
+
 
     private async UniTask RotateLocalXAsync(float TargetPosAngleX, PlayerState playerState, CancellationToken token) {
         float duration = 1f;
