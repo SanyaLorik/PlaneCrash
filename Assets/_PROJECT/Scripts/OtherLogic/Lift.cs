@@ -10,13 +10,11 @@ public class Lift : MonoBehaviour {
     [SerializeField] private Renderer _rend;
     [SerializeField] private Renderer _transformRend;
     [SerializeField] private GameObject _liftPhysical;
-    [SerializeField] private Rigidbody _playerRb;
     [SerializeField]  private float _timeToUp = 10f; 
     
     private Vector3 _liftDownPosition; 
     private Vector3 _moneyEndPos;
     private CancellationTokenSource _tokenSource;
-    private Rigidbody _liftRb;
     public bool _inLift;
 
 
@@ -32,7 +30,6 @@ public class Lift : MonoBehaviour {
     }
 
     private void Awake() {
-        _liftRb = _liftPhysical.GetComponent<Rigidbody>();
         _transformRend = transform.GetComponent<Renderer>();
         _liftDownPosition = transform.position;
     }
@@ -72,7 +69,9 @@ public class Lift : MonoBehaviour {
         float delta = targetTop - liftBottom;          // сколько реально надо ехать вверх
         _moneyEndPos = _liftDownPosition + Vector3.up * delta;
         
-        _liftRb.MovePosition(_liftDownPosition);
+        // _liftRb.MovePosition(_liftDownPosition);
+        
+        
         _liftPhysical.transform.position = _liftDownPosition;
         _tokenSource = null;
     }
@@ -101,12 +100,12 @@ public class Lift : MonoBehaviour {
             float t = elapsedTime / _timeToUp;
             float y = Mathf.Lerp(_startPos.y, _endPosition.y, t);
             Vector3 newPos = new Vector3(_startPos.x, y, _startPos.z);
-            _liftRb.MovePosition(newPos);
+            // _liftRb.MovePosition(newPos);
             elapsedTime += Time.fixedDeltaTime;
             await UniTask.WaitForFixedUpdate(token);
         }
         ResetPlayerVelocity();
-        _liftRb.MovePosition(_endPosition);
+        // _liftRb.MovePosition(_endPosition);
         _tokenSource = null;
     }
 
@@ -131,12 +130,12 @@ public class Lift : MonoBehaviour {
             float t = elapsedTime / _timeToUp/2;
             float y = Mathf.Lerp(_startPos.y, _endPosition.y, t);
             Vector3 newPos = new Vector3(_startPos.x, y, _startPos.z);
-            _liftRb.MovePosition(newPos);
+            // _liftRb.MovePosition(newPos);
             
             elapsedTime += Time.fixedDeltaTime;
             await UniTask.WaitForFixedUpdate(token);
         }
-        _liftRb.MovePosition(_endPosition);
+        // _liftRb.MovePosition(_endPosition);
         ResetPlayerVelocity();
         _liftPhysical.transform.position = _liftDownPosition;
         Debug.Log("Лифт опустился");
@@ -144,7 +143,8 @@ public class Lift : MonoBehaviour {
     }
 
     private void ResetPlayerVelocity() {
-        _playerRb.linearVelocity = new Vector3(_playerRb.linearVelocity.x, 0f, _playerRb.linearVelocity.z);
+       
+        
     }
     
     

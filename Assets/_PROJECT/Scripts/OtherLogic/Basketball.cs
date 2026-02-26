@@ -30,6 +30,9 @@ public class Basketball : MonoBehaviour {
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Transform _spawnPointTransform;
     
+    
+    
+    
     [SerializeField] private float _rewardForScore = 100f;
     [Range(0f,1f), SerializeField] private float _chanceToGoal = 0.5f;
     
@@ -39,7 +42,6 @@ public class Basketball : MonoBehaviour {
     
     
     private Vector3 _hoopPosition;
-    private Vector3 _ballPositionSpawn;
 
 
     [Inject] private Money2dSpawner _money2dSpawner;
@@ -49,12 +51,13 @@ public class Basketball : MonoBehaviour {
     
     
     private void Awake() {
-        _ballPositionSpawn = _spawnPointTransform.position;
-        _parentBall.position = _ballPositionSpawn;
+        _parentBall.position = _spawnPointTransform.position;
         
         _hoopPosition = _hoop.position;
         _currentReward = _rewardForScore;
     }
+
+
 
     private void Start() {
         _scoreText.text = _gameSave.GetSave.CountBaskets.ToString();
@@ -142,14 +145,6 @@ public class Basketball : MonoBehaviour {
         return newPos;
     }
     
-    private void OnDrawGizmos() {
-        if (_shieldRenderer == null) return;
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(newPos, 0.5f); // точка в нужном месте
-    }
-    
-    
 
     private IEnumerator RespawnRoutine(float timeToRespawn, bool isRewarded) {
         if (isRewarded) {
@@ -160,15 +155,10 @@ public class Basketball : MonoBehaviour {
         _rb.linearVelocity = Vector3.zero;
         _rb.linearVelocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
-        
-        
         _rb.isKinematic = true;   // временно выключаем физику
-        _parentBall.position = _ballPositionSpawn;
+        _parentBall.position = _spawnPointTransform.position;
         _rb.isKinematic = false;  // включаем обратно
-        
-        
         _allowToCick = true;
-        
     } 
     
     [Inject] protected IGameSave<GameSavePC> _gameSave;

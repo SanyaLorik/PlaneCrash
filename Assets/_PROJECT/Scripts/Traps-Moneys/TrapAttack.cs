@@ -35,7 +35,7 @@ public abstract class TrapAttack : MonoBehaviour {
        
        if (movement.TryToKill()) {
            Debug.Log("Killed");
-           Atack(movement.Rb);    
+           // Atack(movement.Rb);    
        }
        else {
            Debug.Log("Minus 1 shield!");

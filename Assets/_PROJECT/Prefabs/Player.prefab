@@ -233,12 +233,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3340171977911634004}
-  - component: {fileID: 4858407902858849593}
   - component: {fileID: 6637745517716557854}
   - component: {fileID: 7774766346077790060}
   - component: {fileID: 3567356351725998781}
   - component: {fileID: 4924868635754256822}
   - component: {fileID: 6988422949813744253}
+  - component: {fileID: 7285536231780850867}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -266,33 +266,6 @@ Transform:
   - {fileID: 4221515838622591365}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &4858407902858849593
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3868527733552897812}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!65 &6637745517716557854
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -313,7 +286,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.6624001, y: 4.076479, z: 0.89346313}
-  m_Center: {x: 0, y: -0.19348145, z: 0.1182251}
+  m_Center: {x: 0, y: 0, z: 0.1182251}
 --- !u!114 &7774766346077790060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,8 +432,9 @@ MonoBehaviour:
   _smoothTime: 0.3
   _currentLifesCount: 0
   _jumpParticlesController: {fileID: 3180276614777571555}
+  _playerCollider: {fileID: 6637745517716557854}
+  _controller: {fileID: 7285536231780850867}
   IsBombed: 0
-  _lowOriginMultiplier: 0.3
   _getObjectsCooldownSeconds: 1
   _transformForRotate: {fileID: 2685003040153228485}
 --- !u!114 &4924868635754256822
@@ -494,6 +468,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBank
   _cube: {fileID: 0}
+--- !u!143 &7285536231780850867
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3868527733552897812}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 4.28
+  m_Radius: 1.28
+  m_SlopeLimit: 45
+  m_StepOffset: 0.6
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!1 &3930228025964830617
 GameObject:
   m_ObjectHideFlags: 0
@@ -20777,12 +20776,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 8201113452557777192}
     m_Modifications:
     - target: {fileID: 1802844134549732080, guid: 3abd8afc3ca19f14c89b52bea64c0c83, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 75.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 1802844134549732080, guid: 3abd8afc3ca19f14c89b52bea64c0c83, type: 3}
       propertyPath: moveWithTransform
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1802844134549732080, guid: 3abd8afc3ca19f14c89b52bea64c0c83, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
-      value: 3.26
+      value: 2.38
       objectReference: {fileID: 0}
     - target: {fileID: 1802844134549732080, guid: 3abd8afc3ca19f14c89b52bea64c0c83, type: 3}
       propertyPath: InitialModule.startLifetime.scalar

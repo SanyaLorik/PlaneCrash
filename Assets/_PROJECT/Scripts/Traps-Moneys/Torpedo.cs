@@ -31,7 +31,7 @@ public class Torpedo : MonoBehaviour {
             _particle.Play();
             if(playerMovement.TryToKill()) {
                 Debug.Log("Убили игрока!!");
-                Explode(playerMovement.Rb);
+                // Explode(playerMovement);
                 modelForHide.DisactiveSelf();
                 StartCoroutine(DestroyRoutine(.3f));
             }

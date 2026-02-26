@@ -11,13 +11,10 @@ public class PlayerMovement : FlightObject
     [SerializeField] private float _smoothTime = 0.3f;
     [SerializeField] private int _currentLifesCount;
     [SerializeField] private JumpParticlesController _jumpParticlesController;
-    [SerializeField] private Collider _playerCollider; // можно удалить, CharacterController сам будет коллайдером
+    [SerializeField] private CharacterController _controller; // 
     
-    private CharacterController _controller; // <-- НОВОЕ
     private Quaternion _defaultModelRotation;
-    private Rigidbody _rb;
     public Transform Transform => transform;
-    public Rigidbody Rb => _rb;
 
     public Vector2 MoveInput => _inputDirection2.Direction2;
     private float _currentRoll;
@@ -47,9 +44,7 @@ public class PlayerMovement : FlightObject
     private float _verticalVelocity;
     private int _jumpsUsed;
     private bool _isGrounded;
-    
-    
-    
+
     
     private void OnEnable()
     {
@@ -70,18 +65,6 @@ public class PlayerMovement : FlightObject
         _jumpsUsed = 0;
     }
     
-    
-    private void Awake()
-    {
-        _rb = GetComponent<Rigidbody>();
-        // Добавляем Character Controller, если его нет
-        _controller = GetComponent<CharacterController>();
-        if (_controller == null)
-        {
-            _controller = gameObject.AddComponent<CharacterController>();
-        }
-    }
-    
     private void Start()
     {
         ChangeSpaceRotation(PlayerState.Walking);
@@ -91,22 +74,13 @@ public class PlayerMovement : FlightObject
     
     private void Update()
     {
-        if (_stateManager.CurrentState == PlayerState.Flight)
-        {
+        if (_stateManager.CurrentState == PlayerState.Flight) {
             VisualRotate();
-        }
-    }
-    
-    private void FixedUpdate()
-    {
-        if (_stateManager.CurrentState == PlayerState.Walking ||
-            _stateManager.CurrentState == PlayerState.TrampolineJumping)
-        {
-            Walk();
-        }
-        else if (_stateManager.CurrentState == PlayerState.Flight)
-        {
             FlightLogic();
+        }
+        else if (_stateManager.CurrentState == PlayerState.Walking ||
+            _stateManager.CurrentState == PlayerState.TrampolineJumping) {
+            Walk();
         }
     }
     
@@ -158,7 +132,6 @@ public class PlayerMovement : FlightObject
         if (playerState == PlayerState.Flight)
         {
             ResetLifes();
-            _controller.enabled = false;
             IsBombed = false;
             RotateLocalXAsync(30, playerState, _tokenSource.Token).Forget();
         }
@@ -167,10 +140,6 @@ public class PlayerMovement : FlightObject
         {
             RotateLocalXAsync(0, playerState, _tokenSource.Token).Forget();
             ResetModelRotation();
-        }
-
-        if (playerState == PlayerState.Walking) {
-            _controller.enabled = true;
         }
     }
     
@@ -201,7 +170,7 @@ public class PlayerMovement : FlightObject
         
         while (elapsedTime < duration)
         {
-            elapsedTime += Time.fixedDeltaTime;
+            elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
             
             transform.localRotation = Quaternion.Slerp(startRot, TargetPosRot, t);
@@ -260,14 +229,15 @@ public class PlayerMovement : FlightObject
         // ГРАВИТАЦИЯ
         if (!_controller.isGrounded)
         {
-            _verticalVelocity += Physics.gravity.y * _config.GravityScale * Time.fixedDeltaTime;
+            _verticalVelocity += Physics.gravity.y * _config.GravityScale * Time.deltaTime;
         }
+        
 
         Vector3 horizontalMove = hasInput
-            ? move.normalized * _config.WalkSpeed * Time.fixedDeltaTime
+            ? move.normalized * _config.WalkSpeed * Time.deltaTime
             : Vector3.zero;
 
-        Vector3 verticalMove = Vector3.up * _verticalVelocity * Time.fixedDeltaTime;
+        Vector3 verticalMove = Vector3.up * _verticalVelocity * Time.deltaTime;
 
         _controller.Move(horizontalMove + verticalMove);
 
@@ -309,7 +279,7 @@ public class PlayerMovement : FlightObject
             float y = Mathf.LerpAngle(
                 transform.eulerAngles.y,
                 TargetPosY,
-                _config.RotateSpeed * Time.fixedDeltaTime
+                _config.RotateSpeed * Time.deltaTime
             );
             
             transform.rotation = Quaternion.Euler(
@@ -325,18 +295,18 @@ public class PlayerMovement : FlightObject
         Vector3 newPos = transform.position;
         if (IsBombed)
         {
-            newPos.y -= _config.FallingSpeed * 5f * Time.fixedDeltaTime;
-            transform.position = newPos;
+            newPos.y -= _config.FallingSpeed * 4f * Time.deltaTime;
+            _controller.Move(newPos - transform.position);
             return;
         }
         
-        newPos.x += MoveInput.x * _config.RotateSpeed * Time.fixedDeltaTime;
+        newPos.x += MoveInput.x * _config.RotateSpeed * Time.deltaTime;
         newPos.x = Mathf.Clamp(newPos.x, _levelBounds.LeftX, _levelBounds.RightX);
         
         if (!IsBusted)
         {
-            newPos.z += _config.SpeedForce * Time.fixedDeltaTime;
-            newPos.y -= _config.FallingSpeed * Time.fixedDeltaTime;
+            newPos.z += _config.SpeedForce * Time.deltaTime;
+            newPos.y -= _config.FallingSpeed * Time.deltaTime;
         }
         else
         {
@@ -345,7 +315,7 @@ public class PlayerMovement : FlightObject
             float height = CurrentCurve.Evaluate(normalizedTime) * _config.JumpHeight;
             newPos.y = Mathf.Lerp(_initialPos.y, TargetPos.y, normalizedTime) + height;
             newPos.z = Mathf.Lerp(_initialPos.z, TargetPos.z, normalizedTime);
-            ExpandedTime += Time.fixedDeltaTime;
+            ExpandedTime += Time.deltaTime;
             if (ExpandedTime >= SegmentDuration)
             {
                 IsBusted = false;
@@ -353,7 +323,7 @@ public class PlayerMovement : FlightObject
         }
         
         // Для Flight режима используем прямой transform, потому что физика не нужна
-        transform.position = newPos;
+        _controller.Move(newPos - transform.position);
     }
     
     [SerializeField] private float _getObjectsCooldownSeconds;
@@ -361,7 +331,7 @@ public class PlayerMovement : FlightObject
     
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost)
     {
-        if (!ObjectGetAllow) return;
+        if (!ObjectGetAllow || IsBombed) return;
         
         _visual.SetBoosted();
         CurrentCurve = curve;
