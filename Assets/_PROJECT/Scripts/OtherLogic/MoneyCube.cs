@@ -16,6 +16,7 @@ public class MoneyCube : MonoBehaviour {
     [SerializeField] private MoneyCubeType _moneyCubeType;
     [SerializeField, HideIf(nameof(IsBetCube))] private TMP_Text _cubeText;
     [SerializeField] private Transform _bottomPoint; // точка низа куба
+    [field: SerializeField, HideIf(nameof(IsBetCube))] public Transform UpPoint { get; private set; } // точка уэрха куба
 
     [Header("Настройка размеров ")]
     [SerializeField] private float _scaleDivider = 2f; 

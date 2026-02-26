@@ -16,11 +16,16 @@ public class PlayerMovement : FlightObject
     private Quaternion _defaultModelRotation;
     public Transform Transform => transform;
 
+    public CharacterController Controller => _controller;
+    
     public Vector2 MoveInput => _inputDirection2.Direction2;
     private float _currentRoll;
     private float _rollVelocity;
+    private bool _isOnLift;
     public bool IsBusted { get; private set; }
     public bool IsBombed;
+    
+
     
     public float PlayerSpeed => _config.SpeedForce;
     public float JumpHeight => _config.JumpHeight;
@@ -203,7 +208,28 @@ public class PlayerMovement : FlightObject
         }
     }
     
-    private bool _wasGroundedLastFrame = false; // <-- ЭТА ПЕРЕМЕННАЯ НУЖНА
+    private bool _wasGroundedLastFrame = false;
+
+    private Vector3 _externalMotion;
+
+    public void AddExternalMotion(Vector3 motion, bool inLift = true) {
+        _externalMotion += motion;
+        if (inLift) {
+            _verticalVelocity = 0;
+        }
+    }
+    
+        
+    public void SetLiftState(bool value)
+    {
+        _isOnLift = value;
+
+        if (value)
+        {
+            _verticalVelocity = 0f;
+            _jumpsUsed = 0;
+        }
+    }
 
     private void Walk()
     {
@@ -227,7 +253,7 @@ public class PlayerMovement : FlightObject
         }
 
         // ГРАВИТАЦИЯ
-        if (!_controller.isGrounded)
+        if (!_controller.isGrounded && !_isOnLift)
         {
             _verticalVelocity += Physics.gravity.y * _config.GravityScale * Time.deltaTime;
         }
@@ -239,16 +265,16 @@ public class PlayerMovement : FlightObject
 
         Vector3 verticalMove = Vector3.up * _verticalVelocity * Time.deltaTime;
 
-        _controller.Move(horizontalMove + verticalMove);
-
+        _controller.Move(horizontalMove + verticalMove + _externalMotion);
+        _externalMotion = Vector3.zero;
         // Проверяем grounded ПОСЛЕ Move
-        _isGrounded = _controller.isGrounded;
+        _isGrounded = _controller.isGrounded || _isOnLift;
 
         // Прилипание к земле (анти-дребезг)
         if (_isGrounded)
         {
             if (_verticalVelocity < 0f)
-                _verticalVelocity = -2f; // маленький прижим
+                _verticalVelocity = -2f;
         }
 
         // Настоящее приземление

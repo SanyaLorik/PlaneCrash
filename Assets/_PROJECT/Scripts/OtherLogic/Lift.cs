@@ -1,151 +1,126 @@
-using System.Collections;
-using System.Threading;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Renderer))]
 public class Lift : MonoBehaviour {
-    [SerializeField] private Renderer _rend;
-    [SerializeField] private Renderer _transformRend;
-    [SerializeField] private GameObject _liftPhysical;
-    [SerializeField]  private float _timeToUp = 10f; 
+    [SerializeField] private Transform _topPointMoneyCube;
+    [SerializeField] private Transform _liftTransform;
+
+    [SerializeField] private float _timeToUp = 10f;
+
+    private Vector3 _liftDownPosition;
+    private Vector3 _moneyEndPos => new Vector3(_liftDownPosition.x, _topPointMoneyCube.position.y, _liftDownPosition.z);
+
+    private PlayerMovement _currentPlayer;
     
-    private Vector3 _liftDownPosition; 
-    private Vector3 _moneyEndPos;
-    private CancellationTokenSource _tokenSource;
-    public bool _inLift;
+    [Inject] private PlayerBank _bank;
 
-
-
-    [Inject]
-    public void Init(PlayerBank bank) {
-        bank.BankChanged += BankOnBankChanged;
-    }
-
-    private void BankOnBankChanged(long amount) {
-        CalculateMoneyDistance();
-        
-    }
-
-    private void Awake() {
-        _transformRend = transform.GetComponent<Renderer>();
-        _liftDownPosition = transform.position;
-    }
-
-    private void Start() {
-        CalculateMoneyDistance();
-    }
-
-    private void OnTriggerEnter(Collider collider) {
-        if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
-            _inLift = true;
-            ReadyLiftWork();
-            LiftUp(_tokenSource.Token).Forget();
-        }    
-    }
-
-    
-    private void OnTriggerExit(Collider collider) {
-        if (collider.gameObject.TryGetComponent(out PlayerMovement _)) {
-            _inLift = false;
-            ReadyLiftWork();
-            LiftDown(_tokenSource.Token).Forget();
-        }    
-    }
-
-
-
-
-    private void CalculateMoneyDistance() {
-        StartCoroutine(CalculateMoneyHeightRoutine());
-    }
-
-    private IEnumerator CalculateMoneyHeightRoutine() {
-        yield return new WaitForSeconds(1f);
-        float targetTop = _rend.bounds.max.y;           // куда хотим приехать
-        float liftBottom = _transformRend.bounds.min.y;  // где сейчас низ лифта
-        float delta = targetTop - liftBottom;          // сколько реально надо ехать вверх
-        _moneyEndPos = _liftDownPosition + Vector3.up * delta;
-        
-        // _liftRb.MovePosition(_liftDownPosition);
-        
-        
-        _liftPhysical.transform.position = _liftDownPosition;
-        _tokenSource = null;
-    }
-
-    
-    private void ReadyLiftWork() {
-        _tokenSource?.Cancel();
-        _tokenSource?.Dispose();
-        _tokenSource = new CancellationTokenSource();
+    private void Awake()
+    {
+        _liftDownPosition = _liftTransform.position;
     }
     
 
-    private async UniTask LiftUp(CancellationToken token) {
-        await UniTask.Delay(700, cancellationToken: token);
-        if (Mathf.Approximately(transform.position.y, _moneyEndPos.y) || !_inLift) {
-            return;
+    private enum LiftState
+    {
+        Idle,
+        WaitingUp,
+        MovingUp,
+        MovingDown
+    }
+
+    private LiftState _state = LiftState.Idle;
+
+    private float _moveTimer;
+    private float _waitTimer;
+
+    private Vector3 _startPos;
+    private Vector3 _targetPos;
+    private Vector3 _previousPos;
+
+
+
+    private void Update()
+    {
+        switch (_state)
+        {
+            case LiftState.WaitingUp:
+                _waitTimer += Time.deltaTime;
+                if (_waitTimer >= 0.7f)
+                {
+                    StartMove(_moneyEndPos, _timeToUp);
+                    _state = LiftState.MovingUp;
+                }
+                break;
+
+            case LiftState.MovingUp:
+                MoveLift();
+                break;
+
+            case LiftState.MovingDown:
+                MoveLift();
+                break;
         }
-        
-        Vector3 _startPos = transform.position;
-        Vector3 _endPosition = _moneyEndPos;
-
-        float elapsedTime = 0f;
-
-
-        while (elapsedTime < _timeToUp) {
-            float t = elapsedTime / _timeToUp;
-            float y = Mathf.Lerp(_startPos.y, _endPosition.y, t);
-            Vector3 newPos = new Vector3(_startPos.x, y, _startPos.z);
-            // _liftRb.MovePosition(newPos);
-            elapsedTime += Time.fixedDeltaTime;
-            await UniTask.WaitForFixedUpdate(token);
-        }
-        ResetPlayerVelocity();
-        // _liftRb.MovePosition(_endPosition);
-        _tokenSource = null;
     }
 
-    private bool _liftGoingDown = true;
-    private async UniTask LiftDown(CancellationToken token) {
-        if (Mathf.Approximately(transform.position.y, _liftDownPosition.y) || _inLift) {
-            return;
+    private void StartMove(Vector3 target, float duration) {
+        _moveTimer = 0f;
+        _startPos = _liftTransform.position;
+        _targetPos = target;
+        _previousPos = _startPos;
+        _currentMoveDuration = duration;
+    }
+
+    private float _currentMoveDuration;
+
+    private void MoveLift()
+    {
+        _moveTimer += Time.deltaTime;
+        float t = Mathf.Clamp01(_moveTimer / _currentMoveDuration);
+
+        float y = Mathf.Lerp(_startPos.y, _targetPos.y, t);
+        Vector3 newPos = new Vector3(_startPos.x, y, _startPos.z);
+
+        Vector3 delta = newPos - _previousPos;
+
+        _liftTransform.position = newPos;
+
+        if (_currentPlayer != null)
+        {
+            _currentPlayer.AddExternalMotion(delta);
         }
 
-        _liftGoingDown = true;
-        Vector3 _startPos = transform.position;
-        Vector3 _endPosition = _liftDownPosition;
+        _previousPos = newPos;
 
-        
-        Debug.Log($"Опуск лифта из {_startPos.y} в {_endPosition.y}");
-        
-        
-
-        float elapsedTime = 0f;
-
-        while (elapsedTime < _timeToUp/2) {
-            float t = elapsedTime / _timeToUp/2;
-            float y = Mathf.Lerp(_startPos.y, _endPosition.y, t);
-            Vector3 newPos = new Vector3(_startPos.x, y, _startPos.z);
-            // _liftRb.MovePosition(newPos);
-            
-            elapsedTime += Time.fixedDeltaTime;
-            await UniTask.WaitForFixedUpdate(token);
+        if (t >= 1f)
+        {
+            if (_state == LiftState.MovingUp)
+                _state = LiftState.Idle;
+            else if (_state == LiftState.MovingDown)
+                _state = LiftState.Idle;
         }
-        // _liftRb.MovePosition(_endPosition);
-        ResetPlayerVelocity();
-        _liftPhysical.transform.position = _liftDownPosition;
-        Debug.Log("Лифт опустился");
-        _tokenSource = null;
     }
 
-    private void ResetPlayerVelocity() {
-       
-        
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.TryGetComponent(out PlayerMovement player))
+        {
+            _currentPlayer = player;
+            _waitTimer = 0f;
+            _state = LiftState.WaitingUp;
+            player.SetLiftState(true);
+
+        }
     }
-    
-    
+
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.TryGetComponent(out PlayerMovement player) && player == _currentPlayer)
+        {
+            _currentPlayer = null;
+            StartMove(_liftDownPosition, _timeToUp * 0.5f);
+            _state = LiftState.MovingDown;
+            player.SetLiftState(false);
+        }
+    }
 }

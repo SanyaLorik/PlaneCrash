@@ -50,7 +50,7 @@ public class RangVisual : MonoBehaviour {
     private void SetPlanes() {
         Debug.Log("Установка рангов");
         foreach (var rang in _config.Rangs) {
-            float planeY = _moneyCube.GetCubeHeight(rang.Money) - _moneyCubeBottomPoint.position.y;
+            float planeY = _moneyCube.GetCubeHeight(rang.Money);
             Vector3 position = new Vector3(_planesParent.transform.position.x, planeY, _planesParent.transform.position.z);
             // Debug.Log($"Для ранга: {rang.Name} высота будет: {planeY}");
             Instantiate(_planePrefab, position, Quaternion.identity, _planesParent);
