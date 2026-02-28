@@ -9,8 +9,8 @@ public class StartZone : MonoBehaviour {
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.TryGetComponent(out PlayerStateManager stateManager)) {
             // Бусты уже готовы на этапе выбора множителя
-            _boostSpawner.SpawnEntranceBoost();
             stateManager.ChangePlayerState(PlayerState.Flight);
+            _boostSpawner.SpawnEntranceBoost();
         }    
     }
 }

@@ -41,16 +41,7 @@ public class Torpedo : MonoBehaviour {
         }
     }
     
-    private void Explode(Rigidbody rb) {
-        rb.linearVelocity = Vector3.zero;
-        rb.AddExplosionForce(
-            _force,
-            transform.position,
-            _radius,
-            _upwardModifier,
-            ForceMode.Impulse
-        );
-    }
+
 
 
     private IEnumerator TorpedaFlightAsync() {

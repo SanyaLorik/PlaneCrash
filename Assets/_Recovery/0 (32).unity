@@ -32513,8 +32513,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 8.930938, z: 0.65416974}
-  m_Center: {x: 0, y: 3.965469, z: -0.17291473}
+  m_Size: {x: 1, y: 8.930938, z: 0.69802576}
+  m_Center: {x: 0, y: 3.965469, z: -0.1509867}
 --- !u!64 &953718876
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -63055,11 +63055,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1797040162}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1797412447 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7888046624223804050, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
-  m_PrefabInstance: {fileID: 244287293507882582}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1798873140
 GameObject:
   m_ObjectHideFlags: 0
@@ -77624,22 +77619,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 699255799}
     m_Modifications:
-    - target: {fileID: 411141395828211279, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
-      propertyPath: looping
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1231544818729557821, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
-      propertyPath: _dizzyDuration
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1751412405833801862, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 1751412405833801862, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.251
-      objectReference: {fileID: 0}
     - target: {fileID: 3340171977911634004, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.5
@@ -77684,10 +77663,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4470123149656898882, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
-      propertyPath: _lineTransform
-      value: 
-      objectReference: {fileID: 1797412447}
     - target: {fileID: 4924868635754256822, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: _startFlightPoint
       value: 
@@ -77700,10 +77675,6 @@ PrefabInstance:
       propertyPath: _flightCanvasContainerShow
       value: 
       objectReference: {fileID: 1049888218}
-    - target: {fileID: 6627604817945795286, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
-      propertyPath: looping
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6988422949813744253, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: _cube
       value: 

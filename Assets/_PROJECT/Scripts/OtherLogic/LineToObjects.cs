@@ -3,6 +3,7 @@ using UnityEngine;
 using Zenject;
 
 public class LineToObjects : MonoBehaviour {
+    [SerializeField] private Transform _lineTransform; // - 3.33
     [SerializeField] private int _countTimesShowLine;
     [SerializeField] private Transform _posForBoost; // -2.76
     [SerializeField] private Transform _posForSpawn; // - 3.33
@@ -15,34 +16,31 @@ public class LineToObjects : MonoBehaviour {
     private bool _tutorialStarted;
     private float _offset;
     
-    
-    private PlayerStateManager _playerStateManager;
-    private PlayerMovement _player;
-    private ZoneManager _zoneManager;
     private bool _arrowInBoost;
+    
+    [Inject] private PlayerStateManager _playerStateManager;
+    [Inject] private PlayerMovement _player;
+    [Inject] private ZoneManager _zoneManager;
+    [Inject] private BoostSpawner _boostSpawner;
 
     [Inject] private TasksManager _tasksManager;
 
- 
 
-    [Inject]
-    private void Init(PlayerMovement player, PlayerStateManager playerStateManager, ZoneManager zoneManager) {
-        _player = player;
+    private void OnEnable() {
         _player.SetBoost += PlayerOnSetBoost;
-        _playerStateManager  = playerStateManager;
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
-        _zoneManager = zoneManager;
         _zoneManager.ChooseMultiplier += ChooseMultiplier;
-    }
-
-    private void Awake() {
+    } 
+    
+    private void Start() {
         SetSpawnPose();
     }
-    
+        
+
     private void Update() {
         if (_target != Vector3.zero) {
             // Обновляем позиции линии
-            _lineRenderer.SetPosition(0, transform.position); // от игрока
+            _lineRenderer.SetPosition(0, _lineTransform.position); // от игрока
             _lineRenderer.SetPosition(1, _target); // до цели
             if (_player.transform.position.z > _target.z && _arrowInBoost) {
                 ForceHideArrow();
@@ -76,7 +74,7 @@ public class LineToObjects : MonoBehaviour {
         _target = newTarget;
         _lineRenderer.enabled = (_target != Vector3.zero);
         if (_target != Vector3.zero) {
-            gameObject.ActiveSelf();
+            _lineTransform.ActiveSelf();
         }
         else {
             HideArrow();
@@ -98,22 +96,21 @@ public class LineToObjects : MonoBehaviour {
     public void SetTargetTutorial(Vector3 newTarget) {
         _target = newTarget;
         _lineRenderer.enabled = (_target != Vector3.zero);
-        gameObject.ActiveSelf();
+        _lineTransform.ActiveSelf();
         ResetOffset();
     }
 
     public void HideArrow() {
         if(_tutorialStarted) return;
-        // Debug.Log("HideArrow");
         _target = Vector3.zero;
-        gameObject.DisactiveSelf();
+        _lineTransform.DisactiveSelf();
         ResetOffset();
     }
-    
-    public void ForceHideArrow() {
-        // Debug.Log("ForceHideArrow");
+
+    private void ForceHideArrow() {
+        Debug.Log("ForceHideArrow");
         _target = Vector3.zero;
-        gameObject.DisactiveSelf();
+        _lineTransform.DisactiveSelf();
         ResetOffset();
     }
 
@@ -130,7 +127,7 @@ public class LineToObjects : MonoBehaviour {
 
     private int _currentShowLine;
     private void PlayerOnSetBoost() {
-        if (_currentShowLine == _countTimesShowLine) {
+        if (_currentShowLine == _countTimesShowLine || Mathf.Approximately(_player.TargetPos.y, _boostSpawner.YMinBoost)) {
             HideArrow();
             return;
         }
@@ -146,14 +143,12 @@ public class LineToObjects : MonoBehaviour {
         transform.localPosition = _posForBoost.localPosition;
         _lineRenderer.widthCurve = _sizeDiapasoneCurves.To;
         _lineRenderer.material.mainTextureScale = new Vector2(_tileDiapasone.To.x, _tileDiapasone.To.y);
-        Debug.Log("Изменение SetBoosterPose");
     }
     
     private void SetSpawnPose() {
         transform.localPosition = _posForSpawn.localPosition;
         _lineRenderer.widthCurve = _sizeDiapasoneCurves.From;
         _lineRenderer.material.mainTextureScale = new Vector2(_tileDiapasone.From.x, _tileDiapasone.From.y);
-        Debug.Log("Изменение SetSpawnPose");
     }
        
     

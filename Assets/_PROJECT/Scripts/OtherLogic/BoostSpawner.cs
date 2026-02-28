@@ -6,9 +6,6 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-
-
-
 public class BoostSpawner : MonoBehaviour {
     
     [Header("Граница спауна")]
@@ -31,7 +28,6 @@ public class BoostSpawner : MonoBehaviour {
     [SerializeField] private bool _setPlayerFalseWay;
     
 
-    private IPlayerStatsReadOnly _playerStats;
     public float MinDistance { get; private set; }
 
     private List<List<Boost>> _trueWaysAfterZone = new();
@@ -39,24 +35,33 @@ public class BoostSpawner : MonoBehaviour {
     private List<List<Boost>> _falseWays = new();
     
     private bool MinimumFlightTimeIsBig;
-    
-    
+
+    public float YMinBoost { get; private set; }
+
     [Inject] private LevelBounds _levelBounds;
     [Inject] private PlayerMovement _playerMovement;
     [Inject] private PlayerStateManager _playerStateManager;
     
     [Inject] UpgradesCalculator _upgradesCalculator;
     [Inject] ObjectPoolManager _objectPoolManager;
-    
+    [Inject] private IPlayerStatsReadOnly _playerStats;
     [Inject] private DiContainer _container;
     
-    [Inject]
-    private void Init(IPlayerStatsReadOnly playerStats) {
-        _playerStats =  playerStats;
+    
+    private void OnEnable() {
         _playerStats.ChangeStats += RecalculateSafeDistance;
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
-    }
+    }    
     
+    private void OnDisable() {
+        _playerStats.ChangeStats -= RecalculateSafeDistance;
+        _playerStateManager.ChangeState -= PlayerStateManagerOnChangeState;
+    }
+
+    private void Start() {
+        YMinBoost = _levelBounds.MinY;
+    }
+
     private float CalculateFalseTargetLength() {
         // Debug.Log($"CalculateFalseTargetDistance: MinimumFlightTime = {_upgradesCalculator.GetLuckyByLevel()}");
         float speed = _playerMovement.PlayerSpeed;
@@ -76,15 +81,15 @@ public class BoostSpawner : MonoBehaviour {
 
     private void RecalculateSafeDistance() {
         MinDistance = CalculateFalseTargetLength() + _playerStateManager.StartFlightPositionZ;
-        Debug.Log($"MinDistance = {CalculateFalseTargetLength()} + {_playerStateManager.StartFlightPositionZ}");
+        Debug.LogWarning($"MinDistance = {CalculateFalseTargetLength()} + {_playerStateManager.StartFlightPositionZ} метров");
     }
 
 
     public Boost GetRandomFirstBoost(float trueChance) {
-        if (Random.value > trueChance && _falseWays.Count > 0) {
-            return _falseWays[Random.Range(0, _falseWays.Count)][0];
+        if (Random.value > trueChance && _falseWays[0].Count > 0) {
+            return GetRandomFirstBoost(false);
         }
-        return _trueWaysBeforeZone[Random.Range(0, _trueWaysBeforeZone.Count)][0];
+        return GetRandomFirstBoost(true);
     }   
     
     public List<Boost> GetAllBoosts() {
@@ -148,11 +153,21 @@ public class BoostSpawner : MonoBehaviour {
             _playerMovement.SetBooster(_curves[0], _falseWays[0][0].transform.position); 
             return;
         }
+        _playerMovement.SetBooster(_curves[0], GetRandomFirstBoost(true).transform.position);
+    }
 
-        _playerMovement.SetBooster(_curves[0],
-            _trueWaysBeforeZone.Count != 0
-                ? _trueWaysBeforeZone[0][0].transform.position
-                : _trueWaysAfterZone[0][0].transform.position);
+    private Boost GetRandomFirstBoost(bool trueBoost) {
+        if (trueBoost) {
+            return _trueWaysBeforeZone[0].Count != 0
+            ? _trueWaysBeforeZone[0][0]
+            : _trueWaysAfterZone[0][0];
+        }
+
+        if (_falseWays[0].Count != 0) {
+            return _falseWays[0][0];
+        }
+        Debug.Log("Вернули всеровно правильную цепочку, неправильных бустов нет");
+        return GetRandomFirstBoost(true);
     }
 
 
@@ -220,7 +235,7 @@ public class BoostSpawner : MonoBehaviour {
     
     private List<Boost> SpawnBoostWays(float initZPos, Vector3 targetPosition, Boost boostPrefab, bool isBeforeZone) {
         if (targetPosition.z < initZPos) {
-            Debug.Log("Ебать ты крутой: targetPosition.z < initZPos");
+            Debug.Log("targetPosition.z < initZPos");
             throw new Exception();
         }
         
@@ -288,12 +303,9 @@ public class BoostSpawner : MonoBehaviour {
         // Сортируем для гарантии порядка
         spawnPoints.Sort();
         if (spawnPoints.Count == 0) {
-            if (isBeforeZone) {
-                Debug.LogError("У тя 0 spawnPoints до зоны, пиздец полный укажи больше время для зоны 45 сек");
-            }
-            else {
-                Debug.LogWarning("У тя 0 spawnPoints после зоны мб там большое значение и все пути к крейсеру");
-            }
+            Debug.LogWarning(isBeforeZone
+                ? "0 spawnPoints до зоны"
+                : "0 spawnPoints после зоны мб там большое значение и все пути к крейсеру");
         }
 
         return spawnPoints;
@@ -303,9 +315,8 @@ public class BoostSpawner : MonoBehaviour {
   
     
     private Vector3 CalculateMinEndPosition() {
-        Debug.Log("Подсчет позиции сейф зоны");
         float x = Random.Range(_levelBounds.LeftX, _levelBounds.RightX);
-        return new Vector3(x, 0f, MinDistance);
+        return new Vector3(x, YMinBoost, MinDistance);
     }
     
 

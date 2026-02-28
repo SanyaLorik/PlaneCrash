@@ -114,6 +114,7 @@ public class PlayerMovement : FlightObject
     
     public bool TryToKill()
     {
+        Debug.Log("minus jizn");
         _currentLifesCount--;
         _visual.StartDizzy();
         if (_currentLifesCount <= 0)
@@ -282,7 +283,6 @@ public class PlayerMovement : FlightObject
 
         if (justLanded)
         {
-            Debug.Log($"LANDED! Frame: {Time.frameCount}");
             _jumpsUsed = 0;
             Floored?.Invoke();
             _stateManager.ChangePlayerState(PlayerState.Walking);
@@ -358,6 +358,8 @@ public class PlayerMovement : FlightObject
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost)
     {
         if (!ObjectGetAllow || IsBombed) return;
+        Debug.Log("Set boost: " + nextBoost);
+        
         
         _visual.SetBoosted();
         CurrentCurve = curve;

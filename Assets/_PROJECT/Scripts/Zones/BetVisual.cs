@@ -41,6 +41,14 @@ public class BetVisual : MonoBehaviour {
         _zoneManager.ChooseMultiplier += ShowMultiplier;
         _playerStateManager.ChangeState += OnChangeState;
     }
+    
+        
+    private void OnDisable() {
+        _bank.BankChanged -= OnChangeBank;
+        _zoneManager.ChooseBet -= ShowBet;
+        _zoneManager.ChooseMultiplier -= ShowMultiplier;
+        _playerStateManager.ChangeState -= OnChangeState;
+    }
 
     private void Start() {
         _betAndRewardContainer.ActiveSelf();
@@ -54,11 +62,14 @@ public class BetVisual : MonoBehaviour {
 
     private void OnChangeState(PlayerState state) {
         // ANIMATE 
-        HideBetAndRewardCanvas();
+        HideBetRewardCanvasAnimation();
+        if (state == PlayerState.Cruisered || state == PlayerState.Grounded) {
+            _multiplier = 1f;
+        }
     }
 
-    private void HideBetAndRewardCanvas() {
-        Debug.Log("HideBetAndRewardCanvas");
+    private void HideBetRewardCanvasAnimation() {
+        Debug.Log("HideBetRewardCanvasAnimation");
         _betAndRewardContainer.DOKill();
         _betAndRewardContainer.
             DOAnchorPosY(_outScreenPoseY, _showDuration)
@@ -66,8 +77,8 @@ public class BetVisual : MonoBehaviour {
             .OnComplete(_betAndRewardContainer.DisactiveSelf);
     }
     
-    private void ShowBetAndRewardCanvas() {
-        Debug.Log("ShowBetAndRewardCanvas");
+    private void ShowBetRewardCanvasAnimation() {
+        Debug.Log("ShowBetRewardCanvasAnimation");
         
         _betAndRewardContainer.ActiveSelf();
         _betAndRewardContainer.DOKill();
@@ -78,30 +89,30 @@ public class BetVisual : MonoBehaviour {
 
     private void OnChangeBank(long capital) {
         _playerBankText.text = _formatter.ValuteFormatter(capital);
+        
     }
 
     private void ShowBet(float bet) {
+        _multiplier = 1f;
         _playerBetText.text = _formatter.ValuteFormatter(bet);
-        _rewardText.text = _formatter.ValuteFormatter(_zoneManager.BetAmount);
+        _rewardText.text = _formatter.ValuteFormatter(bet);
+        
         if (bet == 0 && _betAndRewardContainer.gameObject.activeSelf) {
-            HideBetAndRewardCanvas();
+            HideBetRewardCanvasAnimation();
         }
         else if (bet > 0 && !_betAndRewardContainer.gameObject.activeSelf) {
-            ShowBetAndRewardCanvas();
+            ShowBetRewardCanvasAnimation();
         }
     }
     
+    private float _multiplier = 1f;
+    
     private void ShowMultiplier(float multiplier) {
-        _rewardText.text = _formatter.ValuteFormatter(_zoneManager.BetAmount * multiplier);
+        _multiplier = multiplier;
+        _rewardText.text = _formatter.ValuteFormatter(_zoneManager.BetAmount * _multiplier);
     }
 
     
-    
-    private void OnDisable() {
-        _bank.BankChanged -= OnChangeBank;
-        _zoneManager.ChooseBet -= ShowBet;
-        _zoneManager.ChooseMultiplier -= ShowMultiplier;
-        _playerStateManager.ChangeState -= OnChangeState;
-    }
+
     
 }
