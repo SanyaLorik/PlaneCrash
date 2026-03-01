@@ -644,16 +644,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3026669597746501528}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000019868216}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2922000776167135930}
+  m_Father: {fileID: 9115267428094214440}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -203, y: -163.65}
+  m_AnchoredPosition: {x: -512.00073, y: -1.6500549}
   m_SizeDelta: {x: 172.7, y: 172.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7511128781542203932
@@ -1042,7 +1042,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 549465610557241280}
   m_Father: {fileID: 2922000776167135930}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1274,7 +1275,6 @@ RectTransform:
   - {fileID: 6777055376225704789}
   - {fileID: 7012150028984987920}
   - {fileID: 9115267428094214440}
-  - {fileID: 549465610557241280}
   - {fileID: 6569652818868733640}
   m_Father: {fileID: 5971252801279265027}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -1397,10 +1397,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkinItem
   <SkinItemConfig>k__BackingField: {fileID: 0}
-  _nameText: {fileID: 0}
-  _priceText: {fileID: 0}
-  _delayedTrigger: {fileID: 0}
-  _moneyIcon: {fileID: 0}
+  _nameText: {fileID: 1501392682297547403}
+  _priceText: {fileID: 6226348927897535352}
+  _wearText: {fileID: 4458564489543198581}
+  _delayedTrigger: {fileID: 1931391315088686020}
+  _priceContainer: {fileID: 5538062488755012383}
 --- !u!65 &6824424861077567859
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1928,6 +1929,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4495121714141613927, guid: 76489bb24cbbdc646baddb3c0b48623a, type: 3}
   m_PrefabInstance: {fileID: 4532773989223526605}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1931391315088686020 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2605908281447598857, guid: 76489bb24cbbdc646baddb3c0b48623a, type: 3}
+  m_PrefabInstance: {fileID: 4532773989223526605}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d66d662139f20144b91e62d9e231e22e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DelayedTrigger
 --- !u!1001 &6479415436603886030
 PrefabInstance:
   m_ObjectHideFlags: 0

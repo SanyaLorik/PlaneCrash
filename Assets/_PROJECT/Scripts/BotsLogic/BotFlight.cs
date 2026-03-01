@@ -28,7 +28,7 @@ public class BotFlight : FlightObject, IBotBehaviour {
     private int _countGetBoosts;
     
     public event Action EndFlight;
-    public event Action OnStartFlight;
+    public event Action StartFlight;
     
     [Inject] private LevelBounds _levelBounds;
     [Inject] private PlayerConfig _playerConfig;
@@ -70,7 +70,7 @@ public class BotFlight : FlightObject, IBotBehaviour {
 
 
     public void Enter() {
-        OnStartFlight?.Invoke();
+        StartFlight?.Invoke();
         _collider.enabled = true;
         _tokenSource = new CancellationTokenSource();
 

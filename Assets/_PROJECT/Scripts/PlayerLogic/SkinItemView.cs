@@ -2,19 +2,17 @@ using Architecture_M;
 using SanyaBeerExtension;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 public class SkinItemView : MonoBehaviour {
     [field: SerializeField] public SkinItemConfig SkinItemConfig { get; private set; }
-    //  либо через зенджект
-    // [field: SerializeField] public SkinIdToNameConfig _skinIdToNameConfig { get; private set; }
 
     // FOR NOW ID, LATER ID->NAME CONVERTER
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private TextMeshProUGUI _priceText;
+    [SerializeField] private TextMeshProUGUI _wearText;
     [SerializeField] private DelayedTrigger _delayedTrigger;
-    [SerializeField] private Image _moneyIcon;
+    [SerializeField] private GameObject _priceContainer;
 
     [Inject] private NumberFormatter _formatter;
     [Inject] private IGameSave<GameSavePC> _saver; 
@@ -22,13 +20,13 @@ public class SkinItemView : MonoBehaviour {
     [Inject] private PlayerBank _playerBank;
     [Inject] private PlayerSkinWear _playerSkinWear;
 
-    
+
     public void InitSkinData() {
         // _nameText.text = GetNameById();
+        _wearText.text = _localization.IsWeared;
         _nameText.text = _localization.GetSkinName(SkinItemConfig.Id);
         if (_saver.GetSave.SkinIsBought(SkinItemConfig.Id)) {
-            _priceText.text = string.Empty;
-            _moneyIcon.DisactiveSelf();
+            _priceContainer.DisactiveSelf();
         }
         else {
             _priceText.text = _formatter.ValuteFormatter(SkinItemConfig.Price);
@@ -46,7 +44,7 @@ public class SkinItemView : MonoBehaviour {
     
     private void CheckSelect() {
         if (_saver.GetSave.SkinIsBought(SkinItemConfig.Id) && _saver.GetSave.SkinWearId != SkinItemConfig.Id) {
-            _priceText.text = string.Empty;
+            _wearText.DisactiveSelf();
         }
     }
 
@@ -83,7 +81,7 @@ public class SkinItemView : MonoBehaviour {
 
     private void BuyNewSkin() {
         _saver.GetSave.AddNewSkin(SkinItemConfig.Id);
-        _moneyIcon.DisactiveSelf();
+        _priceContainer.DisactiveSelf();
         WearNewSkin();
         _playerBank.GiveMeYourFuckingMoneyNigga(SkinItemConfig.Price);
     }
@@ -94,6 +92,7 @@ public class SkinItemView : MonoBehaviour {
         _saver.GetSave.SkinWearId = SkinItemConfig.Id;
         _playerSkinWear.WearNewSkin(SkinItemConfig);
         _priceText.text = _localization.IsWeared;
+        _wearText.ActiveSelf();
         _saver.Save();
     }
 

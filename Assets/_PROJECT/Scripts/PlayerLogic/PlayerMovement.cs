@@ -12,11 +12,13 @@ public class PlayerMovement : FlightObject
     [SerializeField] private int _currentLifesCount;
     [SerializeField] private JumpParticlesController _jumpParticlesController;
     [SerializeField] private CharacterController _controller; // 
+    [SerializeField] private float _getObjectsCooldownSeconds;
+    [SerializeField] private float _angleToFlight; // 
+    [SerializeField] private float _yFlyCorrectRotation = 5f; // из-за анимации надо чуит развернуть хуилу
     
     private Quaternion _defaultModelRotation;
     public Transform Transform => transform;
 
-    public CharacterController Controller => _controller;
     
     public Vector2 MoveInput => _inputDirection2.Direction2;
     private float _currentRoll;
@@ -51,34 +53,29 @@ public class PlayerMovement : FlightObject
     private bool _isGrounded;
 
     
-    private void OnEnable()
-    {
+    private void OnEnable() {
         _stateManager.ChangeState += ChangeSpaceRotation;
         _inputJumping.OnJumped += OnJump;
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         _stateManager.ChangeState -= ChangeSpaceRotation;
         _inputJumping.OnJumped -= OnJump;
     }
     
     
-    public void AddVerticalImpulse(float force)
-    {
+    public void AddVerticalImpulse(float force) {
         _verticalVelocity = force;
         _jumpsUsed = 0;
     }
     
-    private void Start()
-    {
+    private void Start() {
         ChangeSpaceRotation(PlayerState.Walking);
         TpPlayerInSpawn();
         _defaultModelRotation = _transformForRotate.localRotation;
     }
     
-    private void Update()
-    {
+    private void Update() {
         if (_stateManager.CurrentState == PlayerState.Flight) {
             VisualRotate();
             FlightLogic();
@@ -89,31 +86,32 @@ public class PlayerMovement : FlightObject
         }
     }
     
-    public void TpPlayerInSpawn()
-    {
+    public void TpPlayerInSpawn() {
         _stateManager.ChangePlayerState(PlayerState.Walking);
+        TeleportBase(_levelBounds.PlayerSpawnPoint.position);
+    }
     
+    public void TpPlayerInBetZone() {
+        TeleportBase(_levelBounds.BetZonePosition.position);
+    }
+    
+    public void TpPlayerInParkour() {
+        TeleportBase(_levelBounds.ParkourPosition.position);
+    }
+
+    private void TeleportBase(Vector3 point) {
         _controller.enabled = false;
-        transform.position = _levelBounds.PlayerSpawnPoint.position;
+        transform.position = point;
         _controller.enabled = true;
     
         _verticalVelocity = 0; // Сброс скорости
         _jumpsUsed = 0; // Сброс прыжков
         _visual.TeleportParticles();
     }
+
+
     
-    public void TpPlayerInBetZone()
-    {
-        _controller.enabled = false;
-        transform.position = _levelBounds.BetZonePosition.position;
-        _controller.enabled = true;
-        
-        _verticalVelocity = 0;
-        _visual.TeleportParticles();
-    }
-    
-    public bool TryToKill()
-    {
+    public bool TryToKill() {
         Debug.Log("minus jizn");
         _currentLifesCount--;
         _visual.StartDizzy();
@@ -126,47 +124,39 @@ public class PlayerMovement : FlightObject
     
     private void ResetLifes() => _currentLifesCount = _upgradesCalculator.GetDefenceByLevel();
     
-    private void SetPlayerIsBombed()
-    {
+    private void SetPlayerIsBombed() {
         IsBusted = false;
         IsBombed = true;
     }
     
-    private void ChangeSpaceRotation(PlayerState playerState)
-    {
+    private void ChangeSpaceRotation(PlayerState playerState) {
         _tokenSource = new CancellationTokenSource();
-        if (playerState == PlayerState.Flight)
-        {
+        if (playerState == PlayerState.Flight) {
             ResetLifes();
             IsBombed = false;
-            RotateLocalXAsync(30, playerState, _tokenSource.Token).Forget();
+            RotateLocalXAsync(_angleToFlight, playerState, _tokenSource.Token).Forget();
         }
         
-        else if (playerState == PlayerState.Grounded || playerState == PlayerState.Cruisered)
-        {
+        else if (playerState == PlayerState.Grounded || playerState == PlayerState.Cruisered) {
             RotateLocalXAsync(0, playerState, _tokenSource.Token).Forget();
             ResetModelRotation();
         }
     }
     
-    private void ResetModelRotation()
-    {
+    private void ResetModelRotation() {
         _transformForRotate.localRotation = _defaultModelRotation;
     }
     
-    private async UniTask RotateLocalXAsync(float TargetPosAngleX, PlayerState playerState, CancellationToken token)
-    {
+    private async UniTask RotateLocalXAsync(float targetPosAngleX, PlayerState playerState, CancellationToken token) {
         float duration = 1f;
         
         Vector3 currentLocalEuler = transform.localEulerAngles;
         Vector3 TargetPosLocalEuler;
-        if (playerState == PlayerState.Walking)
-        {
-            TargetPosLocalEuler = new Vector3(TargetPosAngleX, currentLocalEuler.y, currentLocalEuler.z);
+        if (playerState == PlayerState.Walking) {
+            TargetPosLocalEuler = new Vector3(targetPosAngleX, currentLocalEuler.y, currentLocalEuler.z);
         }
-        else
-        {
-            TargetPosLocalEuler = new Vector3(TargetPosAngleX, 0f, 0f);
+        else {
+            TargetPosLocalEuler = new Vector3(targetPosAngleX, _yFlyCorrectRotation, 0f);
         }
         
         Quaternion startRot = transform.localRotation;
@@ -174,8 +164,7 @@ public class PlayerMovement : FlightObject
         
         float elapsedTime = 0;
         
-        while (elapsedTime < duration)
-        {
+        while (elapsedTime < duration) {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
             
@@ -187,20 +176,17 @@ public class PlayerMovement : FlightObject
         transform.localRotation = TargetPosRot;
     }
     
-    public void OnJump()
-    {
+    public void OnJump() {
         if (_stateManager.CurrentState != PlayerState.Walking) return;
         
-        if (_jumpsUsed == 0)
-        {
+        if (_jumpsUsed == 0) {
             _verticalVelocity = _config.JumpForce;
             _jumpParticlesController.Play();
             OnJumpPressed?.Invoke();
             Debug.Log("OnJumpPressed?.Invoke();");
             _jumpsUsed = 1;
         }
-        else if (_jumpsUsed == 1)
-        {
+        else if (_jumpsUsed == 1) {
             _verticalVelocity = _config.SecondJumpForce;
             OnDoubleJumpPressed?.Invoke();
             Debug.Log("OnDoubleJumpPressed?.Invoke();");
@@ -221,8 +207,7 @@ public class PlayerMovement : FlightObject
     }
     
         
-    public void SetLiftState(bool value)
-    {
+    public void SetLiftState(bool value) {
         _isOnLift = value;
 
         if (value)
@@ -232,8 +217,7 @@ public class PlayerMovement : FlightObject
         }
     }
 
-    private void Walk()
-    {
+    private void Walk() {
         Transform cam = Camera.main.transform;
         Vector3 camForward = cam.forward;
         Vector3 camRight = cam.right;
@@ -254,8 +238,7 @@ public class PlayerMovement : FlightObject
         }
 
         // ГРАВИТАЦИЯ
-        if (!_controller.isGrounded && !_isOnLift)
-        {
+        if (!_controller.isGrounded && !_isOnLift) {
             _verticalVelocity += Physics.gravity.y * _config.GravityScale * Time.deltaTime;
         }
         
@@ -296,10 +279,8 @@ public class PlayerMovement : FlightObject
         }
     }
     
-    private void WalkRotate(Vector3 move)
-    {
-        if (move.sqrMagnitude > 0.0001f)
-        {
+    private void WalkRotate(Vector3 move) {
+        if (move.sqrMagnitude > 0.0001f) {
             float TargetPosY = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
             
             float y = Mathf.LerpAngle(
@@ -316,11 +297,9 @@ public class PlayerMovement : FlightObject
         }
     }
     
-    private void FlightLogic()
-    {
+    private void FlightLogic() {
         Vector3 newPos = transform.position;
-        if (IsBombed)
-        {
+        if (IsBombed) {
             newPos.y -= _config.FallingSpeed * 4f * Time.deltaTime;
             _controller.Move(newPos - transform.position);
             return;
@@ -329,13 +308,11 @@ public class PlayerMovement : FlightObject
         newPos.x += MoveInput.x * _config.RotateSpeed * Time.deltaTime;
         newPos.x = Mathf.Clamp(newPos.x, _levelBounds.LeftX, _levelBounds.RightX);
         
-        if (!IsBusted)
-        {
+        if (!IsBusted) {
             newPos.z += _config.SpeedForce * Time.deltaTime;
             newPos.y -= _config.FallingSpeed * Time.deltaTime;
         }
-        else
-        {
+        else {
             float normalizedTime = ExpandedTime / SegmentDuration;
             
             float height = CurrentCurve.Evaluate(normalizedTime) * _config.JumpHeight;
@@ -348,15 +325,12 @@ public class PlayerMovement : FlightObject
             }
         }
         
-        // Для Flight режима используем прямой transform, потому что физика не нужна
         _controller.Move(newPos - transform.position);
     }
     
-    [SerializeField] private float _getObjectsCooldownSeconds;
     public bool ObjectGetAllow { get; private set; } = true;
     
-    public void SetBooster(AnimationCurve curve, Vector3 nextBoost)
-    {
+    public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
         if (!ObjectGetAllow || IsBombed) return;
         Debug.Log("Set boost: " + nextBoost);
         
@@ -374,16 +348,14 @@ public class PlayerMovement : FlightObject
         SetBoost?.Invoke();
     }
     
-    private IEnumerator ObjectAllowCooldown()
-    {
+    private IEnumerator ObjectAllowCooldown() {
         yield return new WaitForSeconds(_getObjectsCooldownSeconds);
         ObjectGetAllow = true;
     }
     
     [SerializeField] private Transform _transformForRotate;
     
-    private void VisualRotate()
-    {
+    private void VisualRotate() {
         float targetRoll = -MoveInput.x * _config.MaxRotate;
         
         _currentRoll = Mathf.SmoothDamp(
@@ -396,18 +368,16 @@ public class PlayerMovement : FlightObject
         SetModelRotation(euler);
     }
     
-    private void SetModelRotation(Vector3 euler)
-    {
-        euler.y = _currentRoll;
+    private void SetModelRotation(Vector3 euler) {
+        euler.z = _currentRoll;
         _transformForRotate.localEulerAngles = euler;
     }
     
-    public Vector3 GetPlayerPositionAt(float t)
-    {
+    public Vector3 GetPlayerPositionAt(float t) {
         float height = CurrentCurve.Evaluate(t) * _config.JumpHeight;
+        float x = transform.position.x;
         float y = Mathf.Lerp(_initialPos.y, TargetPos.y, t) + height;
         float z = Mathf.Lerp(_initialPos.z, TargetPos.z, t);
-        float x = transform.position.x;
         return new Vector3(x, y, z);
     }
 }

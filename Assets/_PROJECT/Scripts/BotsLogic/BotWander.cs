@@ -23,7 +23,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
     
     
     
-    public Action<bool> OnStartWandering;
+    public Action<bool> StartWandering;
     public Action OnJump;
     
     
@@ -79,13 +79,13 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
             if (_agent.enabled && _agent.velocity.sqrMagnitude > 0.05f) {
                 if (!_walkingParticles.IsPlaying) {
                     _walkingParticles.Play();
-                OnStartWandering?.Invoke(true);
+                StartWandering?.Invoke(true);
                 }
             }
             else {
                 if (_walkingParticles.IsPlaying) {
                     _walkingParticles.Stop();
-                    OnStartWandering?.Invoke(false);
+                    StartWandering?.Invoke(false);
                 }
             }
 

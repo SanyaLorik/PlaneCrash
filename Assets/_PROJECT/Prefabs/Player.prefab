@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerVisual
   _dizzyPS: {fileID: 6627604817945795286}
-  _dizzyDuration: 10
+  _dizzyDuration: 15
   _upgradePS: {fileID: 2838751295009174313}
   _teleportPS: {fileID: 2838751295009174313}
   _boostPS: {fileID: 7106943519621781437}
@@ -263,6 +263,7 @@ Transform:
   - {fileID: 9154790413733327085}
   - {fileID: 1206195210409184014}
   - {fileID: 9124389334052012327}
+  - {fileID: 7988692053937646017}
   - {fileID: 4221515838622591365}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -412,8 +413,10 @@ MonoBehaviour:
   _currentLifesCount: 0
   _jumpParticlesController: {fileID: 3180276614777571555}
   _controller: {fileID: 7285536231780850867}
-  IsBombed: 0
   _getObjectsCooldownSeconds: 1
+  _angleToFlight: -20
+  _yFlyCorrectRotation: 5
+  IsBombed: 0
   _transformForRotate: {fileID: 2685003040153228485}
 --- !u!114 &4924868635754256822
 MonoBehaviour:
@@ -5453,7 +5456,7 @@ Transform:
   m_GameObject: {fileID: 4083967282747094535}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.99, z: 3.83}
+  m_LocalPosition: {x: 0, y: -0.68, z: 3.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20369,7 +20372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7888046624223804050
 Transform:
   m_ObjectHideFlags: 0
@@ -20600,7 +20603,7 @@ Transform:
   - {fileID: 7888046624223804050}
   - {fileID: 7440217891136750858}
   - {fileID: 503984949520894052}
-  m_Father: {fileID: 4221515838622591365}
+  m_Father: {fileID: 3340171977911634004}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4470123149656898882
 MonoBehaviour:
@@ -20702,7 +20705,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3602935270504489358}
-  - {fileID: 7988692053937646017}
   - {fileID: 5132186663781143871}
   m_Father: {fileID: 3340171977911634004}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
