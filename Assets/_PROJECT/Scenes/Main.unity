@@ -37858,11 +37858,11 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _jumpHeight:
-    <From>k__BackingField: 100
-    <To>k__BackingField: 50
+    <From>k__BackingField: 50
+    <To>k__BackingField: 25
   _countMoneyAfterFlight: 30
   _spawnTimeDiapasone: 0.07
-  _spawnRadius: 700
+  _spawnRadius: 450
   _trampolineMultiplierRadius: 1
   _playerSpawnPoint: {fileID: 1064869238889878792}
 --- !u!1 &893674666
