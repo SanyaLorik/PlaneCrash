@@ -95,8 +95,8 @@ public class PlayerMovement : FlightObject
         TeleportBase(_levelBounds.BetZonePosition.position);
     }
     
-    public void TpPlayerInParkour() {
-        TeleportBase(_levelBounds.ParkourPosition.position);
+    public void TpPlayerInPoint(Transform target) {
+        TeleportBase(target.position);
     }
 
     private void TeleportBase(Vector3 point) {

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using SanyaBeerExtension;
@@ -14,46 +13,22 @@ public class Money2dSpawner : MonoBehaviour {
     [SerializeField] private float _animationDuration;
     [SerializeField] private List<AnimationCurve> _trajectories;
     [SerializeField] private PairedValue<float> _jumpHeight;
-    [SerializeField] private NewMoneyView _newMoneyView;
 
     [SerializeField] private float _countMoneyAfterFlight;
     [Range(0, 1), SerializeField] private float _spawnTimeDiapasone;
     [SerializeField] private float _spawnRadius;
     [SerializeField] private float _trampolineMultiplierRadius;
     [SerializeField] private Transform _playerSpawnPoint;
-    [SerializeField] private float _showBankOpertionDuration = 2f;
 
     private Queue<RectTransform> _moneyPool = new ();
-    private Queue<NewMoneyView> _bankOpertaionViewPool = new ();
 
-    private bool _isFlightBefore = false;
+    private bool _isFlightBefore;
 
     
     [Inject] private PlayerStateManager _playerStateManager;
     [Inject] private PlayerBank _bank;
     [Inject] private NumberFormatter _formatter;
     [Inject] private RectTransformHelper _rtHelper;
-    
-    
-    private void OnEnable() {
-        _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
-        _bank.BankNewMoneyPlus += BankPlus;
-        _bank.BankNewMoneyMinus += BankMinus;
-    }
-
-    private void BankPlus(long money) {
-        NewMoneyView newMoneyView = GetBankOpertionViewInPool();
-        newMoneyView.transform.position = GetPointAroundPlayerSpiral();;
-        newMoneyView.PlusMoney(_formatter.ValuteFormatter(money));
-        StartCoroutine(HideBankOpertionView(newMoneyView));
-    }
-    
-    private void BankMinus(long money) {
-        NewMoneyView newMoneyView = GetBankOpertionViewInPool();
-        newMoneyView.transform.position = GetPointAroundPlayerSpiral();;
-        newMoneyView.MinusMoney(_formatter.ValuteFormatter(money));
-        StartCoroutine(HideBankOpertionView(newMoneyView));
-    }
 
 
     private void Awake() {
@@ -63,8 +38,11 @@ public class Money2dSpawner : MonoBehaviour {
             icon.DisactiveSelf();
             _moneyPool.Enqueue(icon);
         }
-        
     }
+    
+    private void OnEnable() {
+        _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
+    }    
     
     
     public void SpawnOneMoneyInPoint(Vector3 object3dPosition) {
@@ -138,28 +116,16 @@ public class Money2dSpawner : MonoBehaviour {
         MoneyReturnToPool(icon);
     }
     
-    private IEnumerator HideBankOpertionView(NewMoneyView newMoneyView) {
-        yield return new WaitForSeconds(_showBankOpertionDuration);
-        newMoneyView.DisactiveSelf();
-        _bankOpertaionViewPool.Enqueue(newMoneyView);
-    }
+
 
     
     private RectTransform GetIconFromPool() {
         if (_moneyPool.Count > 0)
             return _moneyPool.Dequeue();
-
-        // если не хватило — создаём ещё
         return Instantiate(_iconPrefab, _parentForMoney);
     }
     
-    private NewMoneyView GetBankOpertionViewInPool() {
-        if (_bankOpertaionViewPool.Count > 0)
-            return _bankOpertaionViewPool.Dequeue();
 
-        // если не хватило — создаём ещё
-        return Instantiate(_newMoneyView, _parentForMoney);
-    }
     
     private void MoneyReturnToPool(RectTransform icon) {
         ResetRect(icon);
@@ -176,7 +142,6 @@ public class Money2dSpawner : MonoBehaviour {
     
     private Vector2 GetRandomPointInCircle(float radius) {
         float angle = Random.Range(0f, Mathf.PI * 2f);
-
         // Корень — чтобы точки были равномерно, а не кучей в центре
         float r = Mathf.Sqrt(Random.value) * radius;
 
@@ -185,6 +150,8 @@ public class Money2dSpawner : MonoBehaviour {
 
         return new Vector2(x, y);
     }
+    
+    
     
     private Vector2 GetPointAroundPlayer() {
         float radius = _playerStateManager.CurrentState == PlayerState.TrampolineJumping
@@ -204,34 +171,6 @@ public class Money2dSpawner : MonoBehaviour {
 
         return point;
     }
-    
-    
-    private float _lastAngle = 0f;
-    private float _angleStep = 60f; // шаг в градусах
-    private Vector2 GetPointAroundPlayerSpiral() {
-        float radius = _playerStateManager.CurrentState == PlayerState.TrampolineJumping
-            ? _spawnRadius * _trampolineMultiplierRadius
-            : _spawnRadius;
-    
-        // Увеличиваем угол с каждым спавном
-        _lastAngle += _angleStep;
-        if (_lastAngle >= 360f) _lastAngle -= 360f;
-    
-        float angle = _lastAngle * Mathf.Deg2Rad;
-        float r = radius * 0.8f; // не используем весь радиус, чтобы было предсказуемо
-    
-        float x = Mathf.Cos(angle) * r;
-        float y = Mathf.Sin(angle) * r;
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(_playerSpawnPoint.transform.position);
-        Vector2 point = new Vector2(x + screenPos.x, y + screenPos.y);
-    
-        float padding = 100f;
 
-        point = _rtHelper.ClampByScreenVector(padding, point);
-        return point;
-    }
-    
-   
-    
     
 }
