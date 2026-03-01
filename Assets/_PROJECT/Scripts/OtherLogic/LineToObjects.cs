@@ -140,13 +140,13 @@ public class LineToObjects : MonoBehaviour {
 
 
     private void SetBoosterPose() {
-        transform.localPosition = _posForBoost.localPosition;
+        _lineTransform.localPosition = _posForBoost.localPosition;
         _lineRenderer.widthCurve = _sizeDiapasoneCurves.To;
         _lineRenderer.material.mainTextureScale = new Vector2(_tileDiapasone.To.x, _tileDiapasone.To.y);
     }
     
     private void SetSpawnPose() {
-        transform.localPosition = _posForSpawn.localPosition;
+        _lineTransform.localPosition = _posForSpawn.localPosition;
         _lineRenderer.widthCurve = _sizeDiapasoneCurves.From;
         _lineRenderer.material.mainTextureScale = new Vector2(_tileDiapasone.From.x, _tileDiapasone.From.y);
     }

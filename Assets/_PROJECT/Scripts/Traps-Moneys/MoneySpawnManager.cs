@@ -71,7 +71,7 @@ public class MoneySpawnManager : MonoBehaviour {
 
     private void ClearMoneyObjects() {
         foreach (var money in _spawnedMoneys) {
-            Destroy(money.gameObject);
+            money.DestroyObject();
         }
         _spawnedMoneys.Clear();
     }

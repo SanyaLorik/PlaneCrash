@@ -55,8 +55,6 @@ public class PlayerStateManager : MonoBehaviour{
     
     
     public void ChangePlayerState(PlayerState newState) {
-
-        
         if (CurrentState == newState) {
             return;
         }

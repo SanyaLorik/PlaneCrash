@@ -11,7 +11,6 @@ public class BoostSpawner : MonoBehaviour {
     [Header("Граница спауна")]
     [field: SerializeField] public PairedValue<float> BoostDistance { get; private set;  }
     [SerializeField] private Boost _boostPrefab;
-    [SerializeField] private Boost _falseBoostPrefab;
     
     [SerializeField] private PairedValue<float> _yDelta;
     
@@ -119,7 +118,7 @@ public class BoostSpawner : MonoBehaviour {
             // Тут тоже подумать до куда он может лететь, 
             Vector3 newFalsePosition = CalculateMinEndPosition();
             newFalsePosition.z = Random.Range(newFalsePosition.z, cruiserPosition.z+100f);
-            _falseWays.Add(SpawnBoostWays(_playerStateManager.StartFlightPositionZ, newFalsePosition, _falseBoostPrefab, false));
+            _falseWays.Add(SpawnBoostWays(_playerStateManager.StartFlightPositionZ, newFalsePosition, _boostPrefab, false));
         }
 
         

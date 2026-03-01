@@ -32028,7 +32028,7 @@ MonoBehaviour:
     Traps:
     - {fileID: 9085201780675271725, guid: 6333736fda853f847a7a70c812acefa9, type: 3}
     - {fileID: 6785409605208709625, guid: b5a1f98a912c4764d8a8c2a9107c1e4f, type: 3}
-  _chanseToSpawnFakeTrap: 0.5
+  _chanseToSpawnFakeTrap: 0.4
 --- !u!114 &738633778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36413,7 +36413,6 @@ MonoBehaviour:
     <From>k__BackingField: 130
     <To>k__BackingField: 180
   _boostPrefab: {fileID: 3505793406659530733, guid: 035a4f018a249d4478c01a1c0d1e6b6b, type: 3}
-  _falseBoostPrefab: {fileID: 3685434286454365345, guid: 6d34e7490d7a34340acda720c0fe2392, type: 3}
   _yDelta:
     <From>k__BackingField: -30
     <To>k__BackingField: 100
@@ -37770,12 +37769,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BankOpertion
   _parentForMoney: {fileID: 430548213}
-  _animationDuration: 2
+  _animationDuration: 3
   _upOffset: 100
   _newMoneyView: {fileID: 9046267092119866457, guid: 466381810842d5a4cbe2a5c968fe2538, type: 3}
   _playerSpawnPoint: {fileID: 1064869238889878792}
-  _spawnRadius: 600
-  _trampolineMultiplierRadius: 1
+  _spawnRadius: 200
+  _trampolineMultiplierRadius: 2
 --- !u!114 &893658167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88886,7 +88885,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 455580888}
   - {fileID: 1279107217}
   - {fileID: 727722057}
   - {fileID: 2114599638}
@@ -88898,6 +88896,7 @@ Transform:
   - {fileID: 703353407}
   - {fileID: 893658164}
   - {fileID: 430849872}
+  - {fileID: 455580888}
   - {fileID: 1824247753}
   m_Father: {fileID: 699255799}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -94938,6 +94937,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 699255799}
     m_Modifications:
+    - target: {fileID: 503984949520894052, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 503984949520894052, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.01
+      objectReference: {fileID: 0}
     - target: {fileID: 3340171977911634004, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.5
@@ -95018,6 +95025,10 @@ PrefabInstance:
       propertyPath: m_UIInputModule
       value: 
       objectReference: {fileID: 615182041}
+    - target: {fileID: 7795132907127889283, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
