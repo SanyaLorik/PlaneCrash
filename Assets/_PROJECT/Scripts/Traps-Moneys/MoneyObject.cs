@@ -6,7 +6,7 @@ using Zenject;
 
 public class MoneyObject : MonoBehaviour, IMagnetic {
     
-    [SerializeField] private ParticleSystem _particleSystem;
+    //[SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private TMP_Text _text;
     
     
@@ -27,7 +27,7 @@ public class MoneyObject : MonoBehaviour, IMagnetic {
     
     
     private void OnTriggerEnter(Collider collider) {
-        _particleSystem.Play(true);
+        //_particleSystem.Play(true);
         if (collider.TryGetComponent(out PlayerMovement _)) {
             Collect();
             
