@@ -1,3 +1,4 @@
+using Architecture_M;
 using DG.Tweening;
 using SanyaBeerExtension;
 using UnityEngine;
@@ -5,7 +6,7 @@ using Zenject;
 
 public class Boost : MonoBehaviour, IMagnetic {
     [SerializeField] private Renderer _renderer;
-    
+    [SerializeField] private DOTweenAnimationBase[] _animations;
     
     
     public AnimationCurve randomTrajectory;
@@ -75,12 +76,12 @@ public class Boost : MonoBehaviour, IMagnetic {
     }
 
     public void SetBoostPersonalityVisibleAndRevealTheHiddenInnerEnergeticMetaphysicalGameplayEssenceOfThisSpecificAccelerationEntityWhileSynchronizingItsVisualAuraWithPlayerPerceptionSystemsTheLivingBreathingDigitalUniverse() {
-        transform
-            .DORotate(Vector3.up * 360f, .7f, RotateMode.LocalAxisAdd)
-            .SetLoops(-1, LoopType.Restart)
-            .SetEase(Ease.Linear)
-            .SetLink(gameObject);
-
+        //transform
+        //    .DORotate(Vector3.up * 360f, .7f, RotateMode.LocalAxisAdd)
+        //    .SetLoops(-1, LoopType.Restart)
+        //    .SetEase(Ease.Linear)
+        //    .SetLink(gameObject);
+        _animations.ForEach(i => i.Animate());
         LightBreeze();
     }
     
