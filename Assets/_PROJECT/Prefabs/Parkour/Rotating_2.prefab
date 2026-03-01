@@ -168,12 +168,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cf562cb01e0204c827e751293d54bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.RotatingAroundAnimation
-  _entity:
+  <Entity>k__BackingField:
     <Source>k__BackingField: {fileID: 377282255371483785}
-    <Duration>k__BackingField: 1
+    <Duration>k__BackingField: 6
     <Ease>k__BackingField: 1
+  <IsAutoStart>k__BackingField: 1
   _endAngleValue: {x: 0, y: 360, z: 0}
-  _isAutoStart: 1
 --- !u!1 &2993043055805311843
 GameObject:
   m_ObjectHideFlags: 0

@@ -920,12 +920,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cf562cb01e0204c827e751293d54bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.RotatingAroundAnimation
-  _entity:
+  <Entity>k__BackingField:
     <Source>k__BackingField: {fileID: 1471720505805362266}
-    <Duration>k__BackingField: 24
+    <Duration>k__BackingField: 6
     <Ease>k__BackingField: 1
+  <IsAutoStart>k__BackingField: 1
   _endAngleValue: {x: 0, y: 360, z: 0}
-  _isAutoStart: 1
 --- !u!114 &1772312789619786911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -938,12 +938,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ef453bd566c8c4f9091dd0d7f7d74e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingAsOffsetAnimation
-  _entity:
+  <Entity>k__BackingField:
     <Source>k__BackingField: {fileID: 1471720505805362266}
-    <Duration>k__BackingField: 4
+    <Duration>k__BackingField: 2
     <Ease>k__BackingField: 1
+  <IsAutoStart>k__BackingField: 1
   _offset: {x: 0, y: 0.2, z: 0}
-  _isAutoStart: 1
 --- !u!1 &4622408194486898692
 GameObject:
   m_ObjectHideFlags: 0

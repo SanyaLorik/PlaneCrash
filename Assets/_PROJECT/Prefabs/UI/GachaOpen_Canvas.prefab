@@ -88,12 +88,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cf562cb01e0204c827e751293d54bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.RotatingAroundAnimation
-  _entity:
+  <Entity>k__BackingField:
     <Source>k__BackingField: {fileID: 1194831700039325724}
-    <Duration>k__BackingField: 16
+    <Duration>k__BackingField: 2
     <Ease>k__BackingField: 1
+  <IsAutoStart>k__BackingField: 0
   _endAngleValue: {x: 0, y: 0, z: 360}
-  _isAutoStart: 1
 --- !u!1 &1107034086034489988
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3482954112660912660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,13 +719,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 626e96b019042a5449e993f7cf077282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.ScaleDownUpAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 2516037537906200674}
-    <Duration>k__BackingField: 0.8
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 1
     <Ease>k__BackingField: 1
+  <IsAutoStart>k__BackingField: 0
   _upScale: {x: 1, y: 1, z: 1}
   _downScale: {x: 0.85, y: 0.85, z: 0.85}
-  _isAutoStart: 1
 --- !u!1 &4534717247794742918
 GameObject:
   m_ObjectHideFlags: 0

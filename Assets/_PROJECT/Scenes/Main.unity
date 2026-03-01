@@ -94672,6 +94672,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 644202770473535795, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 948091186554398511, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_Name
       value: Main_Canvas
@@ -95586,12 +95590,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 2432220107845854000}
-    <Duration>k__BackingField: 60
-    <Ease>k__BackingField: 1
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
+    <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 2888712521409468857}
-  _isAutoStart: 1
 --- !u!23 &957258750597285406
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -95653,12 +95657,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 4327931937546077599}
-    <Duration>k__BackingField: 66
-    <Ease>k__BackingField: 1
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
+    <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 2530207090766050401}
-  _isAutoStart: 1
 --- !u!4 &1000539390273326315
 Transform:
   m_ObjectHideFlags: 0
@@ -95704,12 +95708,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 3677380975128804436}
-    <Duration>k__BackingField: 40
-    <Ease>k__BackingField: 1
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
+    <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 5194392865936006549}
-  _isAutoStart: 1
 --- !u!114 &1173890578765591672 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4203058468739246041, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
@@ -96194,12 +96198,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 2680352419655954656}
-    <Duration>k__BackingField: 120
-    <Ease>k__BackingField: 1
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
+    <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 1312060369424867569}
-  _isAutoStart: 1
 --- !u!114 &1394698764471988587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96212,12 +96216,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 8063592922828480007}
-    <Duration>k__BackingField: 120
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
     <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 5406938192008287117}
-  _isAutoStart: 1
 --- !u!4 &1430746975397861099
 Transform:
   m_ObjectHideFlags: 0
@@ -96557,12 +96561,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 4257147824688207988}
-    <Duration>k__BackingField: 40
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
     <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 5059417302230040659}
-  _isAutoStart: 1
 --- !u!1 &2515181847643826525
 GameObject:
   m_ObjectHideFlags: 0
@@ -97059,12 +97063,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 5401942924622969666}
-    <Duration>k__BackingField: 70
-    <Ease>k__BackingField: 1
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
+    <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 158163996566940691}
-  _isAutoStart: 1
 --- !u!1 &3461857755288772811
 GameObject:
   m_ObjectHideFlags: 0
@@ -98248,12 +98252,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 6139458634100337485}
-    <Duration>k__BackingField: 80
-    <Ease>k__BackingField: 1
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
+    <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 2312647365559043089}
-  _isAutoStart: 1
 --- !u!33 &3965612492910932972
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -98336,12 +98340,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 4825556993197382625}
-    <Duration>k__BackingField: 100
-    <Ease>k__BackingField: 1
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
+    <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 3966780599572971327}
-  _isAutoStart: 1
 --- !u!1 &4186927263003166811
 GameObject:
   m_ObjectHideFlags: 0
@@ -98442,12 +98446,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 7870260442337723966}
-    <Duration>k__BackingField: 75
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
     <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 3369920418196556083}
-  _isAutoStart: 1
 --- !u!4 &4503707992395881206
 Transform:
   m_ObjectHideFlags: 0
@@ -98688,12 +98692,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 1646716693916903447}
-    <Duration>k__BackingField: 110
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
     <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 6839615179267527938}
-  _isAutoStart: 1
 --- !u!1001 &5243846491101932358
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -100334,12 +100338,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 888020546834468223}
-    <Duration>k__BackingField: 50
-    <Ease>k__BackingField: 1
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
+    <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 6283182315177775230}
-  _isAutoStart: 1
 --- !u!82 &7524349611288899152
 AudioSource:
   m_ObjectHideFlags: 0
@@ -100749,12 +100753,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 4503707992395881206}
-    <Duration>k__BackingField: 50
-    <Ease>k__BackingField: 1
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
+    <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 3855751152221722610}
-  _isAutoStart: 1
 --- !u!114 &8167716491013747024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100767,12 +100771,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 8700801363490995384}
-    <Duration>k__BackingField: 130
-    <Ease>k__BackingField: 1
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
+    <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 4075794409914385904}
-  _isAutoStart: 1
 --- !u!114 &8177735165402464182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100785,12 +100789,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
-    <Source>k__BackingField: {fileID: 269024537757657881}
-    <Duration>k__BackingField: 40
-    <Ease>k__BackingField: 1
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 0}
+    <Duration>k__BackingField: 0
+    <Ease>k__BackingField: 0
+  <IsAutoStart>k__BackingField: 0
   _target: {fileID: 8711734022916118612}
-  _isAutoStart: 1
 --- !u!1 &8192488208674506587
 GameObject:
   m_ObjectHideFlags: 0

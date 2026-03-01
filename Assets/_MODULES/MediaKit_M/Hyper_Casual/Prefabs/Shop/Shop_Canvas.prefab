@@ -253,6 +253,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -389,6 +390,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -800,6 +802,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1011,6 +1014,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1147,6 +1151,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1721,6 +1726,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1857,6 +1863,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1978,12 +1985,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cf562cb01e0204c827e751293d54bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.RotatingAroundAnimation
-  _entity:
+  <Entity>k__BackingField:
     <Source>k__BackingField: {fileID: 8229435548280762490}
-    <Duration>k__BackingField: 20
+    <Duration>k__BackingField: 2
     <Ease>k__BackingField: 1
+  <IsAutoStart>k__BackingField: 0
   _endAngleValue: {x: 0, y: 0, z: -360}
-  _isAutoStart: 1
 --- !u!1 &2194726062135841543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2237,6 +2244,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3167,6 +3175,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3528,6 +3537,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3649,12 +3659,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cf562cb01e0204c827e751293d54bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.RotatingAroundAnimation
-  _entity:
+  <Entity>k__BackingField:
     <Source>k__BackingField: {fileID: 1129674626945854423}
-    <Duration>k__BackingField: 40
+    <Duration>k__BackingField: 12
     <Ease>k__BackingField: 1
+  <IsAutoStart>k__BackingField: 1
   _endAngleValue: {x: 0, y: 0, z: -360}
-  _isAutoStart: 1
 --- !u!1 &4174365101151336305
 GameObject:
   m_ObjectHideFlags: 0
@@ -3758,6 +3768,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3894,6 +3905,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4592,6 +4604,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -5333,6 +5346,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -5455,12 +5469,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cf562cb01e0204c827e751293d54bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.RotatingAroundAnimation
-  _entity:
+  <Entity>k__BackingField:
     <Source>k__BackingField: {fileID: 8122301933988179780}
-    <Duration>k__BackingField: 30
+    <Duration>k__BackingField: 24
     <Ease>k__BackingField: 1
+  <IsAutoStart>k__BackingField: 1
   _endAngleValue: {x: 0, y: 0, z: -360}
-  _isAutoStart: 1
 --- !u!114 &383473666296390182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5473,13 +5487,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 626e96b019042a5449e993f7cf077282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.ScaleDownUpAnimation
-  _entity:
+  <Entity>k__BackingField:
     <Source>k__BackingField: {fileID: 8122301933988179780}
-    <Duration>k__BackingField: 10
+    <Duration>k__BackingField: 12
     <Ease>k__BackingField: 1
+  <IsAutoStart>k__BackingField: 1
   _upScale: {x: 1, y: 1, z: 1}
   _downScale: {x: 0.7, y: 0.7, z: 0.7}
-  _isAutoStart: 1
 --- !u!1 &5982376789350360835
 GameObject:
   m_ObjectHideFlags: 0
@@ -6065,6 +6079,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -6276,6 +6291,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -6787,6 +6803,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -7308,6 +7325,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -7744,6 +7762,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -8127,6 +8146,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

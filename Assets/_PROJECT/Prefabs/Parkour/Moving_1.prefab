@@ -46,12 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48edbe7f0560d84c9a6649cc2779b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.MovingToTargetAnimation
-  _entity:
+  <Entity>k__BackingField:
     <Source>k__BackingField: {fileID: 792436125550757629}
-    <Duration>k__BackingField: 2
+    <Duration>k__BackingField: 3
     <Ease>k__BackingField: 1
+  <IsAutoStart>k__BackingField: 1
   _target: {fileID: 5690849435155895864}
-  _isAutoStart: 1
 --- !u!1 &2993043055805311843
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 2227500604226776314}
   - component: {fileID: 6227988891591428727}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
