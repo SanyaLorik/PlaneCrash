@@ -1050,8 +1050,8 @@ RectTransform:
   m_Children:
   - {fileID: 3595845523346390530}
   - {fileID: 7825510795594709909}
-  - {fileID: 4367630259119740011}
   - {fileID: 7831926024272549470}
+  - {fileID: 4367630259119740011}
   - {fileID: 2561059655720427120}
   - {fileID: 6429292514328517441}
   m_Father: {fileID: 0}
@@ -5293,9 +5293,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
