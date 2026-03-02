@@ -16,9 +16,9 @@ public class PlayerAnimationManager : MonoBehaviour {
     
     private void OnEnable() {
         _stateManager.ChangeState += StateManagerOnChangeState;
-        _playerMovement.OnJumpPressed += FirstJumpAnimation;
-        _playerMovement.OnDoubleJumpPressed += SecondJumpAnimation;
-        _playerMovement.OnRunningStateChanged += PlayerMovementOnRunningStateChanged;
+        _playerMovement.JumpPressed += FirstJumpAnimation;
+        _playerMovement.DoubleJumpPressed += SecondJumpAnimation;
+        _playerMovement.RunningStateChanged += PlayerMovementOnRunningStateChanged;
         
     }
 
@@ -52,9 +52,9 @@ public class PlayerAnimationManager : MonoBehaviour {
     
     private void OnDisable() {
         _stateManager.ChangeState -= StateManagerOnChangeState;
-        _playerMovement.OnJumpPressed -= FirstJumpAnimation;
-        _playerMovement.OnDoubleJumpPressed -= SecondJumpAnimation;
-        _playerMovement.OnRunningStateChanged -= PlayerMovementOnRunningStateChanged;
+        _playerMovement.JumpPressed -= FirstJumpAnimation;
+        _playerMovement.DoubleJumpPressed -= SecondJumpAnimation;
+        _playerMovement.RunningStateChanged -= PlayerMovementOnRunningStateChanged;
     }
     
 }

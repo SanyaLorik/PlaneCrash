@@ -32,9 +32,9 @@ public class PlayerMovement : FlightObject
     public float PlayerSpeed => _config.SpeedForce;
     public float JumpHeight => _config.JumpHeight;
     public event Action SetBoost;
-    public event Action OnJumpPressed;
-    public event Action OnDoubleJumpPressed;
-    public event Action<bool> OnRunningStateChanged;
+    public event Action JumpPressed;
+    public event Action DoubleJumpPressed;
+    public event Action<bool> RunningStateChanged;
     public event Action Floored;
     
     public bool IsRunning { get; private set; }
@@ -182,14 +182,14 @@ public class PlayerMovement : FlightObject
         if (_jumpsUsed == 0) {
             _verticalVelocity = _config.JumpForce;
             _jumpParticlesController.Play();
-            OnJumpPressed?.Invoke();
-            Debug.Log("OnJumpPressed?.Invoke();");
+            JumpPressed?.Invoke();
+            Debug.Log("JumpPressed?.Invoke();");
             _jumpsUsed = 1;
         }
         else if (_jumpsUsed == 1) {
             _verticalVelocity = _config.SecondJumpForce;
-            OnDoubleJumpPressed?.Invoke();
-            Debug.Log("OnDoubleJumpPressed?.Invoke();");
+            DoubleJumpPressed?.Invoke();
+            Debug.Log("DoubleJumpPressed?.Invoke();");
             _jumpParticlesController.Play();
             _jumpsUsed = 2;
         }
@@ -234,7 +234,7 @@ public class PlayerMovement : FlightObject
         if (hasInput != IsRunning)
         {
             IsRunning = hasInput;
-            OnRunningStateChanged?.Invoke(IsRunning);
+            RunningStateChanged?.Invoke(IsRunning);
         }
 
         // ГРАВИТАЦИЯ

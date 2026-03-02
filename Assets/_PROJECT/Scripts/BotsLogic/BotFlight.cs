@@ -63,6 +63,7 @@ public class BotFlight : FlightObject, IBotBehaviour {
     
     
     public void Exit() {
+        EndFlight?.Invoke();
         _collider.enabled = false;
         TpToSpawn();
         _tpParticle.Play();
@@ -135,7 +136,6 @@ public class BotFlight : FlightObject, IBotBehaviour {
     private async UniTask BotIsFalledAsync(CancellationToken token) {
         RotateLocalXAsync(-80, token).Forget();
         await UniTask.Delay(2000, cancellationToken: token);
-        EndFlight?.Invoke();
     } 
 
 

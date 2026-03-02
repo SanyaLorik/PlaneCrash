@@ -20,8 +20,8 @@ public class DualLegParticles : MonoBehaviour {
     private bool _allowToPlay = true;
     
     private void OnEnable() {
-        _playerMovement.OnJumpPressed += PlayerMovementOnOnJumpPressed;
-        _playerMovement.OnDoubleJumpPressed += PlayerMovementOnOnJumpPressed;
+        _playerMovement.JumpPressed += PlayerMovementOnOnJumpPressed;
+        _playerMovement.DoubleJumpPressed += PlayerMovementOnOnJumpPressed;
         _playerMovement.Floored += PlayerMovementOnFloored;
     }
 
