@@ -238,6 +238,14 @@ public class SoundManager : MonoBehaviour {
         // BANK
         _bank.BankNewMoneyPlus -= OnMoneyPlus;
         _bank.BankNewMoneyMinus -= BuyOrUnlock;
+        // UI
+        ButtonExtension.Click -= OnUiButtonClick;
+        // Settings
+        _settings.MusicValueChanged -= SettingsOnMusicValueChanged;
+        _settings.EffectsValueChanged -= SettingsOnEffectsValueChanged;
+        
+        _cancellationTokenSource?.Cancel();
+        _cancellationTokenSource?.Dispose();
     }
-
+    
 }
