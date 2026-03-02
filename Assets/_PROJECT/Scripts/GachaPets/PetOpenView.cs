@@ -51,7 +51,7 @@ public class PetOpenView : MonoBehaviour {
 
 
     private void Start() {
-        _openButton.onClick.AddListener(OpenAnimation);
+        _openButton.AddListenerWithSound(OpenAnimation);
         _canvas.ActiveSelf();
         _yBottomScreen = _fillAmounthMover.GetYBottomScreen(_container, _pointerToHide);
         _yInScreen = _container.anchoredPosition.y;

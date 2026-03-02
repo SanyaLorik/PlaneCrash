@@ -19,6 +19,7 @@ public class HelpInstaller: MonoInstaller {
         Container.Bind<RectTransformHelper>().AsSingle();
         
         
+        Container.Bind<SettingsManager>().FromComponentInHierarchy().AsSingle();
     }
 
     private void BindMoneyVisualLogic() {

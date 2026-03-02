@@ -6,6 +6,8 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using SanyaBeerExtension;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 using Zenject;
 
 public class SoundManager : MonoBehaviour {
@@ -20,6 +22,10 @@ public class SoundManager : MonoBehaviour {
     [Header("Background Music")]
     [SerializeField] private AudioSource _walkMusicSource;
     [SerializeField] private AudioSource _flyMusicSource;
+    [Header("Mixer")]
+    [SerializeField] private AudioMixer _audioMixer;
+    [SerializeField] private AudioMixerGroup _musicMixerGroup;
+    [SerializeField] private AudioMixerGroup _soundMixerGroup;
     
     
     private Dictionary<SoundType, SoundConfig> _soundConfigDict = new ();
@@ -28,6 +34,7 @@ public class SoundManager : MonoBehaviour {
     [Inject] private PlayerStateManager _stateManager;
     [Inject] private PlayerMovement _playerMovement;
     [Inject] private PlayerBank _bank;
+    [Inject] private SettingsManager _settings;
     
     
     private void Awake() {
@@ -61,6 +68,26 @@ public class SoundManager : MonoBehaviour {
         // BANK
         _bank.BankNewMoneyPlus += OnMoneyPlus;
         _bank.BankNewMoneyMinus += BuyOrUnlock;
+        // UI
+        ButtonExtension.Click += OnUiButtonClick;
+        // Settings
+        _settings.MusicValueChanged += SettingsOnMusicValueChanged;
+        _settings.EffectsValueChanged += SettingsOnEffectsValueChanged;
+    }
+
+    private void SettingsOnMusicValueChanged(float value) {
+        float db = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
+        _audioMixer.SetFloat("MusicVolume", db);
+    }
+
+    private void SettingsOnEffectsValueChanged(float value) {
+        float db = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
+        _audioMixer.SetFloat("EffectsVolume", db);
+    }
+
+    private void OnUiButtonClick() {
+        PlaySoundByType(SoundType.UIButton);
+
     }
 
     private void OnMoneyPlus(long _) {
@@ -76,19 +103,7 @@ public class SoundManager : MonoBehaviour {
     }
 
 
-    private void OnDisable() {
-        // STATE CHANGES
-        _stateManager.ChangeState -= StateManagerOnChangeState;
-        // PLAYER MOVE
-        _playerMovement.JumpPressed -= PlayerMovementOnJumpPressed;
-        _playerMovement.DoubleJumpPressed -= PlayerMovementOnJumpPressed;
-        _playerMovement.RunningStateChanged -= PlayerMovementOnRunningStateChanged;
-        _playerMovement.Floored -= PlayerMovementOnFloored;
-        _playerMovement.SetBoost -= PlayerMovementOnSetBoost;
-        // BANK
-        _bank.BankNewMoneyPlus -= OnMoneyPlus;
-        _bank.BankNewMoneyMinus -= BuyOrUnlock;
-    }
+
 
     
     private void PlayerMovementOnFloored() {
@@ -127,7 +142,6 @@ public class SoundManager : MonoBehaviour {
         }
 
         AudioClip clip = config.AudioClips.GetRandomElement();
-        Debug.Log("Получен clip " + clip);
         AudioSource source = GetFreeSource();
         
         source.clip = clip;
@@ -168,7 +182,6 @@ public class SoundManager : MonoBehaviour {
         }
         
     }
-    
 
 
     private void PlayMusic(SoundConfig config) 
@@ -209,6 +222,22 @@ public class SoundManager : MonoBehaviour {
 
         // Плавное появление нового трека
         targetSource.DOFade(config.Volume, _fadeTime);
+    }
+    
+    
+    
+    private void OnDisable() {
+        // STATE CHANGES
+        _stateManager.ChangeState -= StateManagerOnChangeState;
+        // PLAYER MOVE
+        _playerMovement.JumpPressed -= PlayerMovementOnJumpPressed;
+        _playerMovement.DoubleJumpPressed -= PlayerMovementOnJumpPressed;
+        _playerMovement.RunningStateChanged -= PlayerMovementOnRunningStateChanged;
+        _playerMovement.Floored -= PlayerMovementOnFloored;
+        _playerMovement.SetBoost -= PlayerMovementOnSetBoost;
+        // BANK
+        _bank.BankNewMoneyPlus -= OnMoneyPlus;
+        _bank.BankNewMoneyMinus -= BuyOrUnlock;
     }
 
 }

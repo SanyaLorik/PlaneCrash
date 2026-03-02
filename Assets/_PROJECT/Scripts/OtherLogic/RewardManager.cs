@@ -54,12 +54,11 @@ public class RewardManager : MonoBehaviour {
         _playerStateManager.ChangeState += OnStateChange;
     }
 
-  
 
     private void Start() {
         _canvas.ActiveSelf();
-        _backButton.onClick.AddListener(() => Reward(false));
-        _backButton2x.onClick.AddListener(Reward2x);
+        _backButton.AddListenerWithSound(() => Reward(false));
+        _backButton2x.AddListenerWithSound(Reward2x);
         _yInScreenPosition = _container.anchoredPosition.y;
         _yOutScreenPosition = _rtHelper.GetYBottomScreen(_container, _outScreenCavasPoint);
         _container.anchoredPosition = new Vector2(_container.anchoredPosition.x, _yOutScreenPosition);

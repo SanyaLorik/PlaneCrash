@@ -11,18 +11,29 @@ public class CameraOrbitalController : MonoBehaviour {
     [SerializeField] private Transform _flightPoint;
     
     [SerializeField] private CinemachineOrbitalFollow _orbitalFollow;
+    
+    [SerializeField] private float _maxZoom;
+    [SerializeField] private float _minZoom;
+    [Range(0,1), SerializeField] private float _zoomSpeed;
+    
     private Mouse _mouse;
     private bool _isOrbiting;
 
-    private PlayerStateManager _playerStateManager;
 
     private bool _allowRotation = true;
     
+    [Inject] private PlayerStateManager _playerStateManager;
+    [Inject] private SettingsManager _settings;
     
-    [Inject]
-    private void Init(PlayerStateManager playerStateManager) {
-        _playerStateManager = playerStateManager;
+    
+    private void OnEnable() {
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
+        _settings.CameraValueChanged += SettingsOnCameraValueChanged;
+    }
+
+    private void SettingsOnCameraValueChanged(float percent) {
+        float zoomValue = Mathf.Lerp(_minZoom, _maxZoom, percent);
+        ChangeZoomByPercent(zoomValue);
     }
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
@@ -123,20 +134,20 @@ public class CameraOrbitalController : MonoBehaviour {
        
     }
 
-    [SerializeField] private float _maxZoom;
-    [SerializeField] private float _minZoom;
-    [Range(0,1), SerializeField] private float _zoomSpeed;
+
     private void HandleZoom() {
-        // Читаем колесико мыши
         float scroll = _mouse.scroll.ReadValue().y * _zoomSpeed; // Масштабируем
-        
-        if (Mathf.Abs(scroll) > 0.001f)
-        {
-            _orbitalFollow.RadialAxis.Value = Mathf.Clamp(
-                _orbitalFollow.RadialAxis.Value - scroll,
-                _minZoom, // минимальный зум
-                _maxZoom    // максимальный зум
-            );
+        float zoomValue = _orbitalFollow.RadialAxis.Value - scroll;
+        if (Mathf.Abs(scroll) > 0.001f) {
+            ChangeZoomByPercent(zoomValue);
         }
+    }
+
+    private void ChangeZoomByPercent(float zoomValue) {
+        _orbitalFollow.RadialAxis.Value = Mathf.Clamp(
+            zoomValue,
+            _minZoom, 
+            _maxZoom
+        );
     }
 }
