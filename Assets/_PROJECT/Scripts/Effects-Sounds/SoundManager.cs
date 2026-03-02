@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -7,7 +6,6 @@ using DG.Tweening;
 using SanyaBeerExtension;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 using Zenject;
 
 public class SoundManager : MonoBehaviour {
@@ -35,6 +33,7 @@ public class SoundManager : MonoBehaviour {
     [Inject] private PlayerMovement _playerMovement;
     [Inject] private PlayerBank _bank;
     [Inject] private SettingsManager _settings;
+    [Inject] private PlayerSkinWear _playerSkinWear;
     
     
     private void Awake() {
@@ -65,9 +64,10 @@ public class SoundManager : MonoBehaviour {
         _playerMovement.RunningStateChanged += PlayerMovementOnRunningStateChanged;
         _playerMovement.Floored += PlayerMovementOnFloored;
         _playerMovement.SetBoost += PlayerMovementOnSetBoost;
-        // BANK
+        // BANK / WEAR
         _bank.BankNewMoneyPlus += OnMoneyPlus;
         _bank.BankNewMoneyMinus += BuyOrUnlock;
+        _playerSkinWear.NewSkinWear += () => BuyOrUnlock(0);
         // UI
         ButtonExtension.Click += OnUiButtonClick;
         // Settings

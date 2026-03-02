@@ -27,14 +27,12 @@ public class PlayerAnimationManager : MonoBehaviour {
     }
 
     private void FirstJumpAnimation() {
-        Debug.Log("FirstJumpAnimation");
         _animator.SetTrigger(Jump);
     }
     
     
     private void SecondJumpAnimation() {
         if (_stateManager.CurrentState != PlayerState.Walking) return;
-        Debug.Log("SecondJumpAnimation");
         _animator.SetTrigger(DoubleJump);
     }
 

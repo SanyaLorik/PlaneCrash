@@ -722,7 +722,8 @@ MonoBehaviour:
     Percentage: {fileID: 7405616469390380543}
   _countToShowReward: 3
   _countTextVisual: {fileID: 4230094583807584953}
-  _rewardProgress: {fileID: 4926305285400507042}
+  _rewardProgress: {fileID: 0}
+  _rewardProgressParent: {fileID: 0}
 --- !u!114 &7405616469390380543 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3723575651707854321, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}

@@ -16,6 +16,7 @@ public class RectTransformHelper {
     }
     
     public void SetPointer(RectTransform pointer, float percent, float xEnd, float offset = 0) {
+        percent = Mathf.Clamp01(percent);
         Vector2 newPointerPos = new Vector2(xEnd * percent + offset, pointer.anchoredPosition.y);
         pointer.anchoredPosition = newPointerPos;
     }

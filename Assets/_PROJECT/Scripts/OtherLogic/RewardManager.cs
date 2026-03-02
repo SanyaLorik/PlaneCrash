@@ -112,10 +112,10 @@ public class RewardManager : MonoBehaviour {
 
     private void Reward(bool doubleReward) {
         int multiplier = doubleReward ? 2 : 1;
-        _playerBank.AddMoney(_reward * multiplier);
         if (!_isCruisered) {
-            _playerBank.Buy(_zoneManager.BetAmount);
+            _playerBank.GetSilentBetFallMoney(_zoneManager.BetAmount);
         }
+        _playerBank.AddMoney(_reward * multiplier);
         
         
         _playerMovement.TpPlayerInSpawn();

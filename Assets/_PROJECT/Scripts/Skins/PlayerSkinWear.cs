@@ -7,7 +7,7 @@ public class PlayerSkinWear : MonoBehaviour {
     [field: SerializeField] public SkinItemConfig DefaultSkinItemConfig;
     [SerializeField] private Transform _playerWearSkinParent;
     [SerializeField] private Animator _animator;
-    [SerializeField] private SkinItemView[] _skinItemViews;
+    [SerializeField] private SkinItemViewBase[] _skinItemViews;
     [SerializeField] private GameObject _currentSkin;
    
     

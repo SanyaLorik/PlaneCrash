@@ -54,6 +54,11 @@ public class PlayerBank : MonoBehaviour {
         if (!CanBuy(amount)) return;
         ChangeMoney((long)-amount);
     }
+    
+    
+    public void GetSilentBetFallMoney(double amount) {
+        PlayerCapital -= (long)amount;
+    }
 
 
     public void AddMoney(double amount) {

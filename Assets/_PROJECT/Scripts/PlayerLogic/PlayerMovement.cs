@@ -183,13 +183,11 @@ public class PlayerMovement : FlightObject
             _verticalVelocity = _config.JumpForce;
             _jumpParticlesController.Play();
             JumpPressed?.Invoke();
-            Debug.Log("JumpPressed?.Invoke();");
             _jumpsUsed = 1;
         }
         else if (_jumpsUsed == 1) {
             _verticalVelocity = _config.SecondJumpForce;
             DoubleJumpPressed?.Invoke();
-            Debug.Log("DoubleJumpPressed?.Invoke();");
             _jumpParticlesController.Play();
             _jumpsUsed = 2;
         }

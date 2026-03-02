@@ -574,7 +574,8 @@ MonoBehaviour:
     Percentage: {fileID: 974337249448842823}
   _timeToWaitSec: 10
   _timeToWaitText: {fileID: 8794060530709475001}
-  _clock: {fileID: 0}
+  _clockRectTransform: {fileID: 0}
+  _parentRectTransform: {fileID: 0}
 --- !u!114 &6161519274859967726 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7758395808831209304, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}

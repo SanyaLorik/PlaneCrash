@@ -27,8 +27,7 @@ public class SettingsManager : MonoBehaviour {
         _musicSlider.onValueChanged.AddListener((value) => MusicValueChanged?.Invoke(value));
         _effectsSlider.onValueChanged.AddListener((value) => EffectsValueChanged?.Invoke(value));
         _cameraSlider.onValueChanged.AddListener((value) => CameraValueChanged?.Invoke(value));
-        
-        
+ 
     }
 
     private void OpenSettings() {
