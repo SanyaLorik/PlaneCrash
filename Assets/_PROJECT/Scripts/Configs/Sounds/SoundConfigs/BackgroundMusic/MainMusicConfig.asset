@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c82936931e992644aaf1500c865c36a7, type: 3}
-  m_Name: UnlockSoundConfig
+  m_Name: MainMusicConfig
   m_EditorClassIdentifier: Assembly-CSharp::SoundConfig
-  <SoundType>k__BackingField: 5
+  <SoundType>k__BackingField: 7
   <AudioClips>k__BackingField:
-  - {fileID: 8300000, guid: 49bc6bc2dd1769a488a2bd8c42a4c718, type: 3}
-  <Volume>k__BackingField: 0.436
+  - {fileID: 8300000, guid: ac1e2830573d5594e8c4a3b7f5cd8a7e, type: 3}
+  <Volume>k__BackingField: 0.2
   <PitchDiapasone>k__BackingField:
-    <From>k__BackingField: 0.9
-    <To>k__BackingField: 1.1
-  <MixerGroup>k__BackingField: {fileID: 750195993760700612, guid: 4dbd4f10ca94e134a8a090e3394d5f41, type: 2}
-  <Loop>k__BackingField: 0
+    <From>k__BackingField: 0
+    <To>k__BackingField: 0
+  <MixerGroup>k__BackingField: {fileID: 223581915536063257, guid: 4dbd4f10ca94e134a8a090e3394d5f41, type: 2}
+  <Loop>k__BackingField: 1

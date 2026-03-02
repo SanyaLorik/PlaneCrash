@@ -50,5 +50,6 @@ public class PetStationViewAdv : PetStationViewBase {
         _countTextVisual.text = $"{_showedReward} / {_countToShowReward}";
         float percent = (float)_showedReward / _countToShowReward;
         _fillAmounthMover.SetFillAmount(_rewardProgress, _rewardProgressParent,  percent);
+        _bank.Buy(0);
     }
 }

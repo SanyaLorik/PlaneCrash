@@ -14,8 +14,10 @@ public class PlayerBank : MonoBehaviour {
     public event Action<long> BankChanged;
     public event Action<long> BankNewMoneyPlus;
     public event Action<long> BankNewMoneyMinus;
-    public event Action<int> MoneyCollect;
+    public event Action<long> MoneyCollect;
 
+    [Inject] IGameSave<GameSavePC> _gameSave;
+    
     public long PlayerCapital {
         get => _gameSave.GetSave.Money;
         private set => _gameSave.GetSave.Money = value;
@@ -27,37 +29,30 @@ public class PlayerBank : MonoBehaviour {
 
     private void ChangeMoney(long newMoney, bool save = true) {
         PlayerCapital += newMoney;
+        _cube.SetMoneyAmount(PlayerCapital);
 
         if (PlayerCapital < 0)
             PlayerCapital = 0;
-
         if (PlayerRecord < PlayerCapital)
             PlayerRecord = PlayerCapital;
-
-        BankChanged?.Invoke(PlayerCapital);
-        
-        if (newMoney > 0)
-            BankNewMoneyPlus?.Invoke(newMoney);
-        else if (newMoney < 0)
-            BankNewMoneyMinus?.Invoke(Math.Abs(newMoney));
-
         if (save)
             _gameSave.Save();
+        
+        
+        BankChanged?.Invoke(PlayerCapital);
+
+        if (newMoney > 0) {
+            BankNewMoneyPlus?.Invoke(newMoney);
+        }
+        else {
+            BankNewMoneyMinus?.Invoke(Math.Abs(newMoney));
+        }
     }
+
     
-
-
-    [Inject] IGameSave<GameSavePC> _gameSave;
-    
-    private void Start() {
-        BankChanged += OnBankChanged;
-        OnBankChanged(PlayerCapital);
-    }
-
-    private void OnBankChanged(long amount) {
-        _gameSave.GetSave.Money = amount;
-        _cube.SetMoneyAmount(PlayerCapital);
-        _gameSave.Save();
+    public void Buy(double amount) {
+        if (!CanBuy(amount)) return;
+        ChangeMoney((long)-amount);
     }
 
 
@@ -73,22 +68,9 @@ public class PlayerBank : MonoBehaviour {
         ChangeMoney(amount, false);
     }
 
-    public void Buy(double amount) {
-        if (!CanBuy(amount)) return;
-        ChangeMoney((long)-amount);
-    }
-
 
     public bool CanBuy(double amount) =>
         PlayerCapital >= amount;
-    
-    public void GiveMeYourFuckingMoneyNigga(float amount) {
-        if (amount > PlayerCapital) {
-            Debug.LogWarning("Как ты сука поставил денег больше чем у тебя было");
-            PlayerCapital = 0;
-        }
-        PlayerCapital -= (long)amount;
-        BankChanged?.Invoke(PlayerCapital);
-        BankNewMoneyMinus?.Invoke((long)amount);
-    }
+
+
 }

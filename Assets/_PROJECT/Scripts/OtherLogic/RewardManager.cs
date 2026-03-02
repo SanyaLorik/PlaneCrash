@@ -115,7 +115,7 @@ public class RewardManager : MonoBehaviour {
         int multiplier = doubleReward ? 2 : 1;
         _playerBank.AddMoney(_reward * multiplier);
         if (!_isCruisered) {
-            _playerBank.GiveMeYourFuckingMoneyNigga(_zoneManager.BetAmount);
+            _playerBank.Buy(_zoneManager.BetAmount);
         }
         
         

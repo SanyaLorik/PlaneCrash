@@ -165,7 +165,7 @@ public class TasksManager : MonoBehaviour {
     }
 
 
-    private void UpdateMoneyCollect(int amount) {
+    private void UpdateMoneyCollect(long amount) {
         _playerMoneyCollect += amount;
         UpdateTaskProgress(TaskType.MoneyCollect, _playerMoneyCollect);
     }

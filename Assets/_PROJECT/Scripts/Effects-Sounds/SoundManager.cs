@@ -50,17 +50,25 @@ public class SoundManager : MonoBehaviour {
 
 
     private void OnEnable() {
+        // STATE CHANGES
         _stateManager.ChangeState += StateManagerOnChangeState;
+        // PLAYER MOVE
         _playerMovement.JumpPressed += PlayerMovementOnJumpPressed;
         _playerMovement.DoubleJumpPressed += PlayerMovementOnJumpPressed;
         _playerMovement.RunningStateChanged += PlayerMovementOnRunningStateChanged;
         _playerMovement.Floored += PlayerMovementOnFloored;
         _playerMovement.SetBoost += PlayerMovementOnSetBoost;
-        _bank.BankChanged += BankOnBankChanged;
+        // BANK
+        _bank.BankNewMoneyPlus += OnMoneyPlus;
+        _bank.BankNewMoneyMinus += BuyOrUnlock;
     }
 
-    private void BankOnBankChanged(long obj) {
-       PlaySoundByType(SoundType.Money);
+    private void OnMoneyPlus(long _) {
+        PlaySoundByType(SoundType.Money);
+    }
+    
+    private void BuyOrUnlock(long _) {
+        PlaySoundByType(SoundType.Unlock);
     }
 
     private void PlayerMovementOnSetBoost() {
@@ -69,17 +77,12 @@ public class SoundManager : MonoBehaviour {
 
 
     private void OnDisable() {
-        _stateManager.ChangeState -= StateManagerOnChangeState;
-        _playerMovement.JumpPressed -= PlayerMovementOnJumpPressed;
-        _playerMovement.DoubleJumpPressed -= PlayerMovementOnJumpPressed;
-        _playerMovement.RunningStateChanged -= PlayerMovementOnRunningStateChanged;
-        _playerMovement.Floored -= PlayerMovementOnFloored;
+        
     }
 
     
     private void PlayerMovementOnFloored() {
         // Можно звук приземления
-        _onAir = false;
         PlayerMovementOnRunningStateChanged(_playerMovement.IsRunning);
     }
 
@@ -94,7 +97,7 @@ public class SoundManager : MonoBehaviour {
 
     private async UniTask StepCycleAsync(CancellationToken token) {
         while (!token.IsCancellationRequested) {
-            if (_onAir) {
+            if (!_playerMovement.IsGrounded || _onAir) {
                 return;
             }
             PlaySoundByType(SoundType.Step);
@@ -105,7 +108,6 @@ public class SoundManager : MonoBehaviour {
     private bool _onAir;
     private void PlayerMovementOnJumpPressed() {
         PlaySoundByType(SoundType.Jump);
-        _onAir = true;
     }
 
     private void PlaySoundByType(SoundType type) {
@@ -141,7 +143,7 @@ public class SoundManager : MonoBehaviour {
     private void StateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.TrampolineJumping) return;
         
-        if (state == PlayerState.Walking && _stateManager.BeforeState != PlayerState.TrampolineJumping) {
+        if (state == PlayerState.Walking) {
             // Проигрывание MainBackground
             _onAir = false;
             PlayMusic(_soundConfigDict[SoundType.MainBackground]);

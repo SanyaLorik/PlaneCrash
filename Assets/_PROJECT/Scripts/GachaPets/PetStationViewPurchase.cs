@@ -37,7 +37,7 @@ public class PetStationViewPurchase : PetStationViewBase {
     protected override void AddPet() {
         Debug.Log("Buy pet");
         PetChance pet = GetRandomPet(_config);
-        _bank.GiveMeYourFuckingMoneyNigga(_config.Price);
+        _bank.Buy(_config.Price);
         _petsManager.AddPet(pet.PetItemConfig);
         _petOpenView.ShowOpenPetView(pet);
     }

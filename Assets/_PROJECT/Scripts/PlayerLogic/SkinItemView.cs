@@ -83,7 +83,7 @@ public class SkinItemView : MonoBehaviour {
         _saver.GetSave.AddNewSkin(SkinItemConfig.Id);
         _priceContainer.DisactiveSelf();
         WearNewSkin();
-        _playerBank.GiveMeYourFuckingMoneyNigga(SkinItemConfig.Price);
+        _playerBank.Buy(SkinItemConfig.Price);
     }
 
     private void WearNewSkin() {

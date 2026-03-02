@@ -71,8 +71,6 @@ public class MoneyCube : MonoBehaviour {
     
     
     public void SetMoneyAmount(float amount) {
-        
-        
         Vector3 newScale = NewScale(amount);
         
         transform.localScale = newScale;
@@ -114,9 +112,6 @@ public class MoneyCube : MonoBehaviour {
 
         _rend.materials = mats;
     }
-
-    
-    
     
 
     private void SetCubeHeighVisual() {

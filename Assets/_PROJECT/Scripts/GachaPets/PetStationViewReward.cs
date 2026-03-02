@@ -48,6 +48,7 @@ public class PetStationViewReward : PetStationViewBase {
         PetChance pet = GetRandomPet(_config);
         _petsManager.AddPet(pet.PetItemConfig);
         _petOpenView.ShowOpenPetView(pet);
+        _bank.Buy(0);
         
         StartNewWaitCycle();
     }

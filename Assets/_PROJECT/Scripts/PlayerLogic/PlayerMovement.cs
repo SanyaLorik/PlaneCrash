@@ -50,9 +50,9 @@ public class PlayerMovement : FlightObject
     // Для гравитации и прыжков
     private float _verticalVelocity;
     private int _jumpsUsed;
-    private bool _isGrounded;
+    public bool IsGrounded { get; private set; }
 
-    
+
     private void OnEnable() {
         _stateManager.ChangeState += ChangeSpaceRotation;
         _inputJumping.OnJumped += OnJump;
@@ -252,17 +252,17 @@ public class PlayerMovement : FlightObject
         _controller.Move(horizontalMove + verticalMove + _externalMotion);
         _externalMotion = Vector3.zero;
         // Проверяем grounded ПОСЛЕ Move
-        _isGrounded = _controller.isGrounded || _isOnLift;
+        IsGrounded = _controller.isGrounded || _isOnLift;
 
         // Прилипание к земле (анти-дребезг)
-        if (_isGrounded)
+        if (IsGrounded)
         {
             if (_verticalVelocity < 0f)
                 _verticalVelocity = -2f;
         }
 
         // Настоящее приземление
-        bool justLanded = _isGrounded && !_wasGroundedLastFrame && _verticalVelocity < -0.1f;
+        bool justLanded = IsGrounded && !_wasGroundedLastFrame && _verticalVelocity < -0.1f;
 
         if (justLanded)
         {
@@ -271,7 +271,7 @@ public class PlayerMovement : FlightObject
             _stateManager.ChangePlayerState(PlayerState.Walking);
         }
 
-        _wasGroundedLastFrame = _isGrounded;
+        _wasGroundedLastFrame = IsGrounded;
 
         if (hasInput)
         {
