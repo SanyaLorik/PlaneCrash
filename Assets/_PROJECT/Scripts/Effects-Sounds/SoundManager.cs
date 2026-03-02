@@ -77,7 +77,17 @@ public class SoundManager : MonoBehaviour {
 
 
     private void OnDisable() {
-        
+        // STATE CHANGES
+        _stateManager.ChangeState -= StateManagerOnChangeState;
+        // PLAYER MOVE
+        _playerMovement.JumpPressed -= PlayerMovementOnJumpPressed;
+        _playerMovement.DoubleJumpPressed -= PlayerMovementOnJumpPressed;
+        _playerMovement.RunningStateChanged -= PlayerMovementOnRunningStateChanged;
+        _playerMovement.Floored -= PlayerMovementOnFloored;
+        _playerMovement.SetBoost -= PlayerMovementOnSetBoost;
+        // BANK
+        _bank.BankNewMoneyPlus -= OnMoneyPlus;
+        _bank.BankNewMoneyMinus -= BuyOrUnlock;
     }
 
     
@@ -201,11 +211,4 @@ public class SoundManager : MonoBehaviour {
         targetSource.DOFade(config.Volume, _fadeTime);
     }
 
-
-
-   
-   
-   
-   
-   
 }
