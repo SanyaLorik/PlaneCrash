@@ -88,9 +88,7 @@ public class LineToObjects : MonoBehaviour {
     
     public void TutorialModeDisable() {
         _tutorialStarted = false;
-        if (!_tasksManager.NeedToGetReward()) {
-            HideArrow();
-        }
+        HideArrow();
     }
     
     public void SetTargetTutorial(Vector3 newTarget) {

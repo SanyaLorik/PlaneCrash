@@ -19,17 +19,17 @@ public class BotAnimator : MonoBehaviour {
         _botWander =  botWander;
         _botWander.OnJump += OnJump;
         _botWander.StartWandering += OnStartWandering;
-        _botFlight.StartFlight += BotFlightOnOnStartFlight;
-        _botFlight.EndFlight += BotFlightOnEndFlight;
+        _botFlight.StartFlight += BotFlightOnStartFlight;
+        _botFlight.LastBoostGet += BotFlightOnLastBoostGet;
         
     }
 
     
-    private void BotFlightOnOnStartFlight() {
+    private void BotFlightOnStartFlight() {
         _animator.SetTrigger(Fly);
     }
 
-    private void BotFlightOnEndFlight() {
+    private void BotFlightOnLastBoostGet() {
         OnStartWandering(false);
     }
 

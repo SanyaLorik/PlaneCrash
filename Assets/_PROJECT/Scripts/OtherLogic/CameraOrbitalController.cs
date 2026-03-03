@@ -31,9 +31,13 @@ public class CameraOrbitalController : MonoBehaviour {
         _settings.CameraValueChanged += SettingsOnCameraValueChanged;
     }
 
+    private void Start() {
+        SettingsOnCameraValueChanged(_settings.CameraZoomValue);
+    }
+
     private void SettingsOnCameraValueChanged(float percent) {
         float zoomValue = Mathf.Lerp(_minZoom, _maxZoom, percent);
-        ChangeZoomByPercent(zoomValue);
+        ChangeZoom(zoomValue);
     }
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
@@ -130,8 +134,6 @@ public class CameraOrbitalController : MonoBehaviour {
             _orbitalFollow.VerticalAxis.Range.x,
             _orbitalFollow.VerticalAxis.Range.y
         );
-        
-       
     }
 
 
@@ -139,11 +141,11 @@ public class CameraOrbitalController : MonoBehaviour {
         float scroll = _mouse.scroll.ReadValue().y * _zoomSpeed; // Масштабируем
         float zoomValue = _orbitalFollow.RadialAxis.Value - scroll;
         if (Mathf.Abs(scroll) > 0.001f) {
-            ChangeZoomByPercent(zoomValue);
+            ChangeZoom(zoomValue);
         }
     }
 
-    private void ChangeZoomByPercent(float zoomValue) {
+    private void ChangeZoom(float zoomValue) {
         _orbitalFollow.RadialAxis.Value = Mathf.Clamp(
             zoomValue,
             _minZoom, 

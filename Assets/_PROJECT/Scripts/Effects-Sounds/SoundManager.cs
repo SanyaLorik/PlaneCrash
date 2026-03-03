@@ -75,6 +75,11 @@ public class SoundManager : MonoBehaviour {
         _settings.EffectsValueChanged += SettingsOnEffectsValueChanged;
     }
 
+    private void Start() {
+        SettingsOnMusicValueChanged(_settings.MusicValue);
+        SettingsOnEffectsValueChanged(_settings.EffectsValue);
+    }
+
     private void SettingsOnMusicValueChanged(float value) {
         float db = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
         _audioMixer.SetFloat("MusicVolume", db);

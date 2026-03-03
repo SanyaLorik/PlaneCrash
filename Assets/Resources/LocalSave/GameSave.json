@@ -1,34 +1,41 @@
 {
-    "Money": 13957,
-    "RecordMoney": 17001023,
+    "Money": 8101,
+    "RecordMoney": 1000000,
     "RecordDistance": 4000,
     "Upgrades": [
         {
             "Id": 0,
-            "Level": 2
+            "Level": 1
+        },
+        {
+            "Id": 3,
+            "Level": 3
         }
     ],
     "Pets": [
         {
             "Id": 1,
-            "Count": 4
+            "Count": 1
         },
         {
             "Id": 2,
-            "Count": 6
+            "Count": 1
         },
         {
             "Id": 0,
-            "Count": 3
+            "Count": 1
         }
     ],
     "Skins": [
         {
             "Id": "kissie_skin"
+        },
+        {
+            "Id": "freddy_skin"
         }
     ],
     "SkinWearId": "kissie_skin",
-    "TutorialPassed": true,
-    "CountBatutJumps": 628,
-    "CountBaskets": 37
+    "TutorialPassed": false,
+    "CountBatutJumps": 640,
+    "CountBaskets": 39
 }

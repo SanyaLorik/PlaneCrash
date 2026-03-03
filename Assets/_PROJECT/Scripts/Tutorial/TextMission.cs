@@ -5,7 +5,7 @@ using Zenject;
 
 [Serializable]
 public class TextMission : IMission {
-    [SerializeField] private int _phraseId;
+    [SerializeField] private string _phraseId;
     [SerializeField] private float _duration;
     
     [Inject] private Narrator _narrator; 

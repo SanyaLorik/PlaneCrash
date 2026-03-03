@@ -36,6 +36,7 @@ public class BankOpertion : MonoBehaviour {
     }
     
     private void BankMinus(long money) {
+        if(money == 0) return;
         NewMoneyView newMoneyView = GetBankOperationViewInPool();
         newMoneyView.transform.position = GetPointAroundPlayerSpiral();;
         newMoneyView.MinusMoney(_formatter.ValuteFormatter(money));

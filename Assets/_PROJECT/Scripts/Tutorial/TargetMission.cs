@@ -2,14 +2,16 @@ using System;
 using Cysharp.Threading.Tasks;
 using NaughtyAttributes;
 using SanyaBeerExtension;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
 [Serializable]
 public class TargetMission : IMission {
-    [SerializeField] private int _phraseId;
-    [SerializeField] private Transform _target;
+    [SerializeField] private string _phraseId;
+    [SerializeField] private Transform[] _targets;
     [SerializeField] private float _delta = 1f;
+    [SerializeField] private float _secToStay;
     
     [SerializeField] private bool _showArrow;
     
@@ -30,15 +32,32 @@ public class TargetMission : IMission {
         // Можно допустим сказать временный текст
         TimerText(_localization.GetPhrase(_phraseId)).Forget();
 
-        if (_showArrow) {
-            _lineToObjects.SetTargetTutorial(_target.position);
+
+        foreach (var target in _targets) {
+            if (_showArrow) {
+                _lineToObjects.SetTargetTutorial(target.position);
+            }
+
+            bool isEnd = false;
+            while (!isEnd) {
+                await UniTask.WaitWhile(
+                    () => Vector3.Distance(_player.transform.position, target.position) > _delta,
+                    cancellationToken: _player.GetCancellationTokenOnDestroy()
+                );
+
+                float elapsedTime = 0f;
+                while (Vector3.Distance(_player.transform.position, target.position) <= _delta && !isEnd) {
+                    // Отсчет времени
+                    elapsedTime += Time.deltaTime;
+                    if (elapsedTime >= _secToStay) {
+                        isEnd = true;
+                    }
+                    await UniTask.Yield();
+                }
+            }
         }
         
         
-        await UniTask.WaitWhile(
-            () => Vector3.Distance(_player.transform.position, _target.position) > _delta,
-            cancellationToken: _player.GetCancellationTokenOnDestroy()
-        );
         
         if (_showArrow) {
             _lineToObjects.HideArrow();

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2685003040153228485}
   - component: {fileID: 1231544818729557821}
-  - component: {fileID: 7514109470753656945}
   - component: {fileID: 2597660317533207808}
   - component: {fileID: 7706505091272424635}
   - component: {fileID: 8662448720901085388}
@@ -55,53 +54,6 @@ MonoBehaviour:
   _upgradePS: {fileID: 2838751295009174313}
   _teleportPS: {fileID: 2838751295009174313}
   _boostPS: {fileID: 7106943519621781437}
---- !u!114 &7514109470753656945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 478297162089491511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb4cb3162d531de449f5776e9f41f735, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Speedometer
-  _image: {fileID: 0}
-  _speedVisualCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.3
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.59290826
-      value: 0.5719951
-      inSlope: 1.0447977
-      outSlope: 1.0447977
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _smoothFactor: 0.8
 --- !u!95 &2597660317533207808
 Animator:
   serializedVersion: 7
@@ -136,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e037a317982beff48b06067cbd38201b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSkinWear
-  DefaultSkinItemConfig: {fileID: 11400000, guid: 17bba114849ec764ba28eacc7e270453, type: 2}
+  DefaultSkinItemConfig: {fileID: 11400000, guid: 7b27c1322e7813d489cf91570d574a36, type: 2}
   _playerWearSkinParent: {fileID: 2685003040153228485}
   _animator: {fileID: 2597660317533207808}
   _skinItemViews:
@@ -15386,7 +15338,7 @@ Transform:
   m_GameObject: {fileID: 6169472949778161487}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.52, z: 2.16}
+  m_LocalPosition: {x: 0, y: 0.32, z: 2.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -51,10 +51,6 @@ public class MusicBlock  : MonoBehaviour {
     private IEnumerator ChangeEmissionRoutine(float targetIntensity) {
         float start = _currentEmission;
         float t = 0f;
-
-
-        Debug.Log("targetIntensity = " + targetIntensity);
-        Debug.Log("start " + start);
         while (t < _durationToShade) {
             t += Time.deltaTime;
             float progress = t / _durationToShade;
@@ -64,7 +60,6 @@ public class MusicBlock  : MonoBehaviour {
 
             yield return null;
         }
-        Debug.Log("Intensity = " + targetIntensity);
 
         SetEmission(targetIntensity);
     }

@@ -30,7 +30,7 @@ public class BotStateManager : MonoBehaviour {
         _botWander = GetComponent<BotWander>();
         _botMonolog = GetComponent<BotMonolog>();
 
-        _botFlight.EndFlight += BotFlightOnEndFlight;
+        _botFlight.EndFlightAfterPlayerFall += BotFlightOnEndFlight;
         _currentBotBehaviour = _botWander;
         State = BotState.Wandering;
         Rb = GetComponent<Rigidbody>();
@@ -81,6 +81,6 @@ public class BotStateManager : MonoBehaviour {
 
 
     private void OnDisable() {
-        _botFlight.EndFlight -= BotFlightOnEndFlight;
+        _botFlight.EndFlightAfterPlayerFall -= BotFlightOnEndFlight;
     }
 }

@@ -406,6 +406,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Timer Coundown Text
       objectReference: {fileID: 0}
+    - target: {fileID: 4590229928936921902, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4598286411044091025, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -493,10 +497,40 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 4311766246019823011}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 167416182329536836, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 4498811110346982220, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1043654223892148454}
+      addedObject: {fileID: 2981729160398263881}
   m_SourcePrefab: {fileID: 100100000, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+--- !u!1 &20189358092142842 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4498811110346982220, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 4479189108845136822}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2981729160398263881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20189358092142842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 144cf12d0dbf8694380b2b07174830b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetStationViewReward
+  _customTrigger: {fileID: 6161519274859967726}
+  _config: {fileID: 11400000, guid: a73016fac212ae848bc2f961d7c05749, type: 2}
+  _views:
+  - Icon: {fileID: 2274968583354829372}
+    Percentage: {fileID: 1511502911425392037}
+  - Icon: {fileID: 346227125227903112}
+    Percentage: {fileID: 7892431327836497189}
+  - Icon: {fileID: 6556158601807415780}
+    Percentage: {fileID: 974337249448842823}
+  _timeToWaitSec: 100
+  _timeToWaitText: {fileID: 8794060530709475001}
+  _clockRectTransform: {fileID: 9175123303859703464}
+  _parentRectTransform: {fileID: 4311766246019823011}
 --- !u!114 &346227125227903112 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4244446382352700222, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
@@ -546,36 +580,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
---- !u!1 &4358234166796761842 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 167416182329536836, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
-  m_PrefabInstance: {fileID: 4479189108845136822}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1043654223892148454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4358234166796761842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 144cf12d0dbf8694380b2b07174830b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PetStationViewReward
-  _customTrigger: {fileID: 6161519274859967726}
-  _config: {fileID: 11400000, guid: a73016fac212ae848bc2f961d7c05749, type: 2}
-  _views:
-  - Icon: {fileID: 346227125227903112}
-    Percentage: {fileID: 7892431327836497189}
-  - Icon: {fileID: 2274968583354829372}
-    Percentage: {fileID: 1511502911425392037}
-  - Icon: {fileID: 6556158601807415780}
-    Percentage: {fileID: 974337249448842823}
-  _timeToWaitSec: 10
-  _timeToWaitText: {fileID: 8794060530709475001}
-  _clockRectTransform: {fileID: 0}
-  _parentRectTransform: {fileID: 0}
 --- !u!114 &6161519274859967726 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7758395808831209304, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}

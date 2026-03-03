@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Threading;
 using Architecture_M;
@@ -114,10 +115,12 @@ public class PetOpenView : MonoBehaviour {
     }
 
 
+    public event Action ClosePetOpen; 
     private IEnumerator WaitToHideRoutine() {
         yield return new WaitForSeconds(_showNewPetDuration);
         HideCanvasAnimation();
         _interstitialDelaying.EnableTimer();
+        ClosePetOpen?.Invoke();
         _inputActivity.Enable();
     } 
     

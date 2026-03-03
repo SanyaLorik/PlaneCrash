@@ -403,12 +403,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dfdaf35b5031d146a7db0f121b490f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BotFlightLogic
+  _transformForRotate: {fileID: 3276610258485397611}
   _countBoostEquilizeSpeed: 5
   _botSpeedCorrect: 14
-  _flightPosition: {fileID: 0}
-  _botModelForRotate: {fileID: 973615598179476012}
+  _flightPosition: {fileID: 3276610258485397611}
   _trueWayChance: 0.3
   _fallingTime: 10
+  _botAngleToFlight: -30
+  _botAngleToWalk: 0
   _rb: {fileID: 1774364267822763429}
   _collider: {fileID: 6369799290924180892}
   _tpParticle: {fileID: 7383476967317639432}

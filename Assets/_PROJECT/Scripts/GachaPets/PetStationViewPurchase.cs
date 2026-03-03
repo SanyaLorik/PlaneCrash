@@ -2,11 +2,11 @@ using TMPro;
 using UnityEngine;
 
 public class PetStationViewPurchase : PetStationViewBase {
-    [SerializeField] private TMP_Text _price;
+    [SerializeField] private TMP_Text _priceText;
 
 
     private void Awake() {
-        _price.text = _formatter.ValuteFormatter(_config.Price);
+        _priceText.text = _formatter.ValuteFormatter(_config.Price);
     }
 
     private void OnEnable() {

@@ -100,11 +100,6 @@ public class BotsMainManager : IInitializable, IDisposable {
     }
     
     
-    
-
-
-   
-    
     private void PlayerOnChangeState(PlayerState state){
         if (state == PlayerState.Flight) {
             SetFlightRandomBot();

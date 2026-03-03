@@ -10,7 +10,6 @@ public class TorpedoSpawn : MonoBehaviour {
     [Range(0f,1f),SerializeField] private float _chanseToSpawn;
 
     [SerializeField] private GameObject _rocketWarning;
-    [SerializeField] private GameObject _circlePrefab;
         
     
     
@@ -44,8 +43,7 @@ public class TorpedoSpawn : MonoBehaviour {
 
     private void StateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Cruisered || state == PlayerState.Grounded) {
-            if (_circleObject != null) {
-                _circleObject.DisactiveSelf();
+            if (_rocketWarnObject != null) {
                 _rocketWarnObject.DisactiveSelf();
             }
         }
@@ -96,31 +94,9 @@ public class TorpedoSpawn : MonoBehaviour {
     }
 
 
-    private GameObject _circleObject;
     private GameObject _rocketWarnObject;
     private void ShowWarning(Vector3 spawnPos) {
-        if (_circleObject != null) {
-            _circleObject.transform.position = spawnPos;
-            _rocketWarnObject.transform.position = spawnPos;
-            if (!_circleObject.activeSelf) {
-                _circleObject.ActiveSelf();
-                _rocketWarnObject.ActiveSelf();
-            }
-            return;
-        }
-
-        _circleObject = Instantiate(_circlePrefab, spawnPos, Quaternion.identity);
         _rocketWarnObject = Instantiate(_rocketWarning.gameObject, spawnPos, Quaternion.identity);
-        // Вращаем бесконечно вокруг Y
-        _circleObject.transform.DORotate(new Vector3(0, 360f, 0), 360f / _rotationSpeed, RotateMode.FastBeyond360)
-            .SetLoops(-1, LoopType.Restart)
-            .SetEase(Ease.Linear)
-            .SetLink(_circleObject);
-        Vector3 _initialScale = _circleObject.transform.localScale;
-        transform.DOScale(_initialScale * pulseScale, pulseDuration)
-            .SetLoops(-1, LoopType.Yoyo)
-            .SetEase(Ease.InOutSine)
-            .SetLink(_circleObject);
     }
     
     

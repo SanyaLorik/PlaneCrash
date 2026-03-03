@@ -12,9 +12,10 @@ public class BotFlight : FlightObject, IBotBehaviour {
     [SerializeField] private int _countBoostEquilizeSpeed;
     [SerializeField] private float _botSpeedCorrect;
     [SerializeField] private Transform _flightPosition;
-    [SerializeField] private Transform _botModelForRotate;
     [Range(0,1), SerializeField] private float _trueWayChance;
     [SerializeField] private float _fallingTime;
+    [SerializeField] private float _botAngleToFlight;
+    [SerializeField] private float _botAngleToWalk;
     
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Collider _collider;
@@ -27,7 +28,8 @@ public class BotFlight : FlightObject, IBotBehaviour {
     private Boost _randomBoost;
     private int _countGetBoosts;
     
-    public event Action EndFlight;
+    public event Action EndFlightAfterPlayerFall;
+    public event Action LastBoostGet;
     public event Action StartFlight;
     
     [Inject] private LevelBounds _levelBounds;
@@ -37,13 +39,16 @@ public class BotFlight : FlightObject, IBotBehaviour {
     
     
     public void GoToFall() {
-        // Логика падения
+        // ИГрок на спавне - падай
         _tokenSource = new CancellationTokenSource();
 
         BotFallAsync(_tokenSource.Token).Forget();
     }
 
-    
+    private void Start() {
+        _defaultModelRotation = _transformForRotate.localRotation;
+    }
+
     public void SetBooster(AnimationCurve curve, Vector3 nextBoost) {
         CurrentCurve = curve;
         ExpandedTime = 0f;
@@ -63,7 +68,6 @@ public class BotFlight : FlightObject, IBotBehaviour {
     
     
     public void Exit() {
-        EndFlight?.Invoke();
         _collider.enabled = false;
         TpToSpawn();
         _tpParticle.Play();
@@ -75,7 +79,7 @@ public class BotFlight : FlightObject, IBotBehaviour {
         _collider.enabled = true;
         _tokenSource = new CancellationTokenSource();
 
-        RotateLocalXAsync(25, _tokenSource.Token).Forget();
+        RotateLocalXAsync(_botAngleToFlight, _tokenSource.Token).Forget();
         TpNearPlayer();
         // Сбросить кол-во бустов надо
         ResetCountBoosts();
@@ -134,8 +138,9 @@ public class BotFlight : FlightObject, IBotBehaviour {
 
 
     private async UniTask BotIsFalledAsync(CancellationToken token) {
-        RotateLocalXAsync(-80, token).Forget();
+        ResetModelRotation();
         await UniTask.Delay(2000, cancellationToken: token);
+        EndFlightAfterPlayerFall?.Invoke();
     } 
 
 
@@ -167,28 +172,24 @@ public class BotFlight : FlightObject, IBotBehaviour {
     
     private async UniTask RotateLocalXAsync(float TargetPosAngleX, CancellationToken token) {
         if (token.IsCancellationRequested) { return; } // Исправить выглядит как гавно
-        transform.localRotation = Quaternion.Euler(Vector3.zero);
         float duration = 1f;
+        transform.localRotation = Quaternion.Euler(Vector3.zero);
     
-        Vector3 TargetPosLocalEuler;
-        TargetPosLocalEuler = new Vector3(TargetPosAngleX, 0f, 180f);
+        Quaternion startRot = _transformForRotate.localRotation;
+        Quaternion targetPosRot = _defaultModelRotation * Quaternion.Euler(TargetPosAngleX, 0f, 0f);
         
-    
-        Quaternion startRot = _botModelForRotate.localRotation;
-        Quaternion targetPosRot = Quaternion.Euler(TargetPosLocalEuler);
-    
         float elapsedTime = 0;
     
         while (elapsedTime < duration &&  !token.IsCancellationRequested) {
             elapsedTime += Time.fixedDeltaTime;
             float t = elapsedTime / duration;
         
-            _botModelForRotate.localRotation = Quaternion.Slerp(startRot, targetPosRot, t);
+            _transformForRotate.localRotation = Quaternion.Slerp(startRot, targetPosRot, t);
         
             await UniTask.Yield();
         }
     
-        _botModelForRotate.localRotation = targetPosRot;
+        _transformForRotate.localRotation = targetPosRot;
     }
     
     

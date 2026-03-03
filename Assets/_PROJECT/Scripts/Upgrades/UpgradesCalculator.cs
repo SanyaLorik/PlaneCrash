@@ -5,19 +5,19 @@ using Zenject;
 /// Преобразование уровня апгрейда в число 
 /// </summary>
 public class UpgradesCalculator {
+    private PetsManager _petsManager;
     [Inject] private IPlayerStatsReadOnly _playerStats;
     [Inject] private UpgradeConfig _config;
-    [Inject] private PetsManager _petsManager;
 
 
     [Inject]
     private void Init(PetsManager petsManager) {
         _petsManager = petsManager;
-        petsManager.BuyPet += PetsManagerOnBuyPet;
+        petsManager.GetPet += PetsManagerOnGetPet;
     }
 
     
-    private void PetsManagerOnBuyPet() {
+    private void PetsManagerOnGetPet() {
         _needRecalculate = true;
     }
 

@@ -17,6 +17,7 @@ public class PlayerBank : MonoBehaviour {
     public event Action<long> MoneyCollect;
 
     [Inject] IGameSave<GameSavePC> _gameSave;
+    [Inject] TutorialCompiller _tutorialCompiller;
     
     public long PlayerCapital {
         get => _gameSave.GetSave.Money;
@@ -57,6 +58,7 @@ public class PlayerBank : MonoBehaviour {
     
     
     public void GetSilentBetFallMoney(double amount) {
+        if(!_tutorialCompiller.TutorialPassed) return;
         PlayerCapital -= (long)amount;
     }
 

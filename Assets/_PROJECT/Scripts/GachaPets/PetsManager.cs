@@ -30,7 +30,8 @@ public class PetsManager : MonoBehaviour {
     private List<InstancePets> PetsInstancesForBots { get; set; } = new();
 
 
-    public event Action BuyPet;
+    public event Action GetPet;
+    
     
     private void Start() {
         LoadDataToDict();
@@ -82,6 +83,7 @@ public class PetsManager : MonoBehaviour {
         var pet = GetPetItemById(petItem.Id);
         _petToCountDict[pet] = count;
         _gameSave.Save();
+        GetPet?.Invoke();
         if (CheckPetsNeedUpdate(pet)) {
             UpdatePets();
         }
@@ -125,7 +127,6 @@ public class PetsManager : MonoBehaviour {
                 PetInfo = pet
             });
         }
-        BuyPet?.Invoke();
         
     }
 

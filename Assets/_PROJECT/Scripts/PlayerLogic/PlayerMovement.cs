@@ -16,7 +16,6 @@ public class PlayerMovement : FlightObject
     [SerializeField] private float _angleToFlight; // 
     [SerializeField] private float _yFlyCorrectRotation = 5f; // из-за анимации надо чуит развернуть хуилу
     
-    private Quaternion _defaultModelRotation;
     public Transform Transform => transform;
 
     
@@ -72,7 +71,6 @@ public class PlayerMovement : FlightObject
     private void Start() {
         ChangeSpaceRotation(PlayerState.Walking);
         TpPlayerInSpawn();
-        _defaultModelRotation = _transformForRotate.localRotation;
     }
     
     private void Update() {
@@ -143,9 +141,7 @@ public class PlayerMovement : FlightObject
         }
     }
     
-    private void ResetModelRotation() {
-        _transformForRotate.localRotation = _defaultModelRotation;
-    }
+   
     
     private async UniTask RotateLocalXAsync(float targetPosAngleX, PlayerState playerState, CancellationToken token) {
         float duration = 1f;
@@ -350,8 +346,6 @@ public class PlayerMovement : FlightObject
         yield return new WaitForSeconds(_getObjectsCooldownSeconds);
         ObjectGetAllow = true;
     }
-    
-    [SerializeField] private Transform _transformForRotate;
     
     private void VisualRotate() {
         float targetRoll = -MoveInput.x * _config.MaxRotate;

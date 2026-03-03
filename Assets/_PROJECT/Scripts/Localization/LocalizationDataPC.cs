@@ -54,7 +54,7 @@ public class LocalizationDataPC : LocalizationData
         return null;
     }
     
-    public string GetPhrase(int id) {
+    public string GetPhrase(string id) {
         foreach (var tutorTranslate in TutorTranslates) {
             if (tutorTranslate.Id == id) {
                 return tutorTranslate.Phrase;
@@ -88,7 +88,7 @@ public class LocalizationDataPC : LocalizationData
 
 [Serializable]
 public class TutorTranslate {
-    public int Id;
+    public string Id;
     public string Phrase;
 }
 
