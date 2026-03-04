@@ -40,6 +40,7 @@ public class PlayerAnimationManager : MonoBehaviour {
     
     private void StateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Flight) {
+            PlayerMovementOnRunningStateChanged(true);
             _animator.SetTrigger(Fly);
         }
         else if (state == PlayerState.Cruisered || state == PlayerState.Grounded) {

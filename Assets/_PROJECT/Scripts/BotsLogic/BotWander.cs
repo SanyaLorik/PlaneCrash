@@ -79,7 +79,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
             if (_agent.enabled && _agent.velocity.sqrMagnitude > 0.05f) {
                 if (!_walkingParticles.IsPlaying) {
                     _walkingParticles.Play();
-                StartWandering?.Invoke(true);
+                    StartWandering?.Invoke(true);
                 }
             }
             else {

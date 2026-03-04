@@ -26,19 +26,24 @@ public class BotAnimator : MonoBehaviour {
 
     
     private void BotFlightOnStartFlight() {
+        Debug.Log("Бот Начал полет");
+        _animator.SetBool(Run, true);
         _animator.SetTrigger(Fly);
     }
 
     private void BotFlightOnLastBoostGet() {
+        Debug.Log("Бот получил ласт буст");
         OnStartWandering(false);
     }
 
     
     private void OnStartWandering(bool isRunning) {
+        Debug.Log("Бот начал гулять");
         _animator.SetBool(Run, isRunning);
     }
 
     private void OnJump() {
+        Debug.Log("Бот рыгнул");
         _animator.SetTrigger(Jump);
     }
 }

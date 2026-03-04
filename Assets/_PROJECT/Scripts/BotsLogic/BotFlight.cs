@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -41,7 +40,6 @@ public class BotFlight : FlightObject, IBotBehaviour {
     public void GoToFall() {
         // ИГрок на спавне - падай
         _tokenSource = new CancellationTokenSource();
-
         BotFallAsync(_tokenSource.Token).Forget();
     }
 

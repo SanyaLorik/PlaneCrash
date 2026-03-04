@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 574521ec4f253c14787606935d6a4966, type: 3}
-  m_Name: Foxy_SkinItem
+  m_Name: Huggie_SkinItem
   m_EditorClassIdentifier: Assembly-CSharp::SkinItem
-  <Id>k__BackingField: kissie_skin
-  <Price>k__BackingField: 0
-  <SkinPrefab>k__BackingField: {fileID: 5194921409329958626, guid: 72a58913a1c1967488b40200e185f8f2, type: 3}
-  <Avatar>k__BackingField: {fileID: 9000000, guid: c167389ca670c4947a5368aa56beee1b, type: 3}
+  <Id>k__BackingField: huggie_skin
+  <Price>k__BackingField: 100
+  <SkinPrefab>k__BackingField: {fileID: 5194921409329958626, guid: 5749a60cb95ced14e9a2245d32c811a2, type: 3}
+  <Avatar>k__BackingField: {fileID: 9000000, guid: 37b777ab0dc18ec48894b69d8ad0b21d, type: 3}
+  <SkinGetType>k__BackingField: 0

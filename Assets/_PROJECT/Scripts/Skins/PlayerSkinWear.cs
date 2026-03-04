@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Architecture_M;
 using UnityEngine;
 using Zenject;
@@ -13,6 +15,7 @@ public class PlayerSkinWear : MonoBehaviour {
     
 
     [Inject] private IGameSave<GameSavePC> _saver; 
+    [Inject] private IInputActivity _inputActivity; 
     public event Action NewSkinWear;
 
 
@@ -50,8 +53,22 @@ public class PlayerSkinWear : MonoBehaviour {
            _playerWearSkinParent
         );
 
-       _animator.avatar = playerSkin.Avatar;
-    
+       StartCoroutine(ChangeSkinRoutine(playerSkin));
        NewSkinWear?.Invoke();
+   }
+
+
+   private IEnumerator ChangeSkinRoutine(SkinItemConfig skin) {
+       _inputActivity.Disable();
+       if (_currentSkin != null) {
+           Destroy(_currentSkin);
+           _animator.avatar = null;
+       }
+       yield return null; // дождаться конца кадра
+
+       _currentSkin = Instantiate(skin.SkinPrefab, _playerWearSkinParent);
+
+       _animator.avatar = skin.Avatar;
+       _inputActivity.Enable();
    }
 }
