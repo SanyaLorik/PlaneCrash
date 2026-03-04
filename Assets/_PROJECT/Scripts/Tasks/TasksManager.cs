@@ -56,9 +56,9 @@ public class TasksManager : MonoBehaviour {
     private CancellationTokenSource _tokenSource;
     
 
-    private PlayerMovement _playerMovement;
-    private PlayerStateManager _playerStateManager;
-    private PlayerBank _bank;
+    [Inject] private PlayerMovement _playerMovement;
+    [Inject] private PlayerStateManager _playerStateManager;
+    [Inject] private PlayerBank _bank;
     
     [Inject] private Money2dSpawner _money2dSpawner;
     [Inject] private ZoneManager _zoneManager;
@@ -68,12 +68,7 @@ public class TasksManager : MonoBehaviour {
     [Inject] private LineToObjects _lineToObjects;
 
 
-    [Inject]
-    private void Init(PlayerStateManager playerStateManager, PlayerMovement playerMovement, PlayerBank bank) {
-        _playerStateManager = playerStateManager;
-        _playerMovement = playerMovement;
-        _bank = bank;
-        
+    private void OnEnable() {
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
         _playerMovement.SetBoost += UpdateBoostsCount;
         _bank.MoneyCollect += UpdateMoneyCollect;
@@ -102,7 +97,7 @@ public class TasksManager : MonoBehaviour {
         
     }
 
-    public bool NeedToGetReward() {
+    private bool NeedToGetReward() {
         foreach (var taskInfo in _taskTypeToVisualDictionary) {
             if (taskInfo.Value.TaskIsComplete) {
                 _delayedTrigger.SetAvailable();

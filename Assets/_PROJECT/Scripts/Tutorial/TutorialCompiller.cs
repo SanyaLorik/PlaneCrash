@@ -53,6 +53,12 @@ public class TutorialCompiller : MonoBehaviour {
 
     [Inject]
     private void Init() {
+        if (!_gameSave.GetSave.TutorialPassed) {
+            InjectMissions();
+        }
+    }
+
+    private void Awake() {
         if (_gameSave.GetSave.TutorialPassed) {
             _flightStopper.DisactiveSelf();
             _multiplierBlock.DisactiveSelf();
@@ -62,15 +68,15 @@ public class TutorialCompiller : MonoBehaviour {
             TutorialPassed = true;
         }
         else {
-            InjectMissions();
             _flightStopper.ActiveSelf();
             _multiplierBlock.ActiveSelf();
             SetCanvasesState(false);
             _narrator.ActiveCanvas(true);
             _isInjected = true;
+            StartTutorial().Forget();
         }
-        
     }
+
 
     private void InjectMissions() {
         foreach (var mission in _missions) {
@@ -90,13 +96,7 @@ public class TutorialCompiller : MonoBehaviour {
             _petAdd = true;
         }
     }
-
-
-    private void Start() {
-        if (!_gameSave.GetSave.TutorialPassed) {
-            StartTutorial().Forget();
-        }
-    }
+    
 
 
 
@@ -150,10 +150,11 @@ public class TutorialCompiller : MonoBehaviour {
         TutorialPassed = true;
         _narrator.HideNarrator();
         _narrator.ActiveCanvas(false);
-        
+        SetCanvasesState(true);
         _lineToObjects.TutorialModeDisable();
         _gameSave.GetSave.TutorialPassed = true;
         _multiplierBlock.DisactiveSelf();
+        _flightStopper.DisactiveSelf();
         _gameSave.Save();
         _interstitialDelaying.EnableTimer();
     }

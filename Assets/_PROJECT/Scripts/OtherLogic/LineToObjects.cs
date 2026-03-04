@@ -56,9 +56,7 @@ public class LineToObjects : MonoBehaviour {
             if (_arrowInBoost) {
                 _arrowInBoost = false;
             }
-            if (!_tasksManager.NeedToGetReward()) {
-                HideArrow();
-            }
+            _tasksManager.CheckToNeedLine();
         }
 
         else if (state == PlayerState.Cruisered || state == PlayerState.Grounded) {
@@ -88,7 +86,7 @@ public class LineToObjects : MonoBehaviour {
     
     public void TutorialModeDisable() {
         _tutorialStarted = false;
-        HideArrow();
+        _tasksManager.CheckToNeedLine();
     }
     
     public void SetTargetTutorial(Vector3 newTarget) {
