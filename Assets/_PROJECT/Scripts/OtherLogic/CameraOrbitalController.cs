@@ -1,3 +1,6 @@
+using System;
+using Architecture_M;
+using MirraGames.SDK.Common;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +10,7 @@ public class CameraOrbitalController : MonoBehaviour {
 
     [SerializeField] private CinemachineCamera _cinemachineCamera;
     [SerializeField] private float _sensitivity = 0.1f;
+    [SerializeField] private float _joystickSensivity = 500f;
     [SerializeField] private Transform _walkPoint;
     [SerializeField] private Transform _flightPoint;
     
@@ -15,15 +19,30 @@ public class CameraOrbitalController : MonoBehaviour {
     [SerializeField] private float _maxZoom;
     [SerializeField] private float _minZoom;
     [Range(0,1), SerializeField] private float _zoomSpeed;
+    private Action _rotationHandler;
+    [Header("Для теста пока через инспектор")]
+    [SerializeField] private bool _isMobile;
+    
     
     private Mouse _mouse;
     private bool _isOrbiting;
 
 
     private bool _allowRotation = true;
+    private float _defaultMouseX;
+    private float _defaultMouseY;
+    
     
     [Inject] private PlayerStateManager _playerStateManager;
     [Inject] private SettingsManager _settings;
+    
+    // Если выбран десктоп ввод то не прокидывается сань помоги(((
+    // [Inject] private IOrbitalRotationInput _orbitalRotationInput;
+    // Сделал InjectOptional
+    [InjectOptional] private IOrbitalRotationInput _orbitalRotationInput;
+    [Inject] private IDeviceTypeProvider _deviceType;
+    [Inject] private IInputActivity _inputActivity;
+
     
     
     private void OnEnable() {
@@ -31,8 +50,22 @@ public class CameraOrbitalController : MonoBehaviour {
         _settings.CameraValueChanged += SettingsOnCameraValueChanged;
     }
 
+
+    
     private void Start() {
         SettingsOnCameraValueChanged(_settings.CameraZoomValue);
+        
+        // К релизу врубать
+        // _isMobile = _deviceType.DeviceType == DeviceTypeEnum.Mobile;
+        if (_isMobile)
+            _rotationHandler = HandleJoystickOrbit;
+        else {
+            // Получаем ссылку на мышь
+            _mouse = Mouse.current;
+            _defaultMouseX = _orbitalFollow.HorizontalAxis.Value;
+            _defaultMouseY = _orbitalFollow.VerticalAxis.Value;
+            _rotationHandler = HandleMouseOrbit;
+        }
     }
 
     private void SettingsOnCameraValueChanged(float percent) {
@@ -66,14 +99,6 @@ public class CameraOrbitalController : MonoBehaviour {
     }
 
 
-    private float _defaultMouseX;
-    private float _defaultMouseY;
-    private void Awake() {
-        // Получаем ссылку на мышь
-        _mouse = Mouse.current;
-        _defaultMouseX = _orbitalFollow.HorizontalAxis.Value;
-        _defaultMouseY = _orbitalFollow.VerticalAxis.Value;
-    }
 
 
     private void SetDefaultRotation() {
@@ -82,8 +107,10 @@ public class CameraOrbitalController : MonoBehaviour {
     }
     
     private void Update() {
-        if (_orbitalFollow == null || _mouse == null) return;
-        
+        _rotationHandler.Invoke();
+    }
+
+    private void HandleMouseOrbit() {
         // Проверяем нажатие правой кнопки мыши
         if (_mouse.rightButton.wasPressedThisFrame) {
             StartOrbiting();
@@ -97,10 +124,9 @@ public class CameraOrbitalController : MonoBehaviour {
             OrbitCamera();
         }
         
-        // Зум колесиком (всегда работает)
         HandleZoom();
     }
-    
+
     private void StartOrbiting() {
         _isOrbiting = true;
         Cursor.lockState = CursorLockMode.Locked;
@@ -112,6 +138,28 @@ public class CameraOrbitalController : MonoBehaviour {
         _isOrbiting = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+    
+    
+    private void HandleJoystickOrbit() {
+        if (!_allowRotation) return;
+
+        Vector2 input = _orbitalRotationInput.OrbitalDirection;
+
+        if (input.sqrMagnitude < 0.001f) 
+            return;
+
+        float joyX = input.x * _sensitivity * _joystickSensivity * Time.deltaTime;
+        float joyY = input.y * _sensitivity * _joystickSensivity * Time.deltaTime;
+
+        _orbitalFollow.HorizontalAxis.Value += joyX;
+        _orbitalFollow.VerticalAxis.Value -= joyY;
+
+        _orbitalFollow.VerticalAxis.Value = Mathf.Clamp(
+            _orbitalFollow.VerticalAxis.Value,
+            _orbitalFollow.VerticalAxis.Range.x,
+            _orbitalFollow.VerticalAxis.Range.y
+        );
     }
     
     

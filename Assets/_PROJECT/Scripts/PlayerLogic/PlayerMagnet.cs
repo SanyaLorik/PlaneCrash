@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
 public class PlayerMagnet : MonoBehaviour {
     [SerializeField] private Transform _playerTransform;
-    [SerializeField] private int _levelCountsToFullScale;
     
     private readonly List<IMagnetic> _magneticsBoost = new();
     private readonly List<IMagnetic> _magneticsMoney = new();
@@ -20,20 +18,16 @@ public class PlayerMagnet : MonoBehaviour {
     
     [SerializeField] private BoxCollider _collider;
     
-    private PlayerStateManager _playerStateManager; 
-    private IPlayerStatsReadOnly _playerStats;
+    [Inject] private PlayerStateManager _playerStateManager; 
+    [Inject] private IPlayerStatsReadOnly _playerStats;
 
-    private UpgradesCalculator _upgradesCalculator;
+    [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private LevelBounds _levelBounds;
     [Inject] private BoostSpawner _boostSpawner;
 
     private int _magnetLevel = -1;
     
-    [Inject]
-    public void Init(PlayerStateManager playerStateManager, IPlayerStatsReadOnly playerStats, UpgradesCalculator upgradesCalculator) {
-        _upgradesCalculator = upgradesCalculator;
-        _playerStateManager = playerStateManager;
-        _playerStats = playerStats;
+    public void OnEnable() {
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
         _playerStats.ChangeStats += PlayerStatsOnChangeStats;
     }
@@ -42,19 +36,20 @@ public class PlayerMagnet : MonoBehaviour {
     private Vector3 _maxColliderSize;
     private Vector3 _defaultColliderSize;
 
-
-
-    private void Start() {
+    private void Awake() {
         CalculateColliderMaxScale();
         SetColiderInHead();
+        _defaultColliderSize = _collider.size;
+        _collider.enabled = false;
+    }
+
+    private void Start() {
         PlayerStatsOnChangeStats();
-        _defaultColliderSize  = _collider.size;
-        
     }
 
 
     private void PlayerStatsOnChangeStats() {
-        if (_magnetLevel != _playerStats.MagnetLevel) {
+        if (_magnetLevel != _playerStats.MagnetLevel && _playerStats.MagnetLevel != 1) {
             // Перерасчет если изменился + 
             _magnetLevel = _playerStats.MagnetLevel;
         
@@ -70,7 +65,7 @@ public class PlayerMagnet : MonoBehaviour {
         float height = _levelBounds.CalculateFlightHeight() * 4;
         float length = _boostSpawner.BoostDistance.To / 2;
         _maxColliderSize = new Vector3(width, height, length);
-        // Debug.Log("_maxColliderSize" + _maxColliderSize);
+        Debug.Log("_maxColliderSize" + _maxColliderSize);
     }
 
 

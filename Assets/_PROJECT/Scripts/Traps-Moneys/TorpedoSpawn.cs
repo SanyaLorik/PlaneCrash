@@ -1,28 +1,27 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using SanyaBeerExtension;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public class TorpedoSpawn : MonoBehaviour {
     [SerializeField] private Torpedo _torpedoPrefab;
     [SerializeField] private PairedValue<float> _diapasoneSpawnProgress;
     [Range(0f,1f),SerializeField] private float _chanseToSpawn;
+    
+    
+    [Header("Чтоб не всегда в игрока попадала а могла выше ниже него лететь")]
+    [SerializeField] private PairedValue<float> _upPlayerDiapasone;
 
     [SerializeField] private GameObject _rocketWarning;
-        
-    
-    
     
     [Header("Настройки анимации")]
     [SerializeField] private float pulseScale = 1.2f;      // максимальный масштаб при пульсации
     [SerializeField] private float pulseDuration = 0.5f;   // время на один цикл пульсации
     [SerializeField] private float _rotationSpeed;
-    
-    
-    
-    
-    
+
     private Vector3 _currentHitPoint;
     
     
@@ -52,6 +51,8 @@ public class TorpedoSpawn : MonoBehaviour {
     private void PlayerOnSetBoost() {
         float playerProgress = Random.Range(_diapasoneSpawnProgress.From, _diapasoneSpawnProgress.To);
         _currentHitPoint = _player.GetPlayerPositionAt(playerProgress);
+        _currentHitPoint.y += Random.Range(_upPlayerDiapasone.From, _upPlayerDiapasone.To);
+        
         if (Random.value > _chanseToSpawn || _currentHitPoint.z < _boostSpawner.MinDistance) {
             return;
         }
@@ -96,18 +97,16 @@ public class TorpedoSpawn : MonoBehaviour {
 
     private GameObject _rocketWarnObject;
     private void ShowWarning(Vector3 spawnPos) {
-        _rocketWarnObject = Instantiate(_rocketWarning.gameObject, spawnPos, Quaternion.identity);
+        if (_rocketWarnObject == null) {
+            _rocketWarnObject = Instantiate(_rocketWarning.gameObject, spawnPos, Quaternion.identity);
+        }
+        _rocketWarnObject.transform.position = spawnPos;
     }
     
-    
-    
-
     private void SpawnTorpedo(Vector3 predictedHitPoint, Vector3 spawnPos) {
         Torpedo torpedo = Instantiate(_torpedoPrefab, spawnPos, Quaternion.identity);
         Torpedo tScript = torpedo.GetComponent<Torpedo>();
         tScript.Launch(predictedHitPoint, _torpedoPrefab.Speed);
     }
-    
-    
 
 }

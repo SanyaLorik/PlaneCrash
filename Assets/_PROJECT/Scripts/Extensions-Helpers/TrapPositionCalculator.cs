@@ -1,5 +1,3 @@
-using System;
-using System.Net.Http.Headers;
 using SanyaBeerExtension;
 using UnityEngine;
 using Zenject;
@@ -12,13 +10,7 @@ public class TrapPositionCalculator : MonoBehaviour {
     [SerializeField] private PairedValue<float> _distanceZ;
     
     
-    private LevelBounds _levelBounds;
-
-    [Inject]
-    public void Init(LevelBounds levelBounds) {
-        _levelBounds  = levelBounds;
-    }
-
+    [Inject] private LevelBounds _levelBounds;
 
 
     public Vector3 GetNearBoostPosition(Vector3 boost) {

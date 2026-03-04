@@ -1,11 +1,9 @@
+using System;
 using Architecture_M;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
-
-
-
 
 
 public abstract class UpgradeBase : MonoBehaviour {
@@ -14,8 +12,7 @@ public abstract class UpgradeBase : MonoBehaviour {
     [SerializeField] protected UpgradeType UpgradeType;
     [SerializeField] protected UpgradeItemVisual _visual;
     [SerializeField] protected TMP_Text _levelTextInSkills;
-    
-    
+
     
     protected UpgradeInfo UpgradeInfo;
     
@@ -40,11 +37,13 @@ public abstract class UpgradeBase : MonoBehaviour {
         _bank.BankChanged += BankOnBankChanged;
     }
 
-    protected void Start() {
+    protected void Awake() {
         LoadLevel();
-        CheckColor();
     }
 
+    private void Start() {
+        CheckColor();
+    }
 
 
     private void BankOnBankChanged(long playerCapital) {

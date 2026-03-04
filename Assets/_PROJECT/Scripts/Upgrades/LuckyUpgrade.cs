@@ -6,10 +6,6 @@ public class LuckyUpgrade : UpgradeBase {
         _bank.Buy(_currentPrice);
         
         Debug.Log("Покупка LuckyUpgrade: " + _playerStats.LuckyLevel);
-        
-        
-        
-        
         _currentPrice *= UpgradeInfo.PriceMultiplier;
         _level++;
         _playerStats.UpdateLuckyLevel(_level);

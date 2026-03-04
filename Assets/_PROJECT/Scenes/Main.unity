@@ -2529,7 +2529,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
-      value: 30
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botModelForRotate
@@ -3498,7 +3498,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
-      value: 30
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botModelForRotate
@@ -25495,7 +25495,10 @@ MonoBehaviour:
   _diapasoneSpawnProgress:
     <From>k__BackingField: 0.6
     <To>k__BackingField: 0.9
-  _chanseToSpawn: 0.6
+  _chanseToSpawn: 1
+  _upPlayerDiapasone:
+    <From>k__BackingField: -10
+    <To>k__BackingField: 30
   _rocketWarning: {fileID: 4537708074210955251, guid: 1bc7f58811d5d9641831d04a6caff6de, type: 3}
   pulseScale: 2.5
   pulseDuration: 0.2
@@ -29647,7 +29650,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
-      value: 30
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botModelForRotate
@@ -58687,12 +58690,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraOrbitalController
   _cinemachineCamera: {fileID: 1695576374}
   _sensitivity: 0.05
+  _joystickSensivity: 2000
   _walkPoint: {fileID: 3592600760854268681}
   _flightPoint: {fileID: 252501680979087494}
   _orbitalFollow: {fileID: 1695576376}
   _maxZoom: 7
   _minZoom: 0.5
   _zoomSpeed: 0.099
+  _isMobile: 0
 --- !u!114 &1695576369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65959,7 +65964,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
-      value: 30
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botModelForRotate
@@ -70973,15 +70978,15 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2114599638}
+  - {fileID: 738633776}
   - {fileID: 115439196}
   - {fileID: 217896889}
   - {fileID: 1279107217}
   - {fileID: 727722057}
   - {fileID: 715291366}
-  - {fileID: 738633776}
   - {fileID: 2132733897}
   - {fileID: 229669525}
+  - {fileID: 2114599638}
   - {fileID: 873727987}
   - {fileID: 703353407}
   - {fileID: 893658164}
@@ -73836,7 +73841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
-      value: 30
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botModelForRotate
@@ -75556,6 +75561,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 499284602056414549, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 644202770473535795, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
@@ -75721,6 +75730,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2432638169025216330, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439922209507541155, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -75931,6 +75944,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 699255799}
     m_Modifications:
+    - target: {fileID: 1507851960005667379, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: _levelCountsToFullScale
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3340171977911634004, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.5
@@ -75987,6 +76004,18 @@ PrefabInstance:
       propertyPath: _flightCanvasContainerShow
       value: 
       objectReference: {fileID: 1049888218}
+    - target: {fileID: 5132186663781143871, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132186663781143871, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132186663781143871, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6988422949813744253, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: _cube
       value: 
@@ -80876,7 +80905,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
-      value: 30
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _countBoostEquilizeSpeed

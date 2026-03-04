@@ -1,15 +1,27 @@
 {
-    "Money": 24357,
+    "Money": 25554,
     "RecordMoney": 1000000,
     "RecordDistance": 4000,
     "Upgrades": [
+        {
+            "Id": 4,
+            "Level": 1
+        },
+        {
+            "Id": 2,
+            "Level": 1
+        },
         {
             "Id": 0,
             "Level": 1
         },
         {
             "Id": 3,
-            "Level": 4
+            "Level": 1
+        },
+        {
+            "Id": 1,
+            "Level": 7
         }
     ],
     "Pets": [
@@ -19,7 +31,7 @@
         },
         {
             "Id": 2,
-            "Count": 2
+            "Count": 3
         },
         {
             "Id": 0,
@@ -35,7 +47,7 @@
         }
     ],
     "SkinWearId": "kissie_skin",
-    "TutorialPassed": false,
+    "TutorialPassed": true,
     "CountBatutJumps": 640,
     "CountBaskets": 39
 }

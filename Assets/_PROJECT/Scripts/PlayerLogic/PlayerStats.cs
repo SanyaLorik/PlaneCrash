@@ -1,14 +1,17 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 public class PlayerStats : IPlayerStatsReadOnly, IPlayerStatsWritable {
+
     public int MultiplierLevel { get; private set; } = 1;
     public int LuckyLevel { get; private set; } = 1;
     public int MagnetLevel { get; private set; } = 1;
     public int DefenceLevel { get; private set;} = 1;
     public int PredictDistanceLevel { get; private set; } = 1;
     public event Action ChangeStats;
-
+    
+    
     public void UpdateMultiplierLevel(int level, bool isInvokable = true) {
         MultiplierLevel = level;
         if (!isInvokable) {

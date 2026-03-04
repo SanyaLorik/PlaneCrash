@@ -5,7 +5,7 @@ public class DefenceUpgrade : UpgradeBase {
     
     protected override void ApplyUpgrade() {
         _bank.Buy(_currentPrice);
-        Debug.Log("Покупка DefenceUpgrade: " + _playerStats.PredictDistanceLevel);
+        Debug.Log("Покупка DefenceUpgrade: " + _playerStats.DefenceLevel);
         
         _currentPrice *= UpgradeInfo.PriceMultiplier;
         _level++;
