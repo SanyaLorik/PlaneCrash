@@ -29,12 +29,16 @@ public class CameraOrbitalController : MonoBehaviour {
 
 
     private bool _allowRotation = true;
-    private float _defaultMouseX;
-    private float _defaultMouseY;
+    private float _defaultX;
+    private float _defaultY;
+    
+    public float DefaultFov => _isMobile ? _playerConfig.MobileFov : _playerConfig.DesktopFov;
+    public float CurrentFovPercent => _orbitalFollow.RadialAxis.Value / _maxZoom;
     
     
     [Inject] private PlayerStateManager _playerStateManager;
     [Inject] private SettingsManager _settings;
+    [Inject] private PlayerConfig _playerConfig;
     
     // Если выбран десктоп ввод то не прокидывается сань помоги(((
     // [Inject] private IOrbitalRotationInput _orbitalRotationInput;
@@ -62,10 +66,10 @@ public class CameraOrbitalController : MonoBehaviour {
         else {
             // Получаем ссылку на мышь
             _mouse = Mouse.current;
-            _defaultMouseX = _orbitalFollow.HorizontalAxis.Value;
-            _defaultMouseY = _orbitalFollow.VerticalAxis.Value;
             _rotationHandler = HandleMouseOrbit;
         }
+        _defaultX = _orbitalFollow.HorizontalAxis.Value;
+        _defaultY = _orbitalFollow.VerticalAxis.Value;
     }
 
     private void SettingsOnCameraValueChanged(float percent) {
@@ -99,11 +103,9 @@ public class CameraOrbitalController : MonoBehaviour {
     }
 
 
-
-
     private void SetDefaultRotation() {
-        _orbitalFollow.HorizontalAxis.Value = _defaultMouseX;
-        _orbitalFollow.VerticalAxis.Value = _defaultMouseY; 
+        _orbitalFollow.HorizontalAxis.Value = _defaultX;
+        _orbitalFollow.VerticalAxis.Value = _defaultY; 
     }
     
     private void Update() {
@@ -199,5 +201,8 @@ public class CameraOrbitalController : MonoBehaviour {
             _minZoom, 
             _maxZoom
         );
+        if (_settings.SettingsIsOpen) {
+            _settings.ChangeCameraZoomSilent();
+        }
     }
 }

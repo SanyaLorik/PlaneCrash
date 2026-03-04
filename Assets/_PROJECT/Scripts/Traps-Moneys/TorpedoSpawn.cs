@@ -100,6 +100,10 @@ public class TorpedoSpawn : MonoBehaviour {
         if (_rocketWarnObject == null) {
             _rocketWarnObject = Instantiate(_rocketWarning.gameObject, spawnPos, Quaternion.identity);
         }
+
+        if (!_rocketWarnObject.activeSelf) {
+            _rocketWarnObject.ActiveSelf();
+        }
         _rocketWarnObject.transform.position = spawnPos;
     }
     

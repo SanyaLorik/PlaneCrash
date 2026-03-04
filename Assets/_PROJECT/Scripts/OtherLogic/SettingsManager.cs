@@ -13,6 +13,7 @@ public class SettingsManager : MonoBehaviour {
     [SerializeField] private Slider _musicSlider;
     [SerializeField] private Slider _effectsSlider;
     [SerializeField] private Slider _cameraSlider;
+    [SerializeField] private CameraOrbitalController _camera;
 
     
     private float _musicValue;
@@ -42,7 +43,9 @@ public class SettingsManager : MonoBehaviour {
 
         _musicValue = PlayerPrefs.GetFloat(MusicKey, 1f);
         _effectsValue = PlayerPrefs.GetFloat(EffectsKey, 1f);
-        _cameraZoomValue = PlayerPrefs.GetFloat(CameraKey, .5f);
+        
+        
+        _cameraZoomValue = PlayerPrefs.GetFloat(CameraKey, _camera.DefaultFov);
 
         _musicSlider.SetValueWithoutNotify(_musicValue);
         _effectsSlider.SetValueWithoutNotify(_effectsValue);
@@ -68,6 +71,8 @@ public class SettingsManager : MonoBehaviour {
         EffectsValueChanged?.Invoke(value);
     }
 
+    
+    public bool SettingsIsOpen => _settingsCanvas.activeSelf;
     private void ChangeMusicVolume(float value) {
         _musicValue = value;
         PlayerPrefs.SetFloat(MusicKey, value);
@@ -77,9 +82,17 @@ public class SettingsManager : MonoBehaviour {
     private void OpenSettings() {
         _settingsCanvas.ActiveSelf();
         _inputActivity.Disable();
+        // При открытии оно подгрузит с камеры измененный
+        ChangeCameraZoomSilent();
     }
-    
-    
+
+    public void ChangeCameraZoomSilent() {
+        float cameraCurrentFovPercent = _camera.CurrentFovPercent;
+        _cameraSlider.SetValueWithoutNotify(cameraCurrentFovPercent);
+        _cameraZoomValue = cameraCurrentFovPercent;
+    }
+
+
     private void CloseSettings() {
         _settingsCanvas.DisactiveSelf();
         _inputActivity.Enable();

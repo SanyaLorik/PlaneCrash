@@ -133,6 +133,7 @@ public class PlayerMovement : FlightObject
             ResetLifes();
             IsBombed = false;
             RotateLocalXAsync(_angleToFlight, playerState, _tokenSource.Token).Forget();
+            JumpPressed?.Invoke();
         }
         
         else if (playerState == PlayerState.Grounded || playerState == PlayerState.Cruisered) {
