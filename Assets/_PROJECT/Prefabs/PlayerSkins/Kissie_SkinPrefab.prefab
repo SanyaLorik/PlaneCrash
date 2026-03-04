@@ -84,6 +84,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: kissie_new
       objectReference: {fileID: 0}
+    - target: {fileID: 4770547241960252118, guid: 37b777ab0dc18ec48894b69d8ad0b21d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5866666021909216657, guid: 37b777ab0dc18ec48894b69d8ad0b21d, type: 3}
     m_RemovedGameObjects: []
