@@ -54,7 +54,7 @@ public class LocalizationDataPC : LocalizationData
         return null;
     }
     
-    public string GetPhrase(string id) {
+    public string GetTutorialPhrase(string id) {
         foreach (var tutorTranslate in TutorTranslates) {
             if (tutorTranslate.Id == id) {
                 return tutorTranslate.Phrase;

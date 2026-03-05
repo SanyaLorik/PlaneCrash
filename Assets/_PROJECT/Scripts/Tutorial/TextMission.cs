@@ -7,16 +7,18 @@ using Zenject;
 [Serializable]
 public class TextMission : IMission {
     [SerializeField] private string _phraseId;
-    [SerializeField] private float _duration;
+    [SerializeField] private bool _allowHideNarrator;
+    
+    // [SerializeField] private float _duration;
     
     [Inject] private Narrator _narrator; 
-    [Inject] private LocalizationDataPC _localization; 
-    [Inject] private ILanguageProvider _languageProvider; 
 
 
     public async UniTask RunAsync() {
-        _narrator.SetTextWithNarattor(_localization.GetPhrase(_phraseId), 3f);
-        await UniTask.WaitForSeconds(_duration);
-        _narrator.HideNarrator();
+        float speakDuration = _narrator.SetTextWithNarattor(_phraseId);
+        await UniTask.WaitForSeconds(Math.Max(speakDuration, speakDuration));
+        if (_allowHideNarrator) {
+            _narrator.HideNarrator();
+        }
     }
 }

@@ -1,18 +1,29 @@
 using System;
 using System.Collections;
+using Architecture_M;
 using DG.Tweening;
-using JetBrains.Annotations;
-using SanyaBeerExtension;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 using Random = UnityEngine.Random;
+
+
+[Serializable]
+public struct VoiceSounds {
+    public string PhraseId;
+    public AudioClip RusClip;
+    public AudioClip EngClip;
+}
+
+
 
 public class Narrator : MonoBehaviour {
     [SerializeField] private GameObject _canvas;
     [SerializeField] private TMP_Text _text;
     [SerializeField] private RectTransform _girlImage;
     [SerializeField] private Image[] _backgrounds;
+    [SerializeField] private RectTransform _hidePoint;
     
     
     [SerializeField] private float _durationNarratorShow;
@@ -24,19 +35,28 @@ public class Narrator : MonoBehaviour {
 
     [Header("Тряска бабы с сиьсками")]
     [SerializeField] private float _strength = 5f;    // насколько далеко двигаем
-    [SerializeField] private float _speed = 0.05f;  
+    [SerializeField] private float _speed = 0.05f;
+    
+    [Header("Озвучка по ID")]
+    [SerializeField] private VoiceSounds[] _voiceSounds;  
+    [SerializeField, Range(0,2)] private float _pitchValue;  
     
 
     private Vector2 _startPos;
     private Vector2 _hidePos;
     
+    [Inject] private LocalizationDataPC _localization;
+    [Inject] private SoundManager _soundManager;
+
+
+    private bool _isRusTutorial = true;
     private void Awake() {
         // Запоминаем финальную позицию картинки
         _startPos = _girlImage.anchoredPosition;
 
         // Прячем слева за экран
         _hidePos = new Vector2(
-            -Screen.width - 200f,
+            _hidePoint.position.x - 200f,
             _startPos.y
         );
 
@@ -44,25 +64,41 @@ public class Narrator : MonoBehaviour {
 
         // Текст в ноль
         _text.transform.localScale = Vector3.zero;
+
+
+        if (_localization.Substitute != LanguageEnum.Russian) {
+            _isRusTutorial = false;
+        }
+        
+    }
+    
+    
+
+
+    public float SetTextWithNarattor(string textId) {
+        _text.text = _localization.GetTutorialPhrase(textId);
+        // Сбиваем старые анимации текста
+        _text.transform.DOKill();
+
+        // Маленький "пульс"    
+        // Вычислить из длительности звука 
+        float speakTimeAnimation = 3f;
+        foreach (VoiceSounds voice in _voiceSounds) {
+            if (voice.PhraseId == textId) {
+                AudioClip clip = _isRusTutorial ? voice.RusClip : voice.EngClip;
+                speakTimeAnimation = clip.length * 1.05f;
+                Debug.Log(clip.length);
+                _soundManager.PlayNarratorSound(clip, _pitchValue);
+            }
+        }
+        ShowNarrator(speakTimeAnimation);
+        return speakTimeAnimation;
     }
 
 
     public void ActiveCanvas(bool state) {
         _canvas.SetActive(state);
     }
-
-    public void SetTextWithNarattor(string text, float speakTimeAnimation) {
-        _text.text = text;
-        // Сбиваем старые анимации текста
-        _text.transform.DOKill();
-
-        // Маленький "пульс"
-
-
-        ShowNarrator(speakTimeAnimation);
-
-    }
-    
     
 
     private Coroutine _timerCoroutine;
@@ -117,8 +153,6 @@ public class Narrator : MonoBehaviour {
         Debug.Log("_stopSpeaking = true");
         _stopSpeaking = true;
     }
-    
-    
     
     
     public void HideNarrator() {

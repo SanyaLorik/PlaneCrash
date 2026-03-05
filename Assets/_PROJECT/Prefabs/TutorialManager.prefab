@@ -35,6 +35,63 @@ Transform:
   - {fileID: 4169617655276950811}
   m_Father: {fileID: 8784413498414956099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1324040252663270096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8283289146607281543}
+  - component: {fileID: 9128298764244138195}
+  m_Layer: 0
+  m_Name: Narrator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8283289146607281543
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324040252663270096}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8784413498414956099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9128298764244138195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324040252663270096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb6ea6bf669933449e1c3c04198d20b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Narrator
+  _canvas: {fileID: 0}
+  _text: {fileID: 0}
+  _girlImage: {fileID: 0}
+  _backgrounds:
+  - {fileID: 0}
+  - {fileID: 0}
+  _hidePoint: {fileID: 0}
+  _durationNarratorShow: 1
+  _durationTextShow: 2
+  _textShowSpeed: 0.4
+  _strength: 18
+  _speed: 0.28
+  _voiceSounds: []
 --- !u!1 &3641134813533652717
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +214,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8784413498414956099}
   - component: {fileID: 3159276835114270060}
-  - component: {fileID: 4450145935761449147}
   m_Layer: 0
   m_Name: TutorialManager
   m_TagString: Untagged
@@ -178,6 +234,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8283289146607281543}
   - {fileID: 904557245516446551}
   - {fileID: 8547079672832978797}
   - {fileID: 2220441057875360957}
@@ -231,7 +288,6 @@ MonoBehaviour:
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: hello
-        _duration: 3
     - rid: 4016510599091716167
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
@@ -256,12 +312,10 @@ MonoBehaviour:
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: movement
-        _duration: 3
     - rid: 8231486178666217547
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: flyExplain
-        _duration: 3
     - rid: 8231486178666217549
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
@@ -298,8 +352,8 @@ MonoBehaviour:
         _phraseId: success
         _targets:
         - {fileID: 0}
-        _delta: 10
-        _secToStay: 0
+        _delta: 2
+        _secToStay: 2
         _showArrow: 0
         _textDuration: 3
     - rid: 8231486178666217556
@@ -316,7 +370,6 @@ MonoBehaviour:
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: cutePet
-        _duration: 5
     - rid: 8231486178666217559
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
@@ -334,35 +387,10 @@ MonoBehaviour:
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: rangStatus
-        _duration: 5
     - rid: 8231486178666217561
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: goodLuck
-        _duration: 5
---- !u!114 &4450145935761449147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4326908251563276621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbb6ea6bf669933449e1c3c04198d20b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Narrator
-  _canvas: {fileID: 0}
-  _text: {fileID: 0}
-  _girlImage: {fileID: 0}
-  _backgrounds:
-  - {fileID: 0}
-  - {fileID: 0}
-  _durationNarratorShow: 1
-  _durationTextShow: 2
-  _textShowSpeed: 0.4
-  _strength: 18
-  _speed: 0.28
 --- !u!1 &4743591119455970793
 GameObject:
   m_ObjectHideFlags: 0

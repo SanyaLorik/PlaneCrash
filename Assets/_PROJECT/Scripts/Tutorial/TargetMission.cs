@@ -14,23 +14,18 @@ public class TargetMission : IMission {
     [SerializeField] private float _secToStay;
     
     [SerializeField] private bool _showArrow;
-    
-    [SerializeField] private float _textDuration;
-    
-
-
+    [SerializeField] private bool _allowHideNarrator;
     
     
     [Inject] private Narrator _narrator; 
     [Inject] private LineToObjects _lineToObjects; 
-    [Inject] private PlayerMovement _player; 
-    [Inject] private LocalizationDataPC _localization; 
+    [Inject] private PlayerMovement _player;
 
-    
+    private bool _narratorIsOver;
     
     public async UniTask RunAsync() {
         // Можно допустим сказать временный текст
-        TimerText(_localization.GetPhrase(_phraseId)).Forget();
+        TimerText(_phraseId).Forget();
 
 
         foreach (var target in _targets) {
@@ -56,20 +51,19 @@ public class TargetMission : IMission {
                 }
             }
         }
-        
-        
-        
         if (_showArrow) {
             _lineToObjects.HideArrow();
         }
-
+        await UniTask.WaitWhile(() => !_narratorIsOver);
     }
     
-    public async UniTask TimerText(string text) {
-        _narrator.SetTextWithNarattor(text, 3f);
-        await UniTask.WaitForSeconds(_textDuration);
-        _narrator.HideNarrator(); 
-       
-        
+    public async UniTask TimerText(string textId) {
+        _narratorIsOver = false;
+        float speakDuration = _narrator.SetTextWithNarattor(textId);
+        await UniTask.WaitForSeconds(speakDuration);
+        if (_allowHideNarrator) {
+            _narrator.HideNarrator();
+        }
+        _narratorIsOver = true;
     }
 }

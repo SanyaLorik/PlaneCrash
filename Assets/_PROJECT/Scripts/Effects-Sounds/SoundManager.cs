@@ -20,6 +20,8 @@ public class SoundManager : MonoBehaviour {
     [Header("Background Music")]
     [SerializeField] private AudioSource _walkMusicSource;
     [SerializeField] private AudioSource _flyMusicSource;
+    [SerializeField] private AudioSource _narratorSource;
+    
     [Header("Mixer")]
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private AudioMixerGroup _musicMixerGroup;
@@ -107,9 +109,6 @@ public class SoundManager : MonoBehaviour {
         PlaySoundByType(SoundType.Boost);
     }
 
-
-
-
     
     private void PlayerMovementOnFloored() {
         // Можно звук приземления
@@ -157,6 +156,21 @@ public class SoundManager : MonoBehaviour {
         source.Play();
     }
 
+
+    public void PlayNarratorSound(AudioClip clip, float pitch) {
+        AudioSource source = _narratorSource;
+        
+        // Обрезаем нарратора если наложилось
+        if (source.isPlaying)
+            source.Stop(); 
+        
+        
+        source.clip = clip;
+        source.volume = 1f;
+        source.pitch = pitch;
+        source.outputAudioMixerGroup = _soundMixerGroup;
+        source.Play();
+    }
 
     private AudioSource GetFreeSource() {
         foreach (var source in _sources) {

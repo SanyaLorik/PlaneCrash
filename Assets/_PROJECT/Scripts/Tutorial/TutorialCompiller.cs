@@ -132,12 +132,13 @@ public class TutorialCompiller : MonoBehaviour {
                     i = _idMissionIfCruisered - 1;
                 }
             }
-            else {
+            else if (i != _idMissionPetOpen) {
                 await _missions[i].RunAsync();
             }
             
             // открытие пета
             if (i == _idMissionPetOpen) {
+                Debug.Log("Миссия с петом");
                 await _missions[i].RunAsync();
                 await UniTask.WaitWhile( () => !_petAdd);
             }
