@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -55,15 +56,36 @@ public class BotStateManager : MonoBehaviour {
         _currentBotBehaviour?.Enter();
     }
     
+    
+    public void ChangeNickname() {
+        _botMonolog.ChangeNickname();
+    }
+    
     public void PlayerInSpawn() {
         _botFlight.GoToFall();
     }
 
+    private GameObject _skinInstance;
     public void SetBotSkin(SkinItemConfig skinItemConfig) {
-        Instantiate(skinItemConfig.SkinPrefab, _skinParent);
-        _botAnimator.SetModel(skinItemConfig);
+        StartCoroutine(ChangeSkinRoutine(skinItemConfig));
+    }
+
+    public void InitAnimator() {
         _botAnimator.InitAnimator(_botFlight, _botWander);
     }
+    
+    private IEnumerator ChangeSkinRoutine(SkinItemConfig skin) {
+        Debug.Log("Смена скина у бота");
+        if (_skinInstance != null) {
+            Destroy(_skinInstance);
+            _botAnimator.SetModelAvatar(null);
+        }
+        yield return null; // дождаться конца кадра
+
+        _skinInstance = Instantiate(skin.SkinPrefab, _skinParent);
+        _botAnimator.SetModelAvatar(skin.Avatar);
+    }
+    
 
     public void SetBotSpeak() {
         _botMonolog.SaySomething();

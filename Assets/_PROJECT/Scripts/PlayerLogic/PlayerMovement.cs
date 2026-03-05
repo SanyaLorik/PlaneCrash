@@ -259,8 +259,7 @@ public class PlayerMovement : FlightObject
         // Настоящее приземление
         bool justLanded = IsGrounded && !_wasGroundedLastFrame && _verticalVelocity < -0.1f;
 
-        if (justLanded)
-        {
+        if (justLanded && _stateManager.CurrentState != PlayerState.TrampolineJumping) {
             _jumpsUsed = 0;
             Floored?.Invoke();
             _stateManager.ChangePlayerState(PlayerState.Walking);
@@ -273,6 +272,7 @@ public class PlayerMovement : FlightObject
             WalkRotate(move);
         }
     }
+    
     
     private void WalkRotate(Vector3 move) {
         if (move.sqrMagnitude > 0.0001f) {

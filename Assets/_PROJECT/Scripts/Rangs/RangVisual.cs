@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 public class RangVisual : MonoBehaviour {
-    [SerializeField] private float _offsetPointer;
+    [SerializeField] private float _pointerOffset = 12f;
     
     
     [SerializeField] private RectTransform _currentImageRt;
@@ -19,10 +18,6 @@ public class RangVisual : MonoBehaviour {
     [Header("Поверхности")]
     [SerializeField] private GameObject _planePrefab;
     [SerializeField] private Transform _planesParent;
-    [SerializeField] private Transform _moneyCubeBottomPoint;
-
-    
-    private float _maxMoney;
     
     [Inject] private PlayerBank _playerBank;
     [Inject] private RangConfig _config;
@@ -39,12 +34,10 @@ public class RangVisual : MonoBehaviour {
 
 
     private void Start() {
-        CalculateMaxMoney();
         InstanceRangs();
         SetPlanes();
-        
         PlayerBankOnBankChanged(_playerBank.PlayerCapital);
-        UpdateRecord();
+        RecalculateRecord();
     }
 
     private void SetPlanes() {
@@ -60,45 +53,65 @@ public class RangVisual : MonoBehaviour {
     }
     
     private void InstanceRangs() {
-        for (var i = 0; i < _config.Rangs.Count; i++) {
-            var rang = _config.Rangs[i];
-            float rangPercent = rang.Money / _maxMoney;
-            float xEnd = _fillAmounthMover.CalculateXEnd(_barWidth);
-            _fillAmounthMover.SetPointer(_rangPrefabs[i]._rt, rangPercent, xEnd);
-            _rangPrefabs[i].SetData(_formatter.ValuteFormatter(rang.Money), rang.Sprite);
-            
-        }
-    }
-    
-    
-    private void PlayerBankOnBankChanged(long amount) {
-        float percent = Mathf.Clamp01(amount / _maxMoney);
-        
-        // Текущий
-        _fillAmounthMover.SetFillAmountWithPointer(_currentImageRt, _barWidth, _pointerIcon, percent, _offsetPointer);
-
-        // Рекорд
-        if (amount > _playerBank.PlayerRecord) {
-            UpdateRecord();
+        float xEnd = _fillAmounthMover.CalculateXEnd(_barWidth);
+        for (int i = 0; i < _config.Rangs.Count; i++) {
+            SetRangInPlace(i, xEnd);
         }
     }
 
-    private void UpdateRecord() {
-        float percent = Mathf.Clamp01(_playerBank.PlayerRecord / _maxMoney);
-        _fillAmounthMover.SetFillAmountWithPointer(_recordImageRt, _barWidth, _recordPointerIcon, percent, _offsetPointer);
+    private void SetRangInPlace(int i, float xEnd) {
+        RangData rang = _config.Rangs[i];
+        // Равномерно распределить
+        float rangPercent = (i+1f) / _config.Rangs.Count;
+        _fillAmounthMover.SetPointer(_rangPrefabs[i]._rt, rangPercent, xEnd);
+        _rangPrefabs[i].SetData(rang.Money, rang.Sprite, (rangPercent*xEnd));
+        Debug.Log("Установка ранга в " + _rangPrefabs[i].XValue);
     }
 
 
-#region Helpers
-
-    private void CalculateMaxMoney() {
-        _maxMoney = _config.Rangs[^1].Money;
-        foreach (var rang in _config.Rangs) {
-            if (_maxMoney < rang.Money) {
-                _maxMoney = rang.Money;
+    private int GetNextRangIndex(long amount) {
+        int index = 0;
+        foreach (var rang in _rangPrefabs) {
+            if (rang.Money >= amount) {
+                Debug.Log("Номер некст ранга: " + index);
+                return index;
             }
+            index++;
+        }
+        Debug.Log("Игрок переплюнул ласт ранг");
+        return _rangPrefabs.Length-1;
+    }
+
+    private void PlayerBankOnBankChanged(long currentAmount) {
+        float percent = CalculatePointerPercent(currentAmount);
+        _fillAmounthMover.SetFillAmountWithPointer(_currentImageRt, _barWidth, _pointerIcon, percent, _pointerOffset);
+
+        
+        // Рекорд
+        Debug.Log($"currentAmount = {currentAmount}, _playerBank.PlayerRecord = {_playerBank.PlayerRecord}");
+        if (currentAmount >= _playerBank.PlayerRecord) {
+            RecalculateRecord();
         }
     }
-    
-#endregion
+
+    private void RecalculateRecord() {
+        float percent = CalculatePointerPercent(_playerBank.PlayerRecord);
+        _fillAmounthMover.SetFillAmountWithPointer(_recordImageRt, _barWidth, _recordPointerIcon, percent, _pointerOffset);
+    }
+
+    private float CalculatePointerPercent(long currentAmount) {
+        int nextRangIndex = GetNextRangIndex(currentAmount);
+        RangUnit nextRang =  _rangPrefabs[nextRangIndex];
+        
+        float previousX = nextRang.XValue 
+                          - 
+                          _fillAmounthMover.Calculate1PeaceWidth(_barWidth, _rangPrefabs.Length);
+
+        float nextX = nextRang.XValue;
+        
+        // Процент между предыдущим и  некст рангом
+        float percent = Mathf.Clamp01((float)currentAmount / nextRang.Money);
+        float newX = previousX + percent * (nextX - previousX);
+        return newX / _fillAmounthMover.CalculateXEnd(_barWidth);
+    }
 }

@@ -6,5 +6,7 @@ using UnityEngine;
 public class BotsManagerConfig : ScriptableObject {
     [field: SerializeField] public PairedValue<int> CountSpeakingBotsPerTime  { get; private set; }
     [field: SerializeField] public PairedValue<float> TimeToSpeak { get; private set; }
+    [field: SerializeField, Range(0,1)] public float ChanseToChangeSkin { get; private set; }
+    [field: SerializeField, Range(0,1)] public float ChanseToChangeNickname { get; private set; }
    
 }

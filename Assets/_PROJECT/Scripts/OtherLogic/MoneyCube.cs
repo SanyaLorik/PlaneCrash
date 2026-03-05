@@ -26,7 +26,7 @@ public class MoneyCube : MonoBehaviour {
     [Header("Настройка размеров ")]
     [SerializeField] private float _maxSide = 5f; 
     private float _baseSide = 1f;
-    [SerializeField] private float _baseAmount = 100000;
+    [SerializeField] private long _baseAmount = 100000;
     
     
     [Header("Настройка всего тайлинга ")]

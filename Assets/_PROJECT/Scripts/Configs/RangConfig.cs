@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class RangData {
     public int Id;
-    public int Money;
+    public long Money;
     public Sprite Sprite;
 }
 

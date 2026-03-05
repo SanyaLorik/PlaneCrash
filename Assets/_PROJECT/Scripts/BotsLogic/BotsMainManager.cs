@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +38,7 @@ public class BotsMainManager : IInitializable, IDisposable {
         BotSpeakCycleAsync(_tokenSource.Token).Forget();
         foreach (var bot in _bots) {
             bot.SetBotSkin(_skins.GetRandomElement());
+            bot.InitAnimator();
         }
     }
 
@@ -83,25 +85,41 @@ public class BotsMainManager : IInitializable, IDisposable {
         return Random.Range(from, to);
     }
     
-    private List<int> GetNewSpeakingBotsNumbers(int count) {
-        List<int> numbers = new List<int>();
-        int iterations = 0;
-        while (numbers.Count < count && iterations < 1000) {
-            int nextNumber = Random.Range(0, _bots.Count);
-            if (!numbers.Contains(nextNumber)) {
-                numbers.Add(nextNumber);
-                // Debug.Log("Номер выбранного бота: " + nextNumber);
-            }
-            iterations++;
+    private List<int> GetNewSpeakingBotsNumbers(int count)
+    {
+        List<int> available = new List<int>();
+
+        for (int i = 0; i < _bots.Count; i++)
+        {
+            if (_bots[i].State != BotState.Flight)
+                available.Add(i);
         }
-        // Debug.Log(iterations);
-        return numbers;
+
+        List<int> result = new List<int>();
+
+        count = Mathf.Min(count, available.Count);
+
+        for (int i = 0; i < count; i++)
+        {
+            int r = Random.Range(0, available.Count);
+            result.Add(available[r]);
+            available.RemoveAt(r);
+        }
+
+        return result;
     }
     
     
     private void PlayerOnChangeState(PlayerState state){
         if (state == PlayerState.Flight) {
-            SetFlightRandomBot();
+            int index = SetFlightRandomBot();
+            index = GetRandomIndexExcept(_bots.Count, index);
+            if (Random.value < _config.ChanseToChangeSkin) {
+                _bots[index].SetBotSkin(_skins.GetRandomElement());
+            }
+            if (Random.value < _config.ChanseToChangeNickname) {
+                _bots[index].ChangeNickname();
+            }
         }
 
         else if(state == PlayerState.Walking) {
@@ -109,10 +127,20 @@ public class BotsMainManager : IInitializable, IDisposable {
         }
     }
 
-    private void SetFlightRandomBot() {
+    private int GetRandomIndexExcept(int count, int previous) {
+        int random = Random.Range(0, count-1);
+
+        if (random >= previous) {
+            random++;
+        }
+        return random;
+    }
+
+    private int SetFlightRandomBot() {
         int randomBot = GetRandomBot();
         // Debug.Log("Выбран бот: " + randomBot);
         _bots[randomBot].ChangeBotState(BotState.Flight);
+        return randomBot;
     }
     
 

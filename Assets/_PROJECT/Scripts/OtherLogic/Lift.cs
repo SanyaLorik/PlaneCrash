@@ -6,7 +6,10 @@ public class Lift : MonoBehaviour {
     [SerializeField] private Transform _topPointMoneyCube;
     [SerializeField] private Transform _liftTransform;
 
-    [SerializeField] private float _timeToUp = 10f;
+    [SerializeField] private float _speed = 10f;
+    [SerializeField] private float _downSpeed = 10f;
+    [SerializeField] private float _waitTimerToGo = 0.7f;
+
 
     private Vector3 _liftDownPosition;
     private Vector3 _moneyEndPos => new Vector3(_liftDownPosition.x, _topPointMoneyCube.position.y, _liftDownPosition.z);
@@ -46,9 +49,9 @@ public class Lift : MonoBehaviour {
         {
             case LiftState.WaitingUp:
                 _waitTimer += Time.deltaTime;
-                if (_waitTimer >= 0.7f)
+                if (_waitTimer >= _waitTimerToGo)
                 {
-                    StartMove(_moneyEndPos, _timeToUp);
+                    StartMove(_moneyEndPos, _speed);
                     _state = LiftState.MovingUp;
                 }
                 break;
@@ -63,12 +66,12 @@ public class Lift : MonoBehaviour {
         }
     }
 
-    private void StartMove(Vector3 target, float duration) {
+    private void StartMove(Vector3 target, float speed) {
         _moveTimer = 0f;
         _startPos = _liftTransform.position;
         _targetPos = target;
         _previousPos = _startPos;
-        _currentMoveDuration = duration;
+        _currentMoveDuration = Mathf.Abs(_startPos.y - _targetPos.y) / speed;
     }
 
     private float _currentMoveDuration;
@@ -118,7 +121,7 @@ public class Lift : MonoBehaviour {
         if (collider.TryGetComponent(out PlayerMovement player) && player == _currentPlayer)
         {
             _currentPlayer = null;
-            StartMove(_liftDownPosition, _timeToUp * 0.5f);
+            StartMove(_liftDownPosition, _downSpeed);
             _state = LiftState.MovingDown;
             player.SetLiftState(false);
         }

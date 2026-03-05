@@ -3894,9 +3894,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HelpInstaller
   _nicknameSettings:
-    MaxCharsName: 8
+    MaxCharsName: 12
     MaxDigitCount: 3
-    ChanceToHaveNumber: 0.4
+    ChanceToHaveNumber: 0.58
     ChanceToRusName: 0.681
     ChanceToMale: 0.7
 --- !u!1 &43833937
@@ -8972,7 +8972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69503de105197bc479a4d89c093a88f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RangVisual
-  _offsetPointer: 12
+  _pointerOffset: 12
   _currentImageRt: {fileID: 1464692645}
   _recordImageRt: {fileID: 1130351279}
   _barWidth: {fileID: 1455810986}
@@ -8987,7 +8987,6 @@ MonoBehaviour:
   - {fileID: 1552723040}
   _planePrefab: {fileID: 7869807326704363594, guid: 551cf42eb94322148aff496c2fa2f6d6, type: 3}
   _planesParent: {fileID: 1624951451}
-  _moneyCubeBottomPoint: {fileID: 0}
 --- !u!1 &229980464
 GameObject:
   m_ObjectHideFlags: 0
@@ -32896,6 +32895,7 @@ MonoBehaviour:
   _firstJumpForce: 10
   _rewardForDistance: 10
   _scoreText: {fileID: 1504727071}
+  _maxTrampolineDistance: 69
 --- !u!65 &965443453
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41927,8 +41927,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.3, z: 1}
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!23 &1216808337
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -47479,7 +47479,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Lift
   _topPointMoneyCube: {fileID: 1092317776}
   _liftTransform: {fileID: 1413970937}
-  _timeToUp: 6
+  _speed: 30
+  _downSpeed: 60
+  _waitTimerToGo: 0.7
 --- !u!65 &1413970946
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69887,12 +69889,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1593474545385605674, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2754141193862462490, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9a32cdc850e16004f9dc67934fec0465, type: 3}
     - target: {fileID: 2754141193862462490, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
       propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3328859860794300799, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4359452892966271709, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
@@ -69914,6 +69924,10 @@ PrefabInstance:
     - target: {fileID: 4450214569311904389, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 312
+      objectReference: {fileID: 0}
+    - target: {fileID: 7375693465096551089, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7667708797286958025, guid: 8a54a56366752344ca00f7078ccc4684, type: 3}
       propertyPath: m_Size.y
@@ -75950,6 +75964,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7226608817169748087, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7298387429320890495, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -77670,6 +77688,10 @@ PrefabInstance:
       propertyPath: _cubeText
       value: 
       objectReference: {fileID: 1510127127}
+    - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
+      propertyPath: _baseAmount
+      value: 1000000
+      objectReference: {fileID: 0}
     - target: {fileID: 744897865116897679, guid: ec3422299b6ecdf45933c55192ba71bc, type: 3}
       propertyPath: _bottomPoint
       value: 

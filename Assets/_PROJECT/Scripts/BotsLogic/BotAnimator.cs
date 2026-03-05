@@ -10,10 +10,10 @@ public class BotAnimator : MonoBehaviour {
     private BotWander _botWander;
     
     
-    public void SetModel(SkinItemConfig skin) {
-        _animator.avatar = skin.Avatar;
+    public void SetModelAvatar(Avatar avatar) {
+        _animator.avatar = avatar;
     }
-
+    
     public void InitAnimator(BotFlight botFlight, BotWander botWander) {
         _botFlight =  botFlight;
         _botWander =  botWander;
@@ -21,8 +21,9 @@ public class BotAnimator : MonoBehaviour {
         _botWander.StartWandering += OnStartWandering;
         _botFlight.StartFlight += BotFlightOnStartFlight;
         _botFlight.LastBoostGet += BotFlightOnLastBoostGet;
-        
     }
+
+
 
     
     private void BotFlightOnStartFlight() {

@@ -23,8 +23,10 @@ public class RectTransformHelper {
 
     public float CalculateXEnd(RectTransform parent) => parent.rect.width;
 
-    
+    public float Calculate1PeaceWidth(RectTransform parent, float peaceCount) 
+        => parent.rect.width/peaceCount;
 
+    
     public float GetYBottomScreen(RectTransform container, RectTransform pointer) {
         Canvas.ForceUpdateCanvases();
        // return -container.parent.GetComponent<RectTransform>().rect.height / 2 - container.rect.height / 2;

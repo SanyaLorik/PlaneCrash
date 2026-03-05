@@ -12,6 +12,7 @@ public class Trampoline : MonoBehaviour {
     [SerializeField] private float _firstJumpForce = 10f; 
     [SerializeField] private float _rewardForDistance = 10f; 
     [SerializeField] private TMP_Text _scoreText; 
+    [SerializeField] private float _maxTrampolineDistance = 1000f; 
     
     private float _jumpForceCurrent;
     
@@ -44,6 +45,7 @@ public class Trampoline : MonoBehaviour {
         if (collider.TryGetComponent(out PlayerMovement player)) {
             _playerStateManager.ChangePlayerState(PlayerState.TrampolineJumping);
             _jumpForceCurrent *= _jumpMultiplier;
+            _jumpForceCurrent = Math.Clamp(_maxTrampolineDistance, 0f, _jumpForceCurrent);
             player.AddVerticalImpulse(_jumpForceCurrent);
             Debug.Log("Прыжок! " + _jumpForceCurrent);
             StartCoroutine(JumpPlusBabki(player.Transform));

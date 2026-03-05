@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Game Save PCSO
   m_EditorClassIdentifier: Assembly-CSharp::GameSavePCSO
   Save:
-    Money: 632257
-    RecordMoney: 1205560
+    Money: 1
+    RecordMoney: 2
     RecordDistance: 4000
     Upgrades:
     - Id: 0
@@ -28,25 +28,26 @@ MonoBehaviour:
     - Id: 0
       Level: 1
     - Id: 4
-      Level: 2
+      Level: 4
     - Id: 2
       Level: 3
     - Id: 3
-      Level: 5
+      Level: 8
     - Id: 1
       Level: 15
     Pets:
     - Id: 2
-      Count: 17
+      Count: 21
     - Id: 1
-      Count: 7
+      Count: 9
     - Id: 0
-      Count: 2
+      Count: 3
     Skins:
     - Id: freddy_skin
     - Id: kissie_skin
     - Id: foxy_skin
+    - Id: huggie_skin
     SkinWearId: kissie_skin
     TutorialPassed: 1
-    CountBatutJumps: 218
-    CountBaskets: 5
+    CountBatutJumps: 505
+    CountBaskets: 10

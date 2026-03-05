@@ -1,4 +1,5 @@
 using System;
+using Architecture_M;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -9,8 +10,8 @@ public class TextMission : IMission {
     [SerializeField] private float _duration;
     
     [Inject] private Narrator _narrator; 
-
     [Inject] private LocalizationDataPC _localization; 
+    [Inject] private ILanguageProvider _languageProvider; 
 
 
     public async UniTask RunAsync() {
