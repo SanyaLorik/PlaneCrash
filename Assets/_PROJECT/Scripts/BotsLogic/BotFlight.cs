@@ -101,6 +101,7 @@ public class BotFlight : FlightObject, IBotBehaviour {
             currentY = transform.position.y;
             await UniTask.WaitForFixedUpdate(token);
         }
+        LastBoostGet?.Invoke();
         // Чутка подождать пока полежит
         await BotIsFalledAsync(token);
     }

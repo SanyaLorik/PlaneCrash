@@ -1971,7 +1971,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1.71, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &3287943094097201901
 BoxCollider:
@@ -2072,7 +2072,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0424\u0418\u041D\u0418\u0428\u042C"
+  m_text: "\u0424\u0418\u041D\u0418\u0428\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
   m_sharedMaterial: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}

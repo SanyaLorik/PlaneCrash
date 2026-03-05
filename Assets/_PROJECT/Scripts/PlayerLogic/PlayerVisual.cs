@@ -2,8 +2,6 @@ using System;
 using System.Threading;
 using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using SanyaBeerExtension;
 using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour {
@@ -23,10 +21,6 @@ public class PlayerVisual : MonoBehaviour {
     
     private CancellationTokenSource _tokenSource;
 
-    
-    
-    
-    
     private void Start() {
         StopDizzy();
     }

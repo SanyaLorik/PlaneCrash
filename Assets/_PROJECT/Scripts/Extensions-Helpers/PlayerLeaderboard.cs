@@ -1,3 +1,4 @@
+using System.Collections;
 using NaughtyAttributes;
 using SanyaBeerExtension;
 using UnityEngine;
@@ -42,6 +43,7 @@ public class PlayerLeaderboard : MonoBehaviour {
         PlayersInit();
     }
     
+   
     private void PlayersInit() {
         _playerInTable = false;
         for (var i = 0; i < _playerLists.Length; i++) {

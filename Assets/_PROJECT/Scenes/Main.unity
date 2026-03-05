@@ -2520,6 +2520,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
+      propertyPath: _botSpeedCorrect
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
       value: -30
       objectReference: {fileID: 0}
@@ -3472,6 +3476,10 @@ PrefabInstance:
       propertyPath: _flightPosition
       value: 
       objectReference: {fileID: 1071896837}
+    - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
+      propertyPath: _botSpeedCorrect
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
       value: -30
@@ -16520,11 +16528,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 459441891}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &459527547 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1632409957424147168, guid: b32b89fa7d6f45c4299cefc92b905272, type: 3}
-  m_PrefabInstance: {fileID: 1734195756}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &462403695
 GameObject:
   m_ObjectHideFlags: 0
@@ -23936,7 +23939,7 @@ MonoBehaviour:
   _floor: {fileID: 1463149886}
   _leftWall: {fileID: 692059725}
   _rightWall: {fileID: 2075164504}
-  _cruiser: {fileID: 459527547}
+  _cruiser: {fileID: 220604356}
   _cruisePoint: {fileID: 1820414630}
   <MaxY>k__BackingField: 60
   <PlayerSpawnPoint>k__BackingField: {fileID: 1134289479}
@@ -29747,6 +29750,10 @@ PrefabInstance:
       propertyPath: _flightPosition
       value: 
       objectReference: {fileID: 1071896837}
+    - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
+      propertyPath: _botSpeedCorrect
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
       value: -30
@@ -66191,6 +66198,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
+      propertyPath: _botSpeedCorrect
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
       value: -30
       objectReference: {fileID: 0}
@@ -74072,7 +74083,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botSpeedCorrect
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
@@ -76085,10 +76096,18 @@ PrefabInstance:
       propertyPath: _flightCanvasContainerShow
       value: 
       objectReference: {fileID: 1049888218}
+    - target: {fileID: 6119948440115213316, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6988422949813744253, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: _cube
       value: 
       objectReference: {fileID: 2108755024}
+    - target: {fileID: 7706505091272424635, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: _playerAnimator
+      value: 
+      objectReference: {fileID: 3592600760854268682}
     - target: {fileID: 7706505091272424635, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: '_skinItemViews.Array.data[0]'
       value: 
@@ -76110,7 +76129,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 615182041}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3562223939233435145, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
@@ -78542,6 +78562,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2685003040153228485, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
   m_PrefabInstance: {fileID: 244287293507882582}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3592600760854268682 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8662448720901085388, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+  m_PrefabInstance: {fileID: 244287293507882582}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28d8f423089edb547a6011bd231c1c54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationManager
 --- !u!1 &3635489429198968244
 GameObject:
   m_ObjectHideFlags: 0
@@ -80898,7 +80929,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botSpeedCorrect
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight

@@ -249,6 +249,7 @@ public class PlayerMovement : FlightObject
         // Проверяем grounded ПОСЛЕ Move
         IsGrounded = _controller.isGrounded || _isOnLift;
 
+        
         // Прилипание к земле (анти-дребезг)
         if (IsGrounded)
         {

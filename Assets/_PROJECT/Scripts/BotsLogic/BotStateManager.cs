@@ -78,12 +78,12 @@ public class BotStateManager : MonoBehaviour {
         Debug.Log("Смена скина у бота");
         if (_skinInstance != null) {
             Destroy(_skinInstance);
-            _botAnimator.SetModelAvatar(null);
+            _botAnimator.SetModelData(null, null);
         }
         yield return null; // дождаться конца кадра
 
         _skinInstance = Instantiate(skin.SkinPrefab, _skinParent);
-        _botAnimator.SetModelAvatar(skin.Avatar);
+        _botAnimator.SetModelData(skin.Avatar, skin.SkinElementsController);
     }
     
 

@@ -25,6 +25,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
     
     public Action<bool> StartWandering;
     public Action OnJump;
+    public Action<bool> Grounded;
     
     
     private NavMeshAgent _agent;
@@ -33,8 +34,6 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
     private PlayerConfig _playerConfig;
     private CancellationTokenSource _botTokenSource;
     private Transform _chooseCube;
-    private Rigidbody _rb;
-
     
     
     [Inject] 
@@ -48,7 +47,6 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
 
     private void Awake() {
         _agent = GetComponent<NavMeshAgent>();
-        _rb =  GetComponent<Rigidbody>();
     }
 
     private void Start() {
@@ -70,6 +68,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         _botTokenSource?.Dispose();
         _botTokenSource =  null;
         _agent.SafeStop();
+        _walkingParticles.Stop();
         _agent.enabled = false;
         _eblaning = false;
     }
@@ -137,6 +136,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
 
         _jumpParticlesController.Play();
         OnJump?.Invoke();
+        Grounded?.Invoke(false);
         while (t < _jumpDuration) {
             t += Time.deltaTime;
             float normalized = t / _jumpDuration;
@@ -149,7 +149,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
 
             await UniTask.Yield(token);
         }
-
+        Grounded?.Invoke(true);
         _landParticleController.Play();
     }
 

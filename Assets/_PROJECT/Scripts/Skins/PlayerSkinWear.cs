@@ -11,6 +11,7 @@ public class PlayerSkinWear : MonoBehaviour {
     [SerializeField] private Animator _animator;
     [SerializeField] private SkinItemViewBase[] _skinItemViews;
     [SerializeField] private GameObject _currentSkin;
+    [SerializeField] private PlayerAnimator _playerAnimator;
    
     
 
@@ -39,36 +40,35 @@ public class PlayerSkinWear : MonoBehaviour {
    
    
     private string _idWearedSkin;
-   public void WearNewSkin(SkinItemConfig playerSkin) {
-       if (_idWearedSkin == playerSkin.Id) {
+    public void WearNewSkin(SkinItemConfig playerSkin) {
+        if (_idWearedSkin == playerSkin.Id) {
             return;
-       }
-       _idWearedSkin = playerSkin.Id;
-       
-       if (_currentSkin != null) {
-           Destroy(_currentSkin);
-       }
-       _currentSkin = _currentSkin = Instantiate(
-           playerSkin.SkinPrefab,
-           _playerWearSkinParent
-        );
+        }
+        _idWearedSkin = playerSkin.Id;
+    
+        // Создаем временный скин для мгновенного отображения
+        if (_currentSkin != null) {
+            Destroy(_currentSkin);
+        }
+    
+        var tempSkin = Instantiate(playerSkin.SkinPrefab, _playerWearSkinParent);
+        var tempController = tempSkin.GetComponent<SkinElementsController>();
+        _playerAnimator.SetSkinElementsController(tempController);
+    
+        // Запускаем корутину для финальной замены с аватаром
+        StartCoroutine(ChangeSkinRoutine(playerSkin, tempSkin));
+    }
 
-       StartCoroutine(ChangeSkinRoutine(playerSkin));
-       NewSkinWear?.Invoke();
-   }
-
-
-   private IEnumerator ChangeSkinRoutine(SkinItemConfig skin) {
-       _inputActivity.Disable();
-       if (_currentSkin != null) {
-           Destroy(_currentSkin);
-           _animator.avatar = null;
-       }
-       yield return null; // дождаться конца кадра
-
-       _currentSkin = Instantiate(skin.SkinPrefab, _playerWearSkinParent);
-
-       _animator.avatar = skin.Avatar;
-       _inputActivity.Enable();
-   }
+    private IEnumerator ChangeSkinRoutine(SkinItemConfig skin, GameObject tempSkin) {
+        _inputActivity.Disable();
+    
+        // Не уничтожаем tempSkin здесь, так как это и есть текущий скин
+        _animator.avatar = null;
+    
+        yield return null;
+    
+        // Обновляем аватар
+        _animator.avatar = skin.Avatar;
+        _inputActivity.Enable();
+    }
 }
