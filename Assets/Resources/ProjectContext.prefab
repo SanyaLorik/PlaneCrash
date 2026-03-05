@@ -161,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LocalizationInstallerPC
   _textDataSuitable:
     _textDatas:
-    - {fileID: 11400000, guid: b0531f82a3b9b1b41b98beb86946635c, type: 2}
+    - {fileID: 11400000, guid: c1359be207699a841aa7d122b7a227bd, type: 2}
     - {fileID: 11400000, guid: b1163c1cd269c4f469d7684d8d1fbf99, type: 2}
 --- !u!1 &3175899789519374987
 GameObject:
@@ -299,5 +299,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SaveInstallerPC
   _gameSaveSO: {fileID: 11400000, guid: fcfd205a8c72d3a45873ad7298846691, type: 2}
   _saveLoader: {fileID: 713748960083348270, guid: 40927a9db94fa494bb5534248c07ea2b, type: 3}
-  _saveLoadFromType: 1
+  _saveLoadFromType: 0
   _isClearSaveWhenStart: 0

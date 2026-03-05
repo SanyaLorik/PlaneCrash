@@ -42,10 +42,10 @@ public class Trampoline : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.TryGetComponent(out PlayerMovement player)) {
-            Debug.Log("Прыжок!");
             _playerStateManager.ChangePlayerState(PlayerState.TrampolineJumping);
             _jumpForceCurrent *= _jumpMultiplier;
             player.AddVerticalImpulse(_jumpForceCurrent);
+            Debug.Log("Прыжок! " + _jumpForceCurrent);
             StartCoroutine(JumpPlusBabki(player.Transform));
         }
     }

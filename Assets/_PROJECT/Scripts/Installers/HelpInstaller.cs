@@ -1,8 +1,19 @@
+using System;
 using UnityEngine;
 using Zenject;
 
+[Serializable]
+public class NicknameSettings {
+    public int MaxCharsName;
+    public int MaxDigitCount;
+    [Range(0,1), SerializeField] public float ChanceToHaveNumber;
+    [Range(0,1), SerializeField] public float ChanceToRusName;
+    [Range(0,1), SerializeField] public float ChanceToMale;
+}
+
+
 public class HelpInstaller: MonoInstaller {
-    
+    [SerializeField] private NicknameSettings _nicknameSettings;
     
     public override void InstallBindings() {
         BindMoneyVisualLogic();
@@ -10,16 +21,23 @@ public class HelpInstaller: MonoInstaller {
         ZonesBind();
         LevelBoundsBind();
         TrapsBoundsBind();
-
         TutorialBind();
         
         Container.Bind<ObjectPoolManager>().FromComponentInHierarchy().AsSingle();
-        Container.Bind<TutorialCompiller>().FromComponentInHierarchy().AsSingle();
         Container.Bind<NumberFormatter>().AsSingle();
         Container.Bind<RectTransformHelper>().AsSingle();
         
-        
+        BindSettings();
+        BindNicknameRandomizer();
+    }
+
+    private void BindSettings() {
         Container.Bind<SettingsManager>().FromComponentInHierarchy().AsSingle();
+    }
+
+    private void BindNicknameRandomizer() {
+        Container.BindInstance(_nicknameSettings);
+        Container.BindInterfacesAndSelfTo<NicknameRandomizer>().AsSingle();
     }
 
     private void BindMoneyVisualLogic() {
@@ -47,9 +65,6 @@ public class HelpInstaller: MonoInstaller {
     
     private void TutorialBind() {
         Container.Bind<Narrator>().FromComponentInHierarchy().AsSingle().NonLazy();
+        Container.Bind<TutorialCompiller>().FromComponentInHierarchy().AsSingle();
     }
-    
-    
-    
-
 }

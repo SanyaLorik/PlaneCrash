@@ -14,7 +14,6 @@ public class BotFlight : FlightObject, IBotBehaviour {
     [Range(0,1), SerializeField] private float _trueWayChance;
     [SerializeField] private float _fallingTime;
     [SerializeField] private float _botAngleToFlight;
-    [SerializeField] private float _botAngleToWalk;
     
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Collider _collider;

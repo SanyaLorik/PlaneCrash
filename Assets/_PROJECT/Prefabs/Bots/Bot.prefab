@@ -370,7 +370,6 @@ MonoBehaviour:
   _trueWayChance: 0.3
   _fallingTime: 10
   _botAngleToFlight: 0
-  _botAngleToWalk: 0
   _rb: {fileID: 1774364267822763429}
   _collider: {fileID: 6369799290924180892}
   _tpParticle: {fileID: 7383476967317639432}
@@ -409,8 +408,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 184da49d40432214eb101d198eaf3ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BotMonolog
-  _monolog: {fileID: 7641439034947648390}
+  _monologCloud: {fileID: 7641439034947648390}
   _monologText: {fileID: 660416264073911364}
+  _botNicknameText: {fileID: 2511671627374138039}
 --- !u!95 &1498412907739502201
 Animator:
   serializedVersion: 7

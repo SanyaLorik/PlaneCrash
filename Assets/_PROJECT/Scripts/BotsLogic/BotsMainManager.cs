@@ -22,7 +22,6 @@ public class BotsMainManager : IInitializable, IDisposable {
     private List<BotStateManager> _speakingBots = new();
     
 
-    [Inject]
     public BotsMainManager(List<BotStateManager> bots, PlayerStateManager playerStateManager, BotsManagerConfig config, SkinItemConfig[] skins) {
         _bots = bots;
         _skins = skins;
@@ -63,7 +62,7 @@ public class BotsMainManager : IInitializable, IDisposable {
     private void SetBotsSpeak() {
         int countSpeakBots = GetCountSpeakingBots();
         // Debug.Log("Говорящих ботов: " + countSpeakBots);
-        List<int> speakingBotsNumbers = BotsNumbers(countSpeakBots);
+        List<int> speakingBotsNumbers = GetNewSpeakingBotsNumbers(countSpeakBots);
         foreach (var bot in speakingBotsNumbers) {
             _speakingBots.Add(_bots[bot]);
             _bots[bot].SetBotSpeak();
@@ -84,7 +83,7 @@ public class BotsMainManager : IInitializable, IDisposable {
         return Random.Range(from, to);
     }
     
-    private List<int> BotsNumbers(int count) {
+    private List<int> GetNewSpeakingBotsNumbers(int count) {
         List<int> numbers = new List<int>();
         int iterations = 0;
         while (numbers.Count < count && iterations < 1000) {

@@ -72,8 +72,7 @@ public class BotStateManager : MonoBehaviour {
     public void SetBotStfu() {
         _botMonolog.Stfu();
     }
-    
-    
+
     
     private void BotFlightOnEndFlight() {
         ChangeBotState(BotState.Wandering);

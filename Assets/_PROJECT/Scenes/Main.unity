@@ -3893,6 +3893,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedf14827a514de4f86cc313ad6cbc89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HelpInstaller
+  _nicknameSettings:
+    MaxCharsName: 8
+    MaxDigitCount: 3
+    ChanceToHaveNumber: 0.4
+    ChanceToRusName: 0.681
+    ChanceToMale: 0.7
 --- !u!1 &43833937
 GameObject:
   m_ObjectHideFlags: 0
@@ -23777,9 +23783,9 @@ Transform:
   m_Children:
   - {fileID: 220604356}
   - {fileID: 1064869238889878792}
+  - {fileID: 205032296}
   - {fileID: 2048660191}
   - {fileID: 1555180597}
-  - {fileID: 205032296}
   - {fileID: 633086274}
   - {fileID: 1134289479}
   - {fileID: 1488212847}
@@ -32886,7 +32892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a272112ba0a57e408f84e453f76a01c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Trampoline
-  _jumpMultiplier: 1.04
+  _jumpMultiplier: 1.2
   _firstJumpForce: 10
   _rewardForDistance: 10
   _scoreText: {fileID: 1504727071}
@@ -51110,6 +51116,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
   m_PrefabInstance: {fileID: 1494918516}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1495057081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495057082}
+  m_Layer: 0
+  m_Name: TaskPointForTutor
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1495057082
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495057081}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -12.3, z: -5.57}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 572648806}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1497582776
 GameObject:
   m_ObjectHideFlags: 0
@@ -71034,6 +71071,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2114599638}
   - {fileID: 738633776}
   - {fileID: 115439196}
   - {fileID: 217896889}
@@ -71042,7 +71080,6 @@ Transform:
   - {fileID: 715291366}
   - {fileID: 2132733897}
   - {fileID: 229669525}
-  - {fileID: 2114599638}
   - {fileID: 873727987}
   - {fileID: 703353407}
   - {fileID: 893658164}
@@ -76319,7 +76356,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8705644069566830676, guid: 564e891e4a77c7d47aabc9d76c2c7b11, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1495057082}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 564e891e4a77c7d47aabc9d76c2c7b11, type: 3}
 --- !u!114 &312179139048593672 stripped
@@ -76406,6 +76446,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 36869424}
     - target: {fileID: 3159276835114270060, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: managedReferences[8231486178666217555]._delta
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3159276835114270060, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: managedReferences[8231486178666217555]._secToStay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3159276835114270060, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: 'managedReferences[4016510599091716167]._targets.Array.data[0]'
       value: 
       objectReference: {fileID: 1427290532}
@@ -76428,7 +76476,7 @@ PrefabInstance:
     - target: {fileID: 3159276835114270060, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: 'managedReferences[8231486178666217555]._targets.Array.data[0]'
       value: 
-      objectReference: {fileID: 1134289479}
+      objectReference: {fileID: 1495057082}
     - target: {fileID: 3159276835114270060, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: 'managedReferences[8231486178666217556]._targets.Array.data[0]'
       value: 

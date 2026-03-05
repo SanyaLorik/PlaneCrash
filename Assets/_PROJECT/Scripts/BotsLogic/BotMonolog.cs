@@ -5,24 +5,28 @@ using Zenject;
 using Random = UnityEngine.Random;
 
 public class BotMonolog : MonoBehaviour {
-    [SerializeField] private GameObject _monolog;
+    [SerializeField] private GameObject _monologCloud;
     [SerializeField] private TMP_Text _monologText;
+    [SerializeField] private TMP_Text _botNicknameText;
     
  
     [Inject] private LocalizationDataPC _localization; 
+    [Inject] private NicknameRandomizer _nicknameRandomizer; 
     
-    private void Awake() {
-        _monolog.DisactiveSelf();
+    private void Start() {
+        Stfu();
+        _botNicknameText.text = _nicknameRandomizer.GetRandomName();
     }
 
 
     public void SaySomething() {
-        _monolog.ActiveSelf();
+        _monologCloud.ActiveSelf();
         _monologText.text = _localization.BotsPhrases[Random.Range(0, _localization.BotsPhrases.Length)];
     }
 
     public void Stfu() {
-        _monolog.DisactiveSelf();
+        _monologCloud.DisactiveSelf();
+        _monologText.text = string.Empty;
     }
     
 }
