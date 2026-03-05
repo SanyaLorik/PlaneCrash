@@ -79,31 +79,44 @@ MonoBehaviour:
   Meters: m
   You: You
   TutorTranslates:
-  - Id: 0
-    Phrase: Hi! Let me show you how things work here.
-  - Id: 1
-    Phrase: "You\u2019ve got some starting cash. The main way to earn is by multiplying
-      your bet."
-  - Id: 2
-    Phrase: "Let\u2019s place your money. The longer you stay in this zone, the higher
-      your bet grows."
-  - Id: 3
-    Phrase: "Let\u2019s double your winnings. But remember - the higher the multiplier,
-      the farther you\u2019ll have to go."
-  - Id: 4
-    Phrase: Time to fly! Run to the start zone.
-  - Id: 5
-    Phrase: To make it to the end, grab boosts and dodge traps.
-  - Id: 6
-    Phrase: Your goal is the cruiser. Good luck!
-  - Id: 7
-    Phrase: Nice job! Congratulations on your win! Head back to spawn.
-  - Id: 8
-    Phrase: "Let\u2019s collect your reward for completing the missions."
-  - Id: 9
-    Phrase: "You can upgrade your character. Let\u2019s boost your distance reward."
-  - Id: 10
-    Phrase: You can also earn money in mini-games. Good luck out there!
+  - Id: hello
+    Phrase: Hey there! You've entered an amazing adventure world! Get ready for fun,
+      challenges and lots of coins!
+  - Id: movement
+    Phrase: 'Look how easy it is! Use the joystick or keyboard arrows to move. Try
+      taking a step forward!  '
+  - Id: flyExplain
+    Phrase: 'Your goal is to fly as far as you can, dodge traps and set new records
+      every time!  '
+  - Id: betZone
+    Phrase: 'See that glowing zone? The longer you stand there, the more coins you
+      get. Let''s try it!  '
+  - Id: x2Flight
+    Phrase: 'Now run to the x2 zone - it doubles your winnings!  '
+  - Id: startZone
+    Phrase: 'Run to the start zone, let''s begin our adventure!  '
+  - Id: fall
+    Phrase: 'Oops! Fell down? Don''t worry, it happens! Get up and try again - you
+      can do it!  '
+  - Id: success
+    Phrase: 'Yay! You did it! Your first coins are waiting. Go grab your reward!  '
+  - Id: shield
+    Phrase: 'Upgrade your shield. Now your coins are safe even in traps!  '
+  - Id: petOpening
+    Phrase: 'Cool pets and awesome skins live here! Wanna see? Let''s open your first
+      friend!  '
+  - Id: cutePet
+    Phrase: 'Wow! Look how cute! Now he''ll travel with you and help you earn more
+      coins!  '
+  - Id: miniGames
+    Phrase: 'Also here: parkour, basketball, trampolines and music games! All in
+      one place!  '
+  - Id: rangStatus
+    Phrase: 'Look at the screen: skills on the right, rank below. More coins = cooler
+      status!  '
+  - Id: goodLuck
+    Phrase: 'You''re a real player now! Tutorial done. Go explore, win and have fun.
+      Good luck, champ!  '
   UpgradeName:
   - Type: 0
     Name: Multiplier
