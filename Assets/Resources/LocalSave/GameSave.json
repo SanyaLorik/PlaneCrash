@@ -1,5 +1,5 @@
 {
-    "Money": 68762,
+    "Money": 72420,
     "RecordMoney": 100308,
     "RecordDistance": 4000,
     "Upgrades": [
@@ -24,22 +24,10 @@
             "Level": 7
         }
     ],
-    "Pets": [
-        {
-            "Id": 2,
-            "Count": 7
-        },
-        {
-            "Id": 0,
-            "Count": 3
-        }
-    ],
+    "Pets": [],
     "Skins": [
         {
             "Id": "kissie_skin"
-        },
-        {
-            "Id": "freddy_skin"
         },
         {
             "Id": "huggie_skin"
@@ -52,10 +40,19 @@
         },
         {
             "Id": "foxie_skin"
+        },
+        {
+            "Id": "guard_skin"
+        },
+        {
+            "Id": "freddy_skin"
+        },
+        {
+            "Id": "gihun_skin"
         }
     ],
-    "SkinWearId": "freddy_skin",
+    "SkinWearId": "tralalelo_skin",
     "TutorialPassed": true,
     "CountBatutJumps": 678,
-    "CountBaskets": 49
+    "CountBaskets": 51
 }
