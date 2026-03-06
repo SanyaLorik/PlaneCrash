@@ -14,16 +14,18 @@ public class  LevelBounds : MonoBehaviour {
     [field: SerializeField] public Transform BetZonePosition { get; private set; }
     [field: SerializeField] public Transform ParkourPosition { get; private set; }
 
-    
-    
-    public Vector3 RecalculateCruiserY() =>
-        new (_cruiser.position.x, _cruisePoint.position.y, _cruiser.position.z);
 
+
+    public Vector3 RecalculateCruiserY() {
+        CruiserPosition = new (_cruiser.position.x, _cruisePoint.position.y, _cruiser.position.z);
+        return CruiserPosition;
+    }
+
+    public Vector3 CruiserPosition { get; private set; }
 
     public float MinY { get;private set; }
     public float LeftX { get;private set; }
     public float RightX { get;private set; }
-    public Vector3 CruiserPosition { get;private set; }
     
     private void Awake() {
         MinY = _floor.position.y;

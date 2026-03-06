@@ -43,6 +43,7 @@ public class BotAnimator : MonoBehaviour {
     }
 
     private void BotFlightOnLastBoostGet() {
+        Debug.Log("Бот начал OnStartWandering");
         OnStartWandering(false);
         _skinController.EnableShadow();
     }

@@ -66,12 +66,12 @@ public class BotStateManager : MonoBehaviour {
     }
 
     private GameObject _skinInstance;
-    public void SetBotSkin(SkinItemConfig skinItemConfig) {
-        StartCoroutine(ChangeSkinRoutine(skinItemConfig));
-    }
 
     public void InitAnimator() {
         _botAnimator.InitAnimator(_botFlight, _botWander);
+    }
+    public void SetBotSkin(SkinItemConfig skinItemConfig) {
+        StartCoroutine(ChangeSkinRoutine(skinItemConfig));
     }
     
     private IEnumerator ChangeSkinRoutine(SkinItemConfig skin) {
@@ -83,7 +83,8 @@ public class BotStateManager : MonoBehaviour {
         yield return null; // дождаться конца кадра
 
         _skinInstance = Instantiate(skin.SkinPrefab, _skinParent);
-        _botAnimator.SetModelData(skin.Avatar, skin.SkinElementsController);
+        var skinItem = _skinInstance.GetComponent<SkinElementsController>();
+        _botAnimator.SetModelData(skin.Avatar, skinItem);
     }
     
 

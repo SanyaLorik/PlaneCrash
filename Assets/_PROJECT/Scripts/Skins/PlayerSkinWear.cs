@@ -40,6 +40,7 @@ public class PlayerSkinWear : MonoBehaviour {
    
    
     private string _idWearedSkin;
+    private Coroutine _changeSkinRoutine;
     public void WearNewSkin(SkinItemConfig playerSkin) {
         if (_idWearedSkin == playerSkin.Id) {
             return;
@@ -51,15 +52,23 @@ public class PlayerSkinWear : MonoBehaviour {
             Destroy(_currentSkin);
         }
     
+        
         var tempSkin = Instantiate(playerSkin.SkinPrefab, _playerWearSkinParent);
+        _currentSkin = tempSkin;
+
         var tempController = tempSkin.GetComponent<SkinElementsController>();
         _playerAnimator.SetSkinElementsController(tempController);
     
         // Запускаем корутину для финальной замены с аватаром
-        StartCoroutine(ChangeSkinRoutine(playerSkin, tempSkin));
+        if (_changeSkinRoutine != null)
+        {
+            StopCoroutine(_changeSkinRoutine);
+        }
+
+        _changeSkinRoutine = StartCoroutine(ChangeSkinRoutine(playerSkin));
     }
 
-    private IEnumerator ChangeSkinRoutine(SkinItemConfig skin, GameObject tempSkin) {
+    private IEnumerator ChangeSkinRoutine(SkinItemConfig skin) {
         _inputActivity.Disable();
     
         // Не уничтожаем tempSkin здесь, так как это и есть текущий скин
@@ -70,5 +79,6 @@ public class PlayerSkinWear : MonoBehaviour {
         // Обновляем аватар
         _animator.avatar = skin.Avatar;
         _inputActivity.Enable();
+        NewSkinWear?.Invoke();
     }
 }

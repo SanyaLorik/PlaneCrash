@@ -52,10 +52,14 @@ public class CameraOrbitalController : MonoBehaviour {
     private void OnEnable() {
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
         _settings.CameraValueChanged += SettingsOnCameraValueChanged;
+        SystemEvents.OpenCanvasWindow += SystemEventsOnOpenCanvasWindow;
+    }
+
+    private void SystemEventsOnOpenCanvasWindow(bool windowIsOpen) {
+        _allowRotation = !windowIsOpen;
     }
 
 
-    
     private void Start() {
         SettingsOnCameraValueChanged(_settings.CameraZoomValue);
         

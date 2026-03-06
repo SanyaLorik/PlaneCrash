@@ -15,7 +15,7 @@ public class ZoneManager : MonoBehaviour {
     public event Action<float> ChooseBet;
 
     public float BetMultiplier { get; private set; } = 1f;
-    public float BetAmount { get; private set; }
+    public long BetAmount { get; private set; }
     
     public float CruiserSpawnDistance { get; private set; } 
     public float DistanceToCruise { get; private set; } 
@@ -25,15 +25,16 @@ public class ZoneManager : MonoBehaviour {
     [Inject] private PlayerStateManager _playerStateManager;
 
     private void Start() {
-        _moneyCube.SetMoneyAmount(0);
+        _moneyCube.SetMoneyAmountForBet(0);
     }
 
 
 
-    public void ChangeBet(float newBet) {
+    public void ChangeBet(long newBet) {
+        Debug.Log("newBet " + newBet);
         BetAmount = newBet;
         ChooseBet?.Invoke(BetAmount);
-        _moneyCube.SetMoneyAmount(BetAmount);
+        _moneyCube.SetMoneyAmountForBet(BetAmount);
     }
 
 
@@ -58,7 +59,7 @@ public class ZoneManager : MonoBehaviour {
 
         
         newCruiserSpawnPos = _levelBounds.RecalculateCruiserY();
-        _moneyCube.SetMoneyAmount(BetAmount * BetMultiplier);
+        _moneyCube.SetMoneyAmountForBet(BetAmount * (int)BetMultiplier);
         _boostSpawner.SpawnBoosts(newCruiserSpawnPos);
         ChooseMultiplier?.Invoke(BetMultiplier);
     }

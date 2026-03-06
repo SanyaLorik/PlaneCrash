@@ -30,7 +30,7 @@ public class PlayerBank : MonoBehaviour {
 
     private void ChangeMoney(long newMoney, bool save = true) {
         PlayerCapital += newMoney;
-        _cube.SetMoneyAmount(PlayerCapital);
+        _cube.SetMoneyAmountForBank(PlayerCapital);
 
         if (PlayerCapital < 0)
             PlayerCapital = 0;

@@ -3,21 +3,20 @@ using Zenject;
 
 public class RangVisual : MonoBehaviour {
     [SerializeField] private float _pointerOffset = 12f;
-    
-    
     [SerializeField] private RectTransform _currentImageRt;
     [SerializeField] private RectTransform _recordImageRt;
-
-    
     [SerializeField] private RectTransform _barWidth;
     [SerializeField] private RectTransform _pointerIcon;
     [SerializeField] private RectTransform _recordPointerIcon;
-    
     [SerializeField] private RangUnit[] _rangPrefabs;
 
     [Header("Поверхности")]
     [SerializeField] private GameObject _planePrefab;
     [SerializeField] private Transform _planesParent;
+    
+    [Header("Куча БАБЛА ЕБАНОГО")]
+    [SerializeField] private Transform _cubeRoof;
+    
     
     [Inject] private PlayerBank _playerBank;
     [Inject] private RangConfig _config;
@@ -42,14 +41,14 @@ public class RangVisual : MonoBehaviour {
 
     private void SetPlanes() {
         Debug.Log("Установка рангов");
-        foreach (var rang in _config.Rangs) {
-            float planeY = _moneyCube.GetCubeHeight(rang.Money);
-            Vector3 position = new Vector3(_planesParent.transform.position.x, planeY, _planesParent.transform.position.z);
-            // Debug.Log($"Для ранга: {rang.Name} высота будет: {planeY}");
+        Debug.Log("Ласт точка в " + _cubeRoof);
+        for (var i = 1; i <= _config.Rangs.Count; i++) {
+            float percent = (float)i / _config.Rangs.Count;
+            Vector3 position = new Vector3(_planesParent.transform.position.x, _cubeRoof.position.y * percent, _planesParent.transform.position.z);
             Instantiate(_planePrefab, position, Quaternion.identity, _planesParent);
-            // plane.transform.position = position;
+            Debug.Log("Новый ранг платформа в " + position);
+            
         }
-        
     }
     
     private void InstanceRangs() {
@@ -103,11 +102,9 @@ public class RangVisual : MonoBehaviour {
         int nextRangIndex = GetNextRangIndex(currentAmount);
         RangUnit nextRang =  _rangPrefabs[nextRangIndex];
         
-        float previousX = nextRang.XValue 
-                          - 
-                          _fillAmounthMover.Calculate1PeaceWidth(_barWidth, _rangPrefabs.Length);
-
         float nextX = nextRang.XValue;
+        float previousX = nextX - _fillAmounthMover.Calculate1PeaceWidth(_barWidth, _rangPrefabs.Length);
+
         
         // Процент между предыдущим и  некст рангом
         float percent = Mathf.Clamp01((float)currentAmount / nextRang.Money);

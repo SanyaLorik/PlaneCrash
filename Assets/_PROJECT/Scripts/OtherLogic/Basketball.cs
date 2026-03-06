@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Architecture_M;
 using Cysharp.Threading.Tasks;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -42,7 +41,7 @@ public class Basketball : MonoBehaviour {
     
     
     private Vector3 _hoopPosition;
-
+    private float _targetBounceHeight;
 
     [Inject] private Money2dSpawner _money2dSpawner;
     [Inject] private PlayerBank _bank;
@@ -55,6 +54,8 @@ public class Basketball : MonoBehaviour {
         
         _hoopPosition = _hoop.position;
         _currentReward = _rewardForScore;
+        _rb.useGravity = false;
+        _targetBounceHeight = _spawnPointTransform.position.y;
     }
 
 
@@ -92,6 +93,20 @@ public class Basketball : MonoBehaviour {
                 SetBouncy(false);
                 KickBall(true);
             }
+        }
+    }
+    
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.contacts[0].normal.y > 0.5f) // удар о пол
+        {
+            float g = Mathf.Abs(Physics.gravity.y * _gravityMultiplier);
+
+            float neededVelocity = Mathf.Sqrt(2f * g * _targetBounceHeight);
+
+            Vector3 v = _rb.linearVelocity;
+            v.y = neededVelocity;
+
+            _rb.linearVelocity = v;
         }
     }
 

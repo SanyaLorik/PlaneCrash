@@ -1,4 +1,5 @@
 ﻿using System;
+using SanyaBeerExtension;
 using UnityEngine;
 using IInitializable = Zenject.IInitializable;
 using Random = UnityEngine.Random;
@@ -8,7 +9,6 @@ enum NickType
     Simple,
     NameNumber,
     NameLast,
-    PrefixName,
     NameSuffix,
     TwoWords,
     Leet,
@@ -26,29 +26,15 @@ public class NicknameRandomizer : IInitializable
     private string[] _enMaleFirst;
     private string[] _enFemaleFirst;
     private string[] _enLast;
-
+    
     private string[] _numberCombines;
+    
+    private string[] _suffix;
+    private string[] _memWords;
+    private string[] _linkWords;
 
-    private string[] _prefix =
-    {
-        "Ultra","Mega","Dark","Real","Top","Pro","xX"
-    };
-
-    private string[] _suffix =
-    {
-        "Pro","YT","TV","GG","LOL","EZ"
-    };
-
-    private string[] _memWords =
-    {
-        "Pelmen","Borsh","Kefir","Bread","Ninja","Dragon","Slav"
-    };
-
-    private string[] _linkWords =
-    {
-        "The","Of","King","Lord","Mr"
-    };
-
+    
+    
     public NicknameRandomizer(NicknameSettings settings)
     {
         _settings = settings;
@@ -105,8 +91,6 @@ public class NicknameRandomizer : IInitializable
 
             NickType.NameLast => first + "_" + last,
 
-            NickType.PrefixName => GetRandom(_prefix) + first,
-
             NickType.NameSuffix => first + GetRandom(_suffix),
 
             NickType.TwoWords => first + GetRandom(_memWords),
@@ -126,27 +110,22 @@ public class NicknameRandomizer : IInitializable
     
     private string BuildGamerTag(string first)
     {
-        int variant = Random.Range(0, 6);
+        int variant = Random.Range(0, 4);
 
         string num = GetNumber();
         string mem = GetRandom(_memWords);
         string link = GetRandom(_linkWords);
-        string prefix = GetRandom(_prefix);
         string suffix = GetRandom(_suffix);
 
         return variant switch
         {
-            0 => "xX_" + first + "_" + num + "_Xx",
+            1 => first + "_" + mem,
 
-            1 => prefix + first + num,
+            2 => first + link + mem,
 
-            2 => first + "_" + mem,
+            3 => link + "_" + first + "_" + num,
 
-            3 => first + link + mem,
-
-            4 => link + "_" + first + "_" + num,
-
-            5 => first + "_" + suffix,
+            4 => first + "_" + suffix,
 
             _ => first
         };
@@ -160,8 +139,7 @@ public class NicknameRandomizer : IInitializable
             1f, // Simple
             1f, // NameNumber
             1f, // NameLast
-            0.5f, // PrefixName
-            0.5f, // NameSuffix
+            0.2f, // NameSuffix
             0.8f, // TwoWords
             0.5f, // Leet
             0.3f  // GamerTag (xX_…Xx)
@@ -184,9 +162,8 @@ public class NicknameRandomizer : IInitializable
     
     
 
-    private string GetRandom(string[] arr)
-    {
-        return arr[Random.Range(0, arr.Length)];
+    private string GetRandom(string[] arr) {
+        return arr.GetRandomElement();
     }
 
     private string GetNumber()
@@ -228,8 +205,17 @@ public class NicknameRandomizer : IInitializable
 
     private string Trim(string s)
     {
-        if (s.Length <= _settings.MaxCharsName) return s;
-        return s.Substring(0, _settings.MaxCharsName);
+        int max = _settings.MaxCharsName;
+
+        if (s.Length <= max)
+            return s;
+
+        int spaceIndex = s.LastIndexOf(' ', max);
+
+        if (spaceIndex > 0)
+            return s.Substring(0, spaceIndex);
+
+        return s.Substring(0, max);
     }
 
     private string[] LoadFile(string path)
@@ -241,6 +227,7 @@ public class NicknameRandomizer : IInitializable
             .Split('\n', StringSplitOptions.RemoveEmptyEntries);
     }
 
+
     private void GetFilesStrings() {
         _ruMaleFirst = LoadFile("PlayerNames/ru_male_first");
         _ruMaleLast = LoadFile("PlayerNames/ru_male_last");
@@ -250,6 +237,12 @@ public class NicknameRandomizer : IInitializable
         _enFemaleFirst = LoadFile("PlayerNames/en_female_first");
         _enLast = LoadFile("PlayerNames/en_last");
         _numberCombines = LoadFile("PlayerNames/number_combine");
+        
+        // GET
+        _suffix = LoadFile("PlayerNames/Extension/suffixes");
+        _memWords = LoadFile("PlayerNames/Extension/mem_words");
+        _linkWords = LoadFile("PlayerNames/Extension/link_words");
+        
     }
 
 }

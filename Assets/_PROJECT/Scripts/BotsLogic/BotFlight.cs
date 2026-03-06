@@ -94,14 +94,17 @@ public class BotFlight : FlightObject, IBotBehaviour {
     
     private async UniTaskVoid BotFlightCycleAsync(CancellationToken token) {
         // Чуть выше пола
-        float minY = _levelBounds.MinY+2f; // чуть выше шоб рост
+        float minY = _levelBounds.MinY + 1f; // чуть выше шоб рост
         float currentY = minY+1;
-        while (currentY > minY && !token.IsCancellationRequested) {
+        var cruiserPose = _levelBounds.CruiserPosition.y;
+        while (currentY > minY && !token.IsCancellationRequested && !Mathf.Approximately(transform.position.y, cruiserPose)) {
             FlightLogic();
             currentY = transform.position.y;
             await UniTask.WaitForFixedUpdate(token);
         }
+        // Если упал
         LastBoostGet?.Invoke();
+        Debug.LogError("LastBoost Get");
         // Чутка подождать пока полежит
         await BotIsFalledAsync(token);
     }
