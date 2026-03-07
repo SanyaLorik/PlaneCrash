@@ -43,6 +43,9 @@ public class Basketball : MonoBehaviour {
     private Vector3 _hoopPosition;
     private float _targetBounceHeight;
 
+
+    public event Action BallCollision;
+
     [Inject] private Money2dSpawner _money2dSpawner;
     [Inject] private PlayerBank _bank;
     [Inject] private UpgradesCalculator _upgradesCalculator;
@@ -97,6 +100,7 @@ public class Basketball : MonoBehaviour {
     }
     
     private void OnCollisionEnter(Collision collision) {
+        BallCollision?.Invoke();
         if (collision.contacts[0].normal.y > 0.5f) // удар о пол
         {
             float g = Mathf.Abs(Physics.gravity.y * _gravityMultiplier);

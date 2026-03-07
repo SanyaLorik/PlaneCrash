@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c82936931e992644aaf1500c865c36a7, type: 3}
-  m_Name: BoostSoundConfig
+  m_Name: TrampolineSoundConfig
   m_EditorClassIdentifier: Assembly-CSharp::SoundConfig
-  <SoundType>k__BackingField: 2
+  <SoundType>k__BackingField: 10
   <AudioClips>k__BackingField:
-  - {fileID: 8300000, guid: f46792824171e1543ad46f0558264f2f, type: 3}
+  - {fileID: 8300000, guid: 9af306bef4d9c094aacc23c17e818213, type: 3}
   <Volume>k__BackingField: 1
   <PitchDiapasone>k__BackingField:
     <From>k__BackingField: 0.9
-    <To>k__BackingField: 1.1
+    <To>k__BackingField: 1.4
   <MixerGroup>k__BackingField: {fileID: 750195993760700612, guid: 4dbd4f10ca94e134a8a090e3394d5f41, type: 2}
   <Loop>k__BackingField: 0
-  <SpatialBlend>k__BackingField: 0.754
+  <SpatialBlend>k__BackingField: 1

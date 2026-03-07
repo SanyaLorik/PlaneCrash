@@ -58,6 +58,10 @@ public class PlayerAnimator : MonoBehaviour {
             PlayerMovementOnRunningStateChanged(false);
             _skinElementsController.EnableShadow();
         }
+        
+        else if (state == PlayerState.TrampolineJumping) {
+            _skinElementsController.DisableShadow();
+        }
     }
     
     

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using SanyaBeerExtension;
 using UnityEngine;
 
 public class MusicBlock  : MonoBehaviour {
@@ -8,6 +9,7 @@ public class MusicBlock  : MonoBehaviour {
     [SerializeField] private string _compositionName;
     [SerializeField] private float _brightnessMultiplier;
     [SerializeField] private float _durationToShade;
+    [SerializeField] private PairedValue<float> _pitchDiapasone;
 
     
     private Material _mat;
@@ -30,6 +32,7 @@ public class MusicBlock  : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.TryGetComponent(out PlayerMovement _)) {
+            _audioSource.pitch = UnityEngine.Random.Range(_pitchDiapasone.From, _pitchDiapasone.To);
             _audioSource.Play();
             Debug.Log("Проигрывание " + _compositionName);
 

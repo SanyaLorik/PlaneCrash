@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c82936931e992644aaf1500c865c36a7, type: 3}
-  m_Name: BoostSoundConfig
+  m_Name: BallSoundConfig
   m_EditorClassIdentifier: Assembly-CSharp::SoundConfig
-  <SoundType>k__BackingField: 2
+  <SoundType>k__BackingField: 9
   <AudioClips>k__BackingField:
-  - {fileID: 8300000, guid: f46792824171e1543ad46f0558264f2f, type: 3}
-  <Volume>k__BackingField: 1
+  - {fileID: 8300000, guid: 6d2f5234d7719c84b90f3cef6a80730c, type: 3}
+  <Volume>k__BackingField: 0.701
   <PitchDiapasone>k__BackingField:
-    <From>k__BackingField: 0.9
-    <To>k__BackingField: 1.1
+    <From>k__BackingField: 1.7
+    <To>k__BackingField: 2
   <MixerGroup>k__BackingField: {fileID: 750195993760700612, guid: 4dbd4f10ca94e134a8a090e3394d5f41, type: 2}
   <Loop>k__BackingField: 0
-  <SpatialBlend>k__BackingField: 0.754
+  <SpatialBlend>k__BackingField: 1

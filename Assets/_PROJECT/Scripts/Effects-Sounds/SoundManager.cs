@@ -27,6 +27,12 @@ public class SoundManager : MonoBehaviour {
     [SerializeField] private AudioMixerGroup _musicMixerGroup;
     [SerializeField] private AudioMixerGroup _soundMixerGroup;
     
+    [Header("Mini-games objects")]
+    [SerializeField] private Trampoline _trampoline;
+    [SerializeField] private Basketball _basket;
+    [SerializeField] private AudioSource _trampolineSource;
+    [SerializeField] private AudioSource _basketballSource;
+    
     
     private Dictionary<SoundType, SoundConfig> _soundConfigDict = new ();
     private List<AudioSource> _sources = new();
@@ -75,6 +81,9 @@ public class SoundManager : MonoBehaviour {
         // Settings
         _settings.MusicValueChanged += SettingsOnMusicValueChanged;
         _settings.EffectsValueChanged += SettingsOnEffectsValueChanged;
+        // Minigames
+        _basket.BallCollision += () => PlaySoundByType(SoundType.Ball);
+        _trampoline.OnTrampolineJump += () => PlaySoundByType(SoundType.Trampoline);
     }
 
     private void Start() {
@@ -112,6 +121,7 @@ public class SoundManager : MonoBehaviour {
     
     private void PlayerMovementOnFloored() {
         // Можно звук приземления
+        PlaySoundByType(SoundType.Step);
         PlayerMovementOnRunningStateChanged(_playerMovement.IsRunning);
     }
 
@@ -144,16 +154,22 @@ public class SoundManager : MonoBehaviour {
             Debug.Log("Нет звука с типом " + type);
             return;
         }
-
-        AudioClip clip = config.AudioClips.GetRandomElement();
-        AudioSource source = GetFreeSource();
+        var clip = GetSource(config);
+        
+        AudioSource source = GetFreeSource(type);
         
         source.clip = clip;
         source.volume = config.Volume;
         source.pitch = UnityEngine.Random.Range(config.PitchDiapasone.From, config.PitchDiapasone.To);
         source.loop = config.Loop;
+        source.spatialBlend = config.SpatialBlend;
         source.outputAudioMixerGroup = config.MixerGroup;
         source.Play();
+    }
+
+    private static AudioClip GetSource(SoundConfig config) {
+        AudioClip clip = config.AudioClips.GetRandomElement();
+        return clip;
     }
 
 
@@ -172,7 +188,15 @@ public class SoundManager : MonoBehaviour {
         source.Play();
     }
 
-    private AudioSource GetFreeSource() {
+    private AudioSource GetFreeSource(SoundType type) {
+
+        if (type == SoundType.Ball) {
+            return _basketballSource;
+        }
+        if (type == SoundType.Trampoline) {
+            return _trampolineSource;
+        }
+        
         foreach (var source in _sources) {
             if (!source.isPlaying)
                 return source;

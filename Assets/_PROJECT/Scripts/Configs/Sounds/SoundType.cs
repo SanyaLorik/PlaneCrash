@@ -7,5 +7,7 @@
     Unlock,
     UIButton,
     MainBackground,
-    FlyBackground
+    FlyBackground,
+    Ball,
+    Trampoline
 }

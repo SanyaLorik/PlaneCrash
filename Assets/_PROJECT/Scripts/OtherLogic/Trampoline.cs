@@ -23,6 +23,8 @@ public class Trampoline : MonoBehaviour {
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] protected IGameSave<GameSavePC> _gameSave;
     
+    public event Action OnTrampolineJump;
+    
 
     private void Start() {
         _jumpForceCurrent = _firstJumpForce;
@@ -43,6 +45,7 @@ public class Trampoline : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.TryGetComponent(out PlayerMovement player)) {
+            OnTrampolineJump?.Invoke();
             _playerStateManager.ChangePlayerState(PlayerState.TrampolineJumping);
             _jumpForceCurrent *= _jumpMultiplier;
             _jumpForceCurrent = Math.Clamp(_maxTrampolineDistance, 0f, _jumpForceCurrent);
