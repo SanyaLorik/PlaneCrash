@@ -16,6 +16,7 @@ public class LocalizationDataPC : LocalizationData
     [Header("UI")]
     public string IsWeared;
     public string TakeAPet;
+    public string Receive;
    
     
     [Header("Tasks")]
@@ -42,6 +43,7 @@ public class LocalizationDataPC : LocalizationData
     public UpgradeName[]  UpgradeName;
     public string[] BotsPhrases;
     public SkinName[]  SkinNameTranslates;
+    public RangName[]  RangNameTranslates;
     
     
     
@@ -49,6 +51,15 @@ public class LocalizationDataPC : LocalizationData
         foreach (var skinNameTranslate in SkinNameTranslates) {
             if (skinNameTranslate.Id == id) {
                 return skinNameTranslate.Name;
+            }
+        }
+        return null;
+    }
+    
+    public string GetRangName(int id) {
+        foreach (var rangNameTranslate in RangNameTranslates) {
+            if (rangNameTranslate.Id == id) {
+                return rangNameTranslate.Name;
             }
         }
         return null;
@@ -112,5 +123,12 @@ public class UpgradeName {
 [Serializable]
 public class SkinName {
     public string Id;
+    public string Name;
+}
+
+
+[Serializable]
+public class RangName {
+    public int Id;
     public string Name;
 }

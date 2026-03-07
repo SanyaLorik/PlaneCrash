@@ -58,9 +58,9 @@ public class BetAccumulation : MonoBehaviour  {
         if (betAmount == 0) {
             _elapsedTime = 0f;
         }
-        while (!token.IsCancellationRequested && _elapsedTime < _accumulateDuration && !Mathf.Approximately(betAmount, playerMoney)) {
+        while (!token.IsCancellationRequested && _elapsedTime < _accumulateDuration && betAmount != playerMoney) {
             float t = _elapsedTime / _accumulateDuration;
-            betAmount = (int)(_moneyCurve.Evaluate(t) * playerMoney);
+            betAmount = (long)(_moneyCurve.Evaluate(t) * playerMoney);
             _elapsedTime += Time.deltaTime;
             _zoneManager.ChangeBet(betAmount);
             await UniTask.Yield(token);

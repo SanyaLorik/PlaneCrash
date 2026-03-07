@@ -1247,6 +1247,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5791307039757829197}
+  - component: {fileID: 817438849128705899}
+  - component: {fileID: 3694426810958122285}
   m_Layer: 0
   m_Name: Rank
   m_TagString: Untagged
@@ -1272,6 +1274,45 @@ Transform:
   - {fileID: 8953964390235914063}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &817438849128705899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6589372475977620580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1184b3d5976942a0bf61ef4baa855477, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RangPlatformUnit
+  _moneyCountText: {fileID: 8965102668122093589}
+  _moneyText: {fileID: 4606267617571094511}
+  _rangNameText: {fileID: 267696307537755028}
+  _rangImg: {fileID: 7810818820759183309}
+  _rangId: 0
+  _trigger: {fileID: 7722250538399464552}
+--- !u!65 &3694426810958122285
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6589372475977620580}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.3361435, y: 0.7724056, z: 1.2450256}
+  m_Center: {x: 0.6048298, y: 0.21257114, z: 1.5150375}
 --- !u!1 &6613772132449737648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1637,6 +1678,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76489bb24cbbdc646baddb3c0b48623a, type: 3}
+--- !u!114 &7722250538399464552 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2605908281447598857, guid: 76489bb24cbbdc646baddb3c0b48623a, type: 3}
+  m_PrefabInstance: {fileID: 5692825035462457185}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d66d662139f20144b91e62d9e231e22e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DelayedTrigger
 --- !u!4 &8169841260421380102 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4495121714141613927, guid: 76489bb24cbbdc646baddb3c0b48623a, type: 3}

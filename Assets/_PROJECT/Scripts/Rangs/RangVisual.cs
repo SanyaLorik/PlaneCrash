@@ -11,11 +11,12 @@ public class RangVisual : MonoBehaviour {
     [SerializeField] private RangUnit[] _rangPrefabs;
 
     [Header("Поверхности")]
-    [SerializeField] private GameObject _planePrefab;
+    [SerializeField] private RangPlatformUnit[] _rangPlanes;
     [SerializeField] private Transform _planesParent;
     
     [Header("Куча БАБЛА ЕБАНОГО")]
     [SerializeField] private Transform _cubeRoof;
+    [SerializeField] private Transform _cubeFloor;
     
     
     [Inject] private PlayerBank _playerBank;
@@ -41,16 +42,27 @@ public class RangVisual : MonoBehaviour {
 
     private void SetPlanes() {
         Debug.Log("Установка рангов");
-        Debug.Log("Ласт точка в " + _cubeRoof);
-        for (var i = 1; i <= _config.Rangs.Count; i++) {
-            float percent = (float)i / _config.Rangs.Count;
-            Vector3 position = new Vector3(_planesParent.transform.position.x, _cubeRoof.position.y * percent, _planesParent.transform.position.z);
-            Instantiate(_planePrefab, position, Quaternion.identity, _planesParent);
-            Debug.Log("Новый ранг платформа в " + position);
-            
+        Debug.Log("Ласт точка в " + _cubeRoof.position);
+        for (var i = 0; i < _config.Rangs.Count; i++) {
+            InstancePlane(i);
         }
     }
-    
+
+    private void InstancePlane(int i) {
+        float percent = (i + 1f) / _config.Rangs.Count;
+        float y = Mathf.Lerp(_cubeFloor.position.y, _cubeRoof.position.y, percent);    
+        
+        
+        Vector3 position = new Vector3(
+            _rangPlanes[i].transform.position.x, 
+            y, 
+            _rangPlanes[i].transform.position.z
+        );
+        _rangPlanes[i].transform.position = position;
+            
+        Debug.Log("Новый ранг платформа в " + position);
+    }
+
     private void InstanceRangs() {
         float xEnd = _fillAmounthMover.CalculateXEnd(_barWidth);
         for (int i = 0; i < _config.Rangs.Count; i++) {
@@ -64,7 +76,6 @@ public class RangVisual : MonoBehaviour {
         float rangPercent = (i+1f) / _config.Rangs.Count;
         _fillAmounthMover.SetPointer(_rangPrefabs[i]._rt, rangPercent, xEnd);
         _rangPrefabs[i].SetData(rang.Money, rang.Sprite, (rangPercent*xEnd));
-        Debug.Log("Установка ранга в " + _rangPrefabs[i].XValue);
     }
 
 

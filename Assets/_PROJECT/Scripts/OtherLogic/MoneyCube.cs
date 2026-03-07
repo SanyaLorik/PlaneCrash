@@ -186,12 +186,10 @@ public class MoneyCube : MonoBehaviour {
         int index = 0;
         foreach (var rang in _rangConfig.Rangs) {
             if (rang.Money >= amount) {
-                Debug.Log("Номер некст ранга: " + index);
                 return index;
             }
             index++;
         }
-        Debug.Log("Игрок переплюнул ласт ранг");
         return _rangConfig.Rangs.Count-1;
     }
     
