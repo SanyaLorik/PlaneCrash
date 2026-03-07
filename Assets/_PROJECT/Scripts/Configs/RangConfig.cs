@@ -6,6 +6,7 @@ using UnityEngine;
 public class RangData {
     public int Id;
     public long Money;
+    public long RewardMoney;
     public Sprite Sprite;
 }
 

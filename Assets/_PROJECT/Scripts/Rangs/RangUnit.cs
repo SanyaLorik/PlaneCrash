@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,8 +13,8 @@ public class RangUnit : MonoBehaviour {
     public long Money { get; private set; }
 
     [Inject] private NumberFormatter _formatter;
-    
-    
+
+
     public void SetData(long money, Sprite img, float xValue) {
         Money =  money;
         _moneyText.text = _formatter.ValuteFormatter(Money);
