@@ -41,8 +41,6 @@ public class RangVisual : MonoBehaviour {
     }
 
     private void SetPlanes() {
-        Debug.Log("Установка рангов");
-        Debug.Log("Ласт точка в " + _cubeRoof.position);
         for (var i = 0; i < _config.Rangs.Count; i++) {
             InstancePlane(i);
         }
@@ -60,7 +58,6 @@ public class RangVisual : MonoBehaviour {
         );
         _rangPlanes[i].transform.position = position;
             
-        Debug.Log("Новый ранг платформа в " + position);
     }
 
     private void InstanceRangs() {

@@ -6,46 +6,32 @@ using UnityEngine;
 using Zenject;
 
 public class PlayerSkinWear : MonoBehaviour { 
-    [field: SerializeField] public SkinItemConfig DefaultSkinItemConfig;
     [SerializeField] private Transform _playerWearSkinParent;
     [SerializeField] private Animator _animator;
     [SerializeField] private SkinItemViewBase[] _skinItemViews;
     [SerializeField] private GameObject _currentSkin;
     [SerializeField] private PlayerAnimator _playerAnimator;
-   
     
+    private Coroutine _changeSkinRoutine;
 
-    [Inject] private IGameSave<GameSavePC> _saver; 
-    [Inject] private IInputActivity _inputActivity; 
-    public event Action NewSkinWear;
+    
+    [Inject] private IInputActivity _inputActivity;
+    [Inject] private List<SkinItemConfig> _skins; 
+    [Inject] private PlayerSkinInventory _playerSkinInventory;
 
-
-    private void Awake() {
-        if (!_saver.GetSave.SkinIsBought(DefaultSkinItemConfig.Id)) {
-            _saver.GetSave.AddNewSkin(DefaultSkinItemConfig.Id);
-            _saver.GetSave.SkinWearId = DefaultSkinItemConfig.Id;
-            _saver.Save();
-           
-            WearNewSkin(DefaultSkinItemConfig);
-        }
+    private void OnEnable() {
+        _playerSkinInventory.SkinEquipped += WearNewSkinVisual;
     }
+
+    private SkinItemConfig GetSkinItemById(string id) 
+        => _skins.Find(s => s.Id == id);
 
 
     private void Start() {
-       // Нет еще скинов
-       foreach (var skinItemView in _skinItemViews) {
-           skinItemView.InitSkinData();
-       }
+        WearNewSkinVisual(GetSkinItemById(_playerSkinInventory.CurrentSkinId));
     }
-   
-   
-    private string _idWearedSkin;
-    private Coroutine _changeSkinRoutine;
-    public void WearNewSkin(SkinItemConfig playerSkin) {
-        if (_idWearedSkin == playerSkin.Id) {
-            return;
-        }
-        _idWearedSkin = playerSkin.Id;
+
+    private void WearNewSkinVisual(SkinItemConfig playerSkin) {
     
         // Создаем временный скин для мгновенного отображения
         if (_currentSkin != null) {
@@ -60,8 +46,7 @@ public class PlayerSkinWear : MonoBehaviour {
         _playerAnimator.SetSkinElementsController(tempController);
     
         // Запускаем корутину для финальной замены с аватаром
-        if (_changeSkinRoutine != null)
-        {
+        if (_changeSkinRoutine != null) {
             StopCoroutine(_changeSkinRoutine);
         }
 
@@ -70,7 +55,7 @@ public class PlayerSkinWear : MonoBehaviour {
 
     private IEnumerator ChangeSkinRoutine(SkinItemConfig skin) {
         _inputActivity.Disable();
-    
+
         // Не уничтожаем tempSkin здесь, так как это и есть текущий скин
         _animator.avatar = null;
     
@@ -79,6 +64,5 @@ public class PlayerSkinWear : MonoBehaviour {
         // Обновляем аватар
         _animator.avatar = skin.Avatar;
         _inputActivity.Enable();
-        NewSkinWear?.Invoke();
     }
 }

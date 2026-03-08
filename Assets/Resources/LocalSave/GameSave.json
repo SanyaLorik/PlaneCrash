@@ -1,14 +1,18 @@
 {
-    "Money": 571213,
-    "RecordMoney": 535000000000,
+    "Money": 203285,
+    "RecordMoney": 20451800,
     "RecordDistance": 4000,
     "Upgrades": [
         {
-            "Id": 4,
+            "Id": 2,
             "Level": 1
         },
         {
-            "Id": 2,
+            "Id": 3,
+            "Level": 1
+        },
+        {
+            "Id": 4,
             "Level": 1
         },
         {
@@ -16,46 +20,37 @@
             "Level": 1
         },
         {
-            "Id": 3,
-            "Level": 10
+            "Id": 1,
+            "Level": 36
+        }
+    ],
+    "Pets": [
+        {
+            "Id": 0,
+            "Count": 14
         },
         {
             "Id": 1,
-            "Level": 7
+            "Count": 14
+        },
+        {
+            "Id": 2,
+            "Count": 14
         }
     ],
-    "Pets": [],
     "Skins": [
+        {
+            "Id": "tralalelo_skin"
+        },
         {
             "Id": "kissie_skin"
         },
         {
             "Id": "huggie_skin"
-        },
-        {
-            "Id": "tralalelo_skin"
-        },
-        {
-            "Id": "tung_skin"
-        },
-        {
-            "Id": "foxie_skin"
-        },
-        {
-            "Id": "guard_skin"
-        },
-        {
-            "Id": "freddy_skin"
-        },
-        {
-            "Id": "gihun_skin"
-        },
-        {
-            "Id": "deer_skin"
         }
     ],
-    "SkinWearId": "deer_skin",
+    "SkinWearId": "huggie_skin",
     "TutorialPassed": true,
-    "CountBatutJumps": 799,
-    "CountBaskets": 59
+    "CountBatutJumps": 1488,
+    "CountBaskets": 69
 }

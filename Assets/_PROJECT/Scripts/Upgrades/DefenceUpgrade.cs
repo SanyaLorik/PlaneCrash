@@ -1,39 +1,29 @@
-using System;
 using UnityEngine;
 
 public class DefenceUpgrade : UpgradeBase {
-    
-    protected override void ApplyUpgrade() {
-        _bank.Buy(_currentPrice);
-        Debug.Log("Покупка DefenceUpgrade: " + _playerStats.DefenceLevel);
-        
-        _currentPrice *= UpgradeInfo.PriceMultiplier;
-        _level++;
-        _playerStats.UpdateDefenceLevel(_level);
-
+    public override void LoadLevel() {
+        _upgradeInfo = _config.DefenceUpgrade;
+        _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
+        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, Level);
+        _playerStats.UpdateDefenceLevel(Level, false);
         UpdateVisual();
-        CheckColor();
+    }
+    
+    protected override void UpdatePlayerStatsInfo() {
+        Debug.Log("Покупка DefenceUpgrade: " + _playerStats.DefenceLevel);
+        _playerStats.UpdateDefenceLevel(Level);
     }
     
         
     protected override void UpdateVisual() {
         _visual.UpdateData(
-            _level, 
+            Level, 
             _upgradesCalculator.GetDefenceByLevel(), 
             _upgradesCalculator.GetDefenceByLevel(false), 
             _currentPrice,
             "шт",
             true);
-        UpdateLevelInLeft(_level);
-        
+        UpdateLevelInLeft();
     }
-
-    protected override void LoadLevel() {
-        UpgradeInfo = _config.DefenceUpgrade;
-        _level = _gameSave.GetSave.GetUpgradeLevel(UpgradeInfo.Id);
-        _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
-        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, _level);
-        _playerStats.UpdateDefenceLevel(_level, false);
-        UpdateVisual();
-    }
+    
 }

@@ -1,40 +1,30 @@
-using System;
 using UnityEngine;
 
 public class PredictUpgrade : UpgradeBase {
-
-    protected override void ApplyUpgrade() {
-        _bank.Buy(_currentPrice);
-        Debug.Log("Покупка PredictUpgrade: " + _playerStats.PredictDistanceLevel);
-        
-        _currentPrice *= UpgradeInfo.PriceMultiplier;
-        _level++;
-        _playerStats.UpdatePredictDistanceLevel(_level);
-
-        UpdateVisual();
-        CheckColor();
-    }
     
+    protected override void UpdatePlayerStatsInfo() {
+        Debug.Log("Покупка PredictUpgrade: " + _playerStats.PredictDistanceLevel);
+        _playerStats.UpdatePredictDistanceLevel(Level);
+    }
         
     protected override void UpdateVisual() {
         _visual.UpdateData(
-            _level, 
+            Level, 
             _upgradesCalculator.GetPredictDistanceByLevel(), 
             _upgradesCalculator.GetPredictDistanceByLevel(false), 
             _currentPrice,
             "м",
             true);
-        UpdateLevelInLeft(_level);
+        UpdateLevelInLeft();
         
     }
 
-    protected override void LoadLevel() {
-        UpgradeInfo = _config.PredictionUpgrade;
-        _level = _gameSave.GetSave.GetUpgradeLevel(UpgradeInfo.Id);
-        _playerStats.UpdatePredictDistanceLevel(_level, false);
+    public override void LoadLevel() {
+        _upgradeInfo = _config.PredictionUpgrade;
+        _playerStats.UpdatePredictDistanceLevel(Level, false);
         
         _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
-        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, _level);
+        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, Level);
         UpdateVisual();
     }
     

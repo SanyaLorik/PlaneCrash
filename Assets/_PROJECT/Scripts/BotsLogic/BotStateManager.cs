@@ -39,7 +39,7 @@ public class BotStateManager : MonoBehaviour {
 
 
     private void Start() {
-        _petsManager.SetRandomPets(_petsPoints);
+        _petsManager.BotSetRandomPets(_petsPoints);
     }
 
     public void ChangeBotState(BotState newState) {

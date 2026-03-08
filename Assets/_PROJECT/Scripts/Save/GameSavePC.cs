@@ -21,44 +21,39 @@ public class GameSavePC : GameSaveBase {
 
 
 
-    public int AddNewPet(int id) {
-        bool exist = Pets.Any(pet => pet.Id == id);
-        if (!exist) {
+    public int AddNewPet(int id, int count) {
+        var pet = Pets.FirstOrDefault(pet => pet.Id == id);
+        if (pet == null) {
             Pets.Add(new PetsData() {
                 Id = id,
-                Count = 1,
+                Count = count,
             });
-            return 1;
+            return count;
         }
-        var pet = Pets.First(pet => pet.Id == id);
-        pet.Count++;
+        pet.Count+=count;
         return pet.Count;
     }
     
     
     public void AddNewSkin(string id) {
+        if(Skins.Any(s => s.Id == id)) return;
         Skins.Add(new Skin {
             Id = id,
         });
     }
+    
+    
+    public int SetNewUpgrade(int id, int level) {
+        var upgrade = Upgrades.FirstOrDefault(u => u.Id == id);
 
-    public bool SkinIsBought(string id) 
-        => Skins.Any(skin => skin.Id == id);
-    
-    
-    public int AddNewUpgrade(int id) {
-        bool exist = Upgrades.Any(upgrade => upgrade.Id == id);
-        if (!exist) {
-            Upgrades.Add(new UpgradeData() {
-                Id = id,
-                Level = 1,
-            });
-            Debug.Log(1);
-            return 1;
+        // Еще нет
+        if (upgrade == null) {
+            upgrade = new UpgradeData { Id = id, Level = level+1 };
+            Upgrades.Add(upgrade);
         }
-        var upgrade = Upgrades.First(upgrade => upgrade.Id == id);
-        upgrade.Level++;
-        Debug.Log(upgrade.Level);
+        else {
+            upgrade.Level = level;
+        }
         return upgrade.Level;
     }
 
@@ -68,11 +63,9 @@ public class GameSavePC : GameSaveBase {
             return Upgrades.First(upgrade => upgrade.Id == id).Level;
         }
 
-        AddNewUpgrade(id);
+        SetNewUpgrade(id, 0);
         return 1;
     }
-        
-    
     
 }
 

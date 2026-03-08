@@ -54,7 +54,7 @@ public class PlayerMagnet : MonoBehaviour {
             _magnetLevel = _playerStats.MagnetLevel;
         
             _collider.size = _upgradesCalculator.GetMagnetSizeByLevel(_defaultColliderSize, _maxColliderSize);
-            Debug.Log("Collider Size = " + _collider.size);
+            // Debug.Log("Magnet Collider Size = " + _collider.size);
             SetColiderInHead();
         }
     }

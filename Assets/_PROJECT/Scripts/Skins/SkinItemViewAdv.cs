@@ -13,23 +13,18 @@ public class SkinItemViewAdv : SkinItemViewBase {
     
     [Inject] private AdvertisingMonetizationMirra _advertisingMonetizationMirra;
     
-    
     private void OnTriggerEnter(Collider collider) {
         if(!collider.TryGetComponent(out PlayerMovement _)) return;
-        if (_saver.GetSave.SkinIsBought(SkinItemConfig.Id)) {
-            _delayedTrigger.DelayedTriggerAction(WearNewSkin);
+        if (SkinIsBought()) {
+            if (!SkinIsWeared()) {
+                _delayedTrigger.DelayedTriggerAction(WearSkin);
+            }
         }
         else {
             _delayedTrigger.DelayedTriggerAction(ShowAdv);
         }
     }
 
-    protected override void GetNewSkin() {
-        _saver.GetSave.AddNewSkin(SkinItemConfig.Id);
-        WearNewSkin();
-    }
-
-    
     private void ShowAdv() {
         _advertisingMonetizationMirra.InvokeRewarded(
             null,
@@ -46,6 +41,7 @@ public class SkinItemViewAdv : SkinItemViewBase {
         _countShowAdv++;
         if (_countShowAdv == _countsToShowAdv) {
             GetNewSkin();
+            WearSkin();
             HideGetVisual();
         }
         else {

@@ -35,10 +35,10 @@ public class PetsManager : MonoBehaviour {
     
     private void Start() {
         LoadDataToDict();
-        UpdatePets();
+        UpdatePetsVisual();
     }
 
-    public void SetRandomPets(List<Transform> points) {
+    public void BotSetRandomPets(List<Transform> points) {
         int maxCount = points.Count;
 
         // 1. Берём всех питомцев, которых бот может иметь
@@ -77,15 +77,16 @@ public class PetsManager : MonoBehaviour {
     }
 
 
-    public void AddPet(PetItemConfig petItem) {
-        // Сохранить 
-        int count = _gameSave.GetSave.AddNewPet(petItem.Id);
-        var pet = GetPetItemById(petItem.Id);
-        _petToCountDict[pet] = count;
-        _gameSave.Save();
+    public void AddPet(PetItemConfig petItem, int newCount = 1, bool updateNow = true) {
+        int count = _gameSave.GetSave.AddNewPet(petItem.Id, newCount);
+        if (updateNow) {
+            _gameSave.Save();
+        }
+        _petToCountDict[petItem] = count;
+       
         GetPet?.Invoke();
-        if (CheckPetsNeedUpdate(pet)) {
-            UpdatePets();
+        if (CheckPetsNeedUpdate(petItem)) {
+            UpdatePetsVisual();
         }
     }
     
@@ -111,7 +112,7 @@ public class PetsManager : MonoBehaviour {
         _petsItems.First(pet => pet.Id == id);
 
 
-    private void UpdatePets() {
+    private void UpdatePetsVisual() {
         var topPets = GetBestPets(_petToCountDict);
 
         foreach (var pet in PetsInstances) {

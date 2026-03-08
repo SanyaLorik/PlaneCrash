@@ -29,6 +29,7 @@ public class CameraOrbitalController : MonoBehaviour {
 
 
     private bool _allowRotation = true;
+    private bool _allowZoom = true;
     private float _defaultX;
     private float _defaultY;
     
@@ -52,10 +53,15 @@ public class CameraOrbitalController : MonoBehaviour {
     private void OnEnable() {
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
         _settings.CameraValueChanged += SettingsOnCameraValueChanged;
-        SystemEvents.OpenCanvasWindow += SystemEventsOnOpenCanvasWindow;
+        SystemEvents.WindowOpened += ForibRotate;
+        SystemEvents.ForbidZoomChanged += ForbidZoom;
     }
 
-    private void SystemEventsOnOpenCanvasWindow(bool windowIsOpen) {
+    private void ForbidZoom(bool forbid) {
+        _allowZoom = !forbid;
+    }
+
+    private void ForibRotate(bool windowIsOpen) {
         _allowRotation = !windowIsOpen;
     }
 
@@ -200,6 +206,7 @@ public class CameraOrbitalController : MonoBehaviour {
     }
 
     private void ChangeZoom(float zoomValue) {
+        if(!_allowZoom) return;
         _orbitalFollow.RadialAxis.Value = Mathf.Clamp(
             zoomValue,
             _minZoom, 

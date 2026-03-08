@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -9,7 +10,9 @@ using UnityEngine.Audio;
 using Zenject;
 
 public class SoundManager : MonoBehaviour {
-    // CORE
+    [Header("Звук накладывается то сколько ждать")]
+    [SerializeField] private float _soundDelay = 0.5f;
+    
     [Header("Конфиги")]
     [SerializeField] private List<SoundConfig> soundConfigs;
     [Header("Тонкая настройка")]
@@ -36,12 +39,16 @@ public class SoundManager : MonoBehaviour {
     
     private Dictionary<SoundType, SoundConfig> _soundConfigDict = new ();
     private List<AudioSource> _sources = new();
+    private bool _onAir;
+    private bool _allowToSound = true;
+    
+    
     
     [Inject] private PlayerStateManager _stateManager;
     [Inject] private PlayerMovement _playerMovement;
     [Inject] private PlayerBank _bank;
     [Inject] private SettingsManager _settings;
-    [Inject] private PlayerSkinWear _playerSkinWear;
+    [Inject] private PlayerSkinInventory _playerSkinInventory;
     
     
     private void Awake() {
@@ -74,8 +81,7 @@ public class SoundManager : MonoBehaviour {
         _playerMovement.SetBoost += PlayerMovementOnSetBoost;
         // BANK / WEAR
         _bank.BankNewMoneyPlus += OnMoneyPlus;
-        _bank.BankNewMoneyMinus += BuyOrUnlock;
-        _playerSkinWear.NewSkinWear += () => BuyOrUnlock(0);
+        _playerSkinInventory.SkinEquipped += SkinAction;
         // UI
         ButtonExtension.Click += OnUiButtonClick;
         // Settings
@@ -84,6 +90,10 @@ public class SoundManager : MonoBehaviour {
         // Minigames
         _basket.BallCollision += () => PlaySoundByType(SoundType.Ball);
         _trampoline.OnTrampolineJump += () => PlaySoundByType(SoundType.Trampoline);
+    }
+
+    private void SkinAction(SkinItemConfig _) {
+        BuyOrUnlock(0);
     }
 
     private void Start() {
@@ -109,9 +119,18 @@ public class SoundManager : MonoBehaviour {
     private void OnMoneyPlus(long _) {
         PlaySoundByType(SoundType.Money);
     }
-    
+
     private void BuyOrUnlock(long _) {
+        if(!_allowToSound) return;
+        Debug.Log("BuyOrUnlock sound");
         PlaySoundByType(SoundType.Unlock);
+        StartCoroutine(WaitForSoundDelay(_soundDelay));
+    }
+
+    private IEnumerator WaitForSoundDelay(float time) {
+        _allowToSound = false;
+        yield return new WaitForSeconds(time);
+        _allowToSound = true;
     }
 
     private void PlayerMovementOnSetBoost() {
@@ -144,7 +163,6 @@ public class SoundManager : MonoBehaviour {
         }
     }
 
-    private bool _onAir;
     private void PlayerMovementOnJumpPressed() {
         PlaySoundByType(SoundType.Jump);
     }

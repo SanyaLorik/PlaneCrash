@@ -13,14 +13,17 @@ public abstract class UpgradeBase : MonoBehaviour {
     [SerializeField] protected UpgradeItemVisual _visual;
     [SerializeField] protected TMP_Text _levelTextInSkills;
 
-    
-    protected UpgradeInfo UpgradeInfo;
-    
-    
-    protected int _level = 1;
+    protected UpgradeInfo _upgradeInfo;
+    public UpgradeInfo UpgradeInfo => _upgradeInfo;
+
+    protected int Level {
+        get => _gameSave.GetSave.GetUpgradeLevel(_upgradeInfo.Id);
+        private set => _gameSave.GetSave.SetNewUpgrade(_upgradeInfo.Id, value);
+    } 
+
     protected double _currentPrice;
     protected IPlayerStatsWritable _playerStats;
-    protected PlayerBank _bank;
+    private PlayerBank _bank;
     
     
     [Inject] protected UpgradeConfig _config;
@@ -37,20 +40,37 @@ public abstract class UpgradeBase : MonoBehaviour {
         _bank.BankChanged += BankOnBankChanged;
     }
 
-    protected void Awake() {
-        LoadLevel();
-    }
-
     private void Start() {
         CheckColor();
     }
 
+    public abstract void LoadLevel();
+    protected abstract void UpdateVisual();
+    protected abstract void UpdatePlayerStatsInfo();
 
+    protected void UpdateLevelInLeft() {
+        _levelTextInSkills.text = Level.ToString();
+    }
+
+    
+    public void ApplyUpgrade(int newLevels, bool gameValute = true) {
+        Level += newLevels;
+        if (gameValute) {
+            _bank.Buy(_currentPrice);
+            _gameSave.Save();
+        }
+        UpdatePlayerStatsInfo();
+        _currentPrice *= UpgradeInfo.PriceMultiplier;
+        UpdateVisual();
+        CheckColor();
+    }
+    
+    
     private void BankOnBankChanged(long playerCapital) {
         CheckColor();
     }
 
-    protected void CheckColor() {
+    private void CheckColor() {
         if (_bank.CanBuy(_currentPrice)) {
             _visual.SetGreen();
             _delayedTrigger.SetAvailable();
@@ -63,7 +83,7 @@ public abstract class UpgradeBase : MonoBehaviour {
     private void OnTriggerEnter(Collider collider) {
         if (!collider.TryGetComponent(out PlayerMovement _)) return;
         if (_bank.CanBuy(_currentPrice)) {
-            _delayedTrigger.DelayedTriggerAction(Buy); 
+            _delayedTrigger.DelayedTriggerAction(BuyByTrigger); 
         }
     }
 
@@ -74,23 +94,14 @@ public abstract class UpgradeBase : MonoBehaviour {
         _delayedTrigger.CancelTriggerAction();
     }
     
-    private void Buy() {
+    private void BuyByTrigger() {
         if (_bank.CanBuy(_currentPrice)) {
-            ApplyUpgrade();
+            ApplyUpgrade(1);
             _particleSystem.Play();
-            _level = _gameSave.GetSave.AddNewUpgrade(UpgradeInfo.Id);
             _playerVisual.SetBought();
             _gameSave.Save();
         }
     }
-
-    protected void UpdateLevelInLeft(int level) {
-        _levelTextInSkills.text = level.ToString();
-    }
-
-
-    protected abstract void ApplyUpgrade();
-    protected abstract void UpdateVisual();
-    protected abstract void LoadLevel();
+    
 
 }

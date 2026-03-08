@@ -1,46 +1,31 @@
-using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using Zenject;
 
 public class MultiplyUpgrade : UpgradeBase {
     
-    
-    protected override void ApplyUpgrade() {
-        _bank.Buy(_currentPrice);
-        Debug.Log("Покупка XMultiplyUpgrade: " + _playerStats.MultiplierLevel);
+    public override void LoadLevel() {
+        _upgradeInfo = _config.XMultiplierUpgrade;
+        _playerStats.UpdateMultiplierLevel(Level, false);
         
-        
-        _currentPrice *= UpgradeInfo.PriceMultiplier;   
-        _level++;
-        _playerStats.UpdateMultiplierLevel(_level);
-
-
+        _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
+        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, Level);
         UpdateVisual();
-        CheckColor();
+    }
+    
+    protected override void UpdatePlayerStatsInfo() {
+        Debug.Log("Покупка XMultiplyUpgrade: " + _playerStats.MultiplierLevel);
+        _playerStats.UpdateMultiplierLevel(Level);
     }
 
-    
-    
     protected override void UpdateVisual() {
         _visual.UpdateData(
-            _level, 
+            Level, 
             _upgradesCalculator.GetUpgradeMultiplierByLevel(), 
             _upgradesCalculator.GetUpgradeMultiplierByLevel(false), 
             _currentPrice,  
             "x", 
             false);
-        UpdateLevelInLeft(_level);
-        
+        UpdateLevelInLeft();
     }
 
-    protected override void LoadLevel() {
-        UpgradeInfo = _config.XMultiplierUpgrade;
-        _level = _gameSave.GetSave.GetUpgradeLevel(UpgradeInfo.Id);
-        _playerStats.UpdateMultiplierLevel(_level, false);
-        
-        _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
-        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, _level);
-        UpdateVisual();
-    }
+    
 }

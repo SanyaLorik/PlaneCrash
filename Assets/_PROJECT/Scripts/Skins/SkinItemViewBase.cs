@@ -1,13 +1,7 @@
-﻿using Architecture_M;
-using Cysharp.Threading.Tasks.Triggers;
-using SanyaBeerExtension;
+﻿using SanyaBeerExtension;
 using TMPro;
 using UnityEngine;
 using Zenject;
-
-
-
-
 
 public abstract class SkinItemViewBase : MonoBehaviour {
     [field: SerializeField] public SkinItemConfig SkinItemConfig { get; private set; }
@@ -20,26 +14,64 @@ public abstract class SkinItemViewBase : MonoBehaviour {
     
     
     [Inject] protected NumberFormatter _formatter;
-    [Inject] protected IGameSave<GameSavePC> _saver; 
     [Inject] protected LocalizationDataPC _localization; 
-    [Inject] protected PlayerBank _playerBank;
-    [Inject] protected PlayerSkinWear _playerSkinWear;
     [Inject] protected RectTransformHelper _fillAmounthMover;
-    
-    
-    
-    public void InitSkinData() {
-        _playerSkinWear.NewSkinWear += CheckSelect;
-        _wearText.text = _localization.IsWeared;
-        _nameText.text = _localization.GetSkinName(SkinItemConfig.Id);
-        
-        if (_saver.GetSave.SkinIsBought(SkinItemConfig.Id)) {
+    [Inject] protected PlayerSkinInventory _playerSkinInventory;
+    [Inject] protected PlayerBank _playerBank;
+
+    protected abstract void InitSpecific();
+
+    private void OnEnable() {
+        _playerSkinInventory.SkinUnlocked += HidePurchaseInfo;
+        _playerSkinInventory.SkinEquipped += SkinEquippedCheck;
+        _playerBank.BankChanged += PlayerBankOnBankChanged;
+    }
+
+    private void SkinEquippedCheck(SkinItemConfig skin) {
+        if (skin.Id != SkinItemConfig.Id) {
+            _wearText.text = string.Empty;
+        }
+    }
+
+    private void PlayerBankOnBankChanged(long amount) {
+        if (amount >= SkinItemConfig.Price) {
+            _delayedTrigger.SetAvailable();
+        }
+        else {
+            _delayedTrigger.SetUnvailable();
+        }
+    }
+
+
+
+    private void HidePurchaseInfo(SkinItemConfig skin) {
+        if(skin.Id != SkinItemConfig.Id) return;
+        if (_priceContainer.activeSelf) {
+            _priceContainer.DisactiveSelf();
+        }
+
+        if (_advContainer.activeSelf) {
+            _advContainer.DisactiveSelf();
+        }
+    }
+
+
+    private void Start() {
+        InitSkinData();
+    }
+
+    private void InitSkinData() {
+        GetTextLocalizated();
+
+        // Скин есть
+        if (_playerSkinInventory.SkinIsBought(SkinItemConfig.Id)) {
             HideGetVisual();
             
-            if(_saver.GetSave.SkinWearId == SkinItemConfig.Id) {
-                WearNewSkin();
+            if(_playerSkinInventory.CurrentSkinId == SkinItemConfig.Id) {
+                WearSkin();
             }
         }
+        // Скина НЭД
         else {
             if (SkinItemConfig.IsAdv) {
                 _advContainer.ActiveSelf();
@@ -50,33 +82,23 @@ public abstract class SkinItemViewBase : MonoBehaviour {
                 _advContainer.DisactiveSelf();
             }
         }
-
         InitSpecific();
     }
-    
-    protected bool SkinIsWeared() 
-        => _saver.GetSave.SkinWearId == SkinItemConfig.Id;
-    
 
-    protected bool SkinIsBought() 
-        => _saver.GetSave.SkinIsBought(SkinItemConfig.Id);
-    
-    
-    
-    private void CheckSelect() {
-        if (_saver.GetSave.SkinIsBought(SkinItemConfig.Id) && _saver.GetSave.SkinWearId != SkinItemConfig.Id) {
-            _wearText.DisactiveSelf();
-        }
+    private void GetTextLocalizated() {
+        _wearText.text = _localization.IsWeared;
+        _nameText.text = _localization.GetSkinName(SkinItemConfig.Id);
+    }
+
+
+    protected void WearSkin() {
+        Debug.Log("Надевание скина " + _localization.GetSkinName(SkinItemConfig.Id));
+        _playerSkinInventory.EquipSkin(SkinItemConfig);
+        _wearText.ActiveSelf();
     }
     
-    
-    protected void WearNewSkin() {
-        Debug.Log("Надеваание скина " + _localization.GetSkinName(SkinItemConfig.Id));
-        _saver.GetSave.SkinWearId = SkinItemConfig.Id;
-        _playerSkinWear.WearNewSkin(SkinItemConfig);
-        _wearText.ActiveSelf();
-        HideGetVisual();
-        _saver.Save();
+    protected void GetNewSkin() {
+        _playerSkinInventory.UnlockSkin(SkinItemConfig);
     }
 
     protected void HideGetVisual() {
@@ -84,12 +106,20 @@ public abstract class SkinItemViewBase : MonoBehaviour {
         _advContainer.DisactiveSelf();
     }
     
+    protected bool SkinIsBought() {
+        return _playerSkinInventory.SkinIsBought(SkinItemConfig.Id);
+    }
+    
+    
+    protected bool SkinIsWeared() {
+        return _playerSkinInventory.CurrentSkinId == SkinItemConfig.Id;
+    }
+    
+
+    
     private void OnTriggerExit(Collider collider) {
         if(!collider.TryGetComponent(out PlayerMovement _)) return;
         _delayedTrigger.CancelTriggerAction();
     }
-    
-    protected abstract void InitSpecific();
-    protected abstract void GetNewSkin();
 
 }

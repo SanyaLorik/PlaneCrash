@@ -13,7 +13,7 @@ using Random = UnityEngine.Random;
 
 public class BotsMainManager : IInitializable, IDisposable {
     private readonly List<BotStateManager> _bots;
-    private readonly SkinItemConfig[] _skins;
+    private readonly List<SkinItemConfig> _skins;
     private readonly PlayerStateManager _playerStateManager;
     private readonly BotsManagerConfig _config;
 
@@ -23,7 +23,7 @@ public class BotsMainManager : IInitializable, IDisposable {
     private List<BotStateManager> _speakingBots = new();
     
 
-    public BotsMainManager(List<BotStateManager> bots, PlayerStateManager playerStateManager, BotsManagerConfig config, SkinItemConfig[] skins) {
+    public BotsMainManager(List<BotStateManager> bots, PlayerStateManager playerStateManager, BotsManagerConfig config, List<SkinItemConfig> skins) {
         _bots = bots;
         _skins = skins;
         _config = config;

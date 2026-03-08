@@ -9,36 +9,22 @@ public class SkinItemViewPrice : SkinItemViewBase {
 
         if (SkinIsBought()) {
             if (!SkinIsWeared()) {
-                _delayedTrigger.DelayedTriggerAction(WearNewSkin);
+                _delayedTrigger.DelayedTriggerAction(WearSkin);
             }
         }
         else if (_playerBank.CanBuy(SkinItemConfig.Price)) {
-            _delayedTrigger.DelayedTriggerAction(GetNewSkin);
+            _delayedTrigger.DelayedTriggerAction(BuyNewSkin);
         }
     }
 
-
-
-    protected override void GetNewSkin() {
-        _saver.GetSave.AddNewSkin(SkinItemConfig.Id);
-        WearNewSkin();
+    private void BuyNewSkin() {
         _playerBank.Buy(SkinItemConfig.Price);
-        HideGetVisual();
-    }
+        GetNewSkin();
+        WearSkin();
+    }    
     
     protected override void InitSpecific() {
-        _playerBank.BankChanged += CheckBuy;
-        CheckBuy(_playerBank.PlayerCapital);
         _priceText.text = _formatter.ValuteFormatter(SkinItemConfig.Price);
-    }
-    
-    private void CheckBuy(long capital) {
-        if (capital < SkinItemConfig.Price && !_saver.GetSave.SkinIsBought(SkinItemConfig.Id)) {
-            _delayedTrigger.SetUnvailable();
-        }
-        else {
-            _delayedTrigger.SetAvailable();
-        }
     }
     
 }
