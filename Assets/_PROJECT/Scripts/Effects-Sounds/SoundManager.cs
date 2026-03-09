@@ -49,6 +49,7 @@ public class SoundManager : MonoBehaviour {
     [Inject] private SettingsManager _settings;
     [Inject] private PlayerSkinInventory _playerSkinInventory;
     [Inject] private TrampolineManager _trampolineManager;
+    [Inject] private TasksManager _tasksManager;
 
     
     private void Awake() {
@@ -84,8 +85,12 @@ public class SoundManager : MonoBehaviour {
         // Minigames
         _basket.BallCollision += () => PlaySoundByType(SoundType.Ball);
         _trampolineManager.OnTrampolineJump += PlayTrampolineSound;
+        // Task
+        _tasksManager.TaskComplete += () => PlaySoundByType(SoundType.TaskComplete);
     }
-    
+
+
+
     private AudioSource CreateNewAudioSource() {
         AudioSource source = _audioSourcesComponent.AddComponent<AudioSource>();
         _sources.Add(source);

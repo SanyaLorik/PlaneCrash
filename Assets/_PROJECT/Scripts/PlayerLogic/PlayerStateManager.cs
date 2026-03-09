@@ -8,7 +8,7 @@ public class PlayerStateManager : MonoBehaviour{
     [SerializeField] private GameObject _flightCanvasContainerShow;
     [SerializeField] private GameObject _flightCanvasContainerHide;
     
-    [SerializeField] private ParticleSystem _particleSystem;
+    [SerializeField] private JumpParticlesController _flooringParticlesController;
     [SerializeField] private JumpParticlesController _jumpParticlesController;
     [SerializeField] private Transform _startFlightPoint;
 
@@ -25,11 +25,17 @@ public class PlayerStateManager : MonoBehaviour{
 
     private void OnEnable() {
         _playerMovement.Floored += PlayerMovementOnFloored;
+        _playerMovement.JumpPressed += PlayerMovementOnJumpPressed;
+        _playerMovement.DoubleJumpPressed += PlayerMovementOnJumpPressed;
     }
 
-    
-    private void PlayerMovementOnFloored() {
+    private void PlayerMovementOnJumpPressed() {
         _jumpParticlesController.Play();
+    }
+
+
+    private void PlayerMovementOnFloored() {
+        _flooringParticlesController.Play();
     }
 
     private void Awake() {

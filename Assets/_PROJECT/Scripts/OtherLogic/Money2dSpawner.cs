@@ -27,6 +27,7 @@ public class Money2dSpawner : MonoBehaviour {
     
     [Inject] private PlayerStateManager _playerStateManager;
     [Inject] private PlayerBank _bank;
+    [Inject] private PlayerMovement _playerMovement;
     [Inject] private NumberFormatter _formatter;
     [Inject] private RectTransformHelper _rtHelper;
 
@@ -75,7 +76,11 @@ public class Money2dSpawner : MonoBehaviour {
             spawnedMoney++;
             RectTransform icon = GetIconFromPool();
             icon.ActiveSelf();
-            icon.position = GetPointAroundPlayer();
+            
+            float radius = _playerStateManager.CurrentState == PlayerState.TrampolineJumping
+                ? _spawnRadius * _trampolineMultiplierRadius
+                : _spawnRadius;
+            icon.position = _rtHelper.GetPointAroundPoint(radius, _playerMovement.Transform.position);
             
             
             StartCoroutine(MoneyAnimationRoutine(icon));
@@ -140,37 +145,7 @@ public class Money2dSpawner : MonoBehaviour {
     }
     
     
-    private Vector2 GetRandomPointInCircle(float radius) {
-        float angle = Random.Range(0f, Mathf.PI * 2f);
-        // Корень — чтобы точки были равномерно, а не кучей в центре
-        float r = Mathf.Sqrt(Random.value) * radius;
-
-        float x = Mathf.Cos(angle) * r;
-        float y = Mathf.Sin(angle) * r;
-
-        return new Vector2(x, y);
-    }
     
-    
-    
-    private Vector2 GetPointAroundPlayer() {
-        float radius = _playerStateManager.CurrentState == PlayerState.TrampolineJumping
-            ? _spawnRadius * _trampolineMultiplierRadius
-            : _spawnRadius;
-
-        Vector2 offset = GetRandomPointInCircle(radius);
-
-
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(_playerSpawnPoint.transform.position);
-        Vector2 point = new Vector2(offset.x + screenPos.x, offset.y + screenPos.y);
-
-        float padding = 100f; // чтобы текст не упирался в край
-
-        point.x = Mathf.Clamp(point.x, padding, Screen.width - padding);
-        point.y = Mathf.Clamp(point.y, padding, Screen.height - padding);
-
-        return point;
-    }
 
     
 }

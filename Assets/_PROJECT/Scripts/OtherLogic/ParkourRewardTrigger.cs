@@ -11,7 +11,10 @@ public class ParkourRewardTrigger : MonoBehaviour {
     [SerializeField, Range(0, 1)] private float _rangPerentageAmountForReward;
     [SerializeField, Range(0, 3)] private float _accumulateMultiplierMax;
     [SerializeField] private TMP_Text _rewardText;
+    [SerializeField] private GameObject[] _interfereColliders;
 
+    
+    
     private long _reward;
     private float _accumulateMultiplier = 1f;
     private long RangPercentageAmount => _rangManager.GetCurrentRangePercentage(_rangPerentageAmountForReward);
@@ -69,11 +72,10 @@ public class ParkourRewardTrigger : MonoBehaviour {
         await MoveParabola(player.Controller, _levelBounds.PlayerSpawnPoint.position, _heightFly, _durationFly);
     }
 
-    [SerializeField] private GameObject _interfereCollider;
     private async UniTask MoveParabola(CharacterController controller, Vector3 target, float height, float duration) {
         Vector3 start = controller.transform.position;
         float time = 0f;
-        _interfereCollider.DisactiveSelf();
+        _interfereColliders.ForEach(c => c.DisactiveSelf());
         while (time < duration)
         {
             time += Time.deltaTime;
@@ -90,6 +92,6 @@ public class ParkourRewardTrigger : MonoBehaviour {
 
             await UniTask.Yield();
         }
-        _interfereCollider.ActiveSelf();
+        _interfereColliders.ForEach(c => c.ActiveSelf());
     }
 }

@@ -9,8 +9,7 @@ using Zenject;
 public class PlayerMovement : FlightObject
 {
     [SerializeField] private float _smoothTime = 0.3f;
-    [SerializeField] private int _currentLifesCount;
-    [SerializeField] private JumpParticlesController _jumpParticlesController;
+    [SerializeField] private int _currentShieldsCount;
     [SerializeField] private CharacterController _controller; // 
     [SerializeField] private float _getObjectsCooldownSeconds;
     [SerializeField] private float _angleToFlight; // 
@@ -111,17 +110,18 @@ public class PlayerMovement : FlightObject
 
     
     public bool TryToKill() {
-        Debug.Log("minus jizn");
-        _currentLifesCount--;
+        Debug.Log("Удар по игроку, новое кол-во жизней + " + _currentShieldsCount);
+        _currentShieldsCount--;
         _visual.StartDizzy();
-        if (_currentLifesCount <= 0)
+        _visual.MinusShield(_currentShieldsCount);
+        if (_currentShieldsCount < 0)
         {
             SetPlayerIsBombed();
         }
-        return _currentLifesCount <= 0;
+        return _currentShieldsCount <= 0;
     }
     
-    private void ResetLifes() => _currentLifesCount = _upgradesCalculator.GetDefenceByLevel();
+    private void ResetLifes() => _currentShieldsCount = _upgradesCalculator.GetDefenceByLevel();
     
     private void SetPlayerIsBombed() {
         IsBusted = false;
@@ -179,14 +179,12 @@ public class PlayerMovement : FlightObject
         
         if (_jumpsUsed == 0) {
             _verticalVelocity = _config.JumpForce;
-            _jumpParticlesController.Play();
             JumpPressed?.Invoke();
             _jumpsUsed = 1;
         }
         else if (_jumpsUsed == 1) {
             _verticalVelocity = _config.SecondJumpForce;
             DoubleJumpPressed?.Invoke();
-            _jumpParticlesController.Play();
             _jumpsUsed = 2;
         }
     }

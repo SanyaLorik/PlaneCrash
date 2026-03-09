@@ -30,7 +30,7 @@ public class MoneyObject : MonoBehaviour, IMagnetic {
             _upgradesCalculator.GetUpgradeMultiplierByLevel()
         );
 
-        _text.text = _formatter.ValuteFormatter(moneyAmount);
+        _text.text = _formatter.ValuteFormatterInteger(moneyAmount);
         SetAnimation();
     }
 

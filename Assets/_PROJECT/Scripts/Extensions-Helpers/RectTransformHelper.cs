@@ -63,4 +63,33 @@ public class RectTransformHelper {
         }
         return -xEnd * (1f - percent);
     }
+    
+    private Vector2 GetRandomPointInCircle(float radius) {
+        float angle = Random.Range(0f, Mathf.PI * 2f);
+        // Корень — чтобы точки были равномерно, а не кучей в центре
+        float r = Mathf.Sqrt(Random.value) * radius;
+
+        float x = Mathf.Cos(angle) * r;
+        float y = Mathf.Sin(angle) * r;
+
+        return new Vector2(x, y);
+    }
+    
+    
+    
+    public Vector2 GetPointAroundPoint(float radius, Vector3 playerPosition) {
+        Vector2 offset = GetRandomPointInCircle(radius);
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(playerPosition);
+        Vector2 point = new Vector2(offset.x + screenPos.x, offset.y + screenPos.y);
+
+        float padding = 100f; // чтобы текст не упирался в край
+
+        point.x = Mathf.Clamp(point.x, padding, Screen.width - padding);
+        point.y = Mathf.Clamp(point.y, padding, Screen.height - padding);
+
+        return point;
+    }
+    
+    
+    
 }

@@ -7,25 +7,33 @@ using UnityEngine;
 using Zenject;
 
 public class DualLegParticles : MonoBehaviour {
-    public ParticleSystem _ps; // одна система
+    [SerializeField] private ParticleSystem _ps;
     private ParticleSystem.EmissionModule _emission;
     
     [SerializeField] private bool _botBehaviour;
     
+    private CancellationTokenSource _tokenSource;
+    private bool _allowToPlay = true;
 
     [Inject] private PlayerMovement _playerMovement;
+    [Inject] private PlayerStateManager _stateManager;
     
-    private CancellationTokenSource _tokenSource;
-
-    private bool _allowToPlay = true;
     
     private void OnEnable() {
         _playerMovement.JumpPressed += PlayerMovementOnOnJumpPressed;
         _playerMovement.DoubleJumpPressed += PlayerMovementOnOnJumpPressed;
         _playerMovement.Floored += PlayerMovementOnFloored;
+        _stateManager.ChangeState += StateManagerOnChangeState;
+    }
+
+    private void StateManagerOnChangeState(PlayerState state) {
+        if (_stateManager.CurrentState == PlayerState.TrampolineJumping) {
+            _allowToPlay = false;
+        }
     }
 
     private void PlayerMovementOnFloored() {
+        if(_stateManager.CurrentState == PlayerState.TrampolineJumping) return; 
         _allowToPlay = true;
     }
 

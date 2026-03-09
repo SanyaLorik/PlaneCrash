@@ -9,5 +9,6 @@
     MainBackground,
     FlyBackground,
     Ball,
-    Trampoline
+    Trampoline,
+    TaskComplete
 }

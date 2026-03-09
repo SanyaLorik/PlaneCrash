@@ -55,6 +55,9 @@ public class TasksManager : MonoBehaviour {
     
     private CancellationTokenSource _tokenSource;
     
+    
+    public event Action TaskComplete;
+    
 
     [Inject] private PlayerMovement _playerMovement;
     [Inject] private PlayerStateManager _playerStateManager;
@@ -276,8 +279,10 @@ public class TasksManager : MonoBehaviour {
             default: return -1;
         }
     }
-    
+
+
     private void ShowNotification(TaskInfo taskInfo) {
+        TaskComplete?.Invoke();
         _taskNotification.ShowNotification("+"+ _formatter.ValuteFormatter(taskInfo.TaskMoney));
     }
 

@@ -3,6 +3,7 @@ using System.Threading;
 using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 public class PlayerVisual : MonoBehaviour {
     [Header("Головокружение")]
@@ -19,8 +20,19 @@ public class PlayerVisual : MonoBehaviour {
     [Header("Бустинг")]
     [SerializeField] private ParticleSystem _boostPS;
     
+    [Header("Префаб щита")]
+    [SerializeField] private  MinusShieldView _minusShieldView;
+    [SerializeField] private Transform _parentToShield;
+    [SerializeField] private float _radiusToSpawn;
+    
+    
     private CancellationTokenSource _tokenSource;
 
+    
+    [Inject] RectTransformHelper _rectTransformHelper;
+    [Inject] PlayerMovement _playerMovement;
+    
+    
     private void Start() {
         StopDizzy();
     }
@@ -41,6 +53,14 @@ public class PlayerVisual : MonoBehaviour {
             _tokenSource.Token
         ).Forget();
     }
+
+    public void MinusShield(int count) {
+        Vector3 posAroundPlayer = _rectTransformHelper.GetPointAroundPoint(_radiusToSpawn, _playerMovement.transform.position);
+        MinusShieldView shieldView = Instantiate(_minusShieldView, _parentToShield);
+        shieldView.transform.position = posAroundPlayer;
+        shieldView.SetCount(count);
+    }
+    
     
     public void TeleportParticles() {
         _teleportPS.Play();
