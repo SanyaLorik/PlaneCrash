@@ -31,7 +31,6 @@ public class ZoneManager : MonoBehaviour {
 
 
     public void ChangeBet(long newBet) {
-        Debug.Log("newBet " + newBet);
         BetAmount = newBet;
         ChooseBet?.Invoke(BetAmount);
         _moneyCube.SetMoneyAmountForBet(BetAmount);

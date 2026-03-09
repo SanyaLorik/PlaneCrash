@@ -5,10 +5,9 @@ using UnityEngine;
 public class SkinElementsController : MonoBehaviour {
     [SerializeField] private GameObject _shadow;
 
-    private void Start() {
+    private void OnEnable() {
         EnableShadow();
     }
-
 
     public void DisableShadow() {
         if (_shadow.activeSelf) {

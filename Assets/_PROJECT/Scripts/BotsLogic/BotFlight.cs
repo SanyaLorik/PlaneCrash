@@ -104,7 +104,6 @@ public class BotFlight : FlightObject, IBotBehaviour {
         }
         // Если упал
         LastBoostGet?.Invoke();
-        Debug.LogError("LastBoost Get");
         // Чутка подождать пока полежит
         await BotIsFalledAsync(token);
     }

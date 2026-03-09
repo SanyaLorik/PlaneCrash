@@ -13,7 +13,6 @@ public class BotAnimator : MonoBehaviour {
     public void SetModelData(Avatar avatar, SkinElementsController controller) {
         _animator.avatar = avatar;
         _skinController = controller;
-        controller.EnableShadow();
     }
     
     public void InitAnimator(BotFlight botFlight, BotWander botWander) {
@@ -27,6 +26,7 @@ public class BotAnimator : MonoBehaviour {
     }
 
     private void BotGrounded(bool grounded) {
+        if(_skinController == null) return;
         if (grounded) {
             _skinController.EnableShadow();
         }

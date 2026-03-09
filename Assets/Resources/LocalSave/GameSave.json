@@ -1,5 +1,5 @@
 {
-    "Money": 6151830,
+    "Money": 1642,
     "RecordMoney": 64551793,
     "RecordDistance": 4000,
     "Upgrades": [
@@ -27,7 +27,15 @@
     "Pets": [
         {
             "Id": 0,
-            "Count": 10
+            "Count": 2
+        },
+        {
+            "Id": 1,
+            "Count": 2
+        },
+        {
+            "Id": 2,
+            "Count": 5
         }
     ],
     "Skins": [
@@ -39,10 +47,16 @@
         },
         {
             "Id": "huggie_skin"
+        },
+        {
+            "Id": "guard_skin"
+        },
+        {
+            "Id": "deer_skin"
         }
     ],
-    "SkinWearId": "tralalelo_skin",
+    "SkinWearId": "deer_skin",
     "TutorialPassed": true,
     "CountBatutJumps": 1588,
-    "CountBaskets": 89
+    "CountBaskets": 90
 }
