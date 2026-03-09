@@ -3,7 +3,12 @@ guid: e98d31172faaa9643bbf5d881403564d
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yeblo
+    second: {fileID: 2100000, guid: 7fc5fe9cf54d96047bae7adb43158d84, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
