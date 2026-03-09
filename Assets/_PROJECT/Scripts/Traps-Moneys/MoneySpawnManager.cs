@@ -8,7 +8,7 @@ public class MoneySpawnManager : MonoBehaviour {
     [Range(0f,1f), SerializeField] private float _chanceToSpawn;
     [SerializeField] private MoneyObject _moneyPrefab;
     [SerializeField] private PairedValue<float> _xDistance;
-    [SerializeField] private PairedValue<int> _moneyAmountDiapasone;
+    [SerializeField] private PairedValue<float> _moneyAmountPercentDiapasone;
     
     [Header("Range 0 to 1!!!")]
     [SerializeField] private PairedValue<float> _boostProgress;
@@ -45,7 +45,7 @@ public class MoneySpawnManager : MonoBehaviour {
 
             MoneyObject newMoney = Instantiate(_moneyPrefab, spawnPos, Quaternion.identity, transform);
             _container.Inject(newMoney);
-            newMoney.SetMoneyAmount(Random.Range(_moneyAmountDiapasone.From, _moneyAmountDiapasone.To));
+            newMoney.SetMoneyAmount(Random.Range(_moneyAmountPercentDiapasone.From, _moneyAmountPercentDiapasone.To));
             _spawnedMoneys.Add(newMoney); 
             yield return null;
         }

@@ -60,9 +60,14 @@ public abstract class UpgradeBase : MonoBehaviour {
             _gameSave.Save();
         }
         UpdatePlayerStatsInfo();
-        _currentPrice *= UpgradeInfo.PriceMultiplier;
+        Debug.Log($"UpgradeInfo.StartPrice для  + {UpgradeInfo.UpgradeType} = UpgradeInfo.StartPrice, UpgradeInfo.PriceMultiplier = {UpgradeInfo.PriceMultiplier}, Level = {Level}");
+        UpdatePrice();
         UpdateVisual();
         CheckColor();
+    }
+    
+    protected void UpdatePrice() {
+        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, Level-1);
     }
     
     

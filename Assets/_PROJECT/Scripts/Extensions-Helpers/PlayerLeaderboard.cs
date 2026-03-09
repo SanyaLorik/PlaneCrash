@@ -1,4 +1,3 @@
-using System.Collections;
 using NaughtyAttributes;
 using SanyaBeerExtension;
 using UnityEngine;
@@ -8,9 +7,9 @@ using Zenject;
 public class PlayerLeaderboard : MonoBehaviour {
     [field: SerializeField] public bool IsTopPlayerLeaderboard { get; private set; }
     [SerializeField, ShowIf(nameof(IsTopPlayerLeaderboard))] private int _zeroMoneyIndex;
+    [SerializeField, ShowIf(nameof(IsTopPlayerLeaderboard))] private PairedValue<long> _valueDiapasone;
     
     [SerializeField] private PlayersListItemView[] _playerLists;
-    [SerializeField] private PairedValue<long> _valueDiapasone;
     [SerializeField] private AnimationCurve _curve;
 
     
@@ -18,11 +17,7 @@ public class PlayerLeaderboard : MonoBehaviour {
     [SerializeField] private Color[] _colors;
     [SerializeField, ShowIf(nameof(IsTopPlayerLeaderboard))] private Color _playerColor;
     
-    
-   
-    
-    
-    
+
     [Inject] private NumberFormatter _formatter;
     [Inject] private PlayerBank _playerBank;
     [Inject] private LocalizationDataPC _localization;
@@ -40,11 +35,16 @@ public class PlayerLeaderboard : MonoBehaviour {
 
 
     private void Start() {
-        PlayersInit();
+        if (IsTopPlayerLeaderboard) {
+            TopPlayersInit();
+        }
+        else {
+            PlayersTopDonaterInit();
+        }
     }
     
    
-    private void PlayersInit() {
+    private void TopPlayersInit() {
         _playerInTable = false;
         for (var i = 0; i < _playerLists.Length; i++) {
             long money = (long)Mathf.Lerp(
@@ -54,7 +54,7 @@ public class PlayerLeaderboard : MonoBehaviour {
             );
             string name = _nicknameRandomizer.GetRandomName();
             // Нашли игрока
-            if (_playerBank.PlayerCapital >= money && !_playerInTable && IsTopPlayerLeaderboard) {
+            if (_playerBank.PlayerCapital >= money && !_playerInTable) {
                 _playerLists[i].SetColor(_playerColor);
                 money = _playerBank.PlayerCapital;
                 name = _localization.You;
@@ -74,11 +74,25 @@ public class PlayerLeaderboard : MonoBehaviour {
             );
         }
 
-        if (_playerInTable || !IsTopPlayerLeaderboard) return;
+        if (_playerInTable) return;
         _playerLists[^1].SetColor(_playerColor);
         float percent = (float) _playerBank.PlayerCapital / _playerLists[^1].MoneyAmount;
         int index = (int)Mathf.Lerp(_zeroMoneyIndex, _playerLists.Length-1, percent);
         _playerLists[^1].SetPlayerListData(index, _localization.You, _formatter.ValuteFormatterInteger(_playerBank.PlayerCapital));
+    }
+    
+    private void PlayersTopDonaterInit() {
+        for (var i = 0; i < _playerLists.Length; i++) {
+            if (i < _colors.Length) {
+                _playerLists[i].SetColor(_colors[i]);
+            }
+            string name = _nicknameRandomizer.GetRandomName();
+            _playerLists[i].SetPlayerListData(
+                i + 1,
+                name,
+                string.Empty
+            );
+        }
     }
 
     

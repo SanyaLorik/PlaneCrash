@@ -17,6 +17,7 @@ public class PlayerMovement : FlightObject
     [SerializeField] private float _yFlyCorrectRotation = 5f; // из-за анимации надо чуит развернуть хуилу
     
     public Transform Transform => transform;
+    public CharacterController Controller => _controller;
 
     
     public Vector2 MoveInput => _inputDirection2.Direction2;

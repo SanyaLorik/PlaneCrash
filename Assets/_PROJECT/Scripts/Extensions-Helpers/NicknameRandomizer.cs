@@ -57,23 +57,23 @@ public class NicknameRandomizer : IInitializable
 
         if (rus && male)
         {
-            first = GetRandom(_ruMaleFirst);
-            last = GetRandom(_ruMaleLast);
+            first = _ruMaleFirst.GetRandomElement();
+            last = _ruMaleLast.GetRandomElement();
         }
         else if (rus)
         {
-            first = GetRandom(_ruFemaleFirst);
-            last = GetRandom(_ruFemaleLast);
+            first = _ruFemaleFirst.GetRandomElement();
+            last = _ruFemaleLast.GetRandomElement();
         }
         else if (male)
         {
-            first = GetRandom(_enMaleFirst);
-            last = GetRandom(_enLast);
+            first = _enMaleFirst.GetRandomElement();
+            last = _enLast.GetRandomElement();
         }
         else
         {
-            first = GetRandom(_enFemaleFirst);
-            last = GetRandom(_enLast);
+            first = _enFemaleFirst.GetRandomElement();
+            last = _enLast.GetRandomElement();
         }
 
         return BuildNick(first, last);
@@ -91,9 +91,9 @@ public class NicknameRandomizer : IInitializable
 
             NickType.NameLast => first + "_" + last,
 
-            NickType.NameSuffix => first + GetRandom(_suffix),
+            NickType.NameSuffix => first + _suffix.GetRandomElement(),
 
-            NickType.TwoWords => first + GetRandom(_memWords),
+            NickType.TwoWords => first + _memWords.GetRandomElement(),
 
             NickType.Leet => ApplyLeet(first),
 
@@ -113,9 +113,9 @@ public class NicknameRandomizer : IInitializable
         int variant = Random.Range(0, 4);
 
         string num = GetNumber();
-        string mem = GetRandom(_memWords);
-        string link = GetRandom(_linkWords);
-        string suffix = GetRandom(_suffix);
+        string mem = _memWords.GetRandomElement();
+        string link = _linkWords.GetRandomElement();
+        string suffix = _suffix.GetRandomElement();
 
         return variant switch
         {
@@ -159,12 +159,6 @@ public class NicknameRandomizer : IInitializable
         return NickType.Simple;
     }
     
-    
-    
-
-    private string GetRandom(string[] arr) {
-        return arr.GetRandomElement();
-    }
 
     private string GetNumber()
     {
@@ -210,8 +204,7 @@ public class NicknameRandomizer : IInitializable
         if (s.Length <= max)
             return s;
 
-        int spaceIndex = s.LastIndexOf(' ', max);
-
+        int spaceIndex = Math.Max(s.LastIndexOf(' ', max), s.LastIndexOf('_', max));
         if (spaceIndex > 0)
             return s.Substring(0, spaceIndex);
 

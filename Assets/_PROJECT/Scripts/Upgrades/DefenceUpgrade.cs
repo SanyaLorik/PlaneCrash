@@ -4,8 +4,8 @@ public class DefenceUpgrade : UpgradeBase {
     public override void LoadLevel() {
         _upgradeInfo = _config.DefenceUpgrade;
         _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
-        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, Level);
         _playerStats.UpdateDefenceLevel(Level, false);
+        UpdatePrice();
         UpdateVisual();
     }
     

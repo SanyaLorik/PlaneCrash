@@ -60,6 +60,7 @@ public class PlayerBank : MonoBehaviour {
     public void GetSilentBetFallMoney(double amount) {
         if(!_tutorialCompiller.TutorialPassed) return;
         PlayerCapital -= (long)amount;
+        BankChanged?.Invoke(PlayerCapital);
     }
 
 
@@ -69,7 +70,7 @@ public class PlayerBank : MonoBehaviour {
     }
     
     
-    public void AddFlightMoney(int amount) {
+    public void AddFlightMoney(long amount) {
         if (amount <= 0) return;
         MoneyCollect?.Invoke(amount);
         ChangeMoney(amount, false);

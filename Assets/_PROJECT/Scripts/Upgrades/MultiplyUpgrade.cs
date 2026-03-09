@@ -1,13 +1,26 @@
+using System;
 using UnityEngine;
+using Zenject;
 
 public class MultiplyUpgrade : UpgradeBase {
+
+    [Inject] private PetsManager _petsManager;
     
+    private void OnEnable() {
+        _petsManager.GetPet += PetsManagerOnGetPet;
+    }
+
+    private void PetsManagerOnGetPet() {
+        UpdateVisual();
+    }
+
+
     public override void LoadLevel() {
         _upgradeInfo = _config.XMultiplierUpgrade;
         _playerStats.UpdateMultiplierLevel(Level, false);
-        
         _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
-        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, Level);
+        
+        UpdatePrice();
         UpdateVisual();
     }
     

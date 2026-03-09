@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using Architecture_M;
+using Cysharp.Threading.Tasks;
 using MirraGames.SDK.Common;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -15,6 +17,7 @@ public class CameraOrbitalController : MonoBehaviour {
     [SerializeField] private Transform _flightPoint;
     
     [SerializeField] private CinemachineOrbitalFollow _orbitalFollow;
+    [SerializeField] private float _cameraSaveDelay = 1f;
     
     [SerializeField] private float _maxZoom;
     [SerializeField] private float _minZoom;
@@ -33,8 +36,8 @@ public class CameraOrbitalController : MonoBehaviour {
     private float _defaultX;
     private float _defaultY;
     
-    public float DefaultFov => _isMobile ? _playerConfig.MobileFov : _playerConfig.DesktopFov;
-    public float CurrentFovPercent => _orbitalFollow.RadialAxis.Value / _maxZoom;
+    public float DefaultFov => _isMobile ? _playerConfig.MobileCameraFov : _playerConfig.DesktopCameraFov;
+    public float CurrentFovPercent => (_orbitalFollow.RadialAxis.Value - _minZoom) / (_maxZoom -  _minZoom);
     
     
     [Inject] private PlayerStateManager _playerStateManager;
@@ -48,12 +51,11 @@ public class CameraOrbitalController : MonoBehaviour {
     [Inject] private IDeviceTypeProvider _deviceType;
     [Inject] private IInputActivity _inputActivity;
 
-    
-    
+
     private void OnEnable() {
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
         _settings.CameraValueChanged += SettingsOnCameraValueChanged;
-        SystemEvents.WindowOpened += ForibRotate;
+        SystemEvents.WindowOpened += ForbidRotate;
         SystemEvents.ForbidZoomChanged += ForbidZoom;
     }
 
@@ -61,7 +63,7 @@ public class CameraOrbitalController : MonoBehaviour {
         _allowZoom = !forbid;
     }
 
-    private void ForibRotate(bool windowIsOpen) {
+    private void ForbidRotate(bool windowIsOpen) {
         _allowRotation = !windowIsOpen;
     }
 
@@ -205,6 +207,7 @@ public class CameraOrbitalController : MonoBehaviour {
         }
     }
 
+    
     private void ChangeZoom(float zoomValue) {
         if(!_allowZoom) return;
         _orbitalFollow.RadialAxis.Value = Mathf.Clamp(
@@ -215,5 +218,16 @@ public class CameraOrbitalController : MonoBehaviour {
         if (_settings.SettingsIsOpen) {
             _settings.ChangeCameraZoomSilent();
         }
+        else {
+            if (_waitCameraSave != null) {
+                StopCoroutine(_waitCameraSave);
+            }   
+            _waitCameraSave = StartCoroutine(WaitCameraSave());
+        }
+    }
+    private Coroutine _waitCameraSave;
+    private IEnumerator WaitCameraSave() {
+        yield return new WaitForSeconds(_cameraSaveDelay);
+        _settings.ChangeCameraZoomSilent();
     }
 }

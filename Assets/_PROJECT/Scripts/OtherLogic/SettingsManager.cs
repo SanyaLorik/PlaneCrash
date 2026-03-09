@@ -44,7 +44,6 @@ public class SettingsManager : MonoBehaviour {
         _musicValue = PlayerPrefs.GetFloat(MusicKey, 1f);
         _effectsValue = PlayerPrefs.GetFloat(EffectsKey, 1f);
         
-        
         _cameraZoomValue = PlayerPrefs.GetFloat(CameraKey, _camera.DefaultFov);
 
         _musicSlider.SetValueWithoutNotify(_musicValue);
@@ -59,10 +58,17 @@ public class SettingsManager : MonoBehaviour {
         _cameraSlider.onValueChanged.AddListener(ChangeCameraZoom);
     }
 
+
     private void ChangeCameraZoom(float value) {
         _cameraZoomValue = value;
         PlayerPrefs.SetFloat(CameraKey, value);
         CameraValueChanged?.Invoke(value);
+    }
+    
+    public void ChangeCameraZoomSilent() {
+        PlayerPrefs.SetFloat(CameraKey, _camera.CurrentFovPercent);
+        _cameraSlider.SetValueWithoutNotify(_camera.CurrentFovPercent);
+        _cameraZoomValue = _camera.CurrentFovPercent;
     }
 
     private void ChangeEffectsVolume(float value) {
@@ -86,11 +92,7 @@ public class SettingsManager : MonoBehaviour {
         ChangeCameraZoomSilent();
     }
 
-    public void ChangeCameraZoomSilent() {
-        float cameraCurrentFovPercent = _camera.CurrentFovPercent;
-        _cameraSlider.SetValueWithoutNotify(cameraCurrentFovPercent);
-        _cameraZoomValue = cameraCurrentFovPercent;
-    }
+
 
 
     private void CloseSettings() {

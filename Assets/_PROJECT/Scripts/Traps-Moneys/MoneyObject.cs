@@ -8,17 +8,29 @@ using Zenject;
 public class MoneyObject : MonoBehaviour, IMagnetic {
     [SerializeField] private TMP_Text _text;
     [SerializeField] private RotatingAroundAnimation _rotatingAnimation;
+    [SerializeField, Range(0,1)] private float _currentRangPercentage = 0.001f;
     
-    public int MoneyAmount;
+    private long moneyAmount;
 
     
     [Inject] private PlayerBank _playerBank;
     [Inject] private Money2dSpawner _money2dSpawner;
+    [Inject] private UpgradesCalculator _upgradesCalculator;
+    [Inject] private RangManager _rangManager;
+    [Inject] private NumberFormatter _formatter;
     
     
-    public void SetMoneyAmount(int amount) {
-        MoneyAmount = amount;
-        _text.text = MoneyAmount.ToString();
+    public void SetMoneyAmount(float percent) {
+        // Установка как часть _currentRangPercentage процента от суммы некст ранга и на множитель игрока
+        moneyAmount = (long)(
+            percent 
+            * 
+            _rangManager.GetCurrentRangePercentage(_currentRangPercentage) 
+            *
+            _upgradesCalculator.GetUpgradeMultiplierByLevel()
+        );
+
+        _text.text = _formatter.ValuteFormatter(moneyAmount);
         SetAnimation();
     }
 
@@ -36,7 +48,7 @@ public class MoneyObject : MonoBehaviour, IMagnetic {
     }
 
     private void Collect() {
-        _playerBank.AddFlightMoney(MoneyAmount);
+        _playerBank.AddFlightMoney(moneyAmount);
         _rotatingAnimation.Kill();
         gameObject.DisactiveSelf();
         CanBeMagnetic = false;

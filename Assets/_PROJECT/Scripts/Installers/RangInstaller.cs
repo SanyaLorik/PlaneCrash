@@ -11,6 +11,7 @@ public class RangInstaller: MonoInstaller {
 
     private void BindConfig() {
         Container.Bind<RangConfig>().FromInstance(_config).AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<RangManager>().AsSingle().NonLazy();
     }
-
 }
+

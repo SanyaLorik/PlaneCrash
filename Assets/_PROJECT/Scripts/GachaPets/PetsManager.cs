@@ -128,7 +128,7 @@ public class PetsManager : MonoBehaviour {
                 PetInfo = pet
             });
         }
-        
+        GetPet?.Invoke();
     }
 
     private List<PetItemConfig> GetBestPets(Dictionary<PetItemConfig, int> petToCountDict) {

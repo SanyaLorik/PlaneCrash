@@ -7,15 +7,15 @@ public class MagnetUpgrade : UpgradeBase {
         _playerStats.UpdateMagnetLevel(Level, false);
         
         _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
-        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, Level);
+        UpdatePrice();
         UpdateVisual();
     }
-    
+ 
+
     protected override void UpdatePlayerStatsInfo() {
         Debug.Log("Покупка MagniteUpgrade: " + _playerStats.MagnetLevel);
         _playerStats.UpdateMagnetLevel(Level);
     }
-    
         
     protected override void UpdateVisual() {
         _visual.UpdateData(

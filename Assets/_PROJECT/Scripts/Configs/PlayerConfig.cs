@@ -1,4 +1,4 @@
-using SanyaBeerExtension;
+    using SanyaBeerExtension;
 using UnityEngine;
 
 
@@ -21,10 +21,10 @@ public class PlayerConfig : ScriptableObject {
     [field: SerializeField] public float WallOffset { get; private set; }
     [field: SerializeField] public float GravityScale { get; private set; } = 2f;
     [field: SerializeField] public float StepHeight { get; private set; } = 0.3f;
-    
+     
     [Header("Camera data")]
-    [field: SerializeField] public float MobileFov { get; private set; }
-    [field: SerializeField] public float DesktopFov { get; private set; }
+    [field: SerializeField, Range(0,1)] public float MobileCameraFov { get; private set; }
+    [field: SerializeField, Range(0,1)] public float DesktopCameraFov { get; private set; }
     
     
 }

@@ -13,6 +13,7 @@ public class Trampoline : MonoBehaviour {
     [SerializeField] private float _rewardForDistance = 10f; 
     [SerializeField] private TMP_Text _scoreText; 
     [SerializeField] private float _maxTrampolineDistance = 1000f; 
+    [SerializeField, Range(0,1)] private double _trampolineRangPercentage = 0.000001f;
     
     private float _jumpForceCurrent;
     
@@ -22,7 +23,9 @@ public class Trampoline : MonoBehaviour {
     [Inject] private Money2dSpawner _money2dSpawner;
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] protected IGameSave<GameSavePC> _gameSave;
-    
+    [Inject] private RangManager _rangManager;
+    [Inject] private NumberFormatter _formatter;
+
     public event Action OnTrampolineJump;
     
 
@@ -67,15 +70,20 @@ public class Trampoline : MonoBehaviour {
         print($"Старт координата: {startY}, конечная: {player.position.y}, дистанция: {distance}" );
         _gameSave.GetSave.CountBatutJumps++;
         _scoreText.text = _gameSave.GetSave.CountBatutJumps.ToString();
-        _bank.AddMoney(GetMoneyReward(distance) * _upgradesCalculator.GetUpgradeMultiplierByLevel());
+        _bank.AddMoney(
+            GetRewardForDistance(distance)
+            *
+            _rangManager.GetCurrentRangePercentage(_trampolineRangPercentage)
+            * 
+            _upgradesCalculator.GetUpgradeMultiplierByLevel());
 
         // _money2dSpawner.SpawnOneMoneyNearPlayer();
         _money2dSpawner.SpawnOneMoneyInPoint(transform.position);
         
     }
 
-    private float GetMoneyReward(float distance) {
+    private double GetRewardForDistance(float distance) {
         print("Награда за прыжок: " + distance * _rewardForDistance);
-        return distance * 100f;
+        return distance * _rewardForDistance;
     }
 }

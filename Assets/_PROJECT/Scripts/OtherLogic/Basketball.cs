@@ -28,6 +28,7 @@ public class Basketball : MonoBehaviour {
     [SerializeField] float _gravityMultiplier = 2f;
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Transform _spawnPointTransform;
+    [SerializeField, Range(0,1)] private double _basketRangPercentage = 0.000001f;
     
     
     
@@ -49,6 +50,7 @@ public class Basketball : MonoBehaviour {
     [Inject] private Money2dSpawner _money2dSpawner;
     [Inject] private PlayerBank _bank;
     [Inject] private UpgradesCalculator _upgradesCalculator;
+    [Inject] private RangManager _rangManager;
 
     
     
@@ -184,7 +186,13 @@ public class Basketball : MonoBehaviour {
     
     private void GetMoneyReward() {
         print("Награда за попадание: " + _rewardForScore);
-        _bank.AddMoney(_currentReward * _upgradesCalculator.GetUpgradeMultiplierByLevel());
+        _bank.AddMoney(
+            _currentReward 
+            *
+            _rangManager.GetCurrentRangePercentage(_basketRangPercentage)
+            * 
+            _upgradesCalculator.GetUpgradeMultiplierByLevel()
+        );
         _gameSave.GetSave.CountBaskets++;
         _scoreText.text = _gameSave.GetSave.CountBaskets.ToString();
         
