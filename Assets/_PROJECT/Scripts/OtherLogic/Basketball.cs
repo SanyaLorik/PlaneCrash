@@ -16,6 +16,7 @@ public class Basketball : MonoBehaviour {
     [SerializeField] private PhysicsMaterial _lowBounceMaterial;
     [SerializeField] private PhysicsMaterial _fullBounceMaterial;
     [SerializeField] private Collider _parentCollider;
+    [SerializeField] private ConfettiSpawner _confettiSpawner;
     
     
     
@@ -28,22 +29,22 @@ public class Basketball : MonoBehaviour {
     [SerializeField] float _gravityMultiplier = 2f;
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Transform _spawnPointTransform;
+
+    [Header("Логика заработка")]
+    [SerializeField] private int _maxSeriesCount = 20;
     [SerializeField, Range(0,1)] private double _basketRangPercentage = 0.000001f;
-    
-    
-    
-    
-    [SerializeField] private float _rewardForScore = 100f;
-    [Range(0f,1f), SerializeField] private float _chanceToGoal = 0.5f;
-    
-    
-    [SerializeField] private ConfettiSpawner _confettiSpawner;
-    private float _currentReward;
+            
+    [SerializeField] private float _rewardForScoreMultiplier = 1.1f;
+    [SerializeField] private float _rewardForScore = 50f;
+    [Range(0f,1f), SerializeField] private float _chanceToGoal = 0.7f;
+    private float _currentScoreReward;
     
     
     private Vector3 _hoopPosition;
     private float _targetBounceHeight;
-
+    private bool _allowToCick = true;
+    private Vector3 _newPos;
+    
 
     public event Action BallCollision;
 
@@ -51,19 +52,26 @@ public class Basketball : MonoBehaviour {
     [Inject] private PlayerBank _bank;
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private RangManager _rangManager;
+    [Inject] protected IGameSave<GameSavePC> _gameSave;
+        
 
-    
     
     private void Awake() {
         _parentBall.position = _spawnPointTransform.position;
         
         _hoopPosition = _hoop.position;
-        _currentReward = _rewardForScore;
+        _currentScoreReward = _rewardForScore;
         _rb.useGravity = false;
         _targetBounceHeight = _spawnPointTransform.position.y;
     }
 
+    private void OnEnable() {
+        _rangManager.RangChanged +=  OnRangChanged;
+    }
 
+    private void OnRangChanged() {
+        _currentScoreReward = _rewardForScore;
+    }
 
     private void Start() {
         _scoreText.text = _gameSave.GetSave.CountBaskets.ToString();
@@ -76,7 +84,6 @@ public class Basketball : MonoBehaviour {
         );
     }
 
-    private bool _allowToCick = true;
     
         
     private void SetBouncy(bool on) {
@@ -137,33 +144,30 @@ public class Basketball : MonoBehaviour {
         AnimationCurve kickTrajectory = _kickTrajectories[Random.Range(0, _kickTrajectories.Count)];
         Vector3 initPos = _parentBall.position;
         while (elapsedTime < timeToFlight) {
-            Vector3 newPos = _parentBall.position;
+            Vector3 _newPos = _parentBall.position;
             float normalizedTime =  elapsedTime / timeToFlight; 
             
             float height = kickTrajectory.Evaluate(normalizedTime) * _height; // По высоте подымается
             
-            newPos.x = Mathf.Lerp(initPos.x, position.x, normalizedTime);
-            newPos.y = Mathf.Lerp(initPos.y, position.y, normalizedTime) + height;
-            newPos.z = Mathf.Lerp(initPos.z, position.z, normalizedTime);
+            _newPos.x = Mathf.Lerp(initPos.x, position.x, normalizedTime);
+            _newPos.y = Mathf.Lerp(initPos.y, position.y, normalizedTime) + height;
+            _newPos.z = Mathf.Lerp(initPos.z, position.z, normalizedTime);
 
-            _parentBall.position = newPos;
+            _parentBall.position = _newPos;
             elapsedTime += Time.deltaTime;
             await UniTask.Yield();
         }
         StartCoroutine(RespawnRoutine(_timeToRespawn, isRewarded));
     }
 
-    private Vector3 newPos;
     private Vector3 GetShieldPosition() {
-     
-
         float z = _shieldRenderer.bounds.max.z;
         float y = Random.Range(_shieldRenderer.bounds.max.y,  _shieldRenderer.bounds.min.y);
         float x = Random.Range(_shieldRenderer.bounds.max.x,  _shieldRenderer.bounds.min.x);
         
-        newPos = new Vector3(x, y, z);
+        _newPos = new Vector3(x, y, z);
         
-        return newPos;
+        return _newPos;
     }
     
 
@@ -181,28 +185,19 @@ public class Basketball : MonoBehaviour {
         _rb.isKinematic = false;  // включаем обратно
         _allowToCick = true;
     } 
-    
-    [Inject] protected IGameSave<GameSavePC> _gameSave;
-    
+
     private void GetMoneyReward() {
-        print("Награда за попадание: " + _rewardForScore);
-        _bank.AddMoney(
-            _currentReward 
-            *
-            _rangManager.GetCurrentRangePercentage(_basketRangPercentage)
-            * 
-            _upgradesCalculator.GetUpgradeMultiplierByLevel()
-        );
+        float calculateReward = (_currentScoreReward + _rangManager.GetCurrentRangePercentage(_basketRangPercentage))
+                                * 
+                                _upgradesCalculator.GetUpgradeMultiplierByLevel();
+        print("Награда за попадание: " + calculateReward);
+        _bank.AddMoney(calculateReward);
         _gameSave.GetSave.CountBaskets++;
         _scoreText.text = _gameSave.GetSave.CountBaskets.ToString();
         
         _money2dSpawner.SpawnOneMoneyInPoint(transform.position);
         _confettiSpawner.SpawnConfetti();
-        _currentReward+= _rewardForScore;
-        
+        _currentScoreReward = Mathf.Min(_currentScoreReward * _rewardForScoreMultiplier, _rewardForScore * _maxSeriesCount);
     }
-    
-    
-
     
 }

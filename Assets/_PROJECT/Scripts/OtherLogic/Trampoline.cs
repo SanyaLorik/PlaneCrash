@@ -70,13 +70,21 @@ public class Trampoline : MonoBehaviour {
         print($"Старт координата: {startY}, конечная: {player.position.y}, дистанция: {distance}" );
         _gameSave.GetSave.CountBatutJumps++;
         _scoreText.text = _gameSave.GetSave.CountBatutJumps.ToString();
-        _bank.AddMoney(
-            GetRewardForDistance(distance)
-            *
-            _rangManager.GetCurrentRangePercentage(_trampolineRangPercentage)
-            * 
-            _upgradesCalculator.GetUpgradeMultiplierByLevel());
+        
+        double baseReward =
+            _rangManager.GetCurrentRangePercentage(_trampolineRangPercentage);
 
+        double skillReward =
+            GetRewardForDistance(distance);
+
+        double reward =
+            (baseReward + skillReward) 
+            *
+            _upgradesCalculator.GetUpgradeMultiplierByLevel();
+
+        _bank.AddMoney(reward);
+        
+        
         // _money2dSpawner.SpawnOneMoneyNearPlayer();
         _money2dSpawner.SpawnOneMoneyInPoint(transform.position);
         
