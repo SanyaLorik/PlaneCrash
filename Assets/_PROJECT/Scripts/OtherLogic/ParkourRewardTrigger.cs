@@ -9,14 +9,9 @@ public class ParkourRewardTrigger : MonoBehaviour {
     [SerializeField] private float _durationFly;
     [SerializeField] private float _rewardMultiplier;
     [SerializeField, Range(0, 1)] private float _rangPerentageAmountForReward;
-    [SerializeField, Range(0, 2)] private float _accumulateMultiplierMax;
+    [SerializeField, Range(0, 3)] private float _accumulateMultiplierMax;
     [SerializeField] private TMP_Text _rewardText;
 
-    
-    [Header("Полет на спавн")]
-    [SerializeField, Range(0, 1)] private float _percentageToPlayerInvincible = 0.9f;
-    
-    
     private long _reward;
     private float _accumulateMultiplier = 1f;
     private long RangPercentageAmount => _rangManager.GetCurrentRangePercentage(_rangPerentageAmountForReward);

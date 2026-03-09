@@ -8,7 +8,6 @@ using Zenject;
 public class PlayerSkinWear : MonoBehaviour { 
     [SerializeField] private Transform _playerWearSkinParent;
     [SerializeField] private Animator _animator;
-    // [SerializeField] private SkinItemViewBase[] _skinItemViews;
     [SerializeField] private GameObject _currentSkin;
     [SerializeField] private PlayerAnimator _playerAnimator;
     

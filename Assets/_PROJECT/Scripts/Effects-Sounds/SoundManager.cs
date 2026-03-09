@@ -31,9 +31,8 @@ public class SoundManager : MonoBehaviour {
     [SerializeField] private AudioMixerGroup _soundMixerGroup;
     
     [Header("Mini-games objects")]
-    [SerializeField] private Trampoline _trampoline;
+    [SerializeField] private Trampoline[] _trampolines;
     [SerializeField] private Basketball _basket;
-    [SerializeField] private AudioSource _trampolineSource;
     [SerializeField] private AudioSource _basketballSource;
     
     
@@ -49,7 +48,8 @@ public class SoundManager : MonoBehaviour {
     [Inject] private PlayerBank _bank;
     [Inject] private SettingsManager _settings;
     [Inject] private PlayerSkinInventory _playerSkinInventory;
-    
+    [Inject] private TrampolineManager _trampolineManager;
+
     
     private void Awake() {
         foreach (var _sound in soundConfigs) {
@@ -61,12 +61,6 @@ public class SoundManager : MonoBehaviour {
             CreateNewAudioSource();
         }
         PlayMusic(_soundConfigDict[SoundType.MainBackground]);
-    }
-
-    private AudioSource CreateNewAudioSource() {
-        AudioSource source = _audioSourcesComponent.AddComponent<AudioSource>();
-        _sources.Add(source);
-        return source;
     }
 
 
@@ -89,7 +83,36 @@ public class SoundManager : MonoBehaviour {
         _settings.EffectsValueChanged += SettingsOnEffectsValueChanged;
         // Minigames
         _basket.BallCollision += () => PlaySoundByType(SoundType.Ball);
-        _trampoline.OnTrampolineJump += () => PlaySoundByType(SoundType.Trampoline);
+        _trampolineManager.OnTrampolineJump += PlayTrampolineSound;
+    }
+    
+    private AudioSource CreateNewAudioSource() {
+        AudioSource source = _audioSourcesComponent.AddComponent<AudioSource>();
+        _sources.Add(source);
+        return source;
+    }
+    
+    private void PlaySoundByType(SoundType type) {
+        if (!_soundConfigDict.TryGetValue(type, out var config)) {
+            Debug.Log("Нет звука с типом " + type);
+            return;
+        }
+        var clip = GetSource(config);
+        
+        AudioSource source = GetFreeSource(type);
+        
+        PlayInSource(source, clip, config);
+    }
+
+    private void PlayTrampolineSound(Trampoline trampoline) {
+        if (!_soundConfigDict.TryGetValue(SoundType.Trampoline, out var config)) {
+            Debug.Log("Нет звука с типом " + SoundType.Trampoline);
+            return;
+        }
+        AudioClip clip = GetSource(config);
+        AudioSource source = trampoline.AudioSource;
+        
+        PlayInSource(source, clip, config);
     }
 
     private void SkinAction(SkinItemConfig _) {
@@ -166,16 +189,9 @@ public class SoundManager : MonoBehaviour {
     private void PlayerMovementOnJumpPressed() {
         PlaySoundByType(SoundType.Jump);
     }
+    
 
-    private void PlaySoundByType(SoundType type) {
-        if (!_soundConfigDict.TryGetValue(type, out var config)) {
-            Debug.Log("Нет звука с типом " + type);
-            return;
-        }
-        var clip = GetSource(config);
-        
-        AudioSource source = GetFreeSource(type);
-        
+    private static void PlayInSource(AudioSource source, AudioClip clip, SoundConfig config) {
         source.clip = clip;
         source.volume = config.Volume;
         source.pitch = UnityEngine.Random.Range(config.PitchDiapasone.From, config.PitchDiapasone.To);
@@ -210,9 +226,6 @@ public class SoundManager : MonoBehaviour {
 
         if (type == SoundType.Ball) {
             return _basketballSource;
-        }
-        if (type == SoundType.Trampoline) {
-            return _trampolineSource;
         }
         
         foreach (var source in _sources) {

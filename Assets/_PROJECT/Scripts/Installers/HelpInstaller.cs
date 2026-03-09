@@ -26,6 +26,7 @@ public class HelpInstaller: MonoInstaller {
         Container.Bind<ObjectPoolManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<NumberFormatter>().AsSingle();
         Container.Bind<RectTransformHelper>().AsSingle();
+        Container.Bind<TrampolineManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<SoundManager>().FromComponentInHierarchy().AsSingle();
         
         BindSettings();
