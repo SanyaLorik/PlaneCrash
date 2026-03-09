@@ -39,6 +39,18 @@
                     {
                         "key": "ILanguage.Override",
                         "value": true
+                    },
+                    {
+                        "key": "IAchievements.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "IAds.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "IAds.Override",
+                        "value": false
                     }
                 ],
                 "intCollection": [],
@@ -47,6 +59,10 @@
                     {
                         "key": "PrototypeLanguageInfo_Configuration",
                         "value": "{\"<CurrentName>k__BackingField\":\"Russian\"}"
+                    },
+                    {
+                        "key": "ILanguage.LanguageInfoProvider",
+                        "value": "FallbackLanguageInfo"
                     }
                 ]
             }
