@@ -76,7 +76,7 @@ public class Narrator : MonoBehaviour {
 
 
     public float SetTextWithNarattor(string textId) {
-        _text.text = _localization.GetTutorialPhrase(textId);
+        _text.text = _localization.GetTranslatedName(textId, _localization.TutorTranslates);
         // Сбиваем старые анимации текста
         _text.transform.DOKill();
 

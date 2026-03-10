@@ -1,0 +1,330 @@
+{
+    "<Real>k__BackingField": 2,
+    "<Substitute>k__BackingField": 2,
+    "<HourTime>k__BackingField": "ч",
+    "<MinuteTime>k__BackingField": "м",
+    "<SecondTime>k__BackingField": "с",
+    "<AdsInterstitial>k__BackingField": "",
+    "<LabelProgressNarrator>k__BackingField": "",
+    "<StaticTranslates>k__BackingField": [
+        {
+            "<Id>k__BackingField": "ad_in_text",
+            "<Data>k__BackingField": "Реклама через"
+        },
+        {
+            "<Id>k__BackingField": "zone_upgrade",
+            "<Data>k__BackingField": "Зона прокачки"
+        },
+        {
+            "<Id>k__BackingField": "start_text",
+            "<Data>k__BackingField": "СТАРТ"
+        },
+        {
+            "<Id>k__BackingField": "start_in_shadow",
+            "<Data>k__BackingField": "Начало"
+        },
+        {
+            "<Id>k__BackingField": "prize_money",
+            "<Data>k__BackingField": "Призовые деньги"
+        },
+        {
+            "<Id>k__BackingField": "money_height",
+            "<Data>k__BackingField": "Высота"
+        },
+        {
+            "<Id>k__BackingField": "tower_money",
+            "<Data>k__BackingField": "Башня денег"
+        },
+        {
+            "<Id>k__BackingField": "lift",
+            "<Data>k__BackingField": "Лифт"
+        },
+        {
+            "<Id>k__BackingField": "parkour",
+            "<Data>k__BackingField": "Паркур"
+        },
+        {
+            "<Id>k__BackingField": "top_player",
+            "<Data>k__BackingField": "Топ-игроков"
+        },
+        {
+            "<Id>k__BackingField": "top_donater",
+            "<Data>k__BackingField": "Топ-донатеров"
+        },
+        {
+            "<Id>k__BackingField": "mini_game",
+            "<Data>k__BackingField": "Мини-игры"
+        },
+        {
+            "<Id>k__BackingField": "trampoline",
+            "<Data>k__BackingField": "Батуты"
+        },
+        {
+            "<Id>k__BackingField": "score",
+            "<Data>k__BackingField": "Счет:"
+        },
+        {
+            "<Id>k__BackingField": "basketball",
+            "<Data>k__BackingField": "Баскетбол"
+        },
+        {
+            "<Id>k__BackingField": "music",
+            "<Data>k__BackingField": "Своя музыка!"
+        },
+        {
+            "<Id>k__BackingField": "task_reward",
+            "<Data>k__BackingField": "Награда:"
+        },
+        {
+            "<Id>k__BackingField": "tasks",
+            "<Data>k__BackingField": "ЗАДАНИЯ"
+        },
+        {
+            "<Id>k__BackingField": "finish",
+            "<Data>k__BackingField": "Финиш"
+        },
+        {
+            "<Id>k__BackingField": "reward",
+            "<Data>k__BackingField": "Награда"
+        },
+        {
+            "<Id>k__BackingField": "skills",
+            "<Data>k__BackingField": "Скиллы"
+        },
+        {
+            "<Id>k__BackingField": "spawn",
+            "<Data>k__BackingField": "СПАВН"
+        },
+        {
+            "<Id>k__BackingField": "distance",
+            "<Data>k__BackingField": "Расстояние"
+        },
+        {
+            "<Id>k__BackingField": "x2BenefitFlight",
+            "<Data>k__BackingField": "Выгода X2"
+        },
+        {
+            "<Id>k__BackingField": "received",
+            "<Data>k__BackingField": "Получено"
+        },
+        {
+            "<Id>k__BackingField": "continue",
+            "<Data>k__BackingField": "продолжить"
+        },
+        {
+            "<Id>k__BackingField": "skins",
+            "<Data>k__BackingField": "Скины"
+        },
+        {
+            "<Id>k__BackingField": "pets",
+            "<Data>k__BackingField": "Питомцы"
+        }
+    ],
+    "Suffixies": [
+        "",
+        "K",
+        "M",
+        "B",
+        "T"
+    ],
+    "IsWeared": "Выбран",
+    "TakeAPet": "Заберите питомца!",
+    "Receive": "Получить",
+    "Level": "Уровень",
+    "Bet": "Ставка",
+    "Reward": "Награда",
+    "Meters": "м",
+    "Pieces": "шт",
+    "Xs": "x",
+    "MagnetPower": "маг",
+    "TaskCompletedNotification": "Задача выполнена !",
+    "CollectRewardTaskNotification": "Заберите награду",
+    "TaskTableTitle": "Задачи",
+    "You": "Вы",
+    "BotsPhrases": [
+        "привет",
+        "хэй",
+        "хэйоу",
+        "йо",
+        "эй",
+        "здарова",
+        "салют",
+        "прив",
+        "хелло",
+        "ну привет",
+        "о, привет",
+        "слушай",
+        "секундочку",
+        "погоди",
+        "ага, вот ты где",
+        "давно тут"
+    ],
+    "TutorTranslates": [
+        {
+            "<Id>k__BackingField": "hello",
+            "name": "Привет, друг! Ты попал в удивительный мир приключений! Здесь тебя ждет веселье, испытания и куча монет!"
+        },
+        {
+            "<Id>k__BackingField": "movement",
+            "name": "Смотри, как тут всё просто! Ты можешь бегать с помощью джойстика или стрелочек на клавиатуре. Попробуй сделать шаг вперёд!"
+        },
+        {
+            "<Id>k__BackingField": "flyExplain",
+            "name": "Твоя главная задача - пролететь как можно дальше, не попадаться в ловушки и каждый раз ставить новый рекорд!"
+        },
+        {
+            "<Id>k__BackingField": "betZone",
+            "name": "Видишь эту светящуюся зону? Чем дольше ты на ней стоишь, тем больше монет получишь в награду. Давай проверим?"
+        },
+        {
+            "<Id>k__BackingField": "x2Flight",
+            "name": "А теперь беги в зону x2 - она удваивает твой выигрыш."
+        },
+        {
+            "<Id>k__BackingField": "startZone",
+            "name": "Побежали на зону старта, начинаем настоящее приключение!"
+        },
+        {
+            "<Id>k__BackingField": "fall",
+            "name": "Ой! Упал? Не переживай, так бывает! Вставай и пробуй снова - у тебя всё получится!"
+        },
+        {
+            "<Id>k__BackingField": "success",
+            "name": "Ура! Ты справился! Твои первые монеты уже ждут тебя. Беги скорее забирать награду!"
+        },
+        {
+            "<Id>k__BackingField": "shield",
+            "name": "Прокачай щит. Теперь монеты в безопасности даже в ловушках!"
+        },
+        {
+            "<Id>k__BackingField": "petOpening",
+            "name": "Вау! Смотри, какой милый! Теперь он будет путешествовать с тобой и помогать зарабатывать ещё больше монет!"
+        },
+        {
+            "<Id>k__BackingField": "cutePet",
+            "name": "А ещё здесь живут классные питомцы и крутые скины! Хочешь посмотреть? Давай откроем твоего первого дружка!"
+        },
+        {
+            "<Id>k__BackingField": "miniGames",
+            "name": "А ещё тут: паркур, баскетбол, батуты и музыкальные игры! Всё в одном месте!"
+        },
+        {
+            "<Id>k__BackingField": "rangStatus",
+            "name": "Посмотри на экран: справа - твои способности, а снизу - твой ранг. Чем больше монет, тем круче твой статус!"
+        },
+        {
+            "<Id>k__BackingField": "goodLuck",
+            "name": "Ты теперь настоящий игрок! Обучение пройдено. Беги вперёд, открывай новое и выигрывай. Удачи, чемпион!"
+        }
+    ],
+    "UpgradeNames": [
+        {
+            "<Id>k__BackingField": 0,
+            "<Name>k__BackingField": "Множитель"
+        },
+        {
+            "<Id>k__BackingField": 1,
+            "<Name>k__BackingField": "Магнит"
+        },
+        {
+            "<Id>k__BackingField": 2,
+            "<Name>k__BackingField": "Удача"
+        },
+        {
+            "<Id>k__BackingField": 3,
+            "<Name>k__BackingField": "Предвиденье"
+        },
+        {
+            "<Id>k__BackingField": 4,
+            "<Name>k__BackingField": "Щит"
+        }
+    ],
+    "SkinNameTranslates": [
+        {
+            "<Id>k__BackingField": "kissie_skin",
+            "<Name>k__BackingField": "Кисси"
+        },
+        {
+            "<Id>k__BackingField": "huggie_skin",
+            "<Name>k__BackingField": "Хагги"
+        },
+        {
+            "<Id>k__BackingField": "freddy_skin",
+            "<Name>k__BackingField": "Фредди"
+        },
+        {
+            "<Id>k__BackingField": "foxie_skin",
+            "<Name>k__BackingField": "Фокси"
+        },
+        {
+            "<Id>k__BackingField": "tralalelo_skin",
+            "<Name>k__BackingField": "Тралалело"
+        },
+        {
+            "<Id>k__BackingField": "tung_skin",
+            "<Name>k__BackingField": "Сахур"
+        },
+        {
+            "<Id>k__BackingField": "guard_skin",
+            "<Name>k__BackingField": "Солдат"
+        },
+        {
+            "<Id>k__BackingField": "gihun_skin",
+            "<Name>k__BackingField": "Ги хун"
+        },
+        {
+            "<Id>k__BackingField": "deer_skin",
+            "<Name>k__BackingField": "Олень"
+        }
+    ],
+    "RangNameTranslates": [
+        {
+            "<Id>k__BackingField": 0,
+            "<Name>k__BackingField": "Новичок"
+        },
+        {
+            "<Id>k__BackingField": 1,
+            "<Name>k__BackingField": "Любитель"
+        },
+        {
+            "<Id>k__BackingField": 2,
+            "<Name>k__BackingField": "Продвинутый"
+        },
+        {
+            "<Id>k__BackingField": 3,
+            "<Name>k__BackingField": "Знаток"
+        },
+        {
+            "<Id>k__BackingField": 4,
+            "<Name>k__BackingField": "Профессионал"
+        },
+        {
+            "<Id>k__BackingField": 5,
+            "<Name>k__BackingField": "Легенда"
+        }
+    ],
+    "EggStationNameTranslates": [
+        {
+            "<Id>k__BackingField": "",
+            "<Name>k__BackingField": "член"
+        }
+    ],
+    "TaskTranslates": [
+        {
+            "<Id>k__BackingField": 0,
+            "name": "Пролететь {0} м."
+        },
+        {
+            "<Id>k__BackingField": 1,
+            "name": "Собрать {0} бусто"
+        },
+        {
+            "<Id>k__BackingField": 2,
+            "name": "Собрать {0} монет"
+        },
+        {
+            "<Id>k__BackingField": 3,
+            "name": "Поставить {0} монет."
+        }
+    ]
+}

@@ -4,7 +4,7 @@ public class LuckyUpgrade : UpgradeBase {
     public override void LoadLevel() {
         _upgradeInfo = _config.LuckyUpgrade;
         _playerStats.UpdateLuckyLevel(Level, false);
-        _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
+        _visual.SetNameText(UpgradeType);
         
         UpdatePrice();
         UpdateVisual();
@@ -22,9 +22,10 @@ public class LuckyUpgrade : UpgradeBase {
             _upgradesCalculator.GetLuckyByLevel(), 
             _upgradesCalculator.GetLuckyByLevel(false), 
             _currentPrice,  
-            "м", 
+            _localization.Meters, 
             false);
-        UpdateLevelInLeft();
+        _visual.UpdateLevelInLeft(Level);
+
     }
 
 

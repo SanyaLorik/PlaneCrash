@@ -7,11 +7,10 @@ using Zenject;
 
 
 public abstract class UpgradeBase : MonoBehaviour {
-    [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private DelayedTrigger _delayedTrigger;
     [SerializeField] protected UpgradeType UpgradeType;
     [SerializeField] protected UpgradeItemVisual _visual;
-    [SerializeField] protected TMP_Text _levelTextInSkills;
+
 
     protected UpgradeInfo _upgradeInfo;
     public UpgradeInfo UpgradeInfo => _upgradeInfo;
@@ -48,9 +47,7 @@ public abstract class UpgradeBase : MonoBehaviour {
     protected abstract void UpdateVisual();
     protected abstract void UpdatePlayerStatsInfo();
 
-    protected void UpdateLevelInLeft() {
-        _levelTextInSkills.text = Level.ToString();
-    }
+
 
     
     public void ApplyUpgrade(int newLevels, bool gameValute = true) {
@@ -102,7 +99,7 @@ public abstract class UpgradeBase : MonoBehaviour {
     private void BuyByTrigger() {
         if (_bank.CanBuy(_currentPrice)) {
             ApplyUpgrade(1);
-            _particleSystem.Play();
+            _visual.SkillISBought();
             _playerVisual.SetBought();
             _gameSave.Save();
         }

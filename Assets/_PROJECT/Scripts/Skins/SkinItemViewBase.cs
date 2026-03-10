@@ -87,12 +87,12 @@ public abstract class SkinItemViewBase : MonoBehaviour {
 
     private void GetTextLocalizated() {
         _wearText.text = _localization.IsWeared;
-        _nameText.text = _localization.GetSkinName(SkinItemConfig.Id);
+        _nameText.text = _localization.GetTranslatedName(SkinItemConfig.Id, _localization.SkinNameTranslates);
     }
 
 
     protected void WearSkin() {
-        Debug.Log("Надевание скина " + _localization.GetSkinName(SkinItemConfig.Id));
+        Debug.Log("Надевание скина " + _localization.GetTranslatedName(SkinItemConfig.Id, _localization.SkinNameTranslates));
         _playerSkinInventory.EquipSkin(SkinItemConfig);
         _wearText.ActiveSelf();
     }

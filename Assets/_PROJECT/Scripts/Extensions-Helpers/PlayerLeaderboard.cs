@@ -1,3 +1,4 @@
+using Architecture_M;
 using NaughtyAttributes;
 using SanyaBeerExtension;
 using UnityEngine;
@@ -17,14 +18,14 @@ public class PlayerLeaderboard : MonoBehaviour {
     [SerializeField] private Color[] _colors;
     [SerializeField, ShowIf(nameof(IsTopPlayerLeaderboard))] private Color _playerColor;
     
+    
+    private bool _playerInTable;
+    
 
     [Inject] private NumberFormatter _formatter;
     [Inject] private PlayerBank _playerBank;
     [Inject] private LocalizationDataPC _localization;
     [Inject] private NicknameRandomizer _nicknameRandomizer;
-    private bool _playerInTable;
-    
-
     private void OnEnable() {
         _playerBank.BankChanged += PlayerBankOnBankChanged;
     }

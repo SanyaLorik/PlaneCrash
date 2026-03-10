@@ -6,7 +6,7 @@ public class MagnetUpgrade : UpgradeBase {
         _upgradeInfo = _config.MagneteUpgrade;
         _playerStats.UpdateMagnetLevel(Level, false);
         
-        _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
+        _visual.SetNameText(UpgradeType);
         UpdatePrice();
         UpdateVisual();
     }
@@ -23,9 +23,9 @@ public class MagnetUpgrade : UpgradeBase {
             _upgradesCalculator.GetMagnetKByLevel(), 
             _upgradesCalculator.GetMagnetKByLevel(false), 
             _currentPrice,
-            "",
+            _localization.MagnetPower,
             false);
-        UpdateLevelInLeft();
+        _visual.UpdateLevelInLeft(Level);
         
     }
     

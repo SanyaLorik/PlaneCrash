@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using SanyaBeerExtension;
@@ -6,7 +7,6 @@ using UnityEngine;
 using Zenject;
 
 public class TaskNotification : MonoBehaviour {
-    [SerializeField] private TMP_Text _moneyText;
     [SerializeField] private RectTransform _panel;
     [SerializeField] private RectTransform _canvas;
     [SerializeField] private RectTransform _screenPosition;
@@ -14,6 +14,10 @@ public class TaskNotification : MonoBehaviour {
     [SerializeField] private float _timeToShow;
     [SerializeField] private float _duration;
     
+    // TEXT
+    [SerializeField] private TMP_Text _moneyText;
+    [SerializeField] private TMP_Text _taskCompletedText;
+    [SerializeField] private TMP_Text _getRewardTextTaskNotification;
     private bool _notifIsShowed;
     
     
@@ -24,6 +28,12 @@ public class TaskNotification : MonoBehaviour {
         _canvas.DisactiveSelf();
         _panel.anchoredPosition = _behindScreenPosition.anchoredPosition; // сразу прячем
     }
+
+    private void Start() {
+        _taskCompletedText.text = _localization.TaskCompletedNotification;
+        _getRewardTextTaskNotification.text = _localization.CollectRewardTaskNotification;
+    }
+
 
     private Coroutine _notifCoroutine;
     public void ShowNotification(string money) {

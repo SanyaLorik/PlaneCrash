@@ -22,7 +22,7 @@ public class TaskVisual : MonoBehaviour {
 
     
     public void SetTaskLocalizationText() {
-        _taskLocalizationText = _localization.GetTaskText(TaskType);
+        _taskLocalizationText = _localization.GetTranslatedName(TaskType,  _localization.TaskTranslates);
     }
 
     public void SetTaskVisual(float rewardMoney, float fullValue, float playerValue) {

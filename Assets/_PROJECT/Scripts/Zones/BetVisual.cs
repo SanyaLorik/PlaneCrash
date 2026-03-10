@@ -1,8 +1,6 @@
-using System;
 using DG.Tweening;
 using SanyaBeerExtension;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -22,6 +20,11 @@ public class BetVisual : MonoBehaviour {
     [SerializeField] private TMP_Text _playerBetText;
     [SerializeField] private TMP_Text _rewardText;
     [SerializeField] private RectTransform _betAndRewardContainer;
+    
+    [Header("Animation")]
+    [SerializeField] private TMP_Text _betNamingText;
+    [SerializeField] private TMP_Text _rewardNamingText;
+    
     
     
     [Inject] private PlayerStateManager _playerStateManager;
@@ -56,6 +59,10 @@ public class BetVisual : MonoBehaviour {
         _outScreenPoseY = _rtHelper.GetYUnderScreen(_betAndRewardContainer, _outScreenPointer);
         _playerBankText.text = _formatter.ValuteFormatter(_bank.PlayerCapital);
         _betAndRewardContainer.anchoredPosition = new Vector2(_betAndRewardContainer.anchoredPosition.x, _outScreenPoseY);
+        // Перевод текста
+        _betNamingText.text = _localization.Bet;
+        _rewardNamingText.text = _localization.Reward;
+        
         _betAndRewardContainer.DisactiveSelf();
     }
   

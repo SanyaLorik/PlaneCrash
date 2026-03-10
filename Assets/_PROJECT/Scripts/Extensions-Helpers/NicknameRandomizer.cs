@@ -1,6 +1,8 @@
 ﻿using System;
+using Architecture_M;
 using SanyaBeerExtension;
 using UnityEngine;
+using Zenject;
 using IInitializable = Zenject.IInitializable;
 using Random = UnityEngine.Random;
 
@@ -18,6 +20,7 @@ enum NickType
 public class NicknameRandomizer : IInitializable
 {
     private readonly NicknameSettings _settings;
+    private readonly LocalizationDataPC _localizationData;
 
     private string[] _ruMaleFirst;
     private string[] _ruFemaleFirst;
@@ -33,25 +36,30 @@ public class NicknameRandomizer : IInitializable
     private string[] _memWords;
     private string[] _linkWords;
 
+    private bool _isRusLanguage;
     
-    
-    public NicknameRandomizer(NicknameSettings settings)
+    public NicknameRandomizer(NicknameSettings settings, LocalizationDataPC localizationData)
     {
         _settings = settings;
+        _localizationData = localizationData;
     }
 
     public void Initialize()
     {
         GetFilesStrings();
+        _isRusLanguage = _localizationData.Substitute == LanguageEnum.Russian;
     }
 
     
 
     public string GetRandomName()
     {
-        bool rus = Random.value < _settings.ChanceToRusName;
         bool male = Random.value < _settings.ChanceToMale;
-
+        bool rus = Random.value < _settings.ChanceToRusName;
+        if (!_isRusLanguage) {
+            rus = false;
+        }
+        
         string first;
         string last;
 

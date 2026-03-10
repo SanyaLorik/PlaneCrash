@@ -274,6 +274,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Time Icon
       objectReference: {fileID: 0}
+    - target: {fileID: 966738897099067824, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1668935998703359361, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -25
@@ -538,6 +542,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144cf12d0dbf8694380b2b07174830b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PetStationViewReward
+  _statonNameId: 1
+  _statonNameText: {fileID: 2270262611457507789}
   _customTrigger: {fileID: 6161519274859967726}
   _config: {fileID: 11400000, guid: a73016fac212ae848bc2f961d7c05749, type: 2}
   _views:
@@ -589,6 +595,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2716447184520814809, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
   m_PrefabInstance: {fileID: 4479189108845136822}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2270262611457507789 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2425418275992488571, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
+  m_PrefabInstance: {fileID: 4479189108845136822}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &2274968583354829372 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2430546443191878026, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}

@@ -5,7 +5,7 @@ public class PredictUpgrade : UpgradeBase {
     public override void LoadLevel() {
         _upgradeInfo = _config.PredictionUpgrade;
         _playerStats.UpdatePredictDistanceLevel(Level, false);
-        _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
+        _visual.SetNameText(UpgradeType);
         
         UpdatePrice();
         UpdateVisual();
@@ -22,9 +22,10 @@ public class PredictUpgrade : UpgradeBase {
             _upgradesCalculator.GetPredictDistanceByLevel(), 
             _upgradesCalculator.GetPredictDistanceByLevel(false), 
             _currentPrice,
-            "м",
+            _localization.Meters,
             true);
-        UpdateLevelInLeft();
+        _visual.UpdateLevelInLeft(Level);
+
         
     }
     

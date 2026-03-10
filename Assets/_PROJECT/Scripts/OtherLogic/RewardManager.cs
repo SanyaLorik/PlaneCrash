@@ -13,9 +13,6 @@ public class RewardManager : MonoBehaviour {
     [SerializeField] private GameObject _canvas;
     [SerializeField] private RectTransform _container;
     
-    [SerializeField] private TMP_Text _distanceText;
-    [SerializeField] private TMP_Text _rewardText;
-    [SerializeField] private TMP_Text _rewardText2x;
 
     [SerializeField] private Button _backButton;
     [SerializeField] private Button _backButton2x;
@@ -28,6 +25,12 @@ public class RewardManager : MonoBehaviour {
     [SerializeField] private Ease _hideCanvasEase;
     [SerializeField] private Ease _showCanvasEase;
 
+    [Header("Динамичный текст")]
+    [SerializeField] private TMP_Text _distanceText;
+    [SerializeField] private TMP_Text _rewardText;
+    [SerializeField] private TMP_Text _rewardText2x;
+    
+    
     private float _yInScreenPosition; 
     private float _yOutScreenPosition; 
 

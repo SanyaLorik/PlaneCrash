@@ -18,7 +18,7 @@ public class MultiplyUpgrade : UpgradeBase {
     public override void LoadLevel() {
         _upgradeInfo = _config.XMultiplierUpgrade;
         _playerStats.UpdateMultiplierLevel(Level, false);
-        _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
+        _visual.SetNameText(UpgradeType);
         
         UpdatePrice();
         UpdateVisual();
@@ -35,9 +35,10 @@ public class MultiplyUpgrade : UpgradeBase {
             _upgradesCalculator.GetUpgradeMultiplierByLevel(), 
             _upgradesCalculator.GetUpgradeMultiplierByLevel(false), 
             _currentPrice,  
-            "x", 
+            _localization.Xs, 
             false);
-        UpdateLevelInLeft();
+        _visual.UpdateLevelInLeft(Level);
+
     }
 
     

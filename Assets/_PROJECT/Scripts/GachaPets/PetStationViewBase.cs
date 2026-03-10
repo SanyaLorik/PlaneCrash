@@ -2,6 +2,7 @@ using System;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -17,6 +18,8 @@ public class EntityView {
 
 public abstract class PetStationViewBase : MonoBehaviour {
 
+    [SerializeField] protected string _statonNameId;
+    [SerializeField] protected TextMeshProUGUI _statonNameText;
     [SerializeField] protected DelayedTrigger _customTrigger;
     [SerializeField] protected PetStationConfig _config;
     [SerializeField] protected EntityView[] _views;
@@ -26,16 +29,18 @@ public abstract class PetStationViewBase : MonoBehaviour {
     [Inject] protected PlayerBank _bank;
     [Inject] protected PetOpenView _petOpenView;
     [Inject] protected PetsManager _petsManager;
+    [Inject] protected LocalizationDataPC _localization;
 
     
-    protected float _divider;
     protected int _showedReward = 0;
+    private float _divider;
     
     
     protected void Start() {
         _divider = ChanceSum(_config.Pets);
         Initialize();
         StartInit();
+        _statonNameText.text = _localization.GetTranslatedName(_statonNameId, _localization.EggStationNameTranslates);
     }
 
 

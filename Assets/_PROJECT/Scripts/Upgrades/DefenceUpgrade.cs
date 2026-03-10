@@ -3,7 +3,7 @@ using UnityEngine;
 public class DefenceUpgrade : UpgradeBase {
     public override void LoadLevel() {
         _upgradeInfo = _config.DefenceUpgrade;
-        _visual.SetNameText(_localization.GetUpgradeName(UpgradeType));
+        _visual.SetNameText(UpgradeType);
         _playerStats.UpdateDefenceLevel(Level, false);
         UpdatePrice();
         UpdateVisual();
@@ -21,9 +21,10 @@ public class DefenceUpgrade : UpgradeBase {
             _upgradesCalculator.GetDefenceByLevel(), 
             _upgradesCalculator.GetDefenceByLevel(false), 
             _currentPrice,
-            "шт",
+            _localization.Pieces,
             true);
-        UpdateLevelInLeft();
+        _visual.UpdateLevelInLeft(Level);
+
     }
     
 }

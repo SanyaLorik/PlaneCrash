@@ -58,7 +58,7 @@ public class RangPlatformUnit : MonoBehaviour {
         _rangImg.sprite = rang.Sprite;
         
         _moneyText.text = _localizationDataPC.Receive;
-        _rangNameText.text = _localizationDataPC.GetRangName(_rangId);
+        _rangNameText.text = _localizationDataPC.GetTranslatedName(_rangId, _localizationDataPC.RangNameTranslates);
         _rewardMoney = rang.RewardMoney;
     }
 }
