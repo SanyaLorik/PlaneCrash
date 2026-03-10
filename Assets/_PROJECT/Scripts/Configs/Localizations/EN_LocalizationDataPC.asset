@@ -1,0 +1,226 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 338074372d83d0f40bb8927a2149acbd, type: 3}
+  m_Name: EN_LocalizationDataPC
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizationDataPC
+  <Real>k__BackingField: 1
+  <Substitute>k__BackingField: 1
+  <HourTime>k__BackingField: h
+  <MinuteTime>k__BackingField: m
+  <SecondTime>k__BackingField: s
+  <AdsInterstitial>k__BackingField: 
+  <LabelProgressNarrator>k__BackingField: 
+  <StaticTranslates>k__BackingField:
+  - <Id>k__BackingField: ad_in_text
+    <Data>k__BackingField: Ad in
+  - <Id>k__BackingField: zone_upgrade
+    <Data>k__BackingField: Upgrade Zone
+  - <Id>k__BackingField: start_text
+    <Data>k__BackingField: START
+  - <Id>k__BackingField: start_in_shadow
+    <Data>k__BackingField: Start
+  - <Id>k__BackingField: prize_money
+    <Data>k__BackingField: Prize Money
+  - <Id>k__BackingField: money_height
+    <Data>k__BackingField: Height
+  - <Id>k__BackingField: tower_money
+    <Data>k__BackingField: Money Tower
+  - <Id>k__BackingField: lift
+    <Data>k__BackingField: Elevator
+  - <Id>k__BackingField: parkour
+    <Data>k__BackingField: Parkour
+  - <Id>k__BackingField: top_player
+    <Data>k__BackingField: Top Players
+  - <Id>k__BackingField: top_donater
+    <Data>k__BackingField: Top Donators
+  - <Id>k__BackingField: mini_game
+    <Data>k__BackingField: Mini-Games
+  - <Id>k__BackingField: trampoline
+    <Data>k__BackingField: Trampolines
+  - <Id>k__BackingField: score
+    <Data>k__BackingField: 'Score:'
+  - <Id>k__BackingField: basketball
+    <Data>k__BackingField: Basketball
+  - <Id>k__BackingField: music
+    <Data>k__BackingField: Your Own Music!
+  - <Id>k__BackingField: task_reward
+    <Data>k__BackingField: 'Reward:'
+  - <Id>k__BackingField: tasks
+    <Data>k__BackingField: TASKS
+  - <Id>k__BackingField: spawn
+    <Data>k__BackingField: SPAWN
+  - <Id>k__BackingField: skins
+    <Data>k__BackingField: Skins
+  - <Id>k__BackingField: pets
+    <Data>k__BackingField: Pets
+  - <Id>k__BackingField: finish
+    <Data>k__BackingField: Finish
+  - <Id>k__BackingField: reward
+    <Data>k__BackingField: Reward
+  - <Id>k__BackingField: distance
+    <Data>k__BackingField: 'Distance:'
+  - <Id>k__BackingField: earned
+    <Data>k__BackingField: 'Earned:'
+  - <Id>k__BackingField: continue
+    <Data>k__BackingField: continue
+  - <Id>k__BackingField: shop
+    <Data>k__BackingField: Shop
+  - <Id>k__BackingField: mega_pack
+    <Data>k__BackingField: MEGA PACK
+  - <Id>k__BackingField: sale
+    <Data>k__BackingField: SALE
+  - <Id>k__BackingField: settings
+    <Data>k__BackingField: settings
+  - <Id>k__BackingField: skills
+    <Data>k__BackingField: Skills
+  - <Id>k__BackingField: profit
+    <Data>k__BackingField: "Profit \u04252"
+  - <Id>k__BackingField: openEgg
+    <Data>k__BackingField: Open Egg!
+  - <Id>k__BackingField: openButton
+    <Data>k__BackingField: Open!
+  Suffixies:
+  - 
+  - K
+  - M
+  - B
+  - T
+  IsWeared: Selected
+  TakeAPet: Take your pet!
+  Receive: Get
+  Level: Level
+  Bet: Bet
+  Reward: Reward
+  Meters: m
+  Pieces: pcs
+  Xs: x
+  MagnetPower: mag
+  TaskCompletedNotification: Task completed!
+  CollectRewardTaskNotification: Claim your reward
+  TaskTableTitle: Tasks
+  You: You
+  BotsPhrases:
+  - hi
+  - hey
+  - heyo
+  - yo
+  - hey
+  - what's up
+  - salute
+  - sup
+  - hello
+  - well hi
+  - oh, hi
+  - listen
+  - one sec
+  - wait
+  - aha, there you are
+  - been here long
+  TutorTranslates:
+  - <Id>k__BackingField: hello
+    name: Hello, friend! You've entered a wonderful world of adventure! Fun, challenges,
+      and tons of coins await you here!
+  - <Id>k__BackingField: movement
+    name: Look how simple it is! You can run using the joystick or the arrow keys
+      on your keyboard. Try taking a step forward!
+  - <Id>k__BackingField: flyExplain
+    name: Your main task is to fly as far as possible, avoid traps, and set a new
+      record every time!
+  - <Id>k__BackingField: betZone
+    name: See this glowing zone? The longer you stand on it, the more coins you'll
+      get as a reward. Shall we check it out?
+  - <Id>k__BackingField: x2Flight
+    name: Now run to the x2 zone - it doubles your winnings.
+  - <Id>k__BackingField: startZone
+    name: Let's run to the start zone, the real adventure begins!
+  - <Id>k__BackingField: fall
+    name: Oops! Fell down? Don't worry, it happens! Get up and try again - you can
+      do it!
+  - <Id>k__BackingField: success
+    name: Hooray! You did it! Your first coins are waiting for you. Run and claim
+      your reward!
+  - <Id>k__BackingField: shield
+    name: Upgrade your shield. Now your coins are safe even in traps!
+  - <Id>k__BackingField: petOpening
+    name: And there are also cool pets and awesome skins here! Want to see? Let's
+      open your first buddy!
+  - <Id>k__BackingField: cutePet
+    name: Wow! Look how cute! Now he'll travel with you and help you earn even more
+      coins!
+  - <Id>k__BackingField: miniGames
+    name: 'And there''s also: parkour, basketball, trampolines, and music games!
+      All in one place!'
+  - <Id>k__BackingField: rangStatus
+    name: 'Look at the screen: on the right - your abilities, and at the bottom -
+      your rank. The more coins, the cooler your status!'
+  - <Id>k__BackingField: goodLuck
+    name: You're a real player now! Tutorial completed. Run forward, discover new
+      things, and win. Good luck, champion!
+  UpgradeNames:
+  - <Id>k__BackingField: 0
+    <Name>k__BackingField: Multiplier
+  - <Id>k__BackingField: 1
+    <Name>k__BackingField: Magnet
+  - <Id>k__BackingField: 2
+    <Name>k__BackingField: Luck
+  - <Id>k__BackingField: 3
+    <Name>k__BackingField: Foresight
+  - <Id>k__BackingField: 4
+    <Name>k__BackingField: Shield
+  SkinNameTranslates:
+  - <Id>k__BackingField: kissie_skin
+    <Name>k__BackingField: Kissie
+  - <Id>k__BackingField: huggie_skin
+    <Name>k__BackingField: Huggie
+  - <Id>k__BackingField: freddy_skin
+    <Name>k__BackingField: Freddy
+  - <Id>k__BackingField: foxie_skin
+    <Name>k__BackingField: Foxie
+  - <Id>k__BackingField: tung_skin
+    <Name>k__BackingField: Sakhur
+  - <Id>k__BackingField: tralalelo_skin
+    <Name>k__BackingField: Tralalelo
+  - <Id>k__BackingField: guard_skin
+    <Name>k__BackingField: Soldier
+  - <Id>k__BackingField: gihun_skin
+    <Name>k__BackingField: Gi-hun
+  - <Id>k__BackingField: deer_skin
+    <Name>k__BackingField: Deer
+  RangNameTranslates:
+  - <Id>k__BackingField: 0
+    <Name>k__BackingField: Beginner
+  - <Id>k__BackingField: 1
+    <Name>k__BackingField: Amateur
+  - <Id>k__BackingField: 2
+    <Name>k__BackingField: Advanced
+  - <Id>k__BackingField: 3
+    <Name>k__BackingField: Expert
+  - <Id>k__BackingField: 4
+    <Name>k__BackingField: Professional
+  - <Id>k__BackingField: 5
+    <Name>k__BackingField: Legend
+  EggStationNameTranslates:
+  - <Id>k__BackingField: 1
+    <Name>k__BackingField: Common Egg
+  - <Id>k__BackingField: 2
+    <Name>k__BackingField: Rare Egg
+  - <Id>k__BackingField: 3
+    <Name>k__BackingField: Legendary Egg
+  TaskTranslates:
+  - <Id>k__BackingField: 0
+    name: Fly {0} m.
+  - <Id>k__BackingField: 1
+    name: Collect {0} boosts.
+  - <Id>k__BackingField: 2
+    name: Collect {0} coins.
+  - <Id>k__BackingField: 3
+    name: Bet {0} coins.

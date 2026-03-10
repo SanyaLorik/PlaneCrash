@@ -10954,6 +10954,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3276610258485397611, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
   m_PrefabInstance: {fileID: 1881996426}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &313861598 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8984488270168018595, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &317064560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64779,6 +64790,14 @@ MonoBehaviour:
     <Data>k__BackingField: {fileID: 132159801}
   - <Id>k__BackingField: shop
     <Data>k__BackingField: {fileID: 761595110}
+  - <Id>k__BackingField: skills
+    <Data>k__BackingField: {fileID: 1965382550}
+  - <Id>k__BackingField: profit
+    <Data>k__BackingField: {fileID: 1900724953}
+  - <Id>k__BackingField: openEgg
+    <Data>k__BackingField: {fileID: 2106309360}
+  - <Id>k__BackingField: openButton
+    <Data>k__BackingField: {fileID: 313861598}
 --- !u!1 &1828735430
 GameObject:
   m_ObjectHideFlags: 0
@@ -67922,6 +67941,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897661405}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1900724953 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4008910323957804446, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1902151400
 GameObject:
   m_ObjectHideFlags: 0
@@ -70339,6 +70369,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963311783}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1965382550 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4782716953339957653, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &1965874095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75022,6 +75063,17 @@ Transform:
   - {fileID: 28344653}
   m_Father: {fileID: 1457630103}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2106309360 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 392453113341743641, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!4 &2107544374 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4099657319889600712, guid: 56fde74b4d346094b941003ca5fcb019, type: 3}
@@ -77712,6 +77764,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1468767265741551171, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1482304494867917964, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -77824,6 +77880,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2546279883998228858, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_Name
+      value: Skills Text
+      objectReference: {fileID: 0}
     - target: {fileID: 2606606813392729268, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -77856,13 +77916,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3930356753591585441, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4494259384213505094, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4988240584931829168, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_text
       value: "\u041C\u0415\u0413\u0410 \u041D\u0410\u0411\u041E\u0420"
       objectReference: {fileID: 0}
     - target: {fileID: 4988240584931829168, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_fontSize
-      value: 50.5
+      value: 52.9
       objectReference: {fileID: 0}
     - target: {fileID: 5070996159901634585, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
@@ -77891,6 +77959,10 @@ PrefabInstance:
     - target: {fileID: 5553978658655615569, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6005816246524537050, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6052008843097824375, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_SizeDelta.x
@@ -78545,37 +78617,73 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 5dad61390ddbbaa40941a7c5e8cf854f, type: 3}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[1].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5f0d85ed7dfa50242a38f61832493a79, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[1].RusClip
       value: 
       objectReference: {fileID: 8300000, guid: 7655eca5fb0137540822428037e3ad4c, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[2].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: db7254d0713462b4fa5b6cbfecbf8650, type: 3}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[2].RusClip
       value: 
       objectReference: {fileID: 8300000, guid: 86eda4595f76df740af3f6ae32e9a177, type: 3}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[3].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a138247e53b9bc64cb35809d3a51f82e, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[3].RusClip
       value: 
       objectReference: {fileID: 8300000, guid: e199860c4d3d83c4797af8c591749482, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[4].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9224c9910ae88fc468f4a0207b27bbe7, type: 3}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[4].RusClip
       value: 
       objectReference: {fileID: 8300000, guid: 0094fc3e24021964c84cf1c5553070c2, type: 3}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[5].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fa0f35b03c7e29f4f9111d06d7c79eb0, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[5].RusClip
       value: 
       objectReference: {fileID: 8300000, guid: d4c7314e8f1d5644f95bc985ba82d254, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[6].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f2d522135cb7f11428e72ceebe80c504, type: 3}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[6].RusClip
       value: 
       objectReference: {fileID: 8300000, guid: 8f952f8fd5f69c64fac08a4c31ac451e, type: 3}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[7].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f8047ecdd487e3e4bac0ba0c601e2f19, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[7].RusClip
       value: 
       objectReference: {fileID: 8300000, guid: 5234baf084a8fbb4fa852bc5108642ee, type: 3}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[8].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 07f2400d64fb773408dfa19bfc4fd0fb, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[8].RusClip
       value: 
       objectReference: {fileID: 8300000, guid: b1170008b4c6b3944954ed0fa0dc2a54, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[9].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9768253063afea44ea28f912c2e00dff, type: 3}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[9].RusClip
       value: 
@@ -78585,17 +78693,33 @@ PrefabInstance:
       value: hello
       objectReference: {fileID: 0}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[10].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 45e7fd33bf1c2ec479b18ee7ee340c32, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[10].RusClip
       value: 
       objectReference: {fileID: 8300000, guid: 14107688a5e59d14fb24daa60b8446ac, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[11].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0af9d0e9c36c0cf4fb12d9c643d9286e, type: 3}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[11].RusClip
       value: 
       objectReference: {fileID: 8300000, guid: 36a32449e28c1bc4a821c564a242f97c, type: 3}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[12].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 51dba1e3ea92d974fa48dbbc71de13eb, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[12].RusClip
       value: 
       objectReference: {fileID: 8300000, guid: dec6d2bee414f764e8a03dc968b1b93c, type: 3}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _voiceSounds.Array.data[13].EngClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6f9b2a455eb44174ea4804e9a449b1db, type: 3}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.data[13].RusClip
       value: 

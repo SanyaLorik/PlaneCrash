@@ -33,7 +33,6 @@ public class LocalizationDataPC : LocalizationData
     
     
     
-    
     [Header("Tasks")]
     public string TaskCompletedNotification;
     public string CollectRewardTaskNotification;
