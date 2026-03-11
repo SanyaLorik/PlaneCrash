@@ -14,7 +14,6 @@ public class BugattiMaterialManager : MonoBehaviour {
         foreach (var matName in _matNames) {
             for (int i = 0; i < materials.Length; i++) {
                 if (materials[i].name.Contains(matName)) {
-                    Debug.Log("Index = " + i);
                     Color newColor = _colors[newColorsIndexes[colorIndex]];
                     materials[i].color = newColor;
                     colorIndex++;

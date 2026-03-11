@@ -1,3 +1,5 @@
+using System.Threading;
+using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
 using SanyaBeerExtension;
 using TMPro;
@@ -54,11 +56,13 @@ public class ParkourRewardTrigger : MonoBehaviour {
     }
 
 
-
+    private bool _allowToReward = true;
+    private CancellationTokenSource _token;
     private void OnTriggerEnter(Collider collider) {
         if (!collider.TryGetComponent(out PlayerMovement player)) return;
+        if (!_allowToReward) return;
+        _allowToReward = false;
         _bank.AddMoney(_reward);
-
         // Обновление за прохождение
         _accumulateMultiplier = Mathf.Min(_accumulateMultiplier * _rewardMultiplier, _accumulateMultiplierMax);
         _reward = (long)(_reward * _accumulateMultiplier);
@@ -66,8 +70,18 @@ public class ParkourRewardTrigger : MonoBehaviour {
         _rewardText.text = _formatter.ValuteFormatter(_reward);
 
         MovePlayerToSpawn(player);
+        _token?.Cancel();
+        _token = new CancellationTokenSource();
+        UniTaskHelper.TimerAction(
+            10f,
+            () => _allowToReward = true,
+            _token.Token
+        ).Forget();
     }
 
+    
+    
+    
     private async void MovePlayerToSpawn(PlayerMovement player) {
         await MoveParabola(player.Controller, _levelBounds.PlayerSpawnPoint.position, _heightFly, _durationFly);
     }
