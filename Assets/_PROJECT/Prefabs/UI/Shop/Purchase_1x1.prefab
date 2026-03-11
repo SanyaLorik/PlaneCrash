@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3368482867592014736}
   - component: {fileID: 6905720838270379158}
   - component: {fileID: 4831182610226529806}
-  - component: {fileID: 7832231307321866012}
   m_Layer: 5
   m_Name: Background Image
   m_TagString: Untagged
@@ -76,24 +75,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7832231307321866012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1335447610367867868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0cf562cb01e0204c827e751293d54bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.RotatingAroundAnimation
-  <Entity>k__BackingField:
-    <Source>k__BackingField: {fileID: 3368482867592014736}
-    <Duration>k__BackingField: 2
-    <Ease>k__BackingField: 1
-  <IsAutoStart>k__BackingField: 1
-  _endAngleValue: {x: 0, y: 0, z: 360}
 --- !u!1 &1383343215929663123
 GameObject:
   m_ObjectHideFlags: 0
