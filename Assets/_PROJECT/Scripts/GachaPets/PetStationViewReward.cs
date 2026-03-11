@@ -10,7 +10,6 @@ public class PetStationViewReward : PetStationViewBase {
     [SerializeField] private RectTransform _clockRectTransform;
     [SerializeField] private RectTransform _parentRectTransform;
 
-    [Inject] private LocalizationDataPC _localization;
     [Inject] private RectTransformHelper _fillAmounthMover;
 
     private CancellationTokenSource _tokenSource;

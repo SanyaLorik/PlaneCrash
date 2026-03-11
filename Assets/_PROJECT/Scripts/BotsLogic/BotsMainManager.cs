@@ -113,7 +113,7 @@ public class BotsMainManager : IInitializable, IDisposable {
     private void PlayerOnChangeState(PlayerState state){
         if (state == PlayerState.Flight) {
             int index = SetFlightRandomBot();
-            index = GetRandomIndexExcept(_bots.Count, index);
+            index = EnumerableHelper.GetRandomIndexExcept(_bots.Count, index);
             if (Random.value < _config.ChanseToChangeSkin) {
                 _bots[index].SetBotSkin(_skins.GetRandomElement());
             }
@@ -127,14 +127,6 @@ public class BotsMainManager : IInitializable, IDisposable {
         }
     }
 
-    private int GetRandomIndexExcept(int count, int previous) {
-        int random = Random.Range(0, count-1);
-
-        if (random >= previous) {
-            random++;
-        }
-        return random;
-    }
 
     private int SetFlightRandomBot() {
         int randomBot = GetRandomBot();

@@ -13,7 +13,6 @@ public class PlayerSkinInventory : IInitializable {
 
     public PlayerSkinInventory(SkinItemConfig defaultSkinConfig) {
         _defaultSkinConfig = defaultSkinConfig;
-        Debug.Log("PlayerSkinInventory constructor " + defaultSkinConfig.Id);
     }
     
     public void Initialize() {
@@ -22,8 +21,6 @@ public class PlayerSkinInventory : IInitializable {
             _saver.GetSave.AddNewSkin(_defaultSkinConfig.Id);
             EquipSkin(_defaultSkinConfig);
         }
-
-        Debug.Log("PlayerSkinInventory Initialized, defaultSkinConfig = " + _defaultSkinConfig.Id);
     }
     
     public bool SkinIsBought(string id) 
@@ -39,7 +36,6 @@ public class PlayerSkinInventory : IInitializable {
         _saver.GetSave.SkinWearId = skinItemConfig.Id;
         _saver.Save();
         SkinEquipped?.Invoke(skinItemConfig);
-        Debug.Log("skin equipped = " + skinItemConfig);
     }
 
     public string CurrentSkinId => _saver.GetSave.SkinWearId;
