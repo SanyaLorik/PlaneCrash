@@ -23,7 +23,7 @@
                 "stringCollection": [
                     {
                         "key": "Configuration",
-                        "value": "FallbackConfiguration"
+                        "value": "MirraWebConfiguration"
                     }
                 ]
             }
@@ -51,6 +51,10 @@
                     {
                         "key": "IAds.Override",
                         "value": false
+                    },
+                    {
+                        "key": "IPlayer.Visible",
+                        "value": false
                     }
                 ],
                 "intCollection": [],
@@ -65,6 +69,32 @@
                         "value": "PrototypeLanguageInfo"
                     }
                 ]
+            }
+        },
+        {
+            "key": "MirraWebConfiguration",
+            "group": {
+                "boolCollection": [
+                    {
+                        "key": "Y8_PropertyGroup.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "Y8_PropertyGroup.Override",
+                        "value": false
+                    },
+                    {
+                        "key": "Logger_PropertyGroup.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "VK_PropertyGroup.Visible",
+                        "value": false
+                    }
+                ],
+                "intCollection": [],
+                "floatCollection": [],
+                "stringCollection": []
             }
         }
     ]
