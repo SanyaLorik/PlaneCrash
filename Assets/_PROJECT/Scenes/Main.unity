@@ -25134,6 +25134,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1045179285}
     m_Modifications:
+    - target: {fileID: 487530172443295389, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 487530172443295389, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343086170019576411, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4774806060392220047, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -25174,9 +25186,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7405616469390380543, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 7405616469390380543, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7711350571106358082, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
       propertyPath: m_Name
       value: GachaPetStation_Adv
+      objectReference: {fileID: 0}
+    - target: {fileID: 9203789193940383261, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 9203789193940383261, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28736,13 +28764,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3186761249618059392, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 3186761249618059392, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3838688712768101218, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 3838688712768101218, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4073492145206396383, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
       propertyPath: m_Name
       value: GachaPetStation_Timer
       objectReference: {fileID: 0}
+    - target: {fileID: 4692841227455982790, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5636772468836395345, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
       propertyPath: _statonNameId
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6145097787380312064, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 6145097787380312064, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -37248,31 +37304,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.37
+      value: -2.3700001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.57
+      value: 3.5700073
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: -0.004442692
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.7071068
+      value: -0.70710504
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.0015679152
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0.7071051
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.0015679061
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -37284,7 +37340,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -0.254
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -39698,6 +39754,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: c7e0fead83cb4a94f9da5c7321a1cb1d, type: 2}
+    - target: {fileID: 6717884624428052061, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -43645,6 +43705,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1045179285}
     m_Modifications:
+    - target: {fileID: 487530172443295389, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 487530172443295389, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343086170019576411, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4774806060392220047, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.25
@@ -43685,9 +43757,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7405616469390380543, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 7405616469390380543, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7711350571106358082, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
       propertyPath: m_Name
       value: GachaPetStation_Adv_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9203789193940383261, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 9203789193940383261, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -46682,6 +46770,10 @@ PrefabInstance:
     - target: {fileID: 2638293288504444740, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
       propertyPath: m_Name
       value: GachaPetStation_Money
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717884624428052061, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -69715,6 +69807,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3186761249618059392, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 3186761249618059392, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3838688712768101218, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 3838688712768101218, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4073492145206396383, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
       propertyPath: m_Name
       value: GachaPetStation_Timer_1
@@ -69722,6 +69830,14 @@ PrefabInstance:
     - target: {fileID: 5636772468836395345, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
       propertyPath: _statonNameId
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6145097787380312064, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 6145097787380312064, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -77889,6 +78005,10 @@ PrefabInstance:
     - target: {fileID: 2638293288504444740, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
       propertyPath: m_Name
       value: GachaPetStation_Money_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717884624428052061, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
