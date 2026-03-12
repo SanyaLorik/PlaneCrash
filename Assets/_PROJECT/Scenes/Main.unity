@@ -40025,6 +40025,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1204852514}
     m_Modifications:
+    - target: {fileID: 1159185328839374871, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2801329284301666475, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
+    - target: {fileID: 1159185328839374871, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1643710317662066905, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -40041,6 +40049,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 2337147602824797392, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3123835778808080627, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -40048,6 +40060,18 @@ PrefabInstance:
     - target: {fileID: 3353298959890225837, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 3624836735387330681, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
+      propertyPath: _countsToShowAdv
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3624836735387330681, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
+      propertyPath: <SkinItemConfig>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 07a60f6f6e5a53347b5f2cdb88a53d37, type: 2}
+    - target: {fileID: 5538062488755012383, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5607419219872239509, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -40063,15 +40087,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6879757548382232001, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.24
+      value: -10.7
       objectReference: {fileID: 0}
     - target: {fileID: 6879757548382232001, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 1.78
       objectReference: {fileID: 0}
     - target: {fileID: 6879757548382232001, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.65
+      value: -3.14
       objectReference: {fileID: 0}
     - target: {fileID: 6879757548382232001, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -40114,7 +40138,7 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 3624836735387330681, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
+    - {fileID: 1793195590371781042, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6136976735846544543, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
     m_AddedGameObjects:
@@ -52815,7 +52839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6879757548382232001, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.44
+      value: 1.1400046
       objectReference: {fileID: 0}
     - target: {fileID: 6879757548382232001, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -66649,7 +66673,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6879757548382232001, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.57
+      value: 4.27
       objectReference: {fileID: 0}
     - target: {fileID: 6879757548382232001, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_LocalRotation.w
