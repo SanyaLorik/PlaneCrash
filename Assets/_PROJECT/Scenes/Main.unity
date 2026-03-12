@@ -42091,6 +42091,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5613417973577866378, guid: d5ca94f83687d704db7a5bca7e541cd0, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d5ca94f83687d704db7a5bca7e541cd0, type: 3}
       propertyPath: m_Name
       value: deer
@@ -61615,8 +61619,8 @@ MonoBehaviour:
     Restrictions: 0
   VerticalAxis:
     Value: 20.4
-    Center: 2
-    Range: {x: 2, y: 45}
+    Center: 4
+    Range: {x: -45, y: 90}
     Wrap: 0
     Recentering:
       Enabled: 0
