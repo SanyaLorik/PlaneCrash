@@ -155,9 +155,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8571313198046185653, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -8065152568033411378, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7104742128712255605, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6786039877820948542, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6060934540939853529, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
       propertyPath: m_IsActive
@@ -171,6 +183,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -4396642182433536433, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4110338037474885127, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -179,9 +195,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -715165470771034904, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -259972160606440404, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -91681808587120018, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 188869523012913620, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
       propertyPath: m_IsActive
@@ -199,10 +223,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wolf
       objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2310999047695662106, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3193569335630800823, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280389743439931121, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5644682510588439348, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5746564759562468899, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -225,6 +265,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
       propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085554978121241473, guid: 02658d9c763b77e499d51fafb5379633, type: 3}
+      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
