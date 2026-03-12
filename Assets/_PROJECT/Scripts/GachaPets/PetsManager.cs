@@ -108,7 +108,7 @@ public class PetsManager : MonoBehaviour {
     }
     
 
-    private PetItemConfig GetPetItemById(int id) =>
+    private PetItemConfig GetPetItemById(string id) =>
         _petsItems.First(pet => pet.Id == id);
 
 

@@ -21,7 +21,7 @@ public class GameSavePC : GameSaveBase {
 
 
 
-    public int AddNewPet(int id, int count) {
+    public int AddNewPet(string id, int count) {
         var pet = Pets.FirstOrDefault(pet => pet.Id == id);
         if (pet == null) {
             Pets.Add(new PetsData() {
@@ -79,7 +79,7 @@ public class UpgradeData {
 
 [Serializable]
 public class PetsData {
-    public int Id = 0;
+    public string Id = "";
     public int Count = 0;
 }
 

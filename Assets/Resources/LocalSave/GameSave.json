@@ -1,5 +1,5 @@
 {
-    "Money": 3271985848,
+    "Money": 3281176113,
     "RecordMoney": 3376215275,
     "RecordDistance": 4000,
     "Upgrades": [
@@ -26,16 +26,40 @@
     ],
     "Pets": [
         {
-            "Id": 2,
-            "Count": 18
+            "Id": "bugatti_pet",
+            "Count": 1
         },
         {
-            "Id": 0,
-            "Count": 2
+            "Id": "cola_pet",
+            "Count": 1
         },
         {
-            "Id": 1,
-            "Count": 4
+            "Id": "doshik_pet",
+            "Count": 1
+        },
+        {
+            "Id": "frutodrillo_pet",
+            "Count": 1
+        },
+        {
+            "Id": "labuba_pet",
+            "Count": 1
+        },
+        {
+            "Id": "syren_pet",
+            "Count": 1
+        },
+        {
+            "Id": "creeper_pet",
+            "Count": 1
+        },
+        {
+            "Id": "wolf_pet",
+            "Count": 1
+        },
+        {
+            "Id": "ghast_pet",
+            "Count": 1
         }
     ],
     "Skins": [
@@ -58,8 +82,8 @@
             "Id": "tung_skin"
         }
     ],
-    "SkinWearId": "guard_skin",
+    "SkinWearId": "tung_skin",
     "TutorialPassed": true,
     "CountBatutJumps": 2219,
-    "CountBaskets": 172
+    "CountBaskets": 173
 }

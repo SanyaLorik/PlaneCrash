@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 53074b88f3f84cb4baef2cd2c6ca5524
+guid: e553c6d1ea64eeb4088f6dd6712d6a3e
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material
-    second: {fileID: 2100000, guid: 7dd1d4c0e257f2c48ba72825d0746c9f, type: 2}
+      name: egg_blue_spike
+    second: {fileID: 2100000, guid: 8d6dea5cc165802408f302b66bd5278b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -84,7 +84,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []

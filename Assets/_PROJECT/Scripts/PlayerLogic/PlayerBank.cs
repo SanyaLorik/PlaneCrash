@@ -18,7 +18,7 @@ public class PlayerBank : MonoBehaviour {
 
     [Inject] IGameSave<GameSavePC> _gameSave;
     [Inject] TutorialCompiller _tutorialCompiller;
-    
+     
     public long PlayerCapital {
         get => _gameSave.GetSave.Money;
         private set => _gameSave.GetSave.Money = value;

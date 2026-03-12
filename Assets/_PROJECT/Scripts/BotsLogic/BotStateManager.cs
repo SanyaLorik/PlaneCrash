@@ -75,7 +75,6 @@ public class BotStateManager : MonoBehaviour {
     }
     
     private IEnumerator ChangeSkinRoutine(SkinItemConfig skin) {
-        Debug.Log("Смена скина у бота");
         if (_skinInstance != null) {
             Destroy(_skinInstance);
             _botAnimator.SetModelData(null, null);
