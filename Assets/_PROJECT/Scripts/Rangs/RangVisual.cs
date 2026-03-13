@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -12,7 +13,6 @@ public class RangVisual : MonoBehaviour {
 
     [Header("Поверхности")]
     [SerializeField] private RangPlatformUnit[] _rangPlanes;
-    [SerializeField] private Transform _planesParent;
     
     [Header("Куча БАБЛА ЕБАНОГО")]
     [SerializeField] private Transform _cubeRoof;
@@ -26,6 +26,9 @@ public class RangVisual : MonoBehaviour {
     [Inject] private NumberFormatter _formatter;
     [Inject] private RectTransformHelper _fillAmounthMover;
 
+    private void Awake() {
+        SetPlanes();
+    }
 
 
     private void OnEnable() {
@@ -35,7 +38,6 @@ public class RangVisual : MonoBehaviour {
 
     private void Start() {
         InstanceRangs();
-        SetPlanes();
         PlayerBankOnBankChanged(_playerBank.PlayerCapital);
         RecalculateRecord();
     }
@@ -57,7 +59,7 @@ public class RangVisual : MonoBehaviour {
             _rangPlanes[i].transform.position.z
         );
         _rangPlanes[i].transform.position = position;
-            
+
     }
 
     private void InstanceRangs() {

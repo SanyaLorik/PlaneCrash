@@ -18,7 +18,7 @@ public class RangPlatformUnit : MonoBehaviour {
     
     private long _rewardMoney;
     private bool _moneyIsGet;
-
+    
     
     private void OnTriggerEnter(Collider collider) {
         if(!collider.TryGetComponent(out PlayerMovement _) || _moneyIsGet) return;
