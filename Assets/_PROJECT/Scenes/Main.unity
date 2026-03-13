@@ -4562,6 +4562,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 69003383}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &72215950 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2077944405398135396, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611408ef5a702e94e88d1d1cefbc15cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.PurchaseSlotView
 --- !u!1 &76496656
 GameObject:
   m_ObjectHideFlags: 0
@@ -9297,20 +9308,27 @@ MonoBehaviour:
   <HasPurchaseInfo>k__BackingField: 0
   _purshaseItems:
   - rid: 8231486293909438730
-  - rid: 8231486293909438731
+  - rid: 2694420624069885956
+  - rid: 2694420624069885957
   references:
     version: 2
     RefIds:
+    - rid: 2694420624069885956
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 0
+        _newLevels: 50
+    - rid: 2694420624069885957
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 4
+        _newLevels: 17
     - rid: 8231486293909438730
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
         _skins:
-        - {fileID: 11400000, guid: 7b27c1322e7813d489cf91570d574a36, type: 2}
-    - rid: 8231486293909438731
-      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
-      data:
-        _skins:
-        - {fileID: 11400000, guid: c3ffec8908476164c89048f857a97aa8, type: 2}
+        - {fileID: 11400000, guid: 4e02a70954dd7de479cf896445d104d0, type: 2}
+        - {fileID: 11400000, guid: d95b31a91af80214dbf0f7162a2ef822, type: 2}
 --- !u!1 &250068505
 GameObject:
   m_ObjectHideFlags: 0
@@ -23061,6 +23079,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638047124}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &640644399 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1739766397468297977, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611408ef5a702e94e88d1d1cefbc15cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.PurchaseSlotView
 --- !u!4 &641519627 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 311742809367500154, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
@@ -35354,20 +35383,21 @@ MonoBehaviour:
     <Currency>k__BackingField: 
   <HasPurchaseInfo>k__BackingField: 0
   _purshaseItems:
-  - rid: 8231486297697157196
+  - rid: 2694420624069885954
+  - rid: 2694420624069885955
   references:
     version: 2
     RefIds:
-    - rid: 8231486297697157196
-      type: {class: PetPurshaseItem, ns: , asm: Assembly-CSharp}
+    - rid: 2694420624069885954
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _petsInfo:
-        - Pet: {fileID: 11400000, guid: a7a47b68cdc48524fb0c1a41c27b96a7, type: 2}
-          count: 2
-        - Pet: {fileID: 11400000, guid: adae021b2b7ed0e4e9d9051b05ff01f7, type: 2}
-          count: 2
-        - Pet: {fileID: 11400000, guid: b69d11ce9cb24064b826efb1eeda9cb2, type: 2}
-          count: 2
+        _upgradeType: 0
+        _newLevels: 25
+    - rid: 2694420624069885955
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 4
+        _newLevels: 10
 --- !u!1 &970447968
 GameObject:
   m_ObjectHideFlags: 0
@@ -36867,7 +36897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InputInstaller
   _mobileInputViewPrefab: {fileID: 3967064296492133266, guid: cc9e6dd412bf9004683139a19bb58739, type: 3}
   _mobileContainer: {fileID: 158810032041061673}
-  _platformDebugType: 1
+  _platformDebugType: 0
 --- !u!1 &1010918795
 GameObject:
   m_ObjectHideFlags: 0
@@ -44877,7 +44907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
-  <Id>k__BackingField: 2
+  <Id>k__BackingField: 3
   <PurchaseInfo>k__BackingField:
     <Id>k__BackingField: 
     <PriceInteger>k__BackingField: 0
@@ -44885,15 +44915,16 @@ MonoBehaviour:
     <Currency>k__BackingField: 
   <HasPurchaseInfo>k__BackingField: 0
   _purshaseItems:
-  - rid: 8231486297697157201
+  - rid: 2694420624069885953
   references:
     version: 2
     RefIds:
-    - rid: 8231486297697157201
-      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+    - rid: 2694420624069885953
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _upgradeType: 3
-        _newLevels: 2
+        _skins:
+        - {fileID: 11400000, guid: c3ffec8908476164c89048f857a97aa8, type: 2}
+        - {fileID: 11400000, guid: 7b27c1322e7813d489cf91570d574a36, type: 2}
 --- !u!1 &1235314319
 GameObject:
   m_ObjectHideFlags: 0
@@ -46312,6 +46343,7 @@ MonoBehaviour:
   - {fileID: 290557860}
   - {fileID: 41891858}
   - {fileID: 2044239424}
+  - {fileID: 1875372352}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -52883,6 +52915,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4507285458199360349, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
   m_PrefabInstance: {fileID: 158810032041061672}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1484166392 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3737760489936313116, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611408ef5a702e94e88d1d1cefbc15cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.PurchaseSlotView
 --- !u!1001 &1484639963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68682,9 +68725,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd02b6f68dc5044dbaf2653ef1a171f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.PurchaseInstaller
-  _purchasesBase: {fileID: 0}
-  _purchaseSlots: []
-  _purchaseSlotViiews: []
+  _purchasesBase: {fileID: 5363244089110065937, guid: b5754cfbfe07e164587b56f1b506eeb5, type: 3}
+  _purchaseSlots:
+  - {fileID: 247477960}
+  - {fileID: 969627713}
+  - {fileID: 1232794017}
+  _purchaseSlotViiews:
+  - {fileID: 72215950}
+  - {fileID: 640644399}
+  - {fileID: 1484166392}
 --- !u!1001 &1875669863
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80315,6 +80364,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1739766397468297977, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 969627713}
     - target: {fileID: 1854769791697405546, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -80327,6 +80380,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2077944405398135396, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1232794017}
     - target: {fileID: 2259382956850344757, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -80395,6 +80452,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3737760489936313116, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 247477960}
     - target: {fileID: 3797105532040861705, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
       value: 1
