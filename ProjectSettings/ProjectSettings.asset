@@ -546,6 +546,14 @@ PlayerSettings:
   openGLRequireES31AEP: 0
   openGLRequireES32: 0
   m_TemplateCustomTags:
+    AUTO_SYNC_PERSISTENT_DATA_PATH: 
+    DESKTOP_ASPECT_RATIO: 
+    DEVICE_PIXEL_RATIO: 0.8
+    LANDSCAPE_ONLY: true
+    MATCH_WEBGL_TO_CANVAS_SIZE: 
+    MOBILE_LANDSCAPE_ASPECT_RATIO: 
+    MOBILE_PORTRAIT_ASPECT_RATIO: 
+    PORTRAIT_ONLY: 
     PRODUCT_DESCRIPTION: 
   mobileMTRendering:
     Android: 1
@@ -812,14 +820,14 @@ PlayerSettings:
   blurSplashScreenBackground: 1
   spritePackerPolicy: 
   webGLMemorySize: 32
-  webGLExceptionSupport: 2
+  webGLExceptionSupport: 1
   webGLNameFilesAsHashes: 0
   webGLShowDiagnostics: 0
   webGLDataCaching: 1
   webGLDebugSymbols: 0
   webGLEmscriptenArgs: 
   webGLModulesDirectory: 
-  webGLTemplate: APPLICATION:Minimal
+  webGLTemplate: PROJECT:MirraGamesTemplate-1.0.4
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
   webGLCompressionFormat: 0
