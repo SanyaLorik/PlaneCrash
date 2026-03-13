@@ -24,4 +24,24 @@ public class MobileInputView : MobileInputViewBase
 
         _orbitalMovement.DisactiveSelf();
     }
+
+    public void ShowJumpButton()
+    {
+        JumpButton.ActiveSelf();
+    }
+
+    public void HideJumpButton()
+    {
+        JumpButton.DisactiveSelf();
+    }
+
+    public void ShowOrbitalJoystick()
+    {
+        _orbitalMovement.ActiveSelf();
+    }
+
+    public void HidOrbitalJoystick()
+    {
+        _orbitalMovement.DisactiveSelf();
+    }
 }

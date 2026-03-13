@@ -1,7 +1,7 @@
 using Architecture_M;
 using UnityEngine;
 
-public class MobileInput : MobileInputBase<MobileInputView>, IOrbitalRotationInput
+public class MobileInput : MobileInputBase<MobileInputView>, IOrbitalRotationInput, IActivityButtonPC
 {
     public MobileInput(MobileInputView inputView) : base(inputView)
     {
@@ -27,5 +27,25 @@ public class MobileInput : MobileInputBase<MobileInputView>, IOrbitalRotationInp
     private void OnInvokedJump()
     {
         InvokeJump();
+    }
+
+    public void ShowJumpButton()
+    {
+        inputView.ShowJumpButton();
+    }
+
+    public void HideJumpButton()
+    {
+        inputView.HideJumpButton();
+    }
+
+    public void ShowOrbitalJoystick()
+    {
+        inputView.ShowOrbitalJoystick();
+    }
+
+    public void HidOrbitalJoystick()
+    {
+        inputView.HidOrbitalJoystick();
     }
 }

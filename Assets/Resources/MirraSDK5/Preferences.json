@@ -146,11 +146,20 @@
                     {
                         "key": "Framework_PropertyGroup.Visible",
                         "value": false
+                    },
+                    {
+                        "key": "IPayments.Override",
+                        "value": false
                     }
                 ],
                 "intCollection": [],
                 "floatCollection": [],
-                "stringCollection": []
+                "stringCollection": [
+                    {
+                        "key": "IPayments.PaymentsProvider",
+                        "value": "MirraWebPayments"
+                    }
+                ]
             }
         }
     ]
