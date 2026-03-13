@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Architecture_M;
-using Cysharp.Threading.Tasks;
-using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -18,7 +14,16 @@ public class PlayerBank : MonoBehaviour {
 
     [Inject] IGameSave<GameSavePC> _gameSave;
     [Inject] TutorialCompiller _tutorialCompiller;
-     
+    [Inject] PlayerConfig _playerConfig;
+
+
+    private void Start() {
+        if (PlayerCapital < _playerConfig.StartMoneyAmount) {
+            AddMoney(_playerConfig.StartMoneyAmount);
+        }
+    }
+
+
     public long PlayerCapital {
         get => _gameSave.GetSave.Money;
         private set => _gameSave.GetSave.Money = value;

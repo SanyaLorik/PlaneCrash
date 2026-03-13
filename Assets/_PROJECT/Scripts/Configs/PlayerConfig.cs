@@ -26,5 +26,8 @@ public class PlayerConfig : ScriptableObject {
     [field: SerializeField, Range(0,1)] public float MobileCameraFov { get; private set; }
     [field: SerializeField, Range(0,1)] public float DesktopCameraFov { get; private set; }
     
+    [Header("PlayerAmount")]
+    [field: SerializeField] public long StartMoneyAmount { get; private set; }
+    
     
 }

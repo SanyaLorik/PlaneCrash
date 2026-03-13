@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TrapVisual : MonoBehaviour {
@@ -8,10 +6,14 @@ public class TrapVisual : MonoBehaviour {
     [SerializeField] private float _brightnessMultiply = 5f;
 
     public void GetEffect() {
-        _particleSystem.Play();
+        if (_particleSystem!=null) {
+            _particleSystem.Play();
+        }
     }
     
     public void StopEffect() {
-        _particleSystem.Stop();
+        if (_particleSystem!=null) {
+            _particleSystem.Stop();
+        }
     }
 }
