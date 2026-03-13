@@ -72,7 +72,7 @@ public class CameraOrbitalController : MonoBehaviour {
         SettingsOnCameraValueChanged(_settings.CameraZoomValue);
         
         // К релизу врубать
-        // _isMobile = _deviceType.DeviceType == DeviceTypeEnum.Mobile;
+        _isMobile = _deviceType.DeviceType == DeviceTypeEnum.Mobile;
         if (_isMobile)
             _rotationHandler = HandleJoystickOrbit;
         else {
