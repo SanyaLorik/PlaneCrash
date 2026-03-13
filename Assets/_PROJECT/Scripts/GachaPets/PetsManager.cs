@@ -92,9 +92,15 @@ public class PetsManager : MonoBehaviour {
     
     private void LoadDataToDict() {
         List<PetsData> boughtPets = _gameSave.GetSave.Pets;
-        // Нужно загружать лучшие
+        Debug.Log("Кол-во купленных петов:" + boughtPets.Count);
         foreach (var pet in boughtPets) {
-            _petToCountDict[GetPetItemById(pet.Id)] = pet.Count;
+            var petItem = GetPetItemById(pet.Id);
+            if (petItem != null) {
+                _petToCountDict[petItem] = pet.Count;
+            }
+            else {
+                Debug.LogWarning($"Питомец с ID {pet.Id} не найден");
+            }
         }
     }
 
@@ -106,10 +112,11 @@ public class PetsManager : MonoBehaviour {
 
         return PetsInstances.Any(pet => pet.PetInfo.Modifier < petItem.Modifier);
     }
-    
 
-    private PetItemConfig GetPetItemById(string id) =>
-        _petsItems.First(pet => pet.Id == id);
+
+    private PetItemConfig GetPetItemById(string id) 
+        => _petsItems.FirstOrDefault(pet => pet.Id == id);
+    
 
 
     private void UpdatePetsVisual() {

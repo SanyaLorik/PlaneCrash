@@ -35,19 +35,14 @@ MonoBehaviour:
       Level: 8
     - Id: 1
       Level: 15
-    Pets:
-    - Id: 2
-      Count: 21
-    - Id: 1
-      Count: 9
-    - Id: 0
-      Count: 3
+    Pets: []
     Skins:
     - Id: freddy_skin
     - Id: kissie_skin
     - Id: foxy_skin
     - Id: huggie_skin
-    SkinWearId: kissie_skin
+    - Id: tralalelo_skin
+    SkinWearId: tralalelo_skin
     TutorialPassed: 1
     CountBatutJumps: 505
     CountBaskets: 10

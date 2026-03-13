@@ -51,7 +51,9 @@ public class BotAnimator : MonoBehaviour {
     
     private void OnStartWandering(bool isRunning) {
         _animator.SetBool(Run, isRunning);
-        _skinController.EnableShadow();
+        if (_skinController!=null) {
+            _skinController.EnableShadow();
+        }
     }
 
     private void OnJump() {

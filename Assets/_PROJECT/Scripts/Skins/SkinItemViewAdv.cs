@@ -59,6 +59,6 @@ public class SkinItemViewAdv : SkinItemViewBase {
     protected override void InitSpecific() {
         SetProgress();
     }
-    
-    
+
+    protected override void OnEnableSpecific() { }
 }

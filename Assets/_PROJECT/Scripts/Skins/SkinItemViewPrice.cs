@@ -4,6 +4,7 @@ using UnityEngine;
 public class SkinItemViewPrice : SkinItemViewBase {
     [SerializeField] private TextMeshProUGUI _priceText;
     
+    
     private void OnTriggerEnter(Collider collider) {
         if(!collider.TryGetComponent(out PlayerMovement _)) return;
 
@@ -16,6 +17,16 @@ public class SkinItemViewPrice : SkinItemViewBase {
             _delayedTrigger.DelayedTriggerAction(BuyNewSkin);
         }
     }
+    
+    private void PlayerBankOnBankChanged(long amount) {
+        if(SkinIsBought()) return;
+        if (amount >= SkinItemConfig.Price) {
+            _delayedTrigger.SetAvailable();
+        }
+        else {
+            _delayedTrigger.SetUnvailable();
+        }
+    }
 
     private void BuyNewSkin() {
         _playerBank.Buy(SkinItemConfig.Price);
@@ -25,6 +36,10 @@ public class SkinItemViewPrice : SkinItemViewBase {
     
     protected override void InitSpecific() {
         _priceText.text = _formatter.ValuteFormatter(SkinItemConfig.Price);
+        PlayerBankOnBankChanged(_playerBank.PlayerCapital);
     }
-    
+
+    protected override void OnEnableSpecific() {
+        _playerBank.BankChanged += PlayerBankOnBankChanged;
+    }
 }

@@ -24,7 +24,7 @@ public abstract class SkinItemViewBase : MonoBehaviour {
     private void OnEnable() {
         _playerSkinInventory.SkinUnlocked += HidePurchaseInfo;
         _playerSkinInventory.SkinEquipped += SkinEquippedCheck;
-        _playerBank.BankChanged += PlayerBankOnBankChanged;
+        OnEnableSpecific();
     }
 
     private void SkinEquippedCheck(SkinItemConfig skin) {
@@ -33,14 +33,7 @@ public abstract class SkinItemViewBase : MonoBehaviour {
         }
     }
 
-    private void PlayerBankOnBankChanged(long amount) {
-        if (amount >= SkinItemConfig.Price) {
-            _delayedTrigger.SetAvailable();
-        }
-        else {
-            _delayedTrigger.SetUnvailable();
-        }
-    }
+    
 
 
 
@@ -114,8 +107,9 @@ public abstract class SkinItemViewBase : MonoBehaviour {
     protected bool SkinIsWeared() {
         return _playerSkinInventory.CurrentSkinId == SkinItemConfig.Id;
     }
-    
 
+
+    protected abstract void OnEnableSpecific();
     
     private void OnTriggerExit(Collider collider) {
         if(!collider.TryGetComponent(out PlayerMovement _)) return;
