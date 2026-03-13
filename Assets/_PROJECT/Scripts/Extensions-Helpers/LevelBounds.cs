@@ -12,8 +12,6 @@ public class  LevelBounds : MonoBehaviour {
     [field: SerializeField] public float MaxY {get; private set; }
     [field: SerializeField] public Transform PlayerSpawnPoint { get; private set; }
     [field: SerializeField] public Transform BetZonePosition { get; private set; }
-    [field: SerializeField] public Transform ParkourPosition { get; private set; }
-
 
 
     public Vector3 RecalculateCruiserY() {

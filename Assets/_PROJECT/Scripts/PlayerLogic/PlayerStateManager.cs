@@ -17,6 +17,7 @@ public class PlayerStateManager : MonoBehaviour{
     [Inject] private ZoneManager _zoneManager;
     [Inject] private TutorialCompiller _tutorialCompiller;
     [Inject] private PlayerMovement _playerMovement;
+    [InjectOptional] private IActivityButtonPC _activityButtonPC;
     
     public event Action<PlayerState> ChangeState;
     
@@ -72,6 +73,7 @@ public class PlayerStateManager : MonoBehaviour{
         BeforeState = CurrentState;
         CurrentState = newState;
         if (newState == PlayerState.Flight) {
+            HideFlightMobileView(true);
             SetFlightCanvas();
             _interstitialDelaying.DisableTimer();
             if (StartFlightPositionZ == 0) {
@@ -86,6 +88,8 @@ public class PlayerStateManager : MonoBehaviour{
         
         if (newState == PlayerState.Walking) {
             SetWalkingCanvas();
+            HideFlightMobileView(false);
+            
         }
         else if (newState == PlayerState.Cruisered || newState == PlayerState.Grounded) {
             SetGroundedCanvas();
@@ -94,6 +98,18 @@ public class PlayerStateManager : MonoBehaviour{
 
         Debug.Log("CurrentPlayerState: " + CurrentState);
         ChangeState?.Invoke(CurrentState);
+    }
+
+    private void HideFlightMobileView(bool state) {
+        if(_activityButtonPC == null) return;
+        if (state) {
+            _activityButtonPC.HideJumpButton();
+            _activityButtonPC.HidOrbitalJoystick();
+        }
+        else {
+            _activityButtonPC.ShowJumpButton();
+            _activityButtonPC.ShowOrbitalJoystick();
+        }
     }
 
     private void SetGroundedCanvas() {
