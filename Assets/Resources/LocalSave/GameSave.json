@@ -1,7 +1,7 @@
 {
-    "Money": 5892154,
-    "RecordMoney": 5951262,
-    "RecordDistance": 2000,
+    "Money": 10000,
+    "RecordMoney": 10000,
+    "RecordDistance": 0,
     "Upgrades": [
         {
             "Id": 2,
@@ -13,7 +13,7 @@
         },
         {
             "Id": 3,
-            "Level": 5
+            "Level": 1
         },
         {
             "Id": 1,
@@ -24,29 +24,14 @@
             "Level": 1
         }
     ],
-    "Pets": [
-        {
-            "Id": "doshik_pet",
-            "Count": 5
-        },
-        {
-            "Id": "cola_pet",
-            "Count": 3
-        }
-    ],
+    "Pets": [],
     "Skins": [
         {
             "Id": "tralalelo_skin"
-        },
-        {
-            "Id": "noobic_skin"
-        },
-        {
-            "Id": "creeper_skin"
         }
     ],
-    "SkinWearId": "creeper_skin",
-    "TutorialPassed": true,
+    "SkinWearId": "tralalelo_skin",
+    "TutorialPassed": false,
     "CountBatutJumps": 0,
-    "CountBaskets": 1
+    "CountBaskets": 0
 }

@@ -73,7 +73,7 @@ public class RangVisual : MonoBehaviour {
         RangData rang = _config.Rangs[i];
         // Равномерно распределить
         float rangPercent = (i+1f) / _config.Rangs.Count;
-        _fillAmounthMover.SetPointer(_rangPrefabs[i]._rt, rangPercent, xEnd);
+        // _fillAmounthMover.SetPointer(_rangPrefabs[i]._rt, rangPercent, xEnd);
         _rangPrefabs[i].SetData(rang.Money, rang.Sprite, (rangPercent*xEnd));
     }
 

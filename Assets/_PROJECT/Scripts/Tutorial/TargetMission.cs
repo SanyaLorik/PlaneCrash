@@ -1,4 +1,5 @@
 using System;
+using Architecture_M;
 using Cysharp.Threading.Tasks;
 using NaughtyAttributes;
 using SanyaBeerExtension;
@@ -56,6 +57,7 @@ public class TargetMission : IMission {
         }
         await UniTask.WaitWhile(() => !_narratorIsOver);
     }
+    
     
     public async UniTask TimerText(string textId) {
         _narratorIsOver = false;
