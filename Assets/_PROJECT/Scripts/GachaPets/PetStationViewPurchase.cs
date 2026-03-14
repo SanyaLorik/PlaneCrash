@@ -3,16 +3,28 @@ using UnityEngine;
 
 public class PetStationViewPurchase : PetStationViewBase {
     [SerializeField] private TMP_Text _priceText;
-
+    private bool _setZeroPrice;
 
     private void Awake() {
-        _priceText.text = _formatter.ValuteFormatter(_config.Price);
+        SetPrice(_config.Price);
+    }
+
+    private void SetPrice(long price) {
+        _priceText.text = _formatter.ValuteFormatter(price);
     }
 
     private void OnEnable() {
         _bank.BankChanged += BankOnBankChanged;
     }
 
+    public void SetZeroPrice() {
+        _setZeroPrice = true;
+        _allowToUse = true;
+        SetPrice(0);
+        _customTrigger.SetAvailable();
+    }
+    
+    
     private void BankOnBankChanged(long obj) {
         CheckAvailable();
     }
@@ -37,7 +49,16 @@ public class PetStationViewPurchase : PetStationViewBase {
     protected override void AddPet() {
         Debug.Log("Buy pet");
         PetChance pet = GetRandomPet(_config);
-        _bank.Buy(_config.Price);
+        if (_setZeroPrice) {
+            _bank.Buy(0);
+            _setZeroPrice = false;
+            _allowToUse = false;
+            CheckAvailable();
+            SetPrice(_config.Price);
+        }
+        else {
+            _bank.Buy(_config.Price);
+        }
         _petsManager.AddPet(pet.PetItemConfig);
         _petOpenView.ShowOpenPetView(pet);
     }

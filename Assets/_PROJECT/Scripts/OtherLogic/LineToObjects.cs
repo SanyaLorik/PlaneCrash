@@ -12,8 +12,11 @@ public class LineToObjects : MonoBehaviour {
     [SerializeField] private PairedValue<AnimationCurve> _sizeDiapasoneCurves;
     [SerializeField] private PairedValue<Vector2> _tileDiapasone;
     
+    [Header("Дистанция для скрытия если пролетел буст")]
+    [SerializeField] private float _distanceToHideArrow = 50f;
+
+    
     private Vector3 _target;
-    private bool _tutorialStarted;
     private float _offset;
     
     private bool _arrowInBoost;
@@ -24,12 +27,18 @@ public class LineToObjects : MonoBehaviour {
     [Inject] private BoostSpawner _boostSpawner;
 
     [Inject] private TasksManager _tasksManager;
+    [Inject] private TutorialCompiller _tutorialCompiller;
+    [Inject] private LevelBounds _levelBounds;
 
+    private bool TutorialStarted => !_tutorialCompiller.TutorialPassed; 
 
     private void OnEnable() {
         _player.SetBoost += PlayerOnSetBoost;
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
         _zoneManager.ChooseMultiplier += ChooseMultiplier;
+        if (!_tutorialCompiller.TutorialPassed) {
+            _tutorialCompiller.TutorialIsOver += TutorialEnd;
+        }
     } 
     
     private void Start() {
@@ -42,7 +51,7 @@ public class LineToObjects : MonoBehaviour {
             // Обновляем позиции линии
             _lineRenderer.SetPosition(0, _lineTransform.position); // от игрока
             _lineRenderer.SetPosition(1, _target); // до цели
-            if (_player.transform.position.z > _target.z && _arrowInBoost) {
+            if (_player.transform.position.z > _target.z+_distanceToHideArrow && _arrowInBoost) {
                 ForceHideArrow();
             }
             _offset += Time.deltaTime * _speed;
@@ -66,7 +75,8 @@ public class LineToObjects : MonoBehaviour {
 
     // Метод для изменения цели
     public void SetTarget(Vector3 newTarget) {
-        if (_tutorialStarted && !_arrowInBoost) {
+        Debug.Log("SetTarget " + newTarget);
+        if (!_arrowInBoost) {
             return;
         }
         _target = newTarget;
@@ -79,17 +89,14 @@ public class LineToObjects : MonoBehaviour {
         }
     }
 
-
-    public void TutorialModeEnable() {
-        _tutorialStarted = true;
-    }
     
-    public void TutorialModeDisable() {
-        _tutorialStarted = false;
+    private void TutorialEnd() {
         _tasksManager.CheckToNeedLine();
     }
     
     public void SetTargetTutorial(Vector3 newTarget) {
+        Debug.Log("SetTargetTutorial " + newTarget);
+        _arrowInBoost = false;
         _target = newTarget;
         _lineRenderer.enabled = (_target != Vector3.zero);
         _lineTransform.ActiveSelf();
@@ -97,9 +104,10 @@ public class LineToObjects : MonoBehaviour {
     }
 
     public void HideArrow() {
-        if(_tutorialStarted) return;
+        if(TutorialStarted) return;
         _target = Vector3.zero;
         _lineTransform.DisactiveSelf();
+        Debug.Log("HideArrow");
         ResetOffset();
     }
 
@@ -117,13 +125,14 @@ public class LineToObjects : MonoBehaviour {
 
 
     private void ChooseMultiplier(float obj) {
-        if(_tutorialStarted) return;
+        if(TutorialStarted) return;
         HideArrow();
     }
 
     private int _currentShowLine;
     private void PlayerOnSetBoost() {
-        if (_currentShowLine == _countTimesShowLine || Mathf.Approximately(_player.TargetPos.y, _boostSpawner.YMinBoost)) {
+        if (_currentShowLine == _countTimesShowLine || 
+            Mathf.Approximately(_player.TargetPos.y, _boostSpawner.YMinBoost)) {
             HideArrow();
             return;
         }

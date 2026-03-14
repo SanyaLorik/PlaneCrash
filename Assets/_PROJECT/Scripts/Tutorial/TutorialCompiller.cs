@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Architecture_M;
 using Cysharp.Threading.Tasks;
 using SanyaBeerExtension;
@@ -7,6 +9,9 @@ using Zenject;
 
 public class TutorialCompiller : MonoBehaviour {
     [SerializeReference, SubclassSelector] List<IMission> _missions;
+    
+    [Header("Для теста с какого индекса начать")]
+    [SerializeReference] private int index = 0;
     
     [Header("Миссия на которой разрешается лететь")]
     [SerializeReference] private int _idMissionToAllowFlight;
@@ -21,8 +26,7 @@ public class TutorialCompiller : MonoBehaviour {
     [Header("Миссия после которой ждем закрытия канваса")]
     [SerializeReference] private int _idMissionPetOpen;
     
-    [Header("Для теста с какого индекса начать")]
-    [SerializeReference] private int index = 0;
+
     
     
     [Header("Миссия после которой врубаем канвасы")]
@@ -39,42 +43,57 @@ public class TutorialCompiller : MonoBehaviour {
     private bool _petAdd; 
     private bool _isInjected;
     
-    public bool TutorialPassed { get; private set; }
+    public bool TutorialPassed => _gameSave.GetSave.TutorialPassed;
+    public event Action<int> TutorialStepChanged;
+    public event Action TutorialIsOver;
+    
 
     [Inject] private IGameSave<GameSavePC> _gameSave;
-    [Inject] private Narrator _narrator; 
     [Inject] private DiContainer _diContainer;
-    [Inject] private LineToObjects _lineToObjects;
     [Inject] private PlayerStateManager _stateManager;
     [Inject] private IInterstitialDelaying  _interstitialDelaying;
     [Inject] private PetOpenView _petOpenView;
 
 
-
     [Inject]
     private void Init() {
-        if (!_gameSave.GetSave.TutorialPassed) {
+        if (!TutorialPassed) {
             InjectMissions();
         }
     }
 
     private void Awake() {
-        if (_gameSave.GetSave.TutorialPassed) {
-            _flightStopper.DisactiveSelf();
-            _multiplierBlock.DisactiveSelf();
-            SetCanvasesState(true);
-            _lineToObjects.TutorialModeDisable();
-            _narrator.ActiveCanvas(false);
-            TutorialPassed = true;
+        if (TutorialPassed) {
+            PrepareTutorial(false);
+            TutorialIsOver?.Invoke();
         }
         else {
-            _flightStopper.ActiveSelf();
-            _multiplierBlock.ActiveSelf();
-            SetCanvasesState(false);
-            _narrator.ActiveCanvas(true);
             _isInjected = true;
+            PrepareTutorial(true);
             StartTutorial().Forget();
         }
+    }
+
+    private void PrepareTutorial(bool tutorialStarting) {
+        _flightStopper.SetActive(tutorialStarting);
+        _multiplierBlock.SetActive(tutorialStarting);
+        SetCanvasesState(!tutorialStarting);
+    }
+
+    private void InitStartTutorial() {
+        _interstitialDelaying.DisableTimer();
+    }
+
+    private void InitCloseTutorial() {
+        _interstitialDelaying.EnableTimer();
+        _gameSave.GetSave.TutorialPassed = true;
+        _gameSave.Save();
+        _petOpenView.ClosePetOpen -= OnClosePetManager;
+
+        SetCanvasesState(true);
+        _flightStopper.SetActive(false);
+        _multiplierBlock.SetActive(false);
+        TutorialIsOver?.Invoke();
     }
 
 
@@ -85,7 +104,9 @@ public class TutorialCompiller : MonoBehaviour {
     }
 
     private void OnEnable() {
-        _petOpenView.ClosePetOpen += OnClosePetManager;
+        if (!TutorialPassed) {
+            _petOpenView.ClosePetOpen += OnClosePetManager;
+        }
     }
 
     private void OnClosePetManager() {
@@ -96,41 +117,21 @@ public class TutorialCompiller : MonoBehaviour {
             _petAdd = true;
         }
     }
-    
+
 
 
 
     private async UniTaskVoid StartTutorial() {
         await UniTask.WaitWhile(() => !_isInjected);
-        _interstitialDelaying.DisableTimer();
-        _lineToObjects.TutorialModeEnable();
+        InitStartTutorial();
         for (int i = index; i < _missions.Count; i++) {
+            TutorialStepChanged?.Invoke(i);
             index = i;
-            Debug.Log(i);
-            if (i == _idMissionToAllowFlight) {
-                _flightStopper.DisactiveSelf();
-            }
-            else if (i < _idMissionToAllowFlight) {
-                _flightStopper.ActiveSelf();
-            }
+            FlightAllow(i);
 
             // Цикл полёта
             if (i == _idMissionToAllowFlight+1) {
-                // Ждем результата полёта
-                await UniTask.WaitWhile(() => _stateManager.CurrentState != PlayerState.Grounded && _stateManager.CurrentState != PlayerState.Cruisered);
-                // Игрок упал = запускаем заново цикл стрелок и полёта
-                Debug.LogWarning("Игрок упал ждем возвращения на спавн");
-                if (_stateManager.CurrentState == PlayerState.Grounded) {
-                    await _missions[_idMissionIfFall].RunAsync();
-                    await UniTask.WaitWhile(() => _stateManager.CurrentState != PlayerState.Walking);
-                    Debug.LogWarning("Игрок вернулся на спавн, все по новой");
-                    // -1 т.к новая итерация i инкрементит
-                    i = _idMissionToStartCycle-1;
-                }
-                else {
-                    // Прошел, лега
-                    i = _idMissionIfCruisered - 1;
-                }
+                i = await FlightCycle();
             }
             else if (i != _idMissionPetOpen) {
                 await _missions[i].RunAsync();
@@ -148,22 +149,49 @@ public class TutorialCompiller : MonoBehaviour {
             }
             
         }
-        TutorialPassed = true;
-        _narrator.HideNarrator();
-        _narrator.ActiveCanvas(false);
-        SetCanvasesState(true);
-        _lineToObjects.TutorialModeDisable();
-        _gameSave.GetSave.TutorialPassed = true;
-        _multiplierBlock.DisactiveSelf();
-        _flightStopper.DisactiveSelf();
-        _gameSave.Save();
-        _interstitialDelaying.EnableTimer();
+        InitCloseTutorial();
     }
-    
-    
+
+    private async Task<int> FlightCycle() {
+        int i;
+        // Ждем результата полёта
+        await UniTask.WaitWhile(() => 
+            _stateManager.CurrentState != PlayerState.Grounded && 
+            _stateManager.CurrentState != PlayerState.Cruisered
+        );
+        // Игрок упал = запускаем заново цикл стрелок и полёта
+        Debug.LogWarning("Игрок упал ждем возвращения на спавн");
+        if (_stateManager.CurrentState == PlayerState.Grounded) {
+            await _missions[_idMissionIfFall].RunAsync();
+            await UniTask.WaitWhile(() => _stateManager.CurrentState != PlayerState.Walking);
+            Debug.LogWarning("Игрок вернулся на спавн, все по новой");
+            // -1 т.к новая итерация i инкрементит
+            i = _idMissionToStartCycle-1;
+        }
+        else {
+            // Прошел, лега
+            i = _idMissionIfCruisered - 1;
+        }
+
+        return i;
+    }
+
+    private void FlightAllow(int i) {
+        if (i == _idMissionToAllowFlight) {
+            _flightStopper.DisactiveSelf();
+        }
+        else if (i < _idMissionToAllowFlight) {
+            _flightStopper.ActiveSelf();
+        }
+    }
+
+
+
+
     private void SetCanvasesState(bool state) {
         foreach (var canvas in _canvasesToHide) {
             canvas.SetActive(state);
         }
     }
 }
+

@@ -62,7 +62,7 @@ public class TargetMission : IMission {
         float speakDuration = _narrator.SetTextWithNarattor(textId);
         await UniTask.WaitForSeconds(speakDuration);
         if (_allowHideNarrator) {
-            _narrator.HideNarrator();
+            _narrator.HideNarratorAnimation();
         }
         _narratorIsOver = true;
     }

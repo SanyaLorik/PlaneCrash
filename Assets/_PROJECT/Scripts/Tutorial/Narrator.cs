@@ -47,32 +47,47 @@ public class Narrator : MonoBehaviour {
     
     [Inject] private LocalizationDataPC _localization;
     [Inject] private SoundManager _soundManager;
+    [Inject] private TutorialCompiller _tutorialCompiller;
 
 
     private bool _isRusTutorial = true;
     private void Awake() {
-        // Запоминаем финальную позицию картинки
-        _startPos = _girlImage.anchoredPosition;
+        if (!_tutorialCompiller.TutorialPassed) {
+            // Запоминаем финальную позицию картинки
+            _startPos = _girlImage.anchoredPosition;
 
-        // Прячем слева за экран
-        _hidePos = new Vector2(
-            _hidePoint.position.x - 200f,
-            _startPos.y
-        );
+            // Прячем слева за экран
+            _hidePos = new Vector2(
+                _hidePoint.position.x - 300f,
+                _startPos.y
+            );
 
-        _girlImage.anchoredPosition = _hidePos;
+            _girlImage.anchoredPosition = _hidePos;
 
-        // Текст в ноль
-        _text.transform.localScale = Vector3.zero;
+            // Текст в ноль
+            _text.transform.localScale = Vector3.zero;
 
 
-        if (_localization.Substitute != LanguageEnum.Russian) {
-            _isRusTutorial = false;
+            if (_localization.Substitute != LanguageEnum.Russian) {
+                _isRusTutorial = false;
+            }
         }
-        
     }
-    
-    
+
+    private void OnEnable() {
+        if (!_tutorialCompiller.TutorialPassed) {
+            _tutorialCompiller.TutorialIsOver += OnTutorialIsOver;
+            ActiveCanvas(true);
+        }
+        else {
+            ActiveCanvas(false);
+        }
+    }
+
+    private void OnTutorialIsOver() {
+        HideNarratorAnimation();
+        ActiveCanvas(false);
+    }
 
 
     public float SetTextWithNarattor(string textId) {
@@ -155,7 +170,7 @@ public class Narrator : MonoBehaviour {
     }
     
     
-    public void HideNarrator() {
+    public void HideNarratorAnimation() {
         Debug.Log("HideNarrator");
 
         if (_timerCoroutine != null)

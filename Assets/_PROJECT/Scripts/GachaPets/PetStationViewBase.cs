@@ -32,9 +32,14 @@ public abstract class PetStationViewBase : MonoBehaviour {
     [Inject] protected LocalizationDataPC _localization;
 
     
+    protected bool _allowToUse;
     protected int _showedReward = 0;
     private float _divider;
-    
+
+    public void SetAllowUse(bool use) {
+        _allowToUse = use;
+    }
+
     
     protected void Start() {
         _divider = ChanceSum(_config.Pets);
@@ -45,6 +50,7 @@ public abstract class PetStationViewBase : MonoBehaviour {
 
 
     private void OnTriggerEnter(Collider collider) {
+        if (!_allowToUse) return;
         if (!collider.TryGetComponent(out PlayerMovement _)) return;
         if (AllowToGetPet) {
             _customTrigger.DelayedTriggerAction(AddPet);
