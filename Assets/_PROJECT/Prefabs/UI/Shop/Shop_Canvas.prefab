@@ -1575,11 +1575,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4933726319879295455, guid: 19d29802564b2b44db6e0ad4a5535ff1, type: 3}
       propertyPath: m_Color.g
-      value: 0.5727352
+      value: 0.94509804
       objectReference: {fileID: 0}
     - target: {fileID: 4933726319879295455, guid: 19d29802564b2b44db6e0ad4a5535ff1, type: 3}
       propertyPath: m_Color.r
-      value: 0.94509804
+      value: 0.27299276
       objectReference: {fileID: 0}
     - target: {fileID: 5585521734870932131, guid: 19d29802564b2b44db6e0ad4a5535ff1, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2372,6 +2372,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Purchase_3x1_1
       objectReference: {fileID: 0}
+    - target: {fileID: 5364238118567011979, guid: de5d78813e12d8e4b830b9870755c040, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5364238118567011979, guid: de5d78813e12d8e4b830b9870755c040, type: 3}
+      propertyPath: m_Color.g
+      value: 0.15014982
+      objectReference: {fileID: 0}
+    - target: {fileID: 5364238118567011979, guid: de5d78813e12d8e4b830b9870755c040, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5898003819536701651, guid: de5d78813e12d8e4b830b9870755c040, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2519,6 +2531,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8227531273227713603}
     m_Modifications:
+    - target: {fileID: 281754872328546674, guid: f374215ae9ac1f74ebf743fa39ddb188, type: 3}
+      propertyPath: m_Color.b
+      value: 0.29128632
+      objectReference: {fileID: 0}
+    - target: {fileID: 281754872328546674, guid: f374215ae9ac1f74ebf743fa39ddb188, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4311015773192110041, guid: f374215ae9ac1f74ebf743fa39ddb188, type: 3}
       propertyPath: m_Name
       value: Purchase_2x1_Multiplier_2_1
@@ -3076,6 +3096,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7727923838058158616, guid: d067d74d3e20ed24c89697e6f022e815, type: 3}
+      propertyPath: m_Color.g
+      value: 0.50965846
+      objectReference: {fileID: 0}
     - target: {fileID: 7982597694700834187, guid: d067d74d3e20ed24c89697e6f022e815, type: 3}
       propertyPath: m_text
       value: +300M
@@ -3354,6 +3378,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8227531273227713603}
     m_Modifications:
+    - target: {fileID: 141939708943130711, guid: d067d74d3e20ed24c89697e6f022e815, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 141939708943130711, guid: d067d74d3e20ed24c89697e6f022e815, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 210258794312703966, guid: d067d74d3e20ed24c89697e6f022e815, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3433,6 +3465,14 @@ PrefabInstance:
     - target: {fileID: 210258794312703966, guid: d067d74d3e20ed24c89697e6f022e815, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7727923838058158616, guid: d067d74d3e20ed24c89697e6f022e815, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9014441
+      objectReference: {fileID: 0}
+    - target: {fileID: 7727923838058158616, guid: d067d74d3e20ed24c89697e6f022e815, type: 3}
+      propertyPath: m_Color.r
+      value: 0.94509804
       objectReference: {fileID: 0}
     - target: {fileID: 8429483083482528027, guid: d067d74d3e20ed24c89697e6f022e815, type: 3}
       propertyPath: m_Name
@@ -3978,6 +4018,10 @@ PrefabInstance:
     - target: {fileID: 210258794312703966, guid: d067d74d3e20ed24c89697e6f022e815, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7727923838058158616, guid: d067d74d3e20ed24c89697e6f022e815, type: 3}
+      propertyPath: m_Color.g
+      value: 0.66587967
       objectReference: {fileID: 0}
     - target: {fileID: 7982597694700834187, guid: d067d74d3e20ed24c89697e6f022e815, type: 3}
       propertyPath: m_text
