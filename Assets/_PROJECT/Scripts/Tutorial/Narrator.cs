@@ -51,7 +51,7 @@ public class Narrator : MonoBehaviour {
 
 
     private bool _isRusTutorial = true;
-    private void Awake() {
+    private void Start() {
         if (!_tutorialCompiller.TutorialPassed) {
             // Запоминаем финальную позицию картинки
             _startPos = _girlImage.anchoredPosition;
@@ -91,6 +91,7 @@ public class Narrator : MonoBehaviour {
 
 
     public float SetTextWithNarattor(string textId) {
+        Debug.Log("Вызов наратора");
         _text.text = _localization.GetTranslatedName(textId, _localization.TutorTranslates);
         // Сбиваем старые анимации текста
         _text.transform.DOKill();
@@ -111,7 +112,7 @@ public class Narrator : MonoBehaviour {
     }
 
 
-    public void ActiveCanvas(bool state) {
+    private void ActiveCanvas(bool state) {
         _canvas.SetActive(state);
     }
     

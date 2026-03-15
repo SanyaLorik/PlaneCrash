@@ -19,7 +19,7 @@ public class RangUnit : MonoBehaviour {
         Money =  money;
         _moneyText.text = _formatter.ValuteFormatter(Money);
         _img.sprite = img;
-        Debug.Log($"xvalue = {XValue}, Rt.localPosition = {Rt.localPosition}, Rt.position = {Rt.position}, xInside = {xInside}");
+        // Debug.Log($"xvalue = {XValue}, Rt.localPosition = {Rt.localPosition}, Rt.position = {Rt.position}, xInside = {xInside}");
         XInside =  xInside;
     }
     

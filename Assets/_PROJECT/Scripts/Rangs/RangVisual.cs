@@ -90,12 +90,10 @@ public class RangVisual : MonoBehaviour {
         int index = 0;
         foreach (var rang in _rangPrefabs) {
             if (rang.Money >= amount) {
-                Debug.Log("Номер некст ранга: " + index);
                 return index;
             }
             index++;
         }
-        Debug.Log("Игрок переплюнул ласт ранг");
         return _rangPrefabs.Length-1;
     }
 
@@ -105,7 +103,6 @@ public class RangVisual : MonoBehaviour {
 
         
         // Рекорд
-        Debug.Log($"currentAmount = {currentAmount}, _playerBank.PlayerRecord = {_playerBank.PlayerRecord}");
         if (currentAmount >= _playerBank.PlayerRecord) {
             RecalculateRecord();
         }

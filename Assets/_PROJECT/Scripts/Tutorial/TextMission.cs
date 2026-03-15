@@ -15,6 +15,7 @@ public class TextMission : IMission {
 
 
     public async UniTask RunAsync() {
+        Debug.Log("Run TextMission" + _phraseId);
         float speakDuration = _narrator.SetTextWithNarattor(_phraseId);
         await UniTask.WaitForSeconds(Math.Max(speakDuration, speakDuration));
         if (_allowHideNarrator) {

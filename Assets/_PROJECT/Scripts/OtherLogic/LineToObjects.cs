@@ -76,7 +76,7 @@ public class LineToObjects : MonoBehaviour {
     // Метод для изменения цели
     public void SetTarget(Vector3 newTarget) {
         Debug.Log("SetTarget " + newTarget);
-        if (!_arrowInBoost) {
+        if (!_arrowInBoost && !_tutorialCompiller.TutorialPassed) {
             return;
         }
         _target = newTarget;

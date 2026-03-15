@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Game Save PCSO
   m_EditorClassIdentifier: Assembly-CSharp::GameSavePCSO
   Save:
-    Money: 10000000
+    Money: 10255485
     RecordMoney: 15000000000
     RecordDistance: 1000
     Upgrades:
@@ -39,7 +39,7 @@ MonoBehaviour:
     - Id: guard_skin
     - Id: gihun_skin
     - Id: obby_skin
-    SkinWearId: obby_skin
-    TutorialPassed: 1
+    SkinWearId: creeper_skin
+    TutorialPassed: 0
     CountBatutJumps: 18
     CountBaskets: 1

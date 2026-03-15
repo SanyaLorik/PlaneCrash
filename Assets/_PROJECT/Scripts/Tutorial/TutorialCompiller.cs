@@ -26,16 +26,11 @@ public class TutorialCompiller : MonoBehaviour {
     [Header("Миссия после которой ждем закрытия канваса")]
     [SerializeReference] private int _idMissionPetOpen;
     
-
-    
-    
     [Header("Миссия после которой врубаем канвасы")]
     [SerializeReference] private int _idMissionShowCanvases;
     
     [Header("Скрытие элементов во время тутора")]
     [SerializeReference] private GameObject[] _canvasesToHide;
-    
-    
     
     [SerializeField] private GameObject _flightStopper;
     [SerializeField] private GameObject _multiplierBlock;
@@ -68,7 +63,6 @@ public class TutorialCompiller : MonoBehaviour {
             TutorialIsOver?.Invoke();
         }
         else {
-            _isInjected = true;
             PrepareTutorial(true);
             StartTutorial().Forget();
         }
@@ -78,10 +72,9 @@ public class TutorialCompiller : MonoBehaviour {
         _flightStopper.SetActive(tutorialStarting);
         _multiplierBlock.SetActive(tutorialStarting);
         SetCanvasesState(!tutorialStarting);
-    }
-
-    private void InitStartTutorial() {
-        _interstitialDelaying.DisableTimer();
+        if (tutorialStarting) {
+            _interstitialDelaying.DisableTimer();
+        }
     }
 
     private void InitCloseTutorial() {
@@ -101,6 +94,7 @@ public class TutorialCompiller : MonoBehaviour {
         foreach (var mission in _missions) {
             _diContainer.QueueForInject(mission);
         }
+        _isInjected = true;
     }
 
     private void OnEnable() {
@@ -123,7 +117,7 @@ public class TutorialCompiller : MonoBehaviour {
 
     private async UniTaskVoid StartTutorial() {
         await UniTask.WaitWhile(() => !_isInjected);
-        InitStartTutorial();
+        Debug.Log("StartTutorial");
         for (int i = index; i < _missions.Count; i++) {
             TutorialStepChanged?.Invoke(i);
             index = i;
