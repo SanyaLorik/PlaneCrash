@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8d4bcd3767fd1cf41b217eb0d9915c62
+guid: 1bb21228774e5984cbb09d250f01ef6d
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -209,13 +209,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: sg_guard(Clone)
+    - name: guard_updated(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Armature.004
-      parentName: sg_guard(Clone)
+      parentName: guard_updated(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
@@ -320,7 +320,7 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Circle.002
-      parentName: sg_guard(Clone)
+      parentName: guard_updated(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}

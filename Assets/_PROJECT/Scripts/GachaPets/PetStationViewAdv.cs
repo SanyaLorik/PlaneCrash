@@ -40,7 +40,7 @@ public class PetStationViewAdv : PetStationViewBase {
             // наградить 
             PetChance pet = GetRandomPet(_config);
             _petsManager.AddPet(pet.PetItemConfig);
-            _petOpenView.ShowOpenPetView(pet);
+            _petOpenView.ShowOpenPetView(pet, _config.EggIcon);
             _showedReward = 0;
         }
         _countTextVisual.text = $"{_showedReward} / {_countToShowReward}";

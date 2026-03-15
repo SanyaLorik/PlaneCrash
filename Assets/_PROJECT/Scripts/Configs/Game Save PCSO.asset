@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Game Save PCSO
   m_EditorClassIdentifier: Assembly-CSharp::GameSavePCSO
   Save:
-    Money: 10255485
-    RecordMoney: 15000000000
+    Money: 3188
+    RecordMoney: 13188
     RecordDistance: 1000
     Upgrades:
     - Id: 2
@@ -28,18 +28,11 @@ MonoBehaviour:
     - Id: 4
       Level: 1
     Pets:
-    - Id: labuba_pet
-      Count: 1
+    - Id: doshik_pet
+      Count: 2
     Skins:
     - Id: tralalelo_skin
-    - Id: creeper_skin
-    - Id: noobic_skin
-    - Id: foxie_skin
-    - Id: tung_skin
-    - Id: guard_skin
-    - Id: gihun_skin
-    - Id: obby_skin
-    SkinWearId: creeper_skin
+    SkinWearId: tralalelo_skin
     TutorialPassed: 0
-    CountBatutJumps: 18
+    CountBatutJumps: 3
     CountBaskets: 1

@@ -60,7 +60,7 @@ public class PetStationViewPurchase : PetStationViewBase {
             _bank.Buy(_config.Price);
         }
         _petsManager.AddPet(pet.PetItemConfig);
-        _petOpenView.ShowOpenPetView(pet);
+        _petOpenView.ShowOpenPetView(pet, _config.EggIcon);
     }
     
 }

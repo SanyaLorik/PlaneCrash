@@ -91,7 +91,81 @@ MonoBehaviour:
   _textShowSpeed: 0.4
   _strength: 18
   _speed: 0.28
-  _voiceSounds: []
+  _voiceSounds:
+  - PhraseId: hello
+    RusClip: {fileID: 8300000, guid: 5dad61390ddbbaa40941a7c5e8cf854f, type: 3}
+    EngClip: {fileID: 8300000, guid: 99aafa7eee4f06f418481bd08e7efac9, type: 3}
+  - PhraseId: movement
+    RusClip: {fileID: 8300000, guid: 7655eca5fb0137540822428037e3ad4c, type: 3}
+    EngClip: {fileID: 8300000, guid: 5f0d85ed7dfa50242a38f61832493a79, type: 3}
+  - PhraseId: flyExplain
+    RusClip: {fileID: 8300000, guid: 86eda4595f76df740af3f6ae32e9a177, type: 3}
+    EngClip: {fileID: 8300000, guid: db7254d0713462b4fa5b6cbfecbf8650, type: 3}
+  - PhraseId: betZone
+    RusClip: {fileID: 8300000, guid: e199860c4d3d83c4797af8c591749482, type: 3}
+    EngClip: {fileID: 8300000, guid: a138247e53b9bc64cb35809d3a51f82e, type: 3}
+  - PhraseId: x2Flight
+    RusClip: {fileID: 8300000, guid: 0094fc3e24021964c84cf1c5553070c2, type: 3}
+    EngClip: {fileID: 8300000, guid: 9224c9910ae88fc468f4a0207b27bbe7, type: 3}
+  - PhraseId: startZone
+    RusClip: {fileID: 8300000, guid: d4c7314e8f1d5644f95bc985ba82d254, type: 3}
+    EngClip: {fileID: 8300000, guid: fa0f35b03c7e29f4f9111d06d7c79eb0, type: 3}
+  - PhraseId: fall
+    RusClip: {fileID: 8300000, guid: 8f952f8fd5f69c64fac08a4c31ac451e, type: 3}
+    EngClip: {fileID: 8300000, guid: f2d522135cb7f11428e72ceebe80c504, type: 3}
+  - PhraseId: success
+    RusClip: {fileID: 8300000, guid: 5234baf084a8fbb4fa852bc5108642ee, type: 3}
+    EngClip: {fileID: 8300000, guid: f8047ecdd487e3e4bac0ba0c601e2f19, type: 3}
+  - PhraseId: shield
+    RusClip: {fileID: 8300000, guid: b1170008b4c6b3944954ed0fa0dc2a54, type: 3}
+    EngClip: {fileID: 8300000, guid: 07f2400d64fb773408dfa19bfc4fd0fb, type: 3}
+  - PhraseId: petOpening
+    RusClip: {fileID: 8300000, guid: 0b3be7050ea81d146959e3232503b813, type: 3}
+    EngClip: {fileID: 8300000, guid: 9768253063afea44ea28f912c2e00dff, type: 3}
+  - PhraseId: cutePet
+    RusClip: {fileID: 8300000, guid: 14107688a5e59d14fb24daa60b8446ac, type: 3}
+    EngClip: {fileID: 8300000, guid: 45e7fd33bf1c2ec479b18ee7ee340c32, type: 3}
+  - PhraseId: miniGames
+    RusClip: {fileID: 8300000, guid: 36a32449e28c1bc4a821c564a242f97c, type: 3}
+    EngClip: {fileID: 8300000, guid: 0af9d0e9c36c0cf4fb12d9c643d9286e, type: 3}
+  - PhraseId: rangStatus
+    RusClip: {fileID: 8300000, guid: dec6d2bee414f764e8a03dc968b1b93c, type: 3}
+    EngClip: {fileID: 8300000, guid: 51dba1e3ea92d974fa48dbbc71de13eb, type: 3}
+  - PhraseId: goodLuck
+    RusClip: {fileID: 8300000, guid: 69c3ce482dbfca1459a895a09c98cb1b, type: 3}
+    EngClip: {fileID: 8300000, guid: 6f9b2a455eb44174ea4804e9a449b1db, type: 3}
+  _pitchValue: 1.1
+--- !u!1 &2236252194221478307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7416404658054229095}
+  m_Layer: 0
+  m_Name: PointForUpgrade
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7416404658054229095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2236252194221478307}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.816, y: 3.401, z: 122.453}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8784413498414956099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3641134813533652717
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,6 +312,8 @@ Transform:
   - {fileID: 904557245516446551}
   - {fileID: 8547079672832978797}
   - {fileID: 2220441057875360957}
+  - {fileID: 2369136501062023260}
+  - {fileID: 7416404658054229095}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3159276835114270060
@@ -267,12 +343,12 @@ MonoBehaviour:
   - rid: 8231486178666217559
   - rid: 8231486178666217560
   - rid: 8231486178666217561
+  index: 0
   _idMissionToAllowFlight: 5
   _idMissionToStartCycle: 3
   _idMissionIfFall: 6
   _idMissionIfCruisered: 7
   _idMissionPetOpen: 9
-  index: 0
   _idMissionShowCanvases: 11
   _canvasesToHide:
   - {fileID: 0}
@@ -288,6 +364,7 @@ MonoBehaviour:
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: hello
+        _allowHideNarrator: 0
     - rid: 4016510599091716167
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
@@ -297,7 +374,7 @@ MonoBehaviour:
         _delta: 3
         _secToStay: 1
         _showArrow: 1
-        _textDuration: 10000
+        _allowHideNarrator: 0
     - rid: 4016510599091716169
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
@@ -307,15 +384,17 @@ MonoBehaviour:
         _delta: 6
         _secToStay: 0
         _showArrow: 1
-        _textDuration: 5
+        _allowHideNarrator: 1
     - rid: 4016510736668295242
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: movement
+        _allowHideNarrator: 0
     - rid: 8231486178666217547
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: flyExplain
+        _allowHideNarrator: 0
     - rid: 8231486178666217549
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
@@ -325,37 +404,37 @@ MonoBehaviour:
         _delta: 6
         _secToStay: 1
         _showArrow: 1
-        _textDuration: 100000
+        _allowHideNarrator: 0
     - rid: 8231486178666217553
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: shield
         _targets:
-        - {fileID: 0}
-        _delta: 2
-        _secToStay: 2
+        - {fileID: 7416404658054229095}
+        _delta: 3
+        _secToStay: 0.7
         _showArrow: 1
-        _textDuration: 100000
+        _allowHideNarrator: 0
     - rid: 8231486178666217554
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: petOpening
         _targets:
-        - {fileID: 0}
+        - {fileID: 2369136501062023260}
         _delta: 2
-        _secToStay: 2
+        _secToStay: 0.7
         _showArrow: 1
-        _textDuration: 10000
+        _allowHideNarrator: 0
     - rid: 8231486178666217555
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: success
         _targets:
         - {fileID: 0}
-        _delta: 2
-        _secToStay: 2
-        _showArrow: 0
-        _textDuration: 3
+        _delta: 3
+        _secToStay: 0.7
+        _showArrow: 1
+        _allowHideNarrator: 0
     - rid: 8231486178666217556
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
@@ -365,11 +444,12 @@ MonoBehaviour:
         _delta: 10
         _secToStay: 0
         _showArrow: 0
-        _textDuration: 3
+        _allowHideNarrator: 1
     - rid: 8231486178666217558
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: cutePet
+        _allowHideNarrator: 0
     - rid: 8231486178666217559
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
@@ -382,15 +462,17 @@ MonoBehaviour:
         _delta: 5
         _secToStay: 0
         _showArrow: 1
-        _textDuration: 10000
+        _allowHideNarrator: 0
     - rid: 8231486178666217560
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: rangStatus
+        _allowHideNarrator: 0
     - rid: 8231486178666217561
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: goodLuck
+        _allowHideNarrator: 1
 --- !u!1 &4743591119455970793
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,3 +709,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.9999999, z: 71.47798}
   m_Center: {x: 0, y: 0, z: 34.351166}
+--- !u!1 &9124976989385755859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2369136501062023260}
+  m_Layer: 0
+  m_Name: EggPointForTutor
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2369136501062023260
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9124976989385755859}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.12, y: 3.179, z: 131.05}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8784413498414956099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

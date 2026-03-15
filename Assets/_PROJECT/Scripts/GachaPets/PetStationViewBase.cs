@@ -14,8 +14,6 @@ public class EntityView {
     public TMP_Text Percentage;
 }
 
-
-
 public abstract class PetStationViewBase : MonoBehaviour {
 
     [SerializeField] protected string _statonNameId;
@@ -66,7 +64,8 @@ public abstract class PetStationViewBase : MonoBehaviour {
         Debug.Log("Операция по получению пета отменена");
     }
     
-    protected void Initialize() {
+    private void Initialize() {
+        
         for (int i = 0; i < _config.Pets.Length; i++) {
             _views[i].Icon.sprite = _config.Pets[i].PetItemConfig.Sprite;
             _views[i].Percentage.text = $"{_config.Pets[i].Chance / _divider * 100f:#0}  %";
@@ -90,7 +89,7 @@ public abstract class PetStationViewBase : MonoBehaviour {
 
 
 
-    protected float ChanceSum(PetChance[] pets) {
+    private float ChanceSum(PetChance[] pets) {
         float sum = 0f;
         foreach (var petChance in pets) {
             sum+= petChance.Chance;

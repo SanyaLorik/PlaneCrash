@@ -42,7 +42,7 @@ public class PetStationViewReward : PetStationViewBase {
         AllowToGetPet = false;
         PetChance pet = GetRandomPet(_config);
         _petsManager.AddPet(pet.PetItemConfig);
-        _petOpenView.ShowOpenPetView(pet);
+        _petOpenView.ShowOpenPetView(pet, _config.EggIcon);
         _bank.Buy(0);
         
         StartNewWaitCycle();

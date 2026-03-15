@@ -20,6 +20,7 @@ public class PetOpenView : MonoBehaviour {
     [SerializeField] private RectTransform _petEggRT;
     [SerializeField] private RectTransform _petIconRT;
     [SerializeField] private Image _petIcon;
+    [SerializeField] private Image _eggIcon;
     
     [Header("Кнопка")]
     [SerializeField] private Button _openButton;
@@ -59,10 +60,10 @@ public class PetOpenView : MonoBehaviour {
         _canvas.DisactiveSelf();
     }
     
-    public void ShowOpenPetView(PetChance pet) {
+    public void ShowOpenPetView(PetChance pet, Sprite eggSprite) {
         _interstitialDelaying.DisableTimer();
         _inputActivity.Disable();
-
+        _eggIcon.sprite = eggSprite;
         OpenCanvasAnimation();
         _openButtonRT.ActiveSelf();
         InitCanvas(pet);
