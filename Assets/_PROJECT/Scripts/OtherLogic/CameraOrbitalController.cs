@@ -15,18 +15,19 @@ public class CameraOrbitalController : MonoBehaviour {
     [SerializeField] private float _joystickSensivity = 500f;
     [SerializeField] private Transform _walkPoint;
     [SerializeField] private Transform _flightPoint;
-    
+
     [SerializeField] private CinemachineOrbitalFollow _orbitalFollow;
     [SerializeField] private float _cameraSaveDelay = 1f;
-    
+
     [SerializeField] private float _maxZoom;
     [SerializeField] private float _minZoom;
-    [Range(0,1), SerializeField] private float _zoomSpeed;
+    [Range(0, 1), SerializeField] private float _zoomSpeed;
     private Action _rotationHandler;
-    [Header("Для теста пока через инспектор")]
-    [SerializeField] private bool _isMobile;
-    
-    
+
+    [Header("Для теста пока через инспектор")] [SerializeField]
+    private bool _isMobile;
+
+
     private Mouse _mouse;
     private bool _isOrbiting;
 
@@ -35,15 +36,15 @@ public class CameraOrbitalController : MonoBehaviour {
     private bool _allowZoom = true;
     private float _defaultX;
     private float _defaultY;
-    
+
     public float DefaultFov => _isMobile ? _playerConfig.MobileCameraFov : _playerConfig.DesktopCameraFov;
-    public float CurrentFovPercent => (_orbitalFollow.RadialAxis.Value - _minZoom) / (_maxZoom -  _minZoom);
-    
-    
+    public float CurrentFovPercent => (_orbitalFollow.RadialAxis.Value - _minZoom) / (_maxZoom - _minZoom);
+
+
     [Inject] private PlayerStateManager _playerStateManager;
     [Inject] private SettingsManager _settings;
     [Inject] private PlayerConfig _playerConfig;
-    
+
     // Если выбран десктоп ввод то не прокидывается сань помоги(((
     // [Inject] private IOrbitalRotationInput _orbitalRotationInput;
     // Сделал InjectOptional
@@ -59,7 +60,8 @@ public class CameraOrbitalController : MonoBehaviour {
         SystemEvents.ForbidZoomChanged += ForbidZoom;
     }
 
-    private void ForbidZoom(bool forbid) {
+
+private void ForbidZoom(bool forbid) {
         _allowZoom = !forbid;
     }
 
@@ -82,6 +84,7 @@ public class CameraOrbitalController : MonoBehaviour {
         }
         _defaultX = _orbitalFollow.HorizontalAxis.Value;
         _defaultY = _orbitalFollow.VerticalAxis.Value;
+        SetWalkPoint(true);
     }
 
     private void SettingsOnCameraValueChanged(float percent) {
