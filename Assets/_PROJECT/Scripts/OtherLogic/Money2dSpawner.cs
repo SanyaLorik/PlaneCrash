@@ -29,8 +29,6 @@ public class Money2dSpawner : MonoBehaviour {
     [Inject] private PlayerBank _bank;
     [Inject] private PlayerMovement _playerMovement;
     [Inject] private NumberFormatter _formatter;
-    [Inject] private RectTransformHelper _rtHelper;
-
 
     private void Awake() {
         for (int i = 0; i < _poolSize; i++) {
@@ -80,7 +78,7 @@ public class Money2dSpawner : MonoBehaviour {
             float radius = _playerStateManager.CurrentState == PlayerState.TrampolineJumping
                 ? _spawnRadius * _trampolineMultiplierRadius
                 : _spawnRadius;
-            icon.position = _rtHelper.GetPointAroundPoint(radius, _playerMovement.Transform.position);
+            icon.position = RectTransformHelper.GetPointAroundPoint(radius, _playerMovement.Transform.position);
             
             
             StartCoroutine(MoneyAnimationRoutine(icon));

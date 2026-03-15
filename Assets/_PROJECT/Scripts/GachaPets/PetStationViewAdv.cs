@@ -13,13 +13,12 @@ public class PetStationViewAdv : PetStationViewBase {
     [SerializeField] private RectTransform _rewardProgressParent;
     
     [Inject] private AdvertisingMonetizationMirra _advertisingMonetizationMirra;
-    [Inject] private RectTransformHelper _fillAmounthMover;
     
 
     
     protected override void StartInit() {
         _countTextVisual.text = $"{_showedReward} / {_countToShowReward}";
-        _fillAmounthMover.SetFillAmount(_rewardProgress, _rewardProgressParent,  0);
+        RectTransformHelper.SetFillAmount(_rewardProgress, _rewardProgressParent,  0);
     }
 
     protected override void AddPet() {
@@ -46,7 +45,7 @@ public class PetStationViewAdv : PetStationViewBase {
         }
         _countTextVisual.text = $"{_showedReward} / {_countToShowReward}";
         float percent = (float)_showedReward / _countToShowReward;
-        _fillAmounthMover.SetFillAmount(_rewardProgress, _rewardProgressParent,  percent);
+        RectTransformHelper.SetFillAmount(_rewardProgress, _rewardProgressParent,  percent);
         _bank.Buy(0);
     }
 }

@@ -48,7 +48,6 @@ public class RewardManager : MonoBehaviour {
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private LocalizationDataPC _localization;
     [Inject] private NumberFormatter _formatter;
-    [Inject] private RectTransformHelper _rtHelper;
     [Inject] private AdvertisingMonetizationMirra _advertisingMonetizationMirra;
     
     
@@ -63,7 +62,7 @@ public class RewardManager : MonoBehaviour {
         _backButton.AddListenerWithSound(() => Reward(false));
         _backButton2x.AddListenerWithSound(Reward2x);
         _yInScreenPosition = _container.anchoredPosition.y;
-        _yOutScreenPosition = _rtHelper.GetYBottomScreen(_container, _outScreenCavasPoint);
+        _yOutScreenPosition = RectTransformHelper.GetYBottomScreen(_container, _outScreenCavasPoint);
         _container.anchoredPosition = new Vector2(_container.anchoredPosition.x, _yOutScreenPosition);
         _canvas.DisactiveSelf();
     }

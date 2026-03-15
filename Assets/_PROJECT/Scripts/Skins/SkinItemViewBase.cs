@@ -15,7 +15,6 @@ public abstract class SkinItemViewBase : MonoBehaviour {
     
     [Inject] protected NumberFormatter _formatter;
     [Inject] protected LocalizationDataPC _localization; 
-    [Inject] protected RectTransformHelper _fillAmounthMover;
     [Inject] protected PlayerSkinInventory _playerSkinInventory;
     [Inject] protected PlayerBank _playerBank;
 

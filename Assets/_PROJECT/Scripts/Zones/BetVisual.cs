@@ -35,7 +35,6 @@ public class BetVisual : MonoBehaviour {
     [Inject] private UpgradesCalculator _upgradesCalculator;
     [Inject] private NumberFormatter _formatter; 
     [Inject] private LocalizationDataPC _localization;
-    [Inject] private RectTransformHelper _rtHelper;
 
 
     private void OnEnable() {
@@ -56,7 +55,7 @@ public class BetVisual : MonoBehaviour {
     private void Start() {
         _betAndRewardContainer.ActiveSelf();
         _inScreenPoseY = _betAndRewardContainer.anchoredPosition.y;
-        _outScreenPoseY = _rtHelper.GetYUnderScreen(_betAndRewardContainer, _outScreenPointer);
+        _outScreenPoseY = RectTransformHelper.GetYUnderScreen(_betAndRewardContainer, _outScreenPointer);
         _playerBankText.text = _formatter.ValuteFormatter(_bank.PlayerCapital);
         _betAndRewardContainer.anchoredPosition = new Vector2(_betAndRewardContainer.anchoredPosition.x, _outScreenPoseY);
         // Перевод текста

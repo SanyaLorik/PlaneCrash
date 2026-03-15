@@ -47,14 +47,13 @@ public class PetOpenView : MonoBehaviour {
     [Inject] private LocalizationDataPC _localization;
     [Inject] private PetStatusColorConfig _petStatusColorConfig;
     [Inject] private IInputActivity _inputActivity;
-    [Inject] private RectTransformHelper _fillAmounthMover;
 
 
 
     private void Start() {
         _openButton.AddListenerWithSound(OpenAnimation);
         _canvas.ActiveSelf();
-        _yBottomScreen = _fillAmounthMover.GetYBottomScreen(_container, _pointerToHide);
+        _yBottomScreen = RectTransformHelper.GetYBottomScreen(_container, _pointerToHide);
         _yInScreen = _container.anchoredPosition.y;
         _container.anchoredPosition = new Vector2(_container.anchoredPosition.x, _yBottomScreen);
         _canvas.DisactiveSelf();

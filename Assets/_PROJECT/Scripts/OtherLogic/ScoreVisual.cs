@@ -28,7 +28,6 @@ public class ScoreVisual : MonoBehaviour {
     [Inject] private ZoneManager _zoneManager;
     [Inject] private LocalizationDataPC _localization;
     [Inject] private IGameSave<GameSavePC> _saver;
-    [Inject] private RectTransformHelper _fillAmounthMover;
     
     [Inject]
     public void OnEnable() {
@@ -81,11 +80,11 @@ public class ScoreVisual : MonoBehaviour {
 
         // Move Finish
         float percent = _zoneManager.DistanceToCruise/_maxDistance;
-        float xEnd = _fillAmounthMover.CalculateXEnd(_parentRectTransform);
-        _fillAmounthMover.SetPointer(_finishPointer, percent, xEnd, _pointerOffset);
+        float xEnd = RectTransformHelper.CalculateXEnd(_parentRectTransform);
+        RectTransformHelper.SetPointer(_finishPointer, percent, xEnd, _pointerOffset);
         
         percent = _saver.GetSave.RecordDistance / _maxDistance;
-        _fillAmounthMover.SetFillAmountWithPointer(_recordProgressBar, _parentRectTransform, _recordPointer, percent);
+        RectTransformHelper.SetFillAmountWithPointer(_recordProgressBar, _parentRectTransform, _recordPointer, percent);
        
         _flightRoutine = StartCoroutine(ShowDistanceRoutine());
     }
@@ -94,7 +93,7 @@ public class ScoreVisual : MonoBehaviour {
         while (_playerStateManager.CurrentState == PlayerState.Flight) {
             // Это процент полета но он не пойдет в SetFillAmount т.к там 100 процентов - конец
             float percent = _playerStateManager.CurrentPlayerDistance() / _maxDistance;
-            _fillAmounthMover.SetFillAmountWithPointer(_currentProgressBar, _parentRectTransform, _currentPointer, percent);
+            RectTransformHelper.SetFillAmountWithPointer(_currentProgressBar, _parentRectTransform, _currentPointer, percent);
             _currentDistanceText.text = $"{(int)_playerStateManager.CurrentPlayerDistance()}{_localization.Meters}";
             yield return null; 
         }
@@ -123,11 +122,11 @@ public class ScoreVisual : MonoBehaviour {
 
 
     private void SetDefault() {
-        _fillAmounthMover.SetFillAmountWithPointer(_currentProgressBar, _parentRectTransform, _currentPointer, 0);
+        RectTransformHelper.SetFillAmountWithPointer(_currentProgressBar, _parentRectTransform, _currentPointer, 0);
     }
 
     private void SetMaxProgress() {
-        _fillAmounthMover.SetFillAmountWithPointer(_currentProgressBar, _parentRectTransform, _currentPointer, 1);
+        RectTransformHelper.SetFillAmountWithPointer(_currentProgressBar, _parentRectTransform, _currentPointer, 1);
         _currentDistanceText.text = $"{Math.Round(_zoneManager.DistanceToCruise)}m";
     }
 

@@ -1,33 +1,49 @@
 using UnityEngine;
 
-public class RectTransformHelper {
+public static class RectTransformHelper {
     
-    public void SetFillAmountWithPointer(RectTransform img,  RectTransform parent, RectTransform pointer, float percent, float offset = 0) {
+    public static void SetFillAmountWithPointer(RectTransform img,  RectTransform parent, RectTransform pointer, float percent, float offset = 0) {
         float xEnd = CalculateXEnd(parent);
         percent = Mathf.Clamp01(percent);
         img.offsetMax = new Vector2(GetXPoseByPercent(percent, xEnd, parent), 0);
         SetPointer(pointer, percent, xEnd, offset);
     }
     
-    public void SetFillAmount(RectTransform img,  RectTransform parent, float percent) {
+    public static void SetPointer(RectTransform pointer, float percent, float xEnd, float offset = 0) {
+        percent = Mathf.Clamp01(percent);
+        Vector2 newPointerPos = new Vector2(xEnd * percent + offset, pointer.anchoredPosition.y);
+        pointer.anchoredPosition = newPointerPos;
+    }
+    
+    public static float CalculateXEnd(RectTransform parent) => parent.rect.width;
+
+
+    public static float GetXNormalized(float x, float startX, float endX) => (x - startX) / (endX - startX);
+    
+    public static float GetXInsideBar(RectTransform rank, RectTransform bar) {
+        Vector3 world = rank.position;
+        Vector3 local = bar.InverseTransformPoint(world);
+
+        float x = local.x + bar.rect.width * 0.5f;
+
+        return x;
+    }
+    
+    
+    public static void SetFillAmount(RectTransform img,  RectTransform parent, float percent) {
         percent = Mathf.Clamp01(percent);
         float xEnd = parent.rect.width;
         img.offsetMax = new Vector2(GetXPoseByPercent(percent, xEnd, parent), 0);
     }
     
-    public void SetPointer(RectTransform pointer, float percent, float xEnd, float offset = 0) {
-        percent = Mathf.Clamp01(percent);
-        Vector2 newPointerPos = new Vector2(xEnd * percent + offset, pointer.anchoredPosition.y);
-        pointer.anchoredPosition = newPointerPos;
-    }
+    
 
-    public float CalculateXEnd(RectTransform parent) => parent.rect.width;
 
-    public float Calculate1PeaceWidth(RectTransform parent, float peaceCount) 
+    public static float Calculate1PeaceWidth(RectTransform parent, float peaceCount) 
         => parent.rect.width/peaceCount;
 
     
-    public float GetYBottomScreen(RectTransform container, RectTransform pointer) {
+    public static float GetYBottomScreen(RectTransform container, RectTransform pointer) {
         Canvas.ForceUpdateCanvases();
        // return -container.parent.GetComponent<RectTransform>().rect.height / 2 - container.rect.height / 2;
        Vector3 worldPos = pointer.position;
@@ -39,7 +55,7 @@ public class RectTransformHelper {
     } 
     
     
-    public float GetYUnderScreen(RectTransform container, RectTransform pointer) {
+    public static float GetYUnderScreen(RectTransform container, RectTransform pointer) {
         Canvas.ForceUpdateCanvases();
        // return -container.parent.GetComponent<RectTransform>().rect.height / 2 - container.rect.height / 2;
        Vector3 worldPos = pointer.position;
@@ -50,13 +66,13 @@ public class RectTransformHelper {
        return localPos.y;
     } 
     
-    public Vector2 ClampByScreenVector(float padding, Vector2 point) {
+    public static Vector2 ClampByScreenVector(float padding, Vector2 point) {
         point.x = Mathf.Clamp(point.x, padding, Screen.width - padding);
         point.y = Mathf.Clamp(point.y, padding, Screen.height - padding);
         return point;
     }
 
-    private float GetXPoseByPercent(float percent, float xEnd, RectTransform parent) {
+    private static float GetXPoseByPercent(float percent, float xEnd, RectTransform parent) {
         if (xEnd < 0) {
             Canvas.ForceUpdateCanvases();
             xEnd = parent.rect.width;
@@ -64,7 +80,7 @@ public class RectTransformHelper {
         return -xEnd * (1f - percent);
     }
     
-    private Vector2 GetRandomPointInCircle(float radius) {
+    private static Vector2 GetRandomPointInCircle(float radius) {
         float angle = Random.Range(0f, Mathf.PI * 2f);
         // Корень — чтобы точки были равномерно, а не кучей в центре
         float r = Mathf.Sqrt(Random.value) * radius;
@@ -77,7 +93,7 @@ public class RectTransformHelper {
     
     
     
-    public Vector2 GetPointAroundPoint(float radius, Vector3 playerPosition) {
+    public static Vector2 GetPointAroundPoint(float radius, Vector3 playerPosition) {
         Vector2 offset = GetRandomPointInCircle(radius);
         Vector3 screenPos = Camera.main.WorldToScreenPoint(playerPosition);
         Vector2 point = new Vector2(offset.x + screenPos.x, offset.y + screenPos.y);

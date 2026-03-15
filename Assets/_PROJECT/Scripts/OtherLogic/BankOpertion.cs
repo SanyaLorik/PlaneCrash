@@ -20,7 +20,6 @@ public class BankOpertion : MonoBehaviour {
     
     [Inject] private PlayerBank _bank;
     [Inject] private NumberFormatter _formatter;
-    [Inject] private RectTransformHelper _rtHelper;
     [Inject] private PlayerStateManager _playerStateManager;
 
     private void OnEnable() {
@@ -90,7 +89,7 @@ public class BankOpertion : MonoBehaviour {
     
         float padding = 100f;
 
-        point = _rtHelper.ClampByScreenVector(padding, point);
+        point = RectTransformHelper.ClampByScreenVector(padding, point);
         return point;
     }
     

@@ -53,7 +53,7 @@ public class SkinItemViewAdv : SkinItemViewBase {
     private void SetProgress() {
         _progressText.text = $"{_countShowAdv}/{_countsToShowAdv}";
         float progress = (float)_countShowAdv / _countsToShowAdv;
-        _fillAmounthMover.SetFillAmount(_advProgress, _advProgressParent, progress);
+        RectTransformHelper.SetFillAmount(_advProgress, _advProgressParent, progress);
     }
 
     protected override void InitSpecific() {

@@ -29,7 +29,6 @@ public class PlayerVisual : MonoBehaviour {
     private CancellationTokenSource _tokenSource;
 
     
-    [Inject] RectTransformHelper _rectTransformHelper;
     [Inject] PlayerMovement _playerMovement;
     
     
@@ -55,7 +54,7 @@ public class PlayerVisual : MonoBehaviour {
     }
 
     public void MinusShield(int count) {
-        Vector3 posAroundPlayer = _rectTransformHelper.GetPointAroundPoint(_radiusToSpawn, _playerMovement.transform.position);
+        Vector3 posAroundPlayer = RectTransformHelper.GetPointAroundPoint(_radiusToSpawn, _playerMovement.transform.position);
         MinusShieldView shieldView = Instantiate(_minusShieldView, _parentToShield);
         shieldView.transform.position = posAroundPlayer;
         shieldView.SetCount(count);

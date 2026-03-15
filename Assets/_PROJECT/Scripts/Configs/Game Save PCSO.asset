@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Game Save PCSO
   m_EditorClassIdentifier: Assembly-CSharp::GameSavePCSO
   Save:
-    Money: 0
-    RecordMoney: 314880000000
+    Money: 10000000
+    RecordMoney: 15000000000
     RecordDistance: 1000
     Upgrades:
     - Id: 2
@@ -41,5 +41,5 @@ MonoBehaviour:
     - Id: obby_skin
     SkinWearId: obby_skin
     TutorialPassed: 1
-    CountBatutJumps: 0
-    CountBaskets: 0
+    CountBatutJumps: 18
+    CountBaskets: 1

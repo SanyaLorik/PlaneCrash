@@ -10,8 +10,6 @@ public class PetStationViewReward : PetStationViewBase {
     [SerializeField] private RectTransform _clockRectTransform;
     [SerializeField] private RectTransform _parentRectTransform;
 
-    [Inject] private RectTransformHelper _fillAmounthMover;
-
     private CancellationTokenSource _tokenSource;
 
     private void Awake() {
@@ -22,7 +20,7 @@ public class PetStationViewReward : PetStationViewBase {
     
     private async UniTask WaitForRewardAsync(CancellationToken token) {
         int elapsedTimeSec = 0;
-        _fillAmounthMover.SetFillAmount(_clockRectTransform, _parentRectTransform, 0);
+        RectTransformHelper.SetFillAmount(_clockRectTransform, _parentRectTransform, 0);
         _customTrigger.SetUnvailable();
         AllowToGetPet = false;
         while (!token.IsCancellationRequested && elapsedTimeSec < _timeToWaitSec) {
@@ -30,12 +28,12 @@ public class PetStationViewReward : PetStationViewBase {
             elapsedTimeSec += 1;
             _timeToWaitText.text = _localization.GetPrettyTime(_timeToWaitSec - elapsedTimeSec);
             float percent = (float)elapsedTimeSec / _timeToWaitSec;
-            _fillAmounthMover.SetFillAmount(_clockRectTransform, _parentRectTransform, percent);
+            RectTransformHelper.SetFillAmount(_clockRectTransform, _parentRectTransform, percent);
         }
         _customTrigger.SetAvailable();
         _timeToWaitText.text = _localization.TakeAPet;
 
-        _fillAmounthMover.SetFillAmount(_clockRectTransform, _parentRectTransform, 1);
+        RectTransformHelper.SetFillAmount(_clockRectTransform, _parentRectTransform, 1);
         AllowToGetPet = true;
     }
     

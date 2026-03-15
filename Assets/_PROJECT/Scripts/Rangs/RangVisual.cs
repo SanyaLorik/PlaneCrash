@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics.Geometry;
 using UnityEngine;
 using Zenject;
 
@@ -24,7 +25,6 @@ public class RangVisual : MonoBehaviour {
     [Inject] private MoneyCube _moneyCube;
     [Inject] private LocalizationDataPC _localization;
     [Inject] private NumberFormatter _formatter;
-    [Inject] private RectTransformHelper _fillAmounthMover;
 
     private void Awake() {
         SetPlanes();
@@ -33,13 +33,20 @@ public class RangVisual : MonoBehaviour {
 
     private void OnEnable() {
         _playerBank.BankChanged += PlayerBankOnBankChanged;
+        SystemEvents.WindowScaleChanged += ReclculateCanvas;
+    }
+    
+
+
+    private void ReclculateCanvas() {
+        InstanceRangs();
+        PlayerBankOnBankChanged(_playerBank.PlayerCapital);
+        RecalculateRecord();
     }
 
 
     private void Start() {
-        InstanceRangs();
-        PlayerBankOnBankChanged(_playerBank.PlayerCapital);
-        RecalculateRecord();
+        ReclculateCanvas();
     }
 
     private void SetPlanes() {
@@ -63,7 +70,7 @@ public class RangVisual : MonoBehaviour {
     }
 
     private void InstanceRangs() {
-        float xEnd = _fillAmounthMover.CalculateXEnd(_barWidth);
+        float xEnd = RectTransformHelper.CalculateXEnd(_barWidth);
         for (int i = 0; i < _config.Rangs.Count; i++) {
             SetRangInPlace(i, xEnd);
         }
@@ -72,9 +79,10 @@ public class RangVisual : MonoBehaviour {
     private void SetRangInPlace(int i, float xEnd) {
         RangData rang = _config.Rangs[i];
         // Равномерно распределить
-        float rangPercent = (i+1f) / _config.Rangs.Count;
-        // _fillAmounthMover.SetPointer(_rangPrefabs[i]._rt, rangPercent, xEnd);
-        _rangPrefabs[i].SetData(rang.Money, rang.Sprite, (rangPercent*xEnd));
+        // float rangPercent = (float)i / _config.Rangs.Count;
+        // _rtHelper.SetPointer(_rangPrefabs[i]._rt, rangPercent, xEnd);
+        float xInside = RectTransformHelper.GetXInsideBar(_rangPrefabs[i].Rt, _barWidth);
+        _rangPrefabs[i].SetData(rang.Money, rang.Sprite, xInside);
     }
 
 
@@ -93,7 +101,7 @@ public class RangVisual : MonoBehaviour {
 
     private void PlayerBankOnBankChanged(long currentAmount) {
         float percent = CalculatePointerPercent(currentAmount);
-        _fillAmounthMover.SetFillAmountWithPointer(_currentImageRt, _barWidth, _pointerIcon, percent, _pointerOffset);
+        RectTransformHelper.SetFillAmountWithPointer(_currentImageRt, _barWidth, _pointerIcon, percent, _pointerOffset);
 
         
         // Рекорд
@@ -105,20 +113,38 @@ public class RangVisual : MonoBehaviour {
 
     private void RecalculateRecord() {
         float percent = CalculatePointerPercent(_playerBank.PlayerRecord);
-        _fillAmounthMover.SetFillAmountWithPointer(_recordImageRt, _barWidth, _recordPointerIcon, percent, _pointerOffset);
+        RectTransformHelper.SetFillAmountWithPointer(_recordImageRt, _barWidth, _recordPointerIcon, percent, _pointerOffset);
     }
 
+    
     private float CalculatePointerPercent(long currentAmount) {
         int nextRangIndex = GetNextRangIndex(currentAmount);
         RangUnit nextRang =  _rangPrefabs[nextRangIndex];
-        
-        float nextX = nextRang.XValue;
-        float previousX = nextX - _fillAmounthMover.Calculate1PeaceWidth(_barWidth, _rangPrefabs.Length);
 
-        
-        // Процент между предыдущим и  некст рангом
+        float xNext = nextRang.XInside;
+        float xPrevious = 0;
+        if (nextRangIndex != 0) {
+            xPrevious = _rangPrefabs[nextRangIndex - 1].XInside;
+        }
+
         float percent = Mathf.Clamp01((float)currentAmount / nextRang.Money);
-        float newX = previousX + percent * (nextX - previousX);
-        return newX / _fillAmounthMover.CalculateXEnd(_barWidth);
+        float x = xPrevious +  (xNext - xPrevious) * percent;
+        var calculatePointerPercent = x / RectTransformHelper .CalculateXEnd(_barWidth);
+        Debug.Log(calculatePointerPercent);
+        return calculatePointerPercent;
+
     }
+
+    
+    private void OnDisable() {
+        _playerBank.BankChanged -= PlayerBankOnBankChanged;
+        SystemEvents.WindowScaleChanged -= ReclculateCanvas;
+    }
+    
+    private void OnDestroy() {
+        if (_playerBank != null)
+            _playerBank.BankChanged -= PlayerBankOnBankChanged;
+        SystemEvents.WindowScaleChanged -= ReclculateCanvas;
+    }
+
 }
