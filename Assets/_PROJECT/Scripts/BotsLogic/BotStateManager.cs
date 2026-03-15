@@ -13,6 +13,7 @@ public class BotStateManager : MonoBehaviour {
     [SerializeField] private List<Transform> _petsPoints;
     [SerializeField] private Transform _skinParent;
     [SerializeField] private BotAnimator _botAnimator;
+    [SerializeField] private GameObject _skinInstance;
     
     private BotFlight _botFlight;
     private BotWander _botWander;
@@ -35,6 +36,7 @@ public class BotStateManager : MonoBehaviour {
         _currentBotBehaviour = _botWander;
         State = BotState.Wandering;
         Rb = GetComponent<Rigidbody>();
+        Destroy(_skinInstance);
     }
 
 
@@ -65,10 +67,10 @@ public class BotStateManager : MonoBehaviour {
         _botFlight.GoToFall();
     }
 
-    private GameObject _skinInstance;
 
     public void InitAnimator() {
         _botAnimator.InitAnimator(_botFlight, _botWander);
+        _currentBotBehaviour.Enter();
     }
     public void SetBotSkin(SkinItemConfig skinItemConfig) {
         StartCoroutine(ChangeSkinRoutine(skinItemConfig));

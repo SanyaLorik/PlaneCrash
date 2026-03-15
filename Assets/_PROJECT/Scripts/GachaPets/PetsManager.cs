@@ -19,10 +19,10 @@ public class InstancePets {
 public class PetsManager : MonoBehaviour {
     [SerializeField] private List<Transform> _petsPoints;
     [SerializeField] private int _maxPetCount;
-    [Range(0,1), SerializeField] private float _chanceToSpawnBotPet;
     
     [Inject] private IGameSave<GameSavePC> _gameSave;
     [Inject] private List<PetItemConfig> _petsItems;
+    [Inject] private BotsManagerConfig _botsManagerConfig;
     
     
     private Dictionary<PetItemConfig, int> _petToCountDict = new();
@@ -39,8 +39,9 @@ public class PetsManager : MonoBehaviour {
     }
 
     public void BotSetRandomPets(List<Transform> points) {
-        int maxCount = points.Count;
-
+        int maxCount = Random.Range(_botsManagerConfig.PetCount.From, _botsManagerConfig.PetCount.To);
+        maxCount = Math.Min(maxCount, _maxPetCount);
+        
         // 1. Берём всех питомцев, которых бот может иметь
         List<PetItemConfig> availablePets = _petsItems; // либо другой источник
     
@@ -70,7 +71,6 @@ public class PetsManager : MonoBehaviour {
                 PetInstance = instance,
                 PetInfo = pet
             });
-            if (Random.value >= _chanceToSpawnBotPet) break;
             yield return null;
         }
         PetsInstancesForBots.Clear();

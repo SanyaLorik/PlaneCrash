@@ -1,13 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
-using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
 using SanyaBeerExtension;
 using UnityEngine;
-using Zenject;
 using IInitializable = Zenject.IInitializable;
 using Random = UnityEngine.Random;
 
@@ -23,7 +19,10 @@ public class BotsMainManager : IInitializable, IDisposable {
     private List<BotStateManager> _speakingBots = new();
     
 
-    public BotsMainManager(List<BotStateManager> bots, PlayerStateManager playerStateManager, BotsManagerConfig config, List<SkinItemConfig> skins) {
+    public BotsMainManager(List<BotStateManager> bots, 
+        PlayerStateManager playerStateManager, 
+        BotsManagerConfig config, 
+        List<SkinItemConfig> skins) {
         _bots = bots;
         _skins = skins;
         _config = config;

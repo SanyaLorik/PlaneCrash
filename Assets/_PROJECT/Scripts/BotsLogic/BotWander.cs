@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -9,48 +10,33 @@ using Zenject;
 using Random = UnityEngine.Random;
 
 public class BotWander : MonoBehaviour, IBotBehaviour {
-    [SerializeField] private bool _eblaning = true;
-    [SerializeField] private float _rotationSpeed;
-    [SerializeField] private PairedValue<float> _timeToStay;
-    
-    [SerializeField] private List<Transform> _pointsToWalks;
-    
     [Header("Партиклы")]
     [SerializeField] private JumpParticlesController _jumpParticlesController;
     [SerializeField] private JumpParticlesController _landParticleController;
     [SerializeField] private DualLegParticles _walkingParticles;
-    [Range(0,1), SerializeField] private float _botChanceToJump = 0.85f; 
+
     
-    
+    public bool Eblaning { get; private set; }
     
     public Action<bool> StartWandering;
     public Action OnJump;
     public Action<bool> Grounded;
-    
-    
-    private NavMeshAgent _agent;
-    private PlayerMovement _playerMovement;
-    private PlayerStateManager _playerStateManager;
-    private PlayerConfig _playerConfig;
-    private CancellationTokenSource _botTokenSource;
     private Transform _chooseCube;
+    private CancellationTokenSource _botTokenSource;
+    private NavMeshAgent _agent;
+    
+    [Inject(Id = "WalkPoints")] private Transform[] _pointsToWalk;
+    [Inject] private PlayerMovement _playerMovement;
+    [Inject] private PlayerStateManager _playerStateManager;
+    [Inject] private PlayerConfig _playerConfig;
+    [Inject] private BotsManagerConfig _botsManagerConfig;
     
     
-    [Inject] 
-    public void Init(PlayerMovement playerMovement, PlayerStateManager playerStateManager, PlayerConfig playerConfig) {
-        _playerMovement = playerMovement;
-        _playerStateManager = playerStateManager;
-        _playerConfig = playerConfig;
-    }
-
-
+    
+    
 
     private void Awake() {
         _agent = GetComponent<NavMeshAgent>();
-    }
-
-    private void Start() {
-        Enter();
     }
 
 
@@ -58,7 +44,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         Exit();
         _agent.enabled = true;
         _botTokenSource = new CancellationTokenSource();
-        _eblaning = true;
+        Eblaning = true;
         LifeCycleAsync(_botTokenSource.Token).Forget();
         MonitorMovementAsync(_botTokenSource.Token).Forget();
     }
@@ -70,7 +56,7 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
         _agent.SafeStop();
         _walkingParticles.Stop();
         _agent.enabled = false;
-        _eblaning = false;
+        Eblaning = false;
     }
 
     private async UniTask MonitorMovementAsync(CancellationToken token) {
@@ -98,6 +84,10 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
             
             Vector3 target = ChooseNextTarget();
             _agent.SetDestination(target);
+            _agent.stoppingDistance = Random.Range(
+                _botsManagerConfig.StoppingDistance.From,
+                _botsManagerConfig.StoppingDistance.To);
+            
             
             await UniTask.WaitUntil(() => !_agent.pathPending && _agent.hasPath, cancellationToken: token);
             Jump(token).Forget(
@@ -107,15 +97,17 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
                 !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance,
                 cancellationToken: token);
             
-            await RotateTowardsAsync(target, _rotationSpeed, token);
+            await RotateTowardsAsync(target, _botsManagerConfig.RotationSpeed, token);
 
-            float waitTime = Random.Range(_timeToStay.From, _timeToStay.To);
+            float waitTime = Random.Range(
+                _botsManagerConfig.TimeToStayOnPoint.From, 
+                _botsManagerConfig.TimeToStayOnPoint.To);
             await UniTask.Delay(TimeSpan.FromSeconds(waitTime), cancellationToken: token);
         }
     }
 
     private async UniTask Jump(CancellationToken token) {
-        if (Random.value > _botChanceToJump) return;
+        if (Random.value > _botsManagerConfig.ChanceToJump) return;
         
         float startPathLength = _agent.remainingDistance;
         float jumpLength = startPathLength / Random.Range(1.5f, 2f);
@@ -157,11 +149,11 @@ public class BotWander : MonoBehaviour, IBotBehaviour {
 
     private Vector3 ChooseNextTarget() {
         float rv = Random.value;
-        if (_playerStateManager.CurrentState == PlayerState.Walking &&  rv > 0.7f)
+        if (_playerStateManager.CurrentState == PlayerState.Walking &&  rv < _botsManagerConfig.ChanseToGoPlayer)
             return _playerMovement.transform.position;
 
         // Иначе выбираем случайный куб
-        return GetTargetPoint(_pointsToWalks[Random.Range(0, _pointsToWalks.Count)]);
+        return GetTargetPoint(_pointsToWalk.GetRandomElement());
     }
     
     private Vector3 GetTargetPoint(Transform point) {

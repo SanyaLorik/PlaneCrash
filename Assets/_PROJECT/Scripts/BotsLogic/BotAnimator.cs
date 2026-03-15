@@ -13,6 +13,9 @@ public class BotAnimator : MonoBehaviour {
     public void SetModelData(Avatar avatar, SkinElementsController controller) {
         _animator.avatar = avatar;
         _skinController = controller;
+        if (_botWander != null && _botWander.Eblaning) {
+            OnStartWandering(true);
+        }
     }
     
     public void InitAnimator(BotFlight botFlight, BotWander botWander) {

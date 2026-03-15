@@ -28,7 +28,7 @@ public abstract class SkinItemViewBase : MonoBehaviour {
 
     private void SkinEquippedCheck(SkinItemConfig skin) {
         if (skin.Id != SkinItemConfig.Id) {
-            _wearText.text = string.Empty;
+            _wearText.DisactiveSelf();
         }
     }
 

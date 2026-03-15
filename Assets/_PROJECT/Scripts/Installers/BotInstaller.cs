@@ -3,9 +3,11 @@ using Zenject;
 
 public class BotInstaller: MonoInstaller {
     [SerializeField] private BotsManagerConfig _botsManagerConfig;
+    [SerializeField] private Transform[] _pointsToWalk;
     
     public override void InstallBindings() {
         BindBotStateManager();
+        BindWalkPoints();
     }
 
     private void BindBotStateManager() {
@@ -18,7 +20,14 @@ public class BotInstaller: MonoInstaller {
         Container.Bind<BotStateManager>()
             .FromComponentsInHierarchy()
             .AsTransient();
-        
+
+    }
+
+    private void BindWalkPoints() {
+        Container.Bind<Transform[]>()
+            .WithId("WalkPoints")
+            .FromInstance(_pointsToWalk)
+            .AsSingle().NonLazy();
     }
 
 }
