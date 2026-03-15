@@ -4598,6 +4598,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: GachaPetStation_Money_2
       objectReference: {fileID: 0}
+    - target: {fileID: 2676123591065677977, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676123591065677977, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676123591065677977, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676123591065677977, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729680628555231799, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729680628555231799, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729680628555231799, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729680628555231799, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2981146873246374393, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468699952139674139, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3780106041876462995, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3780106041876462995, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3780106041876462995, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3780106041876462995, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5286433917716556443, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6405144368078058871, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
@@ -4617,6 +4677,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 311742809367500154, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
   m_PrefabInstance: {fileID: 75441273}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &75441276 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4749780541778788631, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+  m_PrefabInstance: {fileID: 75441273}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059ed70c5064bda4680b1052ae23f8e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetStationViewPurchase
 --- !u!1 &76496656
 GameObject:
   m_ObjectHideFlags: 0
@@ -8590,13 +8661,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PetStationsManager
   _petStations:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 993847775}
   - {fileID: 768571236}
   - {fileID: 1666904426}
@@ -8606,7 +8670,14 @@ MonoBehaviour:
   - {fileID: 1750073167}
   - {fileID: 1022272401}
   - {fileID: 1755317028}
-  _tutorialStation: {fileID: 0}
+  - {fileID: 560639338}
+  - {fileID: 75441276}
+  - {fileID: 1386155096}
+  - {fileID: 733651315}
+  - {fileID: 437580352}
+  - {fileID: 1128714419}
+  - {fileID: 507134788}
+  _tutorialStation: {fileID: 560639338}
   _indexToAllowPetOpen: 8
 --- !u!1 &201834137
 GameObject:
@@ -16669,6 +16740,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1750037872962181089, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
   m_PrefabInstance: {fileID: 437580349}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &437580352 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5636772468836395345, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+  m_PrefabInstance: {fileID: 437580349}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 144cf12d0dbf8694380b2b07174830b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetStationViewReward
 --- !u!1 &437860560
 GameObject:
   m_ObjectHideFlags: 0
@@ -19634,6 +19716,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5461364237386891644, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
   m_PrefabInstance: {fileID: 507134785}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &507134788 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7089125714275386195, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+  m_PrefabInstance: {fileID: 507134785}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad1c8bc5f3ec3c449feb99e49eae369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetStationViewAdv
 --- !u!1 &507511328
 GameObject:
   m_ObjectHideFlags: 0
@@ -21393,6 +21486,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: GachaPetStation_Money_1
       objectReference: {fileID: 0}
+    - target: {fileID: 2676123591065677977, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676123591065677977, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676123591065677977, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676123591065677977, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729680628555231799, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729680628555231799, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729680628555231799, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729680628555231799, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2981146873246374393, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468699952139674139, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3780106041876462995, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3780106041876462995, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3780106041876462995, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3780106041876462995, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5286433917716556443, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6405144368078058871, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
@@ -21412,6 +21565,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 311742809367500154, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
   m_PrefabInstance: {fileID: 560639335}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &560639338 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4749780541778788631, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+  m_PrefabInstance: {fileID: 560639335}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059ed70c5064bda4680b1052ae23f8e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetStationViewPurchase
 --- !u!1 &561459019
 GameObject:
   m_ObjectHideFlags: 0
@@ -27722,6 +27886,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1279109338700206866, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
   m_PrefabInstance: {fileID: 733651313}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &733651315 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5636772468836395345, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
+  m_PrefabInstance: {fileID: 733651313}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 144cf12d0dbf8694380b2b07174830b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetStationViewReward
 --- !u!1 &736187823
 GameObject:
   m_ObjectHideFlags: 0
@@ -44115,6 +44290,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5461364237386891644, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
   m_PrefabInstance: {fileID: 1128714416}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1128714419 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7089125714275386195, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+  m_PrefabInstance: {fileID: 1128714416}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad1c8bc5f3ec3c449feb99e49eae369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetStationViewAdv
 --- !u!224 &1130351279 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5205178657332539784, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
@@ -53339,6 +53525,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: GachaPetStation_Money_3
       objectReference: {fileID: 0}
+    - target: {fileID: 2676123591065677977, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676123591065677977, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676123591065677977, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2676123591065677977, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729680628555231799, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729680628555231799, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729680628555231799, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729680628555231799, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2981146873246374393, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468699952139674139, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3780106041876462995, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3780106041876462995, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3780106041876462995, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3780106041876462995, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5286433917716556443, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6405144368078058871, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
@@ -53358,6 +53604,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 311742809367500154, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
   m_PrefabInstance: {fileID: 1386155093}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1386155096 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4749780541778788631, guid: 2f21e3d233e48fb4e9721b0c2b2f8e8d, type: 3}
+  m_PrefabInstance: {fileID: 1386155093}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059ed70c5064bda4680b1052ae23f8e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetStationViewPurchase
 --- !u!1001 &1390613857
 PrefabInstance:
   m_ObjectHideFlags: 0
