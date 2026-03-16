@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Station_Timer_3
   m_EditorClassIdentifier: Assembly-CSharp::PetStationConfig
   <Pets>k__BackingField:
-  - <PetItemConfig>k__BackingField: {fileID: 11400000, guid: a7a47b68cdc48524fb0c1a41c27b96a7, type: 2}
-    <Chance>k__BackingField: 0.1
-  - <PetItemConfig>k__BackingField: {fileID: 11400000, guid: adae021b2b7ed0e4e9d9051b05ff01f7, type: 2}
-    <Chance>k__BackingField: 0.2
-  - <PetItemConfig>k__BackingField: {fileID: 11400000, guid: b69d11ce9cb24064b826efb1eeda9cb2, type: 2}
+  - <PetItemConfig>k__BackingField: {fileID: 11400000, guid: 9123858e2c9075e479e33680e94f9a61, type: 2}
+    <Chance>k__BackingField: 0.04
+  - <PetItemConfig>k__BackingField: {fileID: 11400000, guid: 3e9ca2510d92a1c46979a4f276099c26, type: 2}
+    <Chance>k__BackingField: 0.87
+  - <PetItemConfig>k__BackingField: {fileID: 11400000, guid: 848edd440a4dd174199247803804071c, type: 2}
     <Chance>k__BackingField: 0.3
   <Price>k__BackingField: 10000
   <EggIcon>k__BackingField: {fileID: 21300000, guid: d040df16fee237d4e808d61419371489, type: 3}
