@@ -101,7 +101,7 @@ public class BetVisual : MonoBehaviour {
     private void ShowBet(float bet) {
         _multiplier = 1f;
         _playerBetText.text = _formatter.ValuteFormatter(bet);
-        _rewardText.text = _formatter.ValuteFormatter(bet);
+        _rewardText.text = _formatter.ValuteFormatter(bet * _upgradesCalculator.GetUpgradeMultiplierByLevel());
         
         if (bet == 0 && _betAndRewardContainer.gameObject.activeSelf) {
             HideBetRewardCanvasAnimation();
@@ -115,7 +115,12 @@ public class BetVisual : MonoBehaviour {
     
     private void ShowMultiplier(float multiplier) {
         _multiplier = multiplier;
-        _rewardText.text = _formatter.ValuteFormatter(_zoneManager.BetAmount * _multiplier);
+        _rewardText.text = _formatter.ValuteFormatter(
+            _zoneManager.BetAmount 
+            *
+            _multiplier 
+            *
+            _upgradesCalculator.GetUpgradeMultiplierByLevel());
     }
 
     

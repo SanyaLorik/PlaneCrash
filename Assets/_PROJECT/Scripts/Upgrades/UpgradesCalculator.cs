@@ -32,9 +32,17 @@ public class UpgradesCalculator {
 
     public float GetUpgradeMultiplierByLevel(bool thisLevel = true, bool forceUpdate = false) {
         if (thisLevel) { 
-            return _config.XMultiplierUpgrade.BaseValue * Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel-1) * GetPetMultiplier(forceUpdate);
+            return _config.XMultiplierUpgrade.BaseValue 
+                * 
+                Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel-1) 
+                + 
+                GetPetMultiplier(forceUpdate);
         }
-        return _config.XMultiplierUpgrade.BaseValue * Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel) * GetPetMultiplier(forceUpdate);
+        return _config.XMultiplierUpgrade.BaseValue 
+            *
+            Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel) 
+            +
+            GetPetMultiplier(forceUpdate);
     } 
     
 
@@ -82,7 +90,7 @@ public class UpgradesCalculator {
         }
         _petMultiplier = 1f;
         foreach (var pet in _petsManager.PetsInstances) {
-            _petMultiplier *= pet.PetInfo.Modifier;
+            _petMultiplier += pet.PetInfo.Modifier;
         }
         Debug.Log($"{_petsManager.PetsInstances.Count} pets multiplayer = {_petMultiplier}");
         _needRecalculate = false;
