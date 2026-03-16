@@ -134,7 +134,7 @@ MonoBehaviour:
   - PhraseId: goodLuck
     RusClip: {fileID: 8300000, guid: 69c3ce482dbfca1459a895a09c98cb1b, type: 3}
     EngClip: {fileID: 8300000, guid: 6f9b2a455eb44174ea4804e9a449b1db, type: 3}
-  _pitchValue: 1.1
+  _pitchValue: 1.25
 --- !u!1 &2236252194221478307
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +314,8 @@ Transform:
   - {fileID: 2220441057875360957}
   - {fileID: 2369136501062023260}
   - {fileID: 7416404658054229095}
+  - {fileID: 8067489310631171756}
+  - {fileID: 7917425710544873562}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3159276835114270060
@@ -410,7 +412,7 @@ MonoBehaviour:
       data:
         _phraseId: shield
         _targets:
-        - {fileID: 7416404658054229095}
+        - {fileID: 7917425710544873562}
         _delta: 3
         _secToStay: 0.7
         _showArrow: 1
@@ -420,7 +422,7 @@ MonoBehaviour:
       data:
         _phraseId: petOpening
         _targets:
-        - {fileID: 2369136501062023260}
+        - {fileID: 8067489310631171756}
         _delta: 2
         _secToStay: 0.7
         _showArrow: 1
@@ -565,6 +567,68 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2220441057875360957}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5952304309289865776
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8067489310631171756}
+  m_Layer: 0
+  m_Name: EggPointForTutor
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8067489310631171756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5952304309289865776}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.134, y: 3.179, z: 126.738}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8784413498414956099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6438374193951626366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7917425710544873562}
+  m_Layer: 0
+  m_Name: PointForUpgrade
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7917425710544873562
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6438374193951626366}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.816, y: 3.401, z: 122.453}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8784413498414956099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7927093204230791361
 GameObject:
