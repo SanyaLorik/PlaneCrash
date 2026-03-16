@@ -176,6 +176,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6988441635805517995, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6988441635805517995, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.24
+      objectReference: {fileID: 0}
     - target: {fileID: 7405616469390380543, guid: 2c4b9a96a6cadb54eab275531e4ab9eb, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -337,6 +345,7 @@ MonoBehaviour:
     Percentage: {fileID: 6145097787380312064}
   - Icon: {fileID: 2833334007465608985}
     Percentage: {fileID: 3186761249618059392}
+  _sortByUp: 1
   _timeToWaitSec: 20
   _timeToWaitText: {fileID: 7581699361519991844}
   _clockRectTransform: {fileID: 6518085134277855516}

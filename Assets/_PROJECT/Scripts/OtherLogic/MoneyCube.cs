@@ -138,9 +138,7 @@ public class MoneyCube : MonoBehaviour {
     
     [SerializeField] private float _maxSideAmount = 1000000;
     private Vector3 NewScaleBank(long amount) {
-        Debug.Log("amount = " + amount);
         float percent = amount / _maxSideAmount;
-        Debug.Log("percent =  " + percent);
         float linearSide = _maxSide * percent;
 
         float height =  _maxYScale * CalculateAmountPercent(amount);
@@ -149,7 +147,6 @@ public class MoneyCube : MonoBehaviour {
         float side = Mathf.Min(linearSide, _maxSide);
 
         Vector3 newScale = new Vector3(side, height, side);
-        Debug.LogWarning("newScale = " + newScale);
         return newScale;
     }
     

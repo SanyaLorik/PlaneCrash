@@ -277,12 +277,13 @@ MonoBehaviour:
   _customTrigger: {fileID: 8167487909902531408}
   _config: {fileID: 11400000, guid: a73016fac212ae848bc2f961d7c05749, type: 2}
   _views:
-  - Icon: {fileID: 4271923757909558658}
-    Percentage: {fileID: 3468699952139674139}
-  - Icon: {fileID: 2311657664068310838}
-    Percentage: {fileID: 5286433917716556443}
   - Icon: {fileID: 9090098422527280730}
     Percentage: {fileID: 2981146873246374393}
+  - Icon: {fileID: 2311657664068310838}
+    Percentage: {fileID: 5286433917716556443}
+  - Icon: {fileID: 4271923757909558658}
+    Percentage: {fileID: 3468699952139674139}
+  _sortByUp: 1
   _priceText: {fileID: 6832071324852101383}
 --- !u!114 &2981146873246374393 stripped
 MonoBehaviour:

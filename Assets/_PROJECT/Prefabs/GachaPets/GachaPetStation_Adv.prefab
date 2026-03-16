@@ -610,7 +610,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
     - target: {fileID: 3085151701850252819, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
       propertyPath: m_hasFontAssetChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3352445519825762715, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
       propertyPath: m_AnchorMax.y
@@ -634,7 +634,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
     - target: {fileID: 3723575651707854321, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
       propertyPath: m_hasFontAssetChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4263147475271220848, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
       propertyPath: m_IsActive
@@ -710,7 +710,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 77e088b2357d74c4aa4d4fb5fc1d31ff, type: 2}
     - target: {fileID: 6029979848344645267, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
       propertyPath: m_hasFontAssetChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7412315404419989349, guid: 7499b898ec129cd4fa9cfd55f70f73bd, type: 3}
       propertyPath: m_IsActive
@@ -816,12 +816,13 @@ MonoBehaviour:
   _customTrigger: {fileID: 4522070612895575894}
   _config: {fileID: 11400000, guid: a73016fac212ae848bc2f961d7c05749, type: 2}
   _views:
-  - Icon: {fileID: 8417735395971060100}
-    Percentage: {fileID: 9203789193940383261}
-  - Icon: {fileID: 8038232495408268080}
-    Percentage: {fileID: 487530172443295389}
   - Icon: {fileID: 3584766222581224028}
     Percentage: {fileID: 7405616469390380543}
+  - Icon: {fileID: 8038232495408268080}
+    Percentage: {fileID: 487530172443295389}
+  - Icon: {fileID: 8417735395971060100}
+    Percentage: {fileID: 9203789193940383261}
+  _sortByUp: 1
   _countToShowReward: 3
   _countTextVisual: {fileID: 4230094583807584953}
   _rewardProgress: {fileID: 718086782611169153}

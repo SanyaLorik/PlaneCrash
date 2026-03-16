@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Game Save PCSO
   m_EditorClassIdentifier: Assembly-CSharp::GameSavePCSO
   Save:
-    Money: 13188
-    RecordMoney: 13188
+    Money: 13554
+    RecordMoney: 13554
     RecordDistance: 1000
     Upgrades:
     - Id: 2
@@ -28,7 +28,11 @@ MonoBehaviour:
     - Id: 4
       Level: 1
     Pets:
-    - Id: doshik_pet
+    - Id: creeper_pet
+      Count: 2
+    - Id: owlcat_pet
+      Count: 2
+    - Id: spongebob_pet
       Count: 2
     Skins:
     - Id: tralalelo_skin

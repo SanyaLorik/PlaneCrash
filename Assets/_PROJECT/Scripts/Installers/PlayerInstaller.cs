@@ -4,6 +4,7 @@ using Zenject;
 
 public class PlayerInstaller : MonoInstaller {
     [SerializeField] private PlayerConfig _playerConfig;
+    [SerializeField] private CameraConfig _cameraConfig;
     [SerializeField] private UpgradeConfig _upgradesConfig;
     [SerializeField] private List<SkinItemConfig> _skinItemConfigs;
     [SerializeField] private SkinItemConfig  _defaultSkinConfig;
@@ -12,8 +13,8 @@ public class PlayerInstaller : MonoInstaller {
     public override void InstallBindings() {
         BindPlayer();
         BindPlayerStats();
-        
         BindUpgrades();
+        BindCamera();
     }
 
     private void BindPlayer() {
@@ -27,6 +28,9 @@ public class PlayerInstaller : MonoInstaller {
         
         Container.Bind<PlayerVisual>().FromComponentInHierarchy().AsSingle().NonLazy();
         BindSkins();
+    }
+    private void BindCamera() {
+        Container.Bind<CameraConfig>().FromInstance(_cameraConfig).AsSingle().NonLazy();
     }
 
     private void BindPlayerStats() {

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -21,6 +23,7 @@ public abstract class PetStationViewBase : MonoBehaviour {
     [SerializeField] protected DelayedTrigger _customTrigger;
     [SerializeField] protected PetStationConfig _config;
     [SerializeField] protected EntityView[] _views;
+    [SerializeField] private bool _sortByUp;
 
     
     [Inject] protected NumberFormatter _formatter;
@@ -65,10 +68,18 @@ public abstract class PetStationViewBase : MonoBehaviour {
     }
     
     private void Initialize() {
+        List<PetChance> sortedPets;
+        if (_sortByUp) {
+            sortedPets = _config.Pets.ToList().OrderBy(a => a.Chance).ToList();
+        }
+        else {
+            sortedPets = _config.Pets.ToList().OrderByDescending(a => a.Chance).ToList();
+        }
         
-        for (int i = 0; i < _config.Pets.Length; i++) {
-            _views[i].Icon.sprite = _config.Pets[i].PetItemConfig.Sprite;
-            _views[i].Percentage.text = $"{_config.Pets[i].Chance / _divider * 100f:#0}  %";
+        
+        for (int i = 0; i < sortedPets.Count; i++) {
+            _views[i].Icon.sprite = sortedPets[i].PetItemConfig.Sprite;
+            _views[i].Percentage.text = $"{sortedPets[i].Chance / _divider * 100f:#0}  %";
         }
     }
 

@@ -1,26 +1,19 @@
 using System;
 using System.Collections;
 using Architecture_M;
-using Cysharp.Threading.Tasks;
-using MirraGames.SDK.Common;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
 public class CameraOrbitalController : MonoBehaviour {
-
     [SerializeField] private CinemachineCamera _cinemachineCamera;
-    [SerializeField] private float _sensitivity = 0.1f;
-    [SerializeField] private float _joystickSensivity = 500f;
     [SerializeField] private Transform _walkPoint;
     [SerializeField] private Transform _flightPoint;
 
     [SerializeField] private CinemachineOrbitalFollow _orbitalFollow;
     [SerializeField] private float _cameraSaveDelay = 1f;
 
-    [SerializeField] private float _maxZoom;
-    [SerializeField] private float _minZoom;
     [Range(0, 1), SerializeField] private float _zoomSpeed;
     private Action _rotationHandler;
 
@@ -37,13 +30,21 @@ public class CameraOrbitalController : MonoBehaviour {
     private float _defaultX;
     private float _defaultY;
 
-    public float DefaultFov => _isMobile ? _playerConfig.MobileCameraFov : _playerConfig.DesktopCameraFov;
-    public float CurrentFovPercent => (_orbitalFollow.RadialAxis.Value - _minZoom) / (_maxZoom - _minZoom);
+    public float DefaultFov => _isMobile ? _cameraConfig.MobileCameraFov : _cameraConfig.DesktopCameraFov;
+    public float CurrentFovPercent => (_orbitalFollow.RadialAxis.Value - _cameraConfig.ZoomDiapasone.From) 
+                                      / 
+                                      (_cameraConfig.ZoomDiapasone.To - _cameraConfig.ZoomDiapasone.From);
+    public float DefaultSens => _cameraConfig.DefaultCameraSens;
 
-
+    private float Sensitivity => Mathf.Clamp(_settings.CameraSensValue, _cameraConfig.MinSensValue, 1f); 
+    private float _walkZoomBeforFly;
+    
+    
+    
     [Inject] private PlayerStateManager _playerStateManager;
     [Inject] private SettingsManager _settings;
     [Inject] private PlayerConfig _playerConfig;
+    [Inject] private CameraConfig _cameraConfig;
 
     // Если выбран десктоп ввод то не прокидывается сань помоги(((
     // [Inject] private IOrbitalRotationInput _orbitalRotationInput;
@@ -55,24 +56,15 @@ public class CameraOrbitalController : MonoBehaviour {
 
     private void OnEnable() {
         _playerStateManager.ChangeState += PlayerStateManagerOnChangeState;
-        _settings.CameraValueChanged += SettingsOnCameraValueChanged;
+        _settings.CameraZoomChanged += ChangeCameraZoomPercent;
         SystemEvents.WindowOpened += ForbidRotate;
         SystemEvents.ForbidZoomChanged += ForbidZoom;
     }
 
 
-private void ForbidZoom(bool forbid) {
-        _allowZoom = !forbid;
-    }
-
-    private void ForbidRotate(bool windowIsOpen) {
-        _allowRotation = !windowIsOpen;
-    }
-
-
     private void Start() {
-        SettingsOnCameraValueChanged(_settings.CameraZoomValue);
-        
+        ChangeCameraZoomPercent(_settings.CameraZoomValue);
+        _walkZoomBeforFly = CurrentFovPercent;
         // К релизу врубать
         _isMobile = _deviceType.DeviceType == DeviceTypeEnum.Mobile;
         if (_isMobile)
@@ -87,8 +79,8 @@ private void ForbidZoom(bool forbid) {
         SetWalkPoint(true);
     }
 
-    private void SettingsOnCameraValueChanged(float percent) {
-        float zoomValue = Mathf.Lerp(_minZoom, _maxZoom, percent);
+    private void ChangeCameraZoomPercent(float percent) {
+        float zoomValue = Mathf.Lerp(_cameraConfig.ZoomDiapasone.From, _cameraConfig.ZoomDiapasone.To, percent);
         ChangeZoom(zoomValue);
     }
 
@@ -97,7 +89,10 @@ private void ForbidZoom(bool forbid) {
             return;
         }
         if (state == PlayerState.Flight) {
+            _walkZoomBeforFly = CurrentFovPercent;
+            Debug.Log("Игрок полетел зум камеры: " + _walkZoomBeforFly);
             // Вырубить
+            ChangeCameraZoomPercent(_cameraConfig.FlightCameraFov);
             SetDefaultRotation();
             _allowRotation = false;
             SetWalkPoint(false);
@@ -106,6 +101,8 @@ private void ForbidZoom(bool forbid) {
         else if(state != PlayerState.Grounded && state != PlayerState.Cruisered){
             _allowRotation = true;
             SetWalkPoint(true);
+            Debug.Log("Игрок вернулся на спавн: " + _walkZoomBeforFly);
+            ChangeCameraZoomPercent(_walkZoomBeforFly);
         }
     }
 
@@ -166,8 +163,8 @@ private void ForbidZoom(bool forbid) {
         if (input.sqrMagnitude < 0.001f) 
             return;
 
-        float joyX = input.x * _sensitivity * _joystickSensivity * Time.deltaTime;
-        float joyY = input.y * _sensitivity * _joystickSensivity * Time.deltaTime;
+        float joyX = input.x * Sensitivity * _cameraConfig.JoystickSensivityMultiplier * Time.deltaTime;
+        float joyY = input.y * Sensitivity * _cameraConfig.JoystickSensivityMultiplier * Time.deltaTime;
 
         _orbitalFollow.HorizontalAxis.Value += joyX;
         _orbitalFollow.VerticalAxis.Value -= joyY;
@@ -185,8 +182,8 @@ private void ForbidZoom(bool forbid) {
         Vector2 delta = _mouse.delta.ReadValue();
         
         // Применяем чувствительность
-        float mouseX = delta.x * _sensitivity;
-        float mouseY = delta.y * _sensitivity;
+        float mouseX = delta.x * Sensitivity * _cameraConfig.MouseSensivityMultiplier;
+        float mouseY = delta.y * Sensitivity * _cameraConfig.MouseSensivityMultiplier;
         
         // Вращаем камеру
         _orbitalFollow.HorizontalAxis.Value += mouseX;
@@ -215,8 +212,8 @@ private void ForbidZoom(bool forbid) {
         if(!_allowZoom) return;
         _orbitalFollow.RadialAxis.Value = Mathf.Clamp(
             zoomValue,
-            _minZoom, 
-            _maxZoom
+            _cameraConfig.ZoomDiapasone.From, 
+            _cameraConfig.ZoomDiapasone.To
         );
         if (_settings.SettingsIsOpen) {
             _settings.ChangeCameraZoomSilent();
@@ -232,5 +229,14 @@ private void ForbidZoom(bool forbid) {
     private IEnumerator WaitCameraSave() {
         yield return new WaitForSeconds(_cameraSaveDelay);
         _settings.ChangeCameraZoomSilent();
+    }
+    
+    
+    private void ForbidZoom(bool forbid) {
+        _allowZoom = !forbid;
+    }
+
+    private void ForbidRotate(bool windowIsOpen) {
+        _allowRotation = !windowIsOpen;
     }
 }

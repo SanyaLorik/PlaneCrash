@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
+
 public class PlayerMovement : FlightObject
 {
     [SerializeField] private float _smoothTime = 0.3f;
@@ -53,12 +54,12 @@ public class PlayerMovement : FlightObject
 
 
     private void OnEnable() {
-        _stateManager.ChangeState += ChangeSpaceRotation;
+        _stateManager.ChangeState += ChangeWalkState;
         _inputJumping.OnJumped += OnJump;
     }
 
     private void OnDisable() {
-        _stateManager.ChangeState -= ChangeSpaceRotation;
+        _stateManager.ChangeState -= ChangeWalkState;
         _inputJumping.OnJumped -= OnJump;
     }
     
@@ -69,8 +70,9 @@ public class PlayerMovement : FlightObject
     }
     
     private void Start() {
-        ChangeSpaceRotation(PlayerState.Walking);
+        ChangeWalkState(PlayerState.Walking);
         TpPlayerInSpawn();
+        _controller.height = _config.WalkCharacterControllerSize;
     }
     
     private void Update() {
@@ -128,9 +130,10 @@ public class PlayerMovement : FlightObject
         IsBombed = true;
     }
     
-    private void ChangeSpaceRotation(PlayerState playerState) {
+    private void ChangeWalkState(PlayerState playerState) {
         _tokenSource = new CancellationTokenSource();
         if (playerState == PlayerState.Flight) {
+            _controller.height = _config.FlightCharacterControllerSize;
             ResetLifes();
             IsBombed = false;
             RotateLocalXAsync(_angleToFlight, playerState, _tokenSource.Token).Forget();
@@ -138,9 +141,11 @@ public class PlayerMovement : FlightObject
         }
         
         else if (playerState == PlayerState.Grounded || playerState == PlayerState.Cruisered) {
+            _controller.height = _config.WalkCharacterControllerSize;
             RotateLocalXAsync(0, playerState, _tokenSource.Token).Forget();
             ResetModelRotation();
         }
+        
     }
     
    
