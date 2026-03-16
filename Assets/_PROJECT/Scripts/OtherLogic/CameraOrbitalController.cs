@@ -14,7 +14,6 @@ public class CameraOrbitalController : MonoBehaviour {
     [SerializeField] private CinemachineOrbitalFollow _orbitalFollow;
     [SerializeField] private float _cameraSaveDelay = 1f;
 
-    [Range(0, 1), SerializeField] private float _zoomSpeed;
     private Action _rotationHandler;
 
     [Header("Для теста пока через инспектор")] [SerializeField]
@@ -200,7 +199,7 @@ public class CameraOrbitalController : MonoBehaviour {
 
 
     private void HandleZoom() {
-        float scroll = _mouse.scroll.ReadValue().y * _zoomSpeed; // Масштабируем
+        float scroll = _mouse.scroll.ReadValue().y * _cameraConfig.ZoomSpeed;
         float zoomValue = _orbitalFollow.RadialAxis.Value - scroll;
         if (Mathf.Abs(scroll) > 0.001f) {
             ChangeZoom(zoomValue);
