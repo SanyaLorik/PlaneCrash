@@ -129,10 +129,13 @@ public class PlayerMovement : FlightObject
         IsBusted = false;
         IsBombed = true;
     }
-    
+
+
+    private float _startTime;
     private void ChangeWalkState(PlayerState playerState) {
         _tokenSource = new CancellationTokenSource();
         if (playerState == PlayerState.Flight) {
+            _startTime = Time.time;
             _controller.height = _config.FlightCharacterControllerSize;
             ResetLifes();
             IsBombed = false;
@@ -141,6 +144,8 @@ public class PlayerMovement : FlightObject
         }
         
         else if (playerState == PlayerState.Grounded || playerState == PlayerState.Cruisered) {
+            float currentTime = Time.time - _startTime;
+            Debug.LogError("Игрок пролетел: " + currentTime);
             _controller.height = _config.WalkCharacterControllerSize;
             RotateLocalXAsync(0, playerState, _tokenSource.Token).Forget();
             ResetModelRotation();
