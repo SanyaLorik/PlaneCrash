@@ -28911,22 +28911,22 @@ MonoBehaviour:
     PercentageEnd: 0.5
     ChunksCount: 4
     EnemiesPerChunk:
-      <From>k__BackingField: 3
-      <To>k__BackingField: 5
+      <From>k__BackingField: 5
+      <To>k__BackingField: 7
   - ZoneName: 2
     PercentageStart: 0.5
     PercentageEnd: 0.7
     ChunksCount: 4
     EnemiesPerChunk:
-      <From>k__BackingField: 5
-      <To>k__BackingField: 7
+      <From>k__BackingField: 7
+      <To>k__BackingField: 9
   - ZoneName: 3
     PercentageStart: 0.7
     PercentageEnd: 1
     ChunksCount: 4
     EnemiesPerChunk:
-      <From>k__BackingField: 7
-      <To>k__BackingField: 9
+      <From>k__BackingField: 10
+      <To>k__BackingField: 14
   _trapsByRoleList:
   - Role: 0
     Traps:
@@ -34456,12 +34456,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _xOffset: 10
+  _xOffset: 3
   <YMinUpBoostCorrect>k__BackingField: 7
   _countTrueWays:
-    <From>k__BackingField: 3
-    <To>k__BackingField: 2
-  _countFalseWays: 2
+    <From>k__BackingField: 1
+    <To>k__BackingField: 1
+  _countFalseWays: 1
   _setPlayerFalseWay: 0
 --- !u!1 &876428970
 GameObject:
@@ -35400,7 +35400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41b3157fe4907244983b0c88025fc81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneySpawnManager
-  _chanceToSpawn: 0.6
+  _chanceToSpawn: 0.86
   _moneyPrefab: {fileID: 7869173763557636, guid: cefc97693421fee44ac19b99305fa918, type: 3}
   _xDistance:
     <From>k__BackingField: -5
