@@ -9635,7 +9635,9 @@ MonoBehaviour:
     - rid: 2694420709505761485
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _skinsInStore: []
+        _skinsInStore:
+        - {fileID: 11400000, guid: 17bba114849ec764ba28eacc7e270453, type: 2}
+        - {fileID: 11400000, guid: 00675be2562c50344a4d3a6d5e9736f6, type: 2}
 --- !u!1 &217896888
 GameObject:
   m_ObjectHideFlags: 0
@@ -12391,7 +12393,9 @@ MonoBehaviour:
     - rid: 2694420709505761485
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _skinsInStore: []
+        _skinsInStore:
+        - {fileID: 11400000, guid: e4d8e1ece5086c6419bffed293a60b3b, type: 2}
+        - {fileID: 11400000, guid: 40121b03d92c6d14283aacf58dc852f3, type: 2}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -21391,7 +21395,9 @@ MonoBehaviour:
     - rid: 2694420709505761491
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _skinsInStore: []
+        _skinsInStore:
+        - {fileID: 11400000, guid: c3ffec8908476164c89048f857a97aa8, type: 2}
+        - {fileID: 11400000, guid: 55a043a1cec096e49a28ff9f57ae5938, type: 2}
 --- !u!1 &535891449
 GameObject:
   m_ObjectHideFlags: 0
@@ -23441,7 +23447,17 @@ MonoBehaviour:
     - rid: 2694420709505761486
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _skinsInStore: []
+        _skinsInStore:
+        - {fileID: 11400000, guid: d2c2ba08db1ae5740bfe6e6bac9fb2df, type: 2}
+        - {fileID: 11400000, guid: e4d8e1ece5086c6419bffed293a60b3b, type: 2}
+        - {fileID: 11400000, guid: 55a043a1cec096e49a28ff9f57ae5938, type: 2}
+        - {fileID: 11400000, guid: 07a60f6f6e5a53347b5f2cdb88a53d37, type: 2}
+        - {fileID: 11400000, guid: c3ffec8908476164c89048f857a97aa8, type: 2}
+        - {fileID: 11400000, guid: 4e02a70954dd7de479cf896445d104d0, type: 2}
+        - {fileID: 11400000, guid: 7b27c1322e7813d489cf91570d574a36, type: 2}
+        - {fileID: 11400000, guid: 00675be2562c50344a4d3a6d5e9736f6, type: 2}
+        - {fileID: 11400000, guid: 40121b03d92c6d14283aacf58dc852f3, type: 2}
+        - {fileID: 11400000, guid: d95b31a91af80214dbf0f7162a2ef822, type: 2}
     - rid: 2694420709505761487
       type: {class: MoneyAmountItem, ns: , asm: Assembly-CSharp}
       data:
@@ -26129,7 +26145,9 @@ MonoBehaviour:
     - rid: 2694420709505761485
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _skinsInStore: []
+        _skinsInStore:
+        - {fileID: 11400000, guid: 4e02a70954dd7de479cf896445d104d0, type: 2}
+        - {fileID: 11400000, guid: d95b31a91af80214dbf0f7162a2ef822, type: 2}
 --- !u!1 &655199657
 GameObject:
   m_ObjectHideFlags: 0
@@ -34472,7 +34490,9 @@ MonoBehaviour:
     - rid: 2694420709505761491
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _skinsInStore: []
+        _skinsInStore:
+        - {fileID: 11400000, guid: 17bba114849ec764ba28eacc7e270453, type: 2}
+        - {fileID: 11400000, guid: d2c2ba08db1ae5740bfe6e6bac9fb2df, type: 2}
 --- !u!1 &868980335
 GameObject:
   m_ObjectHideFlags: 0
@@ -64912,7 +64932,13 @@ MonoBehaviour:
     - rid: 2694420709505761483
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _skinsInStore: []
+        _skinsInStore:
+        - {fileID: 11400000, guid: 17bba114849ec764ba28eacc7e270453, type: 2}
+        - {fileID: 11400000, guid: 00675be2562c50344a4d3a6d5e9736f6, type: 2}
+        - {fileID: 11400000, guid: e4d8e1ece5086c6419bffed293a60b3b, type: 2}
+        - {fileID: 11400000, guid: 40121b03d92c6d14283aacf58dc852f3, type: 2}
+        - {fileID: 11400000, guid: 4e02a70954dd7de479cf896445d104d0, type: 2}
+        - {fileID: 11400000, guid: d95b31a91af80214dbf0f7162a2ef822, type: 2}
 --- !u!1 &1582238497
 GameObject:
   m_ObjectHideFlags: 0
@@ -79589,7 +79615,9 @@ MonoBehaviour:
     - rid: 2694420709505761491
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _skinsInStore: []
+        _skinsInStore:
+        - {fileID: 11400000, guid: e4d8e1ece5086c6419bffed293a60b3b, type: 2}
+        - {fileID: 11400000, guid: 07a60f6f6e5a53347b5f2cdb88a53d37, type: 2}
 --- !u!1 &1926413272
 GameObject:
   m_ObjectHideFlags: 0
@@ -79892,7 +79920,9 @@ MonoBehaviour:
     - rid: 2694420709505761481
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _skinsInStore: []
+        _skinsInStore:
+        - {fileID: 11400000, guid: d2c2ba08db1ae5740bfe6e6bac9fb2df, type: 2}
+        - {fileID: 11400000, guid: 55a043a1cec096e49a28ff9f57ae5938, type: 2}
     - rid: 2694420709505761482
       type: {class: PetPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
@@ -82733,7 +82763,9 @@ MonoBehaviour:
     - rid: 2694420709505761478
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _skinsInStore: []
+        _skinsInStore:
+        - {fileID: 11400000, guid: d2c2ba08db1ae5740bfe6e6bac9fb2df, type: 2}
+        - {fileID: 11400000, guid: 55a043a1cec096e49a28ff9f57ae5938, type: 2}
 --- !u!1 &1997406841
 GameObject:
   m_ObjectHideFlags: 0
@@ -86154,7 +86186,11 @@ MonoBehaviour:
     - rid: 2694420709505761472
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _skinsInStore: []
+        _skinsInStore:
+        - {fileID: 11400000, guid: e4d8e1ece5086c6419bffed293a60b3b, type: 2}
+        - {fileID: 11400000, guid: 40121b03d92c6d14283aacf58dc852f3, type: 2}
+        - {fileID: 11400000, guid: 55a043a1cec096e49a28ff9f57ae5938, type: 2}
+        - {fileID: 11400000, guid: d2c2ba08db1ae5740bfe6e6bac9fb2df, type: 2}
     - rid: 2694420709505761473
       type: {class: PetPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
@@ -87194,7 +87230,9 @@ MonoBehaviour:
     - rid: 2694420709505761478
       type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
       data:
-        _skinsInStore: []
+        _skinsInStore:
+        - {fileID: 11400000, guid: c3ffec8908476164c89048f857a97aa8, type: 2}
+        - {fileID: 11400000, guid: 7b27c1322e7813d489cf91570d574a36, type: 2}
 --- !u!1 &2123954091
 GameObject:
   m_ObjectHideFlags: 0
@@ -89516,7 +89554,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 91042807807709368, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.8079871
       objectReference: {fileID: 0}
     - target: {fileID: 109720251378410718, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -89921,6 +89959,10 @@ PrefabInstance:
     - target: {fileID: 6052008843097824375, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6458389982763666192, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6522181752937721110, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: _purchaseSlot
