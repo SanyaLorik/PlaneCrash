@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public struct UpgradeInfo {
     public UpgradeType UpgradeType;
-    public int Id;
+    public string Id;
     public float K;
     public float BaseValue;
     public float StartPrice;

@@ -41388,7 +41388,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1020612844}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a114bafa35ef000419ac73c5546b1760, type: 3}
   m_Name: 
@@ -64166,8 +64166,8 @@ MonoBehaviour:
   m_SerializedVersion: 0
   m_AgentTypeID: 0
   m_CollectObjects: 1
-  m_Size: {x: 138.66, y: 6.9, z: 85.7}
-  m_Center: {x: 20.88, y: 2, z: -26.2}
+  m_Size: {x: 151.8, y: 14.49, z: 119.5}
+  m_Center: {x: 20.88, y: 2, z: -30.2}
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -90209,6 +90209,10 @@ PrefabInstance:
       propertyPath: _cube
       value: 
       objectReference: {fileID: 2108755024}
+    - target: {fileID: 6988422949813744253, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: _maxTutorialAmount
+      value: 50000
+      objectReference: {fileID: 0}
     - target: {fileID: 7774766346077790060, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: m_Camera
       value: 

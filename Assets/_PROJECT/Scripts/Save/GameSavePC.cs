@@ -44,7 +44,7 @@ public class GameSavePC : GameSaveBase {
     }
     
     
-    public int SetNewUpgrade(int id, int level) {
+    public int SetNewUpgrade(string id, int level) {
         var upgrade = Upgrades.FirstOrDefault(u => u.Id == id);
 
         // Еще нет
@@ -58,7 +58,7 @@ public class GameSavePC : GameSaveBase {
         return upgrade.Level;
     }
 
-    public int GetUpgradeLevel(int id) {
+    public int GetUpgradeLevel(string id) {
         bool exist = Upgrades.Any(upgrade => upgrade.Id == id);
         if (exist) {
             return Upgrades.First(upgrade => upgrade.Id == id).Level;
@@ -73,7 +73,7 @@ public class GameSavePC : GameSaveBase {
 
 [Serializable]
 public class UpgradeData {
-    public int Id = 0;
+    public string Id = "";
     public int Level = 1;
 }
 

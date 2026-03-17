@@ -24,7 +24,8 @@ public class SkinPurshaseItem : PurshaseItem
     {
         await UniTask.WaitUntil(() => _playerSkinInventory != null && _bank != null);
         SavePurchasedStatus();
-        foreach (var skin in _skinsInStore) {
+        foreach (var skin in _skinsInStore) 
+        {
             if (_playerSkinInventory.SkinIsBought(skin.Id)) 
             {
                 _bank.AddMoney(skin.Price);

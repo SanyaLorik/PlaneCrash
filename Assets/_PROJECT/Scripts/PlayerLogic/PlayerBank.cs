@@ -40,9 +40,9 @@ public class PlayerBank : MonoBehaviour {
         }
         else {
             PlayerCapital += newMoney;
+            BankNewMoneyMinus?.Invoke(Math.Abs(newMoney));
             if (PlayerCapital < 0)
                 PlayerCapital = 0;
-            BankNewMoneyMinus?.Invoke(Math.Abs(newMoney));
         }
 
 
@@ -60,15 +60,18 @@ public class PlayerBank : MonoBehaviour {
         try {
             checked {
                 PlayerCapital += newMoney;
-                BankNewMoneyPlus?.Invoke(newMoney);
+                if (!_tutorialCompiller.TutorialPassed && PlayerCapital > _maxTutorialAmount) {
+                    PlayerCapital = _maxTutorialAmount;
+                }
+                else {
+                    BankNewMoneyPlus?.Invoke(newMoney);
+                }
             }
         }
         catch (OverflowException) {
             PlayerCapital = long.MaxValue;
         }
-        if (!_tutorialCompiller.TutorialPassed) {
-            PlayerCapital = Math.Min(PlayerCapital, _maxTutorialAmount);
-        }
+        
         
     }
 
