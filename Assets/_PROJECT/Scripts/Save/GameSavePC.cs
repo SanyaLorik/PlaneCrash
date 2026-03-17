@@ -16,6 +16,7 @@ public class GameSavePC : GameSaveBase {
     
     
     public bool TutorialPassed = false;
+    public bool Purchased = false;
     public int CountBatutJumps = 0;
     public int CountBaskets = 0;
 

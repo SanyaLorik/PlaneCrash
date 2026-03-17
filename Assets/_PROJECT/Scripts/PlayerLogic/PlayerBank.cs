@@ -5,6 +5,7 @@ using Zenject;
 
 public class PlayerBank : MonoBehaviour {
     [SerializeField] private MoneyCube _cube;
+    [SerializeField] private long _maxTutorialAmount;
     
     
     public event Action<long> BankChanged;
@@ -34,28 +35,44 @@ public class PlayerBank : MonoBehaviour {
     }
 
     private void ChangeMoney(long newMoney, bool save = true) {
-        PlayerCapital += newMoney;
-        _cube.SetMoneyAmountForBank(PlayerCapital);
-
-        if (PlayerCapital < 0)
-            PlayerCapital = 0;
-        if (PlayerRecord < PlayerCapital)
-            PlayerRecord = PlayerCapital;
-        if (save)
-            _gameSave.Save();
-        
-        
-        BankChanged?.Invoke(PlayerCapital);
-
         if (newMoney > 0) {
-            BankNewMoneyPlus?.Invoke(newMoney);
+            TryAddMoney(newMoney);
         }
         else {
+            PlayerCapital += newMoney;
+            if (PlayerCapital < 0)
+                PlayerCapital = 0;
             BankNewMoneyMinus?.Invoke(Math.Abs(newMoney));
         }
+
+
+        if (PlayerRecord < PlayerCapital) {
+            PlayerRecord = PlayerCapital;
+        }
+        if (save) {
+            _gameSave.Save();
+        }
+        _cube.SetMoneyAmountForBank(PlayerCapital);
+        BankChanged?.Invoke(PlayerCapital);
     }
 
-    
+    private void TryAddMoney(long newMoney) {
+        try {
+            checked {
+                PlayerCapital += newMoney;
+                BankNewMoneyPlus?.Invoke(newMoney);
+            }
+        }
+        catch (OverflowException) {
+            PlayerCapital = long.MaxValue;
+        }
+        if (!_tutorialCompiller.TutorialPassed) {
+            PlayerCapital = Math.Min(PlayerCapital, _maxTutorialAmount);
+        }
+        
+    }
+
+
     public void Buy(double amount) {
         if (!CanBuy(amount)) return;
         ChangeMoney((long)-amount);

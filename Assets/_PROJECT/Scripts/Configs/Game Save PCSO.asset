@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Game Save PCSO
   m_EditorClassIdentifier: Assembly-CSharp::GameSavePCSO
   Save:
-    Money: 0
-    RecordMoney: 10000
-    RecordDistance: 0
+    Money: 2012990
+    RecordMoney: 9223372036854775807
+    RecordDistance: 1075
     Upgrades:
     - Id: 2
       Level: 1
@@ -30,9 +30,14 @@ MonoBehaviour:
     Pets:
     - Id: cola_pet
       Count: 1
+    - Id: doshik_pet
+      Count: 1
+    - Id: creeper_pet
+      Count: 1
     Skins:
     - Id: obby_skin
     SkinWearId: obby_skin
     TutorialPassed: 1
-    CountBatutJumps: 0
+    Purchased: 1
+    CountBatutJumps: 19
     CountBaskets: 0

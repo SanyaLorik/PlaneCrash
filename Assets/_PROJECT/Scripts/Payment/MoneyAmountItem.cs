@@ -1,4 +1,5 @@
 ﻿using System;
+using Architecture_M;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -8,14 +9,14 @@ public class MoneyAmountItem : PurshaseItem
 {
     [SerializeField] private long _moneyAmount;
     
-    [Inject] private PlayerBank _bank;
-    
-    public override void Receive() {
+    public override void Receive() 
+    {
         BindReceiveAsync();
     }
     
     private async void BindReceiveAsync() 
     {
+        SavePurchasedStatus();
         await UniTask.WaitUntil(() => _bank != null);
         _bank.AddMoney(_moneyAmount);
     }

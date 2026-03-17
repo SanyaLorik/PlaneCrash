@@ -14,9 +14,12 @@ public class PlayerStateManager : MonoBehaviour{
 
     
     [Inject] private IInterstitialDelaying  _interstitialDelaying;
+    [Inject] private IInterstitialActivity  _interstitialActivity;
     [Inject] private ZoneManager _zoneManager;
     [Inject] private TutorialCompiller _tutorialCompiller;
     [Inject] private PlayerMovement _playerMovement;
+    [Inject] protected IGameSave<GameSavePC> _saver;
+
     [InjectOptional] private IActivityButtonPC _activityButtonPC;
     
     public event Action<PlayerState> ChangeState;
@@ -43,6 +46,12 @@ public class PlayerStateManager : MonoBehaviour{
         StartFlightPositionZ = _startFlightPoint.position.z;
         SetWalkingCanvas();
         SetGroundedCanvas();
+    }
+
+    private void Start() {
+        if (_saver.GetSave.Purchased) {
+            _interstitialActivity.DisableInterstitial();
+        }
     }
 
 
