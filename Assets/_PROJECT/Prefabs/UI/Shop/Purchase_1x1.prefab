@@ -808,6 +808,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3291561203183473689}
+  - component: {fileID: 6710365106398400798}
   m_Layer: 5
   m_Name: Purchase_1x1
   m_TagString: Untagged
@@ -836,6 +837,21 @@ RectTransform:
   m_AnchoredPosition: {x: 180, y: -180}
   m_SizeDelta: {x: 312, y: 312}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6710365106398400798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6610314518201348828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611408ef5a702e94e88d1d1cefbc15cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.PurchaseSlotView
+  _purchaseSlot: {fileID: 0}
+  _bougthButton: {fileID: 3481235444854343334}
+  _bougthText: {fileID: 6811791817018790170}
 --- !u!1 &7729905852161116911
 GameObject:
   m_ObjectHideFlags: 0

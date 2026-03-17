@@ -4675,17 +4675,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 71948290}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &72215950 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2077944405398135396, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
-  m_PrefabInstance: {fileID: 158810032041061672}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 611408ef5a702e94e88d1d1cefbc15cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.PurchaseSlotView
 --- !u!1 &74009206
 GameObject:
   m_ObjectHideFlags: 0
@@ -6191,7 +6180,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 98249838}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &102733178
+--- !u!1 &98301543
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6199,22 +6188,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 102733179}
-  - component: {fileID: 102733180}
+  - component: {fileID: 98301544}
+  - component: {fileID: 98301545}
   m_Layer: 0
-  m_Name: Id_4
+  m_Name: 102
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &102733179
+--- !u!4 &98301544
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 102733178}
+  m_GameObject: {fileID: 98301543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -6223,19 +6212,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1875372351}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &102733180
+--- !u!114 &98301545
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 102733178}
+  m_GameObject: {fileID: 98301543}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
-  <Id>k__BackingField: 4
+  <Id>k__BackingField: 102
   <PurchaseInfo>k__BackingField:
     <Id>k__BackingField: 
     <PriceInteger>k__BackingField: 0
@@ -6243,14 +6232,14 @@ MonoBehaviour:
     <Currency>k__BackingField: 
   <HasPurchaseInfo>k__BackingField: 0
   _purshaseItems:
-  - rid: 8231486453353807947
+  - rid: 2694420709505761477
   references:
     version: 2
     RefIds:
-    - rid: 8231486453353807947
+    - rid: 2694420709505761477
       type: {class: MoneyAmountItem, ns: , asm: Assembly-CSharp}
       data:
-        _moneyAmount: 0
+        _moneyAmount: 999000000
 --- !u!1 &104777067
 GameObject:
   m_ObjectHideFlags: 0
@@ -7978,6 +7967,67 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124409554}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &129193230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 129193231}
+  - component: {fileID: 129193232}
+  m_Layer: 0
+  m_Name: 113
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &129193231
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129193230}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &129193232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129193230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 113
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761490
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761490
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 4
+        _newLevels: 5
 --- !u!1001 &130395310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9526,6 +9576,68 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 214786618}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &216815283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 216815284}
+  - component: {fileID: 216815285}
+  m_Layer: 0
+  m_Name: 108
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &216815284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216815283}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &216815285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216815283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 108
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761485
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761485
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _skins:
+        - {fileID: 11400000, guid: 17bba114849ec764ba28eacc7e270453, type: 2}
+        - {fileID: 11400000, guid: 00675be2562c50344a4d3a6d5e9736f6, type: 2}
 --- !u!1 &217896888
 GameObject:
   m_ObjectHideFlags: 0
@@ -10054,80 +10166,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 244952075}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &247477958
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 247477959}
-  - component: {fileID: 247477960}
-  m_Layer: 0
-  m_Name: Id_1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &247477959
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 247477958}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1875372351}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &247477960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 247477958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
-  <Id>k__BackingField: 1
-  <PurchaseInfo>k__BackingField:
-    <Id>k__BackingField: 
-    <PriceInteger>k__BackingField: 0
-    <PriceFloat>k__BackingField: 0
-    <Currency>k__BackingField: 
-  <HasPurchaseInfo>k__BackingField: 0
-  _purshaseItems:
-  - rid: 8231486293909438730
-  - rid: 2694420624069885956
-  - rid: 2694420624069885957
-  references:
-    version: 2
-    RefIds:
-    - rid: 2694420624069885956
-      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
-      data:
-        _upgradeType: 0
-        _newLevels: 50
-    - rid: 2694420624069885957
-      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
-      data:
-        _upgradeType: 4
-        _newLevels: 17
-    - rid: 8231486293909438730
-      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
-      data:
-        _skins:
-        - {fileID: 11400000, guid: 4e02a70954dd7de479cf896445d104d0, type: 2}
-        - {fileID: 11400000, guid: d95b31a91af80214dbf0f7162a2ef822, type: 2}
 --- !u!1 &250068505
 GameObject:
   m_ObjectHideFlags: 0
@@ -12296,6 +12334,68 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 327391174}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &330016771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 330016772}
+  - component: {fileID: 330016773}
+  m_Layer: 0
+  m_Name: 110
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &330016772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330016771}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &330016773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330016771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 110
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761485
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761485
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _skins:
+        - {fileID: 11400000, guid: e4d8e1ece5086c6419bffed293a60b3b, type: 2}
+        - {fileID: 11400000, guid: 40121b03d92c6d14283aacf58dc852f3, type: 2}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -21236,6 +21336,68 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8451126332531077546, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
   m_PrefabInstance: {fileID: 158810032041061672}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &532503393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 532503394}
+  - component: {fileID: 532503395}
+  m_Layer: 0
+  m_Name: 116
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &532503394
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532503393}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &532503395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532503393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 116
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761491
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761491
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _skins:
+        - {fileID: 11400000, guid: c3ffec8908476164c89048f857a97aa8, type: 2}
+        - {fileID: 11400000, guid: 55a043a1cec096e49a28ff9f57ae5938, type: 2}
 --- !u!1 &535891449
 GameObject:
   m_ObjectHideFlags: 0
@@ -23223,6 +23385,93 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604759985}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &609044215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 609044216}
+  - component: {fileID: 609044217}
+  m_Layer: 0
+  m_Name: 302
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &609044216
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609044215}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &609044217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609044215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 302
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761486
+  - rid: 2694420709505761487
+  - rid: 2694420709505761488
+  - rid: 2694420709505761489
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761486
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _skins:
+        - {fileID: 11400000, guid: 4e02a70954dd7de479cf896445d104d0, type: 2}
+        - {fileID: 11400000, guid: d95b31a91af80214dbf0f7162a2ef822, type: 2}
+        - {fileID: 11400000, guid: 7b27c1322e7813d489cf91570d574a36, type: 2}
+        - {fileID: 11400000, guid: 00675be2562c50344a4d3a6d5e9736f6, type: 2}
+        - {fileID: 11400000, guid: 40121b03d92c6d14283aacf58dc852f3, type: 2}
+        - {fileID: 11400000, guid: d2c2ba08db1ae5740bfe6e6bac9fb2df, type: 2}
+        - {fileID: 11400000, guid: e4d8e1ece5086c6419bffed293a60b3b, type: 2}
+        - {fileID: 11400000, guid: 55a043a1cec096e49a28ff9f57ae5938, type: 2}
+        - {fileID: 11400000, guid: 07a60f6f6e5a53347b5f2cdb88a53d37, type: 2}
+        - {fileID: 11400000, guid: c3ffec8908476164c89048f857a97aa8, type: 2}
+    - rid: 2694420709505761487
+      type: {class: MoneyAmountItem, ns: , asm: Assembly-CSharp}
+      data:
+        _moneyAmount: 20000000000000
+    - rid: 2694420709505761488
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 0
+        _newLevels: 20
+    - rid: 2694420709505761489
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 4
+        _newLevels: 10
 --- !u!1 &609574703
 GameObject:
   m_ObjectHideFlags: 0
@@ -25191,17 +25440,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638047124}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &640644399 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1739766397468297977, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
-  m_PrefabInstance: {fileID: 158810032041061672}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 611408ef5a702e94e88d1d1cefbc15cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.PurchaseSlotView
 --- !u!1 &643381877
 GameObject:
   m_ObjectHideFlags: 0
@@ -25848,6 +26086,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652670116}
   m_CullTransparentMesh: 1
+--- !u!1 &653542856
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 653542857}
+  - component: {fileID: 653542858}
+  m_Layer: 0
+  m_Name: 109
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &653542857
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653542856}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &653542858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653542856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 109
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761485
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761485
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _skins:
+        - {fileID: 11400000, guid: 4e02a70954dd7de479cf896445d104d0, type: 2}
+        - {fileID: 11400000, guid: d95b31a91af80214dbf0f7162a2ef822, type: 2}
 --- !u!1 &655199657
 GameObject:
   m_ObjectHideFlags: 0
@@ -26531,6 +26831,73 @@ Transform:
   - {fileID: 80602889}
   m_Father: {fileID: 1849939435}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &674216733
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 674216734}
+  - component: {fileID: 674216735}
+  m_Layer: 0
+  m_Name: 200
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &674216734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674216733}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &674216735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674216733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 200
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761479
+  - rid: 2694420709505761480
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761479
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 0
+        _newLevels: 5
+    - rid: 2694420709505761480
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 4
+        _newLevels: 2
 --- !u!1 &678101134
 GameObject:
   m_ObjectHideFlags: 0
@@ -34064,6 +34431,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059ed70c5064bda4680b1052ae23f8e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PetStationViewPurchase
+--- !u!1 &866366122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 866366123}
+  - component: {fileID: 866366124}
+  m_Layer: 0
+  m_Name: 114
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &866366123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866366122}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &866366124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866366122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 114
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761491
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761491
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _skins:
+        - {fileID: 11400000, guid: 17bba114849ec764ba28eacc7e270453, type: 2}
+        - {fileID: 11400000, guid: d2c2ba08db1ae5740bfe6e6bac9fb2df, type: 2}
 --- !u!1 &868980335
 GameObject:
   m_ObjectHideFlags: 0
@@ -38957,73 +39386,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 968476373}
   m_CullTransparentMesh: 1
---- !u!1 &969627711
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 969627712}
-  - component: {fileID: 969627713}
-  m_Layer: 0
-  m_Name: Id_2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &969627712
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 969627711}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1875372351}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &969627713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 969627711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
-  <Id>k__BackingField: 2
-  <PurchaseInfo>k__BackingField:
-    <Id>k__BackingField: 
-    <PriceInteger>k__BackingField: 0
-    <PriceFloat>k__BackingField: 0
-    <Currency>k__BackingField: 
-  <HasPurchaseInfo>k__BackingField: 0
-  _purshaseItems:
-  - rid: 2694420624069885954
-  - rid: 2694420624069885955
-  references:
-    version: 2
-    RefIds:
-    - rid: 2694420624069885954
-      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
-      data:
-        _upgradeType: 0
-        _newLevels: 25
-    - rid: 2694420624069885955
-      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
-      data:
-        _upgradeType: 4
-        _newLevels: 10
 --- !u!1 &970447968
 GameObject:
   m_ObjectHideFlags: 0
@@ -40776,6 +41138,66 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2452805846047165633, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
+--- !u!1 &1011359423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1011359424}
+  - component: {fileID: 1011359425}
+  m_Layer: 0
+  m_Name: 101
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1011359424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011359423}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1011359425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011359423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 101
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761477
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761477
+      type: {class: MoneyAmountItem, ns: , asm: Assembly-CSharp}
+      data:
+        _moneyAmount: 2000000
 --- !u!1 &1012478203
 GameObject:
   m_ObjectHideFlags: 0
@@ -40963,7 +41385,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1020612845
 Transform:
   m_ObjectHideFlags: 0
@@ -40992,7 +41414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TEST_PURCHASE
   PurchaseSlotPCs:
-  - {fileID: 102733180}
+  - {fileID: 0}
 --- !u!1001 &1021208416
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41192,6 +41614,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1021545830}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1021717620 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2476734322218419241, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611408ef5a702e94e88d1d1cefbc15cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.PurchaseSlotView
 --- !u!114 &1022272401 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5636772468836395345, guid: 962fa9179a2046c4dac52b147c9d4610, type: 3}
@@ -49907,68 +50340,6 @@ Transform:
   - {fileID: 137322115}
   m_Father: {fileID: 1990260420}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1232794015
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1232794016}
-  - component: {fileID: 1232794017}
-  m_Layer: 0
-  m_Name: Id_3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1232794016
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232794015}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1875372351}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1232794017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232794015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
-  <Id>k__BackingField: 3
-  <PurchaseInfo>k__BackingField:
-    <Id>k__BackingField: 
-    <PriceInteger>k__BackingField: 0
-    <PriceFloat>k__BackingField: 0
-    <Currency>k__BackingField: 
-  <HasPurchaseInfo>k__BackingField: 0
-  _purshaseItems:
-  - rid: 2694420624069885953
-  references:
-    version: 2
-    RefIds:
-    - rid: 2694420624069885953
-      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
-      data:
-        _skins:
-        - {fileID: 11400000, guid: c3ffec8908476164c89048f857a97aa8, type: 2}
-        - {fileID: 11400000, guid: 7b27c1322e7813d489cf91570d574a36, type: 2}
 --- !u!1 &1235314319
 GameObject:
   m_ObjectHideFlags: 0
@@ -52344,6 +52715,67 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313495822}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1316064634
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1316064635}
+  - component: {fileID: 1316064636}
+  m_Layer: 0
+  m_Name: 107
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1316064635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316064634}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1316064636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316064634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 107
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761484
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761484
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 0
+        _newLevels: 10
 --- !u!1 &1319373990
 GameObject:
   m_ObjectHideFlags: 0
@@ -52686,6 +53118,67 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1327915153}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1328422797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1328422798}
+  - component: {fileID: 1328422799}
+  m_Layer: 0
+  m_Name: 105
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1328422798
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328422797}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1328422799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328422797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 105
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761484
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761484
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 0
+        _newLevels: 1
 --- !u!1 &1328489803
 GameObject:
   m_ObjectHideFlags: 0
@@ -59265,17 +59758,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8863985105240153855, guid: e20306d00828f8043a13aa64af058a3b, type: 3}
   m_PrefabInstance: {fileID: 1481821512}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1484166392 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3737760489936313116, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
-  m_PrefabInstance: {fileID: 158810032041061672}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 611408ef5a702e94e88d1d1cefbc15cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.PurchaseSlotView
 --- !u!1001 &1484639963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61482,6 +61964,67 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &1518288151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1518288152}
+  - component: {fileID: 1518288153}
+  m_Layer: 0
+  m_Name: 111
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1518288152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518288151}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1518288153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518288151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 111
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761490
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761490
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 4
+        _newLevels: 1
 --- !u!4 &1520244659 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1471720505805362266, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
@@ -64330,6 +64873,72 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 741542719a5366d47a94dcc0bd382cea, type: 3}
   m_PrefabInstance: {fileID: 1582092098}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1582229967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1582229968}
+  - component: {fileID: 1582229969}
+  m_Layer: 0
+  m_Name: 201
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1582229968
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582229967}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1582229969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582229967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 201
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761483
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761483
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _skins:
+        - {fileID: 11400000, guid: 17bba114849ec764ba28eacc7e270453, type: 2}
+        - {fileID: 11400000, guid: 00675be2562c50344a4d3a6d5e9736f6, type: 2}
+        - {fileID: 11400000, guid: e4d8e1ece5086c6419bffed293a60b3b, type: 2}
+        - {fileID: 11400000, guid: 40121b03d92c6d14283aacf58dc852f3, type: 2}
+        - {fileID: 11400000, guid: 4e02a70954dd7de479cf896445d104d0, type: 2}
+        - {fileID: 11400000, guid: d95b31a91af80214dbf0f7162a2ef822, type: 2}
 --- !u!1 &1582238497
 GameObject:
   m_ObjectHideFlags: 0
@@ -65862,6 +66471,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3e16e07dacb0f5e4dbc4b6f68bdf5095, type: 3}
   m_PrefabInstance: {fileID: 1613315724}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1617392693
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1617392694}
+  - component: {fileID: 1617392695}
+  m_Layer: 0
+  m_Name: 112
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1617392694
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617392693}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1617392695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617392693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 112
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761490
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761490
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 4
+        _newLevels: 3
 --- !u!1 &1618619830
 GameObject:
   m_ObjectHideFlags: 0
@@ -75174,6 +75844,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1880480571}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1848186797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1848186798}
+  - component: {fileID: 1848186799}
+  m_Layer: 0
+  m_Name: 100
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1848186798
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848186797}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1848186799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848186797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 100
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761477
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761477
+      type: {class: MoneyAmountItem, ns: , asm: Assembly-CSharp}
+      data:
+        _moneyAmount: 599000
 --- !u!1 &1849939434
 GameObject:
   m_ObjectHideFlags: 0
@@ -76075,10 +76805,28 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1020612845}
-  - {fileID: 247477959}
-  - {fileID: 969627712}
-  - {fileID: 1232794016}
-  - {fileID: 102733179}
+  - {fileID: 2081103152}
+  - {fileID: 1848186798}
+  - {fileID: 1011359424}
+  - {fileID: 98301544}
+  - {fileID: 2120624741}
+  - {fileID: 674216734}
+  - {fileID: 1930871277}
+  - {fileID: 1582229968}
+  - {fileID: 1991443049}
+  - {fileID: 1328422798}
+  - {fileID: 1902250449}
+  - {fileID: 1316064635}
+  - {fileID: 216815284}
+  - {fileID: 653542857}
+  - {fileID: 330016772}
+  - {fileID: 609044216}
+  - {fileID: 1518288152}
+  - {fileID: 1617392694}
+  - {fileID: 129193231}
+  - {fileID: 866366123}
+  - {fileID: 1926222286}
+  - {fileID: 532503394}
   m_Father: {fileID: 1291533253}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1875372352
@@ -76094,14 +76842,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.PurchaseInstaller
   _purchasesBase: {fileID: 5363244089110065937, guid: b5754cfbfe07e164587b56f1b506eeb5, type: 3}
-  _purchaseSlots:
-  - {fileID: 247477960}
-  - {fileID: 969627713}
-  - {fileID: 1232794017}
+  _purchaseSlots: []
   _purchaseSlotViiews:
-  - {fileID: 72215950}
-  - {fileID: 640644399}
-  - {fileID: 1484166392}
+  - {fileID: 1021717620}
 --- !u!1001 &1875669863
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -77794,6 +78537,67 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1902250448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1902250449}
+  - component: {fileID: 1902250450}
+  m_Layer: 0
+  m_Name: 106
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1902250449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902250448}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1902250450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902250448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 106
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761484
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761484
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 0
+        _newLevels: 5
 --- !u!1 &1902401051
 GameObject:
   m_ObjectHideFlags: 0
@@ -78752,6 +79556,68 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1926222285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1926222286}
+  - component: {fileID: 1926222287}
+  m_Layer: 0
+  m_Name: 115
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1926222286
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926222285}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1926222287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926222285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 115
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761491
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761491
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _skins:
+        - {fileID: 11400000, guid: e4d8e1ece5086c6419bffed293a60b3b, type: 2}
+        - {fileID: 11400000, guid: 07a60f6f6e5a53347b5f2cdb88a53d37, type: 2}
 --- !u!1 &1926413272
 GameObject:
   m_ObjectHideFlags: 0
@@ -78994,6 +79860,79 @@ Transform:
   - {fileID: 43833938}
   m_Father: {fileID: 63448783}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &1930871276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1930871277}
+  - component: {fileID: 1930871278}
+  m_Layer: 0
+  m_Name: 301
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1930871277
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930871276}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1930871278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930871276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 301
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761481
+  - rid: 2694420709505761482
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761481
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _skins:
+        - {fileID: 11400000, guid: 55a043a1cec096e49a28ff9f57ae5938, type: 2}
+        - {fileID: 11400000, guid: d2c2ba08db1ae5740bfe6e6bac9fb2df, type: 2}
+    - rid: 2694420709505761482
+      type: {class: PetPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _petsInfo:
+        - Pet: {fileID: 11400000, guid: 349ac55d97fca054181a069c851be14e, type: 2}
+          count: 1
+        - Pet: {fileID: 11400000, guid: 05249be0a39e3fd4a8f6b5d5b609a7b5, type: 2}
+          count: 1
+        - Pet: {fileID: 11400000, guid: d5fb59b69096e794399128b55b6f1a0e, type: 2}
+          count: 1
 --- !u!114 &1934789326 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2677114251214153024, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
@@ -81765,6 +82704,68 @@ Transform:
   - {fileID: 74009207}
   m_Father: {fileID: 205032296}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1991443048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1991443049}
+  - component: {fileID: 1991443050}
+  m_Layer: 0
+  m_Name: 104
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1991443049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991443048}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1991443050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991443048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 104
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761478
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761478
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _skins:
+        - {fileID: 11400000, guid: 55a043a1cec096e49a28ff9f57ae5938, type: 2}
+        - {fileID: 11400000, guid: d2c2ba08db1ae5740bfe6e6bac9fb2df, type: 2}
 --- !u!1 &1997406841
 GameObject:
   m_ObjectHideFlags: 0
@@ -85123,6 +86124,95 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2452805846047165633, guid: aed3c5a5818e78d44ad10866e90d8234, type: 3}
+--- !u!1 &2081103151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2081103152}
+  - component: {fileID: 2081103153}
+  m_Layer: 0
+  m_Name: 300
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2081103152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081103151}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2081103153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081103151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 300
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761472
+  - rid: 2694420709505761473
+  - rid: 2694420709505761474
+  - rid: 2694420709505761475
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761472
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _skins:
+        - {fileID: 11400000, guid: 55a043a1cec096e49a28ff9f57ae5938, type: 2}
+        - {fileID: 11400000, guid: d2c2ba08db1ae5740bfe6e6bac9fb2df, type: 2}
+        - {fileID: 11400000, guid: e4d8e1ece5086c6419bffed293a60b3b, type: 2}
+        - {fileID: 11400000, guid: 40121b03d92c6d14283aacf58dc852f3, type: 2}
+    - rid: 2694420709505761473
+      type: {class: PetPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _petsInfo:
+        - Pet: {fileID: 11400000, guid: d5fb59b69096e794399128b55b6f1a0e, type: 2}
+          count: 1
+        - Pet: {fileID: 11400000, guid: 05249be0a39e3fd4a8f6b5d5b609a7b5, type: 2}
+          count: 1
+        - Pet: {fileID: 11400000, guid: a7a47b68cdc48524fb0c1a41c27b96a7, type: 2}
+          count: 1
+        - Pet: {fileID: 11400000, guid: 349ac55d97fca054181a069c851be14e, type: 2}
+          count: 1
+    - rid: 2694420709505761474
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 0
+        _newLevels: 10
+    - rid: 2694420709505761475
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 4
+        _newLevels: 5
 --- !u!1 &2084075440
 GameObject:
   m_ObjectHideFlags: 0
@@ -86081,6 +87171,68 @@ Transform:
   - {fileID: 33685132}
   m_Father: {fileID: 1045179285}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2120624740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2120624741}
+  - component: {fileID: 2120624742}
+  m_Layer: 0
+  m_Name: 103
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2120624741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120624740}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2120624742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120624740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 103
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 2694420709505761478
+  references:
+    version: 2
+    RefIds:
+    - rid: 2694420709505761478
+      type: {class: SkinPurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _skins:
+        - {fileID: 11400000, guid: c3ffec8908476164c89048f857a97aa8, type: 2}
+        - {fileID: 11400000, guid: 7b27c1322e7813d489cf91570d574a36, type: 2}
 --- !u!1 &2123954091
 GameObject:
   m_ObjectHideFlags: 0
@@ -88392,10 +89544,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 954956134}
     m_Modifications:
+    - target: {fileID: 91042807807709368, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 91042807807709368, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 91042807807709368, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 109720251378410718, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -5
       objectReference: {fileID: 0}
+    - target: {fileID: 444400713719003725, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1328422799}
     - target: {fileID: 728192518586657763, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 18.560059
@@ -88523,7 +89691,11 @@ PrefabInstance:
     - target: {fileID: 1739766397468297977, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: _purchaseSlot
       value: 
-      objectReference: {fileID: 969627713}
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837482645807362204, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 216815285}
     - target: {fileID: 1854769791697405546, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -88532,14 +89704,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1879310278621366020, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 2120624742}
     - target: {fileID: 1991713791367019404, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2031699752511821968, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 330016773}
     - target: {fileID: 2077944405398135396, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: _purchaseSlot
       value: 
-      objectReference: {fileID: 1232794017}
+      objectReference: {fileID: 0}
     - target: {fileID: 2220793808502869374, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.682
@@ -88552,6 +89732,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0.682
       objectReference: {fileID: 0}
+    - target: {fileID: 2243607869658567952, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 674216735}
     - target: {fileID: 2430586398530624720, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -44
@@ -88560,6 +89744,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2476734322218419241, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 2081103153}
     - target: {fileID: 2546279883998228858, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_Name
       value: Skills Text
@@ -88568,6 +89756,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2844172529003429901, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 609044217}
     - target: {fileID: 2942652569753412093, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -88588,6 +89780,22 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0.682
       objectReference: {fileID: 0}
+    - target: {fileID: 3448151546778358772, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448151546778358772, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448151546778358772, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571269279239689934, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1930871278}
     - target: {fileID: 3639797788279150119, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -88599,7 +89807,15 @@ PrefabInstance:
     - target: {fileID: 3737760489936313116, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: _purchaseSlot
       value: 
-      objectReference: {fileID: 247477960}
+      objectReference: {fileID: 0}
+    - target: {fileID: 3770427983101517443, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1582229969}
+    - target: {fileID: 3770443582052692832, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3797105532040861705, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -88608,6 +89824,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4109052481067670334, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 129193232}
     - target: {fileID: 4485762586047462582, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -88640,6 +89860,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4830733866387600064, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1991443050}
     - target: {fileID: 4988240584931829168, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_text
       value: "\u041C\u0415\u0413\u0410 \u041D\u0410\u0411\u041E\u0420"
@@ -88668,6 +89892,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5610144593275159609, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 866366124}
     - target: {fileID: 5771032237867404982, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -88704,6 +89932,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -731
       objectReference: {fileID: 0}
+    - target: {fileID: 5803436305846213573, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1011359425}
     - target: {fileID: 5888373847009729223, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_Name
       value: Continue Button
@@ -88728,18 +89960,38 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6522181752937721110, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1316064636}
     - target: {fileID: 6633294861474142823, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6740494339451665596, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 653542858}
     - target: {fileID: 7363317481887619090, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7374221386260759163, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1848186799}
+    - target: {fileID: 7524060096366605119, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 532503395}
     - target: {fileID: 7525032341680248771, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7766281902738143125, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1926222287}
     - target: {fileID: 7770661440245659130, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -88800,6 +90052,22 @@ PrefabInstance:
       propertyPath: m_RaycastTarget
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8246992515619486195, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1902250450}
+    - target: {fileID: 8556988809533791190, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 98301545}
+    - target: {fileID: 8657371811244558718, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1518288153}
+    - target: {fileID: 8800710603470201058, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1617392695}
     - target: {fileID: 8883705149411940015, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
