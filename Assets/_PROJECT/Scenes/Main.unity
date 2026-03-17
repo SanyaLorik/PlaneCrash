@@ -12356,7 +12356,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 1394
+  far clip plane: 512
   field of view: 47.36291
   orthographic: 0
   orthographic size: 10
@@ -34205,7 +34205,7 @@ PrefabInstance:
     - target: {fileID: 3624836735387330681, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: <SkinItemConfig>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 54622124c412f1d438bb338855b82bb6, type: 2}
+      objectReference: {fileID: 11400000, guid: 55a043a1cec096e49a28ff9f57ae5938, type: 2}
     - target: {fileID: 5538062488755012383, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -41622,7 +41622,7 @@ PrefabInstance:
     - target: {fileID: 3624836735387330681, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: <SkinItemConfig>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 54622124c412f1d438bb338855b82bb6, type: 2}
+      objectReference: {fileID: 11400000, guid: d2c2ba08db1ae5740bfe6e6bac9fb2df, type: 2}
     - target: {fileID: 5538062488755012383, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -68511,7 +68511,7 @@ MonoBehaviour:
     FieldOfView: 47.36291
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 1394
+    FarClipPlane: 512
     Dutch: 0
     ModeOverride: 3
     PhysicalProperties:
