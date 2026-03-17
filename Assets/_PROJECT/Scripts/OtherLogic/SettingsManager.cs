@@ -70,6 +70,12 @@ public class SettingsManager : MonoBehaviour {
     }
 
 
+    private void Start() {
+        CameraZoomChanged?.Invoke(_cameraZoomValue);
+        EffectsValueChanged?.Invoke(_effectsValue);
+        MusicValueChanged?.Invoke(_musicValue);
+    }
+
     private void ChangeCameraZoom(float value) {
         _cameraZoomValue = value;
         PlayerPrefs.SetFloat(CameraZoomKey, value);

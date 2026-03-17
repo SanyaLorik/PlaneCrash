@@ -87,22 +87,18 @@ public class RewardManager : MonoBehaviour {
         _isCruisered = cruisered;
         ShowRewardWindowAnimation();
         if (cruisered) {
-            _reward = 
-                _upgradesCalculator.GetUpgradeMultiplierByLevel() 
-                *
-                (_zoneManager.BetAmount * _zoneManager.BetMultiplier) 
-                + 
-                _playerStateManager.CurrentPlayerDistance(); 
+            _reward = _upgradesCalculator.GetWinMoney(); 
         }
         else {
-            _reward = 
-                _playerStateManager.CurrentPlayerDistance() 
-                *
-                _upgradesCalculator.GetUpgradeMultiplierByLevel();
+            _reward = _upgradesCalculator.GetDistanceMoney();
             
         }
         ShowBaseRewardVisual(_reward);
     }
+
+    
+
+    
 
 
     private void ShowBaseRewardVisual(double reward) {

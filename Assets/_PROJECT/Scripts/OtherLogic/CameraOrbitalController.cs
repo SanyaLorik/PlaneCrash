@@ -16,8 +16,7 @@ public class CameraOrbitalController : MonoBehaviour {
 
     private Action _rotationHandler;
 
-    [Header("Для теста пока через инспектор")] [SerializeField]
-    private bool _isMobile;
+    private bool IsMobile => _deviceType.DeviceType == DeviceTypeEnum.Mobile;
 
 
     private Mouse _mouse;
@@ -29,7 +28,7 @@ public class CameraOrbitalController : MonoBehaviour {
     private float _defaultX;
     private float _defaultY;
 
-    public float DefaultFov => _isMobile ? _cameraConfig.MobileCameraFov : _cameraConfig.DesktopCameraFov;
+    public float DefaultFov => IsMobile ? _cameraConfig.MobileCameraFov : _cameraConfig.DesktopCameraFov;
     public float CurrentFovPercent => (_orbitalFollow.RadialAxis.Value - _cameraConfig.ZoomDiapasone.From) 
                                       / 
                                       (_cameraConfig.ZoomDiapasone.To - _cameraConfig.ZoomDiapasone.From);
@@ -65,8 +64,7 @@ public class CameraOrbitalController : MonoBehaviour {
         ChangeCameraZoomPercent(_settings.CameraZoomValue);
         _walkZoomBeforFly = CurrentFovPercent;
         // К релизу врубать
-        _isMobile = _deviceType.DeviceType == DeviceTypeEnum.Mobile;
-        if (_isMobile)
+        if (IsMobile)
             _rotationHandler = HandleJoystickOrbit;
         else {
             // Получаем ссылку на мышь

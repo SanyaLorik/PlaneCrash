@@ -1,8 +1,5 @@
-using System;
 using Architecture_M;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 
@@ -47,8 +44,6 @@ public abstract class UpgradeBase : MonoBehaviour {
     protected abstract void UpdateVisual();
     protected abstract void UpdatePlayerStatsInfo();
 
-
-
     
     public void ApplyUpgrade(int newLevels, bool gameValute = true) {
         Level += newLevels;
@@ -57,15 +52,12 @@ public abstract class UpgradeBase : MonoBehaviour {
             _gameSave.Save();
         }
         UpdatePlayerStatsInfo();
-        Debug.Log($"UpgradeInfo.StartPrice для  + {UpgradeInfo.UpgradeType} = UpgradeInfo.StartPrice, UpgradeInfo.PriceMultiplier = {UpgradeInfo.PriceMultiplier}, Level = {Level}");
         UpdatePrice();
         UpdateVisual();
         CheckColor();
     }
-    
-    protected void UpdatePrice() {
-        _currentPrice = UpgradeInfo.StartPrice * Mathf.Pow(UpgradeInfo.PriceMultiplier, Level-1);
-    }
+
+    protected abstract void UpdatePrice();
     
     
     private void BankOnBankChanged(long playerCapital) {

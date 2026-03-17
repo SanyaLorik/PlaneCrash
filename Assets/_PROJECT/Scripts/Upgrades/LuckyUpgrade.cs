@@ -15,14 +15,18 @@ public class LuckyUpgrade : UpgradeBase {
         _playerStats.UpdateLuckyLevel(Level);
     }
 
-    
+    protected override void UpdatePrice() {
+        _currentPrice = 70 * Mathf.Pow(Level+1, 4);
+    }
+
+
     protected override void UpdateVisual() {
         _visual.UpdateData(
             Level,
             _upgradesCalculator.GetLuckyByLevel(), 
             _upgradesCalculator.GetLuckyByLevel(false), 
             _currentPrice,  
-            _localization.Meters, 
+            _localization.SecondTime, 
             false);
         _visual.UpdateLevelInLeft(Level);
 

@@ -1,3 +1,4 @@
+using Unity.Mathematics.Geometry;
 using UnityEngine;
 using Zenject;
 
@@ -6,8 +7,12 @@ using Zenject;
 /// </summary>
 public class UpgradesCalculator {
     private PetsManager _petsManager;
+    private bool _needRecalculate = true;
+    private float _petMultiplier;
     [Inject] private IPlayerStatsReadOnly _playerStats;
     [Inject] private UpgradeConfig _config;
+    [Inject] private PlayerStateManager _playerStateManager;
+    [Inject] private ZoneManager _zoneManager;
 
 
     [Inject]
@@ -23,37 +28,24 @@ public class UpgradesCalculator {
 
 
     public float GetLuckyByLevel(bool thisLevel = true) {
-        if (thisLevel) {
-            return _config.LuckyUpgrade.BaseValue * Mathf.Pow(_config.LuckyUpgrade.K,_playerStats.LuckyLevel-1);
-        }
-        return _config.LuckyUpgrade.BaseValue * Mathf.Pow(_config.LuckyUpgrade.K,_playerStats.LuckyLevel);
+        int level = thisLevel ? _playerStats.LuckyLevel - 1 : _playerStats.LuckyLevel;
+        return _config.LuckyUpgrade.BaseValue + 5 * level;
     }
 
 
     public float GetUpgradeMultiplierByLevel(bool thisLevel = true, bool forceUpdate = false) {
-        if (thisLevel) { 
-            return _config.XMultiplierUpgrade.BaseValue 
-                * 
-                Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel-1) 
+        int level = thisLevel ? _playerStats.MultiplierLevel - 1 : _playerStats.MultiplierLevel;
+        return _config.XMultiplierUpgrade.BaseValue + level * 0.05f
                 + 
                 GetPetMultiplier(forceUpdate);
-        }
-        return _config.XMultiplierUpgrade.BaseValue 
-            *
-            Mathf.Pow(_config.XMultiplierUpgrade.K,_playerStats.MultiplierLevel) 
-            +
-            GetPetMultiplier(forceUpdate);
+        
     } 
     
 
-    
     // Пока прст экспоненциально
     public float GetMagnetKByLevel(bool thisLevel = true) {
-        if (thisLevel) {
-            return _config.MagneteUpgrade.BaseValue * Mathf.Pow(_config.MagneteUpgrade.K, _playerStats.MagnetLevel - 1);
-        }
-
-        return _config.MagneteUpgrade.BaseValue * Mathf.Pow(_config.MagneteUpgrade.K, _playerStats.MagnetLevel);
+        int level = thisLevel ? _playerStats.MagnetLevel - 1 : _playerStats.MagnetLevel;
+        return _config.MagneteUpgrade.BaseValue * Mathf.Pow(_config.MagnetLevelK, level);
     }
     
     
@@ -66,10 +58,8 @@ public class UpgradesCalculator {
     }
 
     public float GetPredictDistanceByLevel(bool thisLevel = true) {
-        if (thisLevel) {
-            return _config.PredictionUpgrade.BaseValue + (_config.PredictionUpgrade.K * (_playerStats.PredictDistanceLevel-1));
-        }
-        return _config.PredictionUpgrade.BaseValue + (_config.PredictionUpgrade.K * _playerStats.PredictDistanceLevel);
+        int level = thisLevel ? _playerStats.PredictDistanceLevel - 1 : _playerStats.PredictDistanceLevel;
+        return _config.PredictionUpgrade.BaseValue + 5 * level;
     }
 
 
@@ -81,18 +71,36 @@ public class UpgradesCalculator {
 
         return _playerStats.DefenceLevel;
     }
+    
+    
+    
 
-    private bool _needRecalculate = true;
-    private float _petMultiplier;
+    public float GetWinMoney() {
+        return GetUpgradeMultiplierByLevel() 
+               *
+               (_zoneManager.BetAmount * _zoneManager.BetMultiplier) 
+               + 
+               _playerStateManager.CurrentPlayerDistance();
+    }
+    
+    public float GetDistanceMoney() {
+        return _playerStateManager.CurrentPlayerDistance() 
+               *
+               GetUpgradeMultiplierByLevel();
+    }
+    
+    
+
     private float GetPetMultiplier(bool forceUpdate = false) {
         if (!_needRecalculate && !forceUpdate) {
             return _petMultiplier;
         }
-        _petMultiplier = 1f;
+
+        _petMultiplier = 0;
         foreach (var pet in _petsManager.PetsInstances) {
             _petMultiplier += pet.PetInfo.Modifier;
         }
-        Debug.Log($"{_petsManager.PetsInstances.Count} pets multiplayer = {_petMultiplier}");
+        Debug.Log($"{_petsManager.PetsInstances.Count} pets multiplier = {_petMultiplier}");
         _needRecalculate = false;
         return _petMultiplier;
     }

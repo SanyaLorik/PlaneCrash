@@ -120,6 +120,7 @@ public class TutorialCompiller : MonoBehaviour {
         Debug.Log("StartTutorial");
         for (int i = index; i < _missions.Count; i++) {
             TutorialStepChanged?.Invoke(i);
+            _interstitialDelaying.DisableTimer();
             index = i;
             FlightAllow(i);
 

@@ -69084,7 +69084,6 @@ MonoBehaviour:
   _flightPoint: {fileID: 3592600760854268681}
   _orbitalFollow: {fileID: 1695576376}
   _cameraSaveDelay: 1
-  _isMobile: 1
 --- !u!114 &1695576369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90233,7 +90232,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4470123149656898882, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: _countTimesShowLine
-      value: 20
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470123149656898882, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
+      propertyPath: _distanceToHideArrow
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4924868635754256822, guid: 4b9d5718fcf81e149b58b9a9c9567c1c, type: 3}
       propertyPath: _startFlightPoint
@@ -90439,11 +90442,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5551583124687634216, guid: 564e891e4a77c7d47aabc9d76c2c7b11, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.15
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: 5551583124687634216, guid: 564e891e4a77c7d47aabc9d76c2c7b11, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.65
+      value: -5.55
       objectReference: {fileID: 0}
     - target: {fileID: 5793305134198299252, guid: 564e891e4a77c7d47aabc9d76c2c7b11, type: 3}
       propertyPath: m_AnchorMax.y

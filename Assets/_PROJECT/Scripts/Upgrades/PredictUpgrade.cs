@@ -15,7 +15,11 @@ public class PredictUpgrade : UpgradeBase {
         Debug.Log("Покупка PredictUpgrade: " + _playerStats.PredictDistanceLevel);
         _playerStats.UpdatePredictDistanceLevel(Level);
     }
-        
+
+    protected override void UpdatePrice() {
+        _currentPrice = 10 * Mathf.Pow(Level+1, 3);
+    }
+
     protected override void UpdateVisual() {
         _visual.UpdateData(
             Level, 

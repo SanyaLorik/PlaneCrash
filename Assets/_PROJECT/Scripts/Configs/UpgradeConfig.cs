@@ -6,10 +6,8 @@ using UnityEngine;
 public struct UpgradeInfo {
     public UpgradeType UpgradeType;
     public string Id;
-    public float K;
     public float BaseValue;
     public float StartPrice;
-    public float PriceMultiplier;
 }
 
 [Serializable]
@@ -30,4 +28,6 @@ public class UpgradeConfig : ScriptableObject {
     public UpgradeInfo DefenceUpgrade;
     public UpgradeInfo PredictionUpgrade;
     public float MagneteSizeGrowSpeed;
+    [Header("Множитель магнита с уровнем")]
+    public float MagnetLevelK;
 }

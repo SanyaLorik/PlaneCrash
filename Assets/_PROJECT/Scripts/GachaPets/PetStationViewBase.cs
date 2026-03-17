@@ -78,9 +78,23 @@ public abstract class PetStationViewBase : MonoBehaviour {
         
         
         for (int i = 0; i < sortedPets.Count; i++) {
-            _views[i].Icon.sprite = sortedPets[i].PetItemConfig.Sprite;
-            _views[i].Percentage.text = $"{sortedPets[i].Chance / _divider * 100f:#0}  %";
+            _views[i].Percentage.text = $"{sortedPets[i].Chance / _divider * 100f:#0}%";
         }
+        
+        float totalPercentage = 0f;
+
+        for (int i = 0; i < sortedPets.Count - 1; i++) {
+            float percentage = Mathf.Round(sortedPets[i].Chance / _divider * 100f);
+            totalPercentage += percentage;
+            _views[i].Icon.sprite = sortedPets[i].PetItemConfig.Sprite;
+            _views[i].Percentage.text = $"{percentage:F0}%";
+        }
+
+        // Последний элемент получает остаток
+        float lastPercentage = 100f - totalPercentage;
+        _views[^1].Percentage.text = $"{lastPercentage:F0}%";
+        _views[^1].Icon.sprite = sortedPets[^1].PetItemConfig.Sprite;
+        
     }
 
     protected bool AllowToGetPet = true;

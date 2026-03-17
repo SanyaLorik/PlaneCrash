@@ -29,6 +29,10 @@ public class MultiplyUpgrade : UpgradeBase {
         _playerStats.UpdateMultiplierLevel(Level);
     }
 
+    protected override void UpdatePrice() {
+        _currentPrice = 15 * 10 * Mathf.Pow(Level+1, 3);
+    }
+
     protected override void UpdateVisual() {
         _visual.UpdateData(
             Level, 
