@@ -715,6 +715,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\u041F\u0440\u043E\u043A\u0430\u0447\u0430\u0439 \u0441\u0435\u0431\u044F"
       objectReference: {fileID: 0}
+    - target: {fileID: 2146301378998683422, guid: c4b73c60819045b40a0496be9ecc6c94, type: 3}
+      propertyPath: m_fontStyle
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 3576077877403496528, guid: c4b73c60819045b40a0496be9ecc6c94, type: 3}
       propertyPath: m_SizeDelta.x
       value: 309.47
