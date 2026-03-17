@@ -50,6 +50,7 @@ public class SoundManager : MonoBehaviour {
     [Inject] private PlayerSkinInventory _playerSkinInventory;
     [Inject] private TrampolineManager _trampolineManager;
     [Inject] private TasksManager _tasksManager;
+    [Inject] private PetOpenView _petOpenView;
 
     
     private void Awake() {
@@ -87,6 +88,8 @@ public class SoundManager : MonoBehaviour {
         _trampolineManager.OnTrampolineJump += PlayTrampolineSound;
         // Task
         _tasksManager.TaskComplete += () => PlaySoundByType(SoundType.TaskComplete);
+        _petOpenView.PetNewOpen += () => PlaySoundByType(SoundType.PetOpen);
+        _petOpenView.PetCanasOpen += () => PlaySoundByType(SoundType.PetCanvasOpen);
     }
 
 

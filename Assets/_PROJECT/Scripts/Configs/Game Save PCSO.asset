@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Game Save PCSO
   m_EditorClassIdentifier: Assembly-CSharp::GameSavePCSO
   Save:
-    Money: 50000
+    Money: 10497999999
     RecordMoney: 9223372036854775807
     RecordDistance: 1075
     Upgrades:
@@ -29,7 +29,7 @@ MonoBehaviour:
       Level: 1
     Pets:
     - Id: doshik_pet
-      Count: 2
+      Count: 6
     - Id: cola_pet
       Count: 2
     Skins:
@@ -38,5 +38,5 @@ MonoBehaviour:
     SkinWearId: tralalelo_skin
     TutorialPassed: 1
     Purchased: 0
-    CountBatutJumps: 115
+    CountBatutJumps: 118
     CountBaskets: 4

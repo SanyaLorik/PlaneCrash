@@ -10,5 +10,7 @@
     FlyBackground,
     Ball,
     Trampoline,
-    TaskComplete
+    TaskComplete,
+    PetOpen,
+    PetCanvasOpen
 }

@@ -4,7 +4,6 @@ using System.Threading;
 using Architecture_M;
 using DG.Tweening;
 using SanyaBeerExtension;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -49,6 +48,8 @@ public class PetOpenView : MonoBehaviour {
     [Inject] private PetStatusColorConfig _petStatusColorConfig;
     [Inject] private IInputActivity _inputActivity;
 
+    public event Action PetNewOpen;
+    public event Action PetCanasOpen;
 
 
     private void Start() {
@@ -106,8 +107,10 @@ public class PetOpenView : MonoBehaviour {
         );
     }
 
+
     private void OnShowPet() {
         _colorLighning.color = _petStatusColorConfig.GetColorByStatus(_newPetStatus);
+        PetNewOpen?.Invoke();
     }
     
     private void CloseWindow() {
@@ -128,11 +131,17 @@ public class PetOpenView : MonoBehaviour {
     private void HideCanvasAnimation() {
         _container.DOMoveY(_yBottomScreen, _flightCanvasDuration)
             .SetEase(_hideCanvasEase)
-            .OnComplete(_canvas.DisactiveSelf);
+            .OnComplete(OnCanvasHide);
     }
-    
+
+    private void OnCanvasHide() {
+        _canvas.DisactiveSelf();
+        PetCanasOpen?.Invoke();
+    }
+
     private void OpenCanvasAnimation() {
         _canvas.ActiveSelf();
+        PetCanasOpen?.Invoke();
         _container.DOAnchorPosY(_yInScreen, _flightCanvasDuration)
             .SetEase(_showCanvasEase);
     }
