@@ -93,6 +93,10 @@ public class PlayerBank : MonoBehaviour {
         }
     }
 
+    public void BankActionInvoke() {
+        BankChanged?.Invoke(PlayerCapital);
+    }
+
 
     public void Buy(double amount) {
         if (!CanBuy(amount)) return;

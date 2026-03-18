@@ -19,7 +19,10 @@ public class SkinItemViewPrice : SkinItemViewBase {
     }
     
     private void PlayerBankOnBankChanged(long amount) {
-        if(SkinIsBought()) return;
+        if (SkinIsBought()) {
+            _delayedTrigger.SetAvailable();
+            return;
+        }
         if (amount >= SkinItemConfig.Price) {
             _delayedTrigger.SetAvailable();
         }

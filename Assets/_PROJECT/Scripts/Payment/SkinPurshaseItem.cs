@@ -34,6 +34,7 @@ public class SkinPurshaseItem : PurshaseItem
             else 
             {
                 _playerSkinInventory.UnlockSkin(skin);
+                _bank.BankActionInvoke();
             }
         }
         _playerSkinInventory.EquipSkin(_skinsInStore[0]);
