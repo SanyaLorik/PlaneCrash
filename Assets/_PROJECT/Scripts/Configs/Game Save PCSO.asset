@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Game Save PCSO
   m_EditorClassIdentifier: Assembly-CSharp::GameSavePCSO
   Save:
-    Money: 1056249
+    Money: 1103977
     RecordMoney: 9223372036854775807
     RecordDistance: 4000
     Upgrades:
     - Id: lucky_upgrade
       Level: 10
     - Id: multiplier_upgrade
-      Level: 21
+      Level: 31
     - Id: defence_upgrade
-      Level: 5
+      Level: 10
     - Id: magnet_upgrade
       Level: 20
     - Id: predict_upgrade
@@ -32,7 +32,7 @@ MonoBehaviour:
       Count: 1
     - Id: labuba_pet
       Count: 1
-    - Id: frutodrillo_pet
+    - Id: spongebob_pet
       Count: 1
     - Id: labuba_pet
       Count: 1
@@ -45,8 +45,17 @@ MonoBehaviour:
     Skins:
     - Id: obby_skin
     - Id: tralalelo_skin
-    SkinWearId: huggie_skin
+    - Id: tung_skin
+    - Id: noobic_skin
+    - Id: creeper_skin
+    - Id: huggie_skin
+    - Id: kissie_skin
+    - Id: freddy_skin
+    - Id: foxie_skin
+    - Id: guard_skin
+    - Id: gihun_skin
+    SkinWearId: tralalelo_skin
     TutorialPassed: 1
     Purchased: 1
     CountBatutJumps: 179
-    CountBaskets: 7
+    CountBaskets: 9
