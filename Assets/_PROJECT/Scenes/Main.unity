@@ -28732,12 +28732,12 @@ MonoBehaviour:
     TaskType: 0
   - FullValue: 2000
     TaskMoney: 1000
-    ValueMultiplier: 2
+    ValueMultiplier: 4
     MoneyMultiplier: 1.2
     TaskType: 2
   - FullValue: 10000
     TaskMoney: 1000
-    ValueMultiplier: 2
+    ValueMultiplier: 4
     MoneyMultiplier: 1.2
     TaskType: 3
   _tasksVisual:
@@ -85108,6 +85108,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 715291366}
   - {fileID: 217896889}
   - {fileID: 1824247753}
   - {fileID: 2046009003}
@@ -85120,7 +85121,6 @@ Transform:
   - {fileID: 115439196}
   - {fileID: 1279107217}
   - {fileID: 727722057}
-  - {fileID: 715291366}
   - {fileID: 2132733897}
   - {fileID: 873727987}
   - {fileID: 703353407}

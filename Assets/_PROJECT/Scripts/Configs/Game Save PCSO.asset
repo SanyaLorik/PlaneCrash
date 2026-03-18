@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Game Save PCSO
   m_EditorClassIdentifier: Assembly-CSharp::GameSavePCSO
   Save:
-    Money: 80000
+    Money: 100000
     RecordMoney: 900000000000000000
     RecordDistance: 4000
     Upgrades:
@@ -42,5 +42,5 @@ MonoBehaviour:
     SkinWearId: tralalelo_skin
     TutorialPassed: 1
     Purchased: 1
-    CountBatutJumps: 132
-    CountBaskets: 4
+    CountBatutJumps: 179
+    CountBaskets: 7

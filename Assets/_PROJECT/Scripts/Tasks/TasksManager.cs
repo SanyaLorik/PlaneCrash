@@ -88,16 +88,34 @@ public class TasksManager : MonoBehaviour {
         _delayedTrigger.SetUnvailable();
     }
 
+    private bool _isOnTrigger;
+    private CancellationTokenSource _triggerTokenSource;
+    
     private void OnTriggerEnter(Collider collider) {
         if (!collider.TryGetComponent(out PlayerMovement _)) return;
-        UpdateCompleteTasksByTrigger();
+        _isOnTrigger =  true;
+        _triggerTokenSource = new CancellationTokenSource();
+        ProcessTriggerWhileStay(_triggerTokenSource.Token).Forget();
         
+    }
+    
+    private async UniTask ProcessTriggerWhileStay(CancellationToken token) {
+        while (!token.IsCancellationRequested && _isOnTrigger) {
+            // Пока игрок в триггере, постоянно проверяем и обновляем задания
+            UpdateCompleteTasksByTrigger();
+        
+            // Ждём немного, чтобы не нагружать процессор
+            await UniTask.WaitForSeconds(1.2f, cancellationToken: token);
+        }
     }
     
     private void OnTriggerExit(Collider collider) {
         if (!collider.TryGetComponent(out PlayerMovement _)) return;
             _delayedTrigger.CancelTriggerAction();
-        
+            _isOnTrigger =  false;
+            _triggerTokenSource?.Cancel();
+            _triggerTokenSource?.Dispose();
+            _triggerTokenSource = null;
     }
 
     private bool NeedToGetReward() {
@@ -196,12 +214,23 @@ public class TasksManager : MonoBehaviour {
     
 
     private void UpdateCompleteTasksByTrigger() {
-        foreach (var taskVisual in _taskTypeToVisualDictionary) {
-            if (_taskTypeToVisualDictionary[taskVisual.Key].TaskIsComplete) {
-                _delayedTrigger.DelayedTriggerAction(() => RefreshCompleteTask(taskVisual.Key));
+        bool anyComplete = false;
+    
+        foreach (var kvp in _taskTypeToVisualDictionary) {
+            TaskType taskType = kvp.Key;
+            TaskVisual taskVisual = kvp.Value;
+        
+            if (taskVisual.TaskIsComplete) {
+                anyComplete = true;
+                // Запускаем отложенное действие, но только если оно ещё не запущено для этой задачи
+                _delayedTrigger.DelayedTriggerAction(() => RefreshCompleteTask(taskType));
             }
         }
-       
+    
+        // Если есть выполненные задания, показываем линию
+        if (anyComplete) {
+            _lineToObjects.SetTarget(_getTasksRewardTrigger.position);
+        }
     }
 
 
@@ -286,10 +315,10 @@ public class TasksManager : MonoBehaviour {
         _taskNotification.ShowNotification("+"+ _formatter.ValuteFormatter(taskInfo.TaskMoney));
     }
 
-    
-
 
     private void OnDestroy() {
         UniTaskHelper.DisposeTask(ref _tokenSource);
+        _triggerTokenSource?.Cancel();
+        _triggerTokenSource?.Dispose();
     }
 }
