@@ -16,7 +16,7 @@ public class LuckyUpgrade : UpgradeBase {
     }
 
     protected override void UpdatePrice() {
-        _currentPrice = 70 * Mathf.Pow(Level+1, 4);
+        _currentPrice = 70 * Mathf.Pow(Level+1, 5);
     }
 
 

@@ -13,7 +13,7 @@ public class ParkourRewardTrigger : MonoBehaviour {
     [SerializeField, Range(0, 1)] private float _rangPerentageAmountForReward;
     [SerializeField, Range(0, 3)] private float _accumulateMultiplierMax;
     [SerializeField] private TMP_Text _rewardText;
-    [SerializeField] private GameObject[] _interfereColliders;
+    [SerializeField] private Collider[] _interfereColliders;
 
     
     

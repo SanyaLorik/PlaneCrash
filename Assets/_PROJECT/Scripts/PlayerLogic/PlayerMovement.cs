@@ -145,7 +145,7 @@ public class PlayerMovement : FlightObject
         
         else if (playerState == PlayerState.Grounded || playerState == PlayerState.Cruisered) {
             float currentTime = Time.time - _startTime;
-            Debug.LogError("Игрок пролетел: " + currentTime);
+            Debug.LogWarning("Игрок пролетел: " + currentTime);
             _controller.height = _config.WalkCharacterControllerSize;
             RotateLocalXAsync(0, playerState, _tokenSource.Token).Forget();
             ResetModelRotation();
