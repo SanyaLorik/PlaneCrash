@@ -30,7 +30,7 @@ public class MultiplyUpgrade : UpgradeBase {
     }
 
     protected override void UpdatePrice() {
-        _currentPrice = 15 * 10 * Mathf.Pow(Level+1, 3);
+        _currentPrice = 15 * 10 * Mathf.Pow(Level+1, 4.2f);
     }
 
     protected override void UpdateVisual() {
