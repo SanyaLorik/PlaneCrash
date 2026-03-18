@@ -2,7 +2,6 @@
 using Architecture_M;
 using SanyaBeerExtension;
 using UnityEngine;
-using Zenject;
 using IInitializable = Zenject.IInitializable;
 using Random = UnityEngine.Random;
 

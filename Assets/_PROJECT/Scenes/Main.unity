@@ -36251,8 +36251,8 @@ MonoBehaviour:
   _upOffset: 150
   _newMoneyView: {fileID: 9046267092119866457, guid: 466381810842d5a4cbe2a5c968fe2538, type: 3}
   _playerSpawnPoint: {fileID: 1064869238889878792}
-  _spawnRadius: 300
-  _trampolineMultiplierRadius: 2
+  _spawnRadius: 150
+  _trampolineMultiplierRadius: 1
 --- !u!114 &893658167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36340,7 +36340,7 @@ MonoBehaviour:
     <To>k__BackingField: 25
   _countMoneyAfterFlight: 30
   _spawnTimeDiapasone: 0.07
-  _spawnRadius: 450
+  _spawnRadius: 150
   _trampolineMultiplierRadius: 1
   _playerSpawnPoint: {fileID: 1064869238889878792}
 --- !u!1 &893703527
@@ -38726,7 +38726,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _accumulateDuration: 10
+  _accumulateDuration: 3
 --- !u!65 &953718875
 BoxCollider:
   m_ObjectHideFlags: 0
