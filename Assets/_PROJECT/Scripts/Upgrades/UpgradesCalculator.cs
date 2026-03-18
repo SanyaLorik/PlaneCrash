@@ -1,3 +1,4 @@
+using System;
 using Unity.Mathematics.Geometry;
 using UnityEngine;
 using Zenject;
@@ -29,7 +30,7 @@ public class UpgradesCalculator {
 
     public float GetLuckyByLevel(bool thisLevel = true) {
         int level = thisLevel ? _playerStats.LuckyLevel - 1 : _playerStats.LuckyLevel;
-        return _config.LuckyUpgrade.BaseValue + 5 * level;
+        return _config.LuckyUpgrade.BaseValue + 2 * level;
     }
 
 
@@ -74,20 +75,30 @@ public class UpgradesCalculator {
     
     
     
-
-    public float GetWinMoney() {
-        return GetUpgradeMultiplierByLevel() 
-               *
-               (_zoneManager.BetAmount * _zoneManager.BetMultiplier) 
-               + 
-               _playerStateManager.CurrentPlayerDistance();
+    public long GetWinMoney() {
+        double result = (double)GetUpgradeMultiplierByLevel() 
+                        * _zoneManager.BetAmount 
+                        * _zoneManager.BetMultiplier 
+                        + _playerStateManager.CurrentPlayerDistance();
+    
+        if (result > long.MaxValue) return long.MaxValue;
+        if (result < long.MinValue) return long.MinValue; // хотя минус вряд ли
+    
+        return (long)result;
     }
     
     public float GetDistanceMoney() {
-        return _playerStateManager.CurrentPlayerDistance() 
-               *
-               GetUpgradeMultiplierByLevel();
+        double result = (double)GetUpgradeMultiplierByLevel() 
+                        *
+                        _playerStateManager.CurrentPlayerDistance();
+    
+        if (result > long.MaxValue) return long.MaxValue;
+        if (result < long.MinValue) return long.MinValue; // хотя минус вряд ли
+        
+        
+        return (long)result;
     }
+    
     
     
 

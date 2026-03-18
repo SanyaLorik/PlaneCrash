@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using SanyaBeerExtension;
 using TMPro;
@@ -101,7 +102,20 @@ public class BetVisual : MonoBehaviour {
     private void ShowBet(float bet) {
         _multiplier = 1f;
         _playerBetText.text = _formatter.ValuteFormatter(bet);
-        _rewardText.text = _formatter.ValuteFormatter(bet * _upgradesCalculator.GetUpgradeMultiplierByLevel());
+        float playerRewardWithoutMultiplier = bet * _upgradesCalculator.GetUpgradeMultiplierByLevel();
+        
+        long win;
+        try {
+            checked {
+                win = (long)playerRewardWithoutMultiplier;
+            }
+        }
+        catch (OverflowException) {
+            win = long.MaxValue;
+        }
+        
+        
+        _rewardText.text = _formatter.ValuteFormatter(win);
         
         if (bet == 0 && _betAndRewardContainer.gameObject.activeSelf) {
             HideBetRewardCanvasAnimation();
@@ -115,12 +129,18 @@ public class BetVisual : MonoBehaviour {
     
     private void ShowMultiplier(float multiplier) {
         _multiplier = multiplier;
-        _rewardText.text = _formatter.ValuteFormatter(
-            _zoneManager.BetAmount 
-            *
-            _multiplier 
-            *
-            _upgradesCalculator.GetUpgradeMultiplierByLevel());
+        float playerReward = _zoneManager.BetAmount * _multiplier * _upgradesCalculator.GetUpgradeMultiplierByLevel();
+        long win;
+        try {
+            checked {
+                win = (long)playerReward;
+            }
+        }
+        catch (OverflowException) {
+            win = long.MaxValue;
+        }
+        
+        _rewardText.text = _formatter.ValuteFormatter(win);
     }
 
     

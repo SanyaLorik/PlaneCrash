@@ -187,7 +187,7 @@ public class Basketball : MonoBehaviour {
     } 
 
     private void GetMoneyReward() {
-        float calculateReward = (_currentScoreReward + _rangManager.GetCurrentRangePercentage(_basketRangPercentage))
+        float calculateReward = (_currentScoreReward + _rangManager.GetNextRangePercentage(_basketRangPercentage))
                                 * 
                                 _upgradesCalculator.GetUpgradeMultiplierByLevel();
         print("Награда за попадание: " + calculateReward);

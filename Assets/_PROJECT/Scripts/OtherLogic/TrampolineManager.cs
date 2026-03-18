@@ -70,7 +70,7 @@ public class TrampolineManager : MonoBehaviour {
         _scoreText.text = _gameSave.GetSave.CountBatutJumps.ToString();
         
         double baseReward =
-            _rangManager.GetCurrentRangePercentage(_trampolineRangPercentage);
+            _rangManager.GetNextRangePercentage(_trampolineRangPercentage);
 
         double skillReward =
             GetRewardForDistance(distance);

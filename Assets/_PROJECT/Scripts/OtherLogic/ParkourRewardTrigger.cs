@@ -19,7 +19,7 @@ public class ParkourRewardTrigger : MonoBehaviour {
     
     private long _reward;
     private float _accumulateMultiplier = 1f;
-    private long RangPercentageAmount => _rangManager.GetCurrentRangePercentage(_rangPerentageAmountForReward);
+    private long RangPercentageAmount => _rangManager.GetNextRangePercentage(_rangPerentageAmountForReward);
     private float PlayerMultiplier => _multiplierCalculator.GetUpgradeMultiplierByLevel();
 
 

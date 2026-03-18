@@ -17,7 +17,7 @@ public class PredictUpgrade : UpgradeBase {
     }
 
     protected override void UpdatePrice() {
-        _currentPrice = 10 * Mathf.Pow(Level+1, 3);
+        _currentPrice = 150 * Mathf.Pow(Level+1, 4);
     }
 
     protected override void UpdateVisual() {

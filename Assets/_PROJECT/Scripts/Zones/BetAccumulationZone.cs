@@ -13,12 +13,9 @@ public class BetAccumulation : MonoBehaviour  {
     private float _elapsedTime;
     private CancellationTokenSource _accumulateCTS;
     
-    private ZoneManager _zoneManager;
-        
-    [Inject]
-    public void Init(ZoneManager zoneManager) {
-        _zoneManager = zoneManager;
-    }
+    [Inject] private ZoneManager _zoneManager;
+    [Inject] private RangManager _rangManager;
+    
 
 
     private void StopAccumulate() {
@@ -49,11 +46,11 @@ public class BetAccumulation : MonoBehaviour  {
         if (!collider.gameObject.TryGetComponent(out PlayerMovement _)) return;
         StopAccumulate();
     }
-
+    
     
     
     private async UniTaskVoid AccumulateBet(CancellationToken token, PlayerBank bank) {
-        long playerMoney = bank.PlayerCapital;
+        long playerMoney = Math.Min(_rangManager.CurrentRang.Money, bank.PlayerCapital);
         long betAmount = _zoneManager.BetAmount;
         if (betAmount == 0) {
             _elapsedTime = 0f;

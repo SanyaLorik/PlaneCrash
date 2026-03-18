@@ -25,7 +25,7 @@ public class MoneyObject : MonoBehaviour, IMagnetic {
         moneyAmount = (long)(
             percent 
             * 
-            _rangManager.GetCurrentRangePercentage(_currentRangPercentage) 
+            _rangManager.GetNextRangePercentage(_currentRangPercentage) 
             *
             _upgradesCalculator.GetUpgradeMultiplierByLevel()
         );

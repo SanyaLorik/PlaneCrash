@@ -107,7 +107,6 @@ public class LineToObjects : MonoBehaviour {
         if(TutorialStarted) return;
         _target = Vector3.zero;
         _lineTransform.DisactiveSelf();
-        Debug.Log("HideArrow");
         ResetOffset();
     }
 

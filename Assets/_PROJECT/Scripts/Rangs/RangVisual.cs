@@ -127,7 +127,6 @@ public class RangVisual : MonoBehaviour {
         float percent = Mathf.Clamp01((float)currentAmount / nextRang.Money);
         float x = xPrevious +  (xNext - xPrevious) * percent;
         var calculatePointerPercent = x / RectTransformHelper .CalculateXEnd(_barWidth);
-        Debug.Log(calculatePointerPercent);
         return calculatePointerPercent;
 
     }

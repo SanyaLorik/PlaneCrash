@@ -13,30 +13,34 @@ MonoBehaviour:
   m_Name: Game Save PCSO
   m_EditorClassIdentifier: Assembly-CSharp::GameSavePCSO
   Save:
-    Money: 10497999999
-    RecordMoney: 9223372036854775807
-    RecordDistance: 1075
+    Money: 1710
+    RecordMoney: 900000000000000000
+    RecordDistance: 4000
     Upgrades:
     - Id: lucky_upgrade
-      Level: 1
+      Level: 10
     - Id: multiplier_upgrade
       Level: 1
     - Id: defence_upgrade
-      Level: 2
+      Level: 9
     - Id: magnet_upgrade
       Level: 1
     - Id: predict_upgrade
-      Level: 1
+      Level: 9
     Pets:
     - Id: doshik_pet
-      Count: 6
+      Count: 7
     - Id: cola_pet
-      Count: 2
+      Count: 4
+    - Id: frutodrillo_pet
+      Count: 1
+    - Id: labuba_pet
+      Count: 1
     Skins:
     - Id: obby_skin
     - Id: tralalelo_skin
     SkinWearId: tralalelo_skin
     TutorialPassed: 1
-    Purchased: 0
-    CountBatutJumps: 118
+    Purchased: 1
+    CountBatutJumps: 121
     CountBaskets: 4

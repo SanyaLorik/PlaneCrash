@@ -27,7 +27,7 @@ public class LuckyUpgrade : UpgradeBase {
             _upgradesCalculator.GetLuckyByLevel(false), 
             _currentPrice,  
             _localization.SecondTime, 
-            false);
+            true);
         _visual.UpdateLevelInLeft(Level);
 
     }
