@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Architecture_M;
 using SanyaBeerExtension;
 using UnityEngine;
@@ -46,7 +47,7 @@ public class NicknameRandomizer : IInitializable
     public void Initialize()
     {
         GetFilesStrings();
-        _isRusLanguage = _localizationData.Substitute == LanguageEnum.Russian;
+        _isRusLanguage = _localizationData.Substitutes.Any(i => i == LanguageEnum.Russian);
     }
 
     

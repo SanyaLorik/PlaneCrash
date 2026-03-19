@@ -1,7 +1,8 @@
-using System;
-using System.Collections;
 using Architecture_M;
 using DG.Tweening;
+using System;
+using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -68,7 +69,8 @@ public class Narrator : MonoBehaviour {
             _text.transform.localScale = Vector3.zero;
 
 
-            if (_localization.Substitute != LanguageEnum.Russian) {
+            //if (_localization.Substitutes != LanguageEnum.Russian) {
+            if (_localization.Substitutes.Any(i => i == LanguageEnum.Russian) == false) {
                 _isRusTutorial = false;
             }
         }

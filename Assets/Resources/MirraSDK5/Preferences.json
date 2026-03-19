@@ -34,11 +34,11 @@
                 "boolCollection": [
                     {
                         "key": "ILanguage.Visible",
-                        "value": true
+                        "value": false
                     },
                     {
                         "key": "ILanguage.Override",
-                        "value": true
+                        "value": false
                     },
                     {
                         "key": "IAchievements.Visible",
@@ -55,6 +55,18 @@
                     {
                         "key": "IPlayer.Visible",
                         "value": false
+                    },
+                    {
+                        "key": "IBootstrap.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "IData.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "IDevice.Visible",
+                        "value": false
                     }
                 ],
                 "intCollection": [],
@@ -62,7 +74,7 @@
                 "stringCollection": [
                     {
                         "key": "PrototypeLanguageInfo_Configuration",
-                        "value": "{\"<CurrentName>k__BackingField\":\"Russian\"}"
+                        "value": "{\"<CurrentName>k__BackingField\":\"English\"}"
                     },
                     {
                         "key": "ILanguage.LanguageInfoProvider",
@@ -113,7 +125,7 @@
                     },
                     {
                         "key": "ILanguage.Visible",
-                        "value": true
+                        "value": false
                     },
                     {
                         "key": "IPayments.Visible",
@@ -149,6 +161,30 @@
                     },
                     {
                         "key": "IPayments.Override",
+                        "value": false
+                    },
+                    {
+                        "key": "IAnalytics.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "IAudio.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "IAssets.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "IBootstrap.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "IDevice.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "IFlags.Visible",
                         "value": false
                     }
                 ],
