@@ -34,7 +34,7 @@
                 "boolCollection": [
                     {
                         "key": "ILanguage.Visible",
-                        "value": true
+                        "value": false
                     },
                     {
                         "key": "ILanguage.Override",
@@ -46,7 +46,7 @@
                     },
                     {
                         "key": "IAds.Visible",
-                        "value": true
+                        "value": false
                     },
                     {
                         "key": "IAds.Override",
@@ -67,6 +67,18 @@
                     {
                         "key": "IDevice.Visible",
                         "value": false
+                    },
+                    {
+                        "key": "IPlatform.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "IPayments.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "IPayments.Override",
+                        "value": false
                     }
                 ],
                 "intCollection": [],
@@ -79,6 +91,10 @@
                     {
                         "key": "ILanguage.LanguageInfoProvider",
                         "value": "PrototypeLanguageInfo"
+                    },
+                    {
+                        "key": "IPayments.PaymentsProvider",
+                        "value": "MirraWebPayments"
                     }
                 ]
             }
