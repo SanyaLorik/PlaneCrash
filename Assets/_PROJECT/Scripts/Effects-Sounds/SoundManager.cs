@@ -144,7 +144,10 @@ public class SoundManager : MonoBehaviour {
 
     private void OnUiButtonClick() {
         PlaySoundByType(SoundType.UIButton);
-
+    }
+    
+    public void UiButtonClick() {
+        OnUiButtonClick();
     }
 
     private void OnMoneyPlus(long _) {
