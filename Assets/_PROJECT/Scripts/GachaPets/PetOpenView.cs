@@ -47,6 +47,7 @@ public class PetOpenView : MonoBehaviour {
     [Inject] private LocalizationDataPC _localization;
     [Inject] private PetStatusColorConfig _petStatusColorConfig;
     [Inject] private IInputActivity _inputActivity;
+    [Inject] private TutorialCompiller _tutorialManager;
 
     public event Action PetNewOpen;
     public event Action PetCanasOpen;
@@ -122,7 +123,9 @@ public class PetOpenView : MonoBehaviour {
     private IEnumerator WaitToHideRoutine() {
         yield return new WaitForSeconds(_showNewPetDuration);
         HideCanvasAnimation();
-        _interstitialDelaying.EnableTimer();
+        if (_tutorialManager.TutorialPassed) {
+            _interstitialDelaying.EnableTimer();
+        }
         ClosePetOpen?.Invoke();
         _inputActivity.Enable();
     } 

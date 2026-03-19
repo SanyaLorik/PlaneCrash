@@ -47,6 +47,7 @@ public class TutorialCompiller : MonoBehaviour {
     [Inject] private DiContainer _diContainer;
     [Inject] private PlayerStateManager _stateManager;
     [Inject] private IInterstitialDelaying  _interstitialDelaying;
+    [Inject] private IInterstitialActivity  _interstitialActivity;
     [Inject] private PetOpenView _petOpenView;
 
 

@@ -69,6 +69,7 @@ public class LineToObjects : MonoBehaviour {
         }
 
         else if (state == PlayerState.Cruisered || state == PlayerState.Grounded) {
+            _currentShowLine = 0;
             HideArrow();
         }
     }
@@ -130,10 +131,17 @@ public class LineToObjects : MonoBehaviour {
 
     private int _currentShowLine;
     private void PlayerOnSetBoost() {
-        if (_currentShowLine == _countTimesShowLine || 
-            Mathf.Approximately(_player.TargetPos.y, _boostSpawner.YMinBoost)) {
-            HideArrow();
-            return;
+        if (_tutorialCompiller.TutorialPassed) {
+            if (_currentShowLine == _countTimesShowLine || Mathf.Approximately(_player.TargetPos.y, _boostSpawner.YMinBoost)) {
+                HideArrow();
+                return;
+            }
+        }
+        else {
+            if (Mathf.Approximately(_player.TargetPos.y, _boostSpawner.YMinBoost)) {
+                HideArrow();
+                return;
+            }
         }
         SetBoosterPose();
         _arrowInBoost = true;
