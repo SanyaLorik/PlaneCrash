@@ -2499,7 +2499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _trueWayChance
-      value: 1
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _flightPosition
@@ -2507,7 +2507,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botSpeedCorrect
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
@@ -2519,7 +2519,7 @@ PrefabInstance:
       objectReference: {fileID: 27756076}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _countBoostEquilizeSpeed
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6085690292654690406, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: m_Layer
@@ -3283,7 +3283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _trueWayChance
-      value: 1
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _flightPosition
@@ -3291,7 +3291,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botSpeedCorrect
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
@@ -3303,7 +3303,7 @@ PrefabInstance:
       objectReference: {fileID: 35214372}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _countBoostEquilizeSpeed
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6085690292654690406, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: m_Layer
@@ -33069,7 +33069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _trueWayChance
-      value: 1
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _flightPosition
@@ -33077,7 +33077,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botSpeedCorrect
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
@@ -33089,7 +33089,7 @@ PrefabInstance:
       objectReference: {fileID: 832394901}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _countBoostEquilizeSpeed
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5662838617652010443, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: m_Layer
@@ -35931,7 +35931,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _trueWayChance
-      value: 1
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _flightPosition
@@ -35939,7 +35939,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botSpeedCorrect
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
@@ -35951,7 +35951,7 @@ PrefabInstance:
       objectReference: {fileID: 1410292384}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _countBoostEquilizeSpeed
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6085690292654690406, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: m_Layer
@@ -44662,7 +44662,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _trueWayChance
-      value: 1
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _flightPosition
@@ -44670,7 +44670,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botSpeedCorrect
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
@@ -44682,7 +44682,7 @@ PrefabInstance:
       objectReference: {fileID: 1080818146}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _countBoostEquilizeSpeed
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6085690292654690406, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: m_Layer
@@ -55775,7 +55775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _trueWayChance
-      value: 1
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _flightPosition
@@ -55783,7 +55783,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botSpeedCorrect
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
@@ -55795,7 +55795,7 @@ PrefabInstance:
       objectReference: {fileID: 1371994043}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _countBoostEquilizeSpeed
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6085690292654690406, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: m_Layer
@@ -73425,7 +73425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _trueWayChance
-      value: 1
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _flightPosition
@@ -73433,7 +73433,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botSpeedCorrect
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
@@ -73445,7 +73445,7 @@ PrefabInstance:
       objectReference: {fileID: 1753557325}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _countBoostEquilizeSpeed
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6085690292654690406, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: m_Layer
@@ -79229,7 +79229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _trueWayChance
-      value: 1
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _flightPosition
@@ -79237,7 +79237,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botSpeedCorrect
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
@@ -79249,7 +79249,7 @@ PrefabInstance:
       objectReference: {fileID: 313616540}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _countBoostEquilizeSpeed
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6085690292654690406, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: m_Layer
@@ -89566,7 +89566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _trueWayChance
-      value: 1
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _flightPosition
@@ -89574,7 +89574,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botSpeedCorrect
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
@@ -89586,7 +89586,7 @@ PrefabInstance:
       objectReference: {fileID: 1057216133}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _countBoostEquilizeSpeed
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5662838617652010443, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: m_Layer
@@ -97573,7 +97573,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _trueWayChance
-      value: 1
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _flightPosition
@@ -97581,7 +97581,7 @@ PrefabInstance:
       objectReference: {fileID: 1071896837}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botSpeedCorrect
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _botAngleToFlight
@@ -97589,7 +97589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5651165803298450137, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: _countBoostEquilizeSpeed
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5662838617652010443, guid: 7afbeb3e407b93f42a285881685c7a9f, type: 3}
       propertyPath: m_Layer
