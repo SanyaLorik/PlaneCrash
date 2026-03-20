@@ -81826,6 +81826,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &1949293073 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4430501383721184665, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &1949336141
 GameObject:
   m_ObjectHideFlags: 0
@@ -93087,7 +93098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3159276835114270060, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: managedReferences[8231486178666217555]._allowHideNarrator
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3159276835114270060, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: managedReferences[8231486178666217556]._allowHideNarrator
@@ -93190,6 +93201,10 @@ PrefabInstance:
       value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: _backgrounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: _voiceSounds.Array.size
       value: 14
       objectReference: {fileID: 0}
@@ -93199,6 +93214,10 @@ PrefabInstance:
       objectReference: {fileID: 496744582008939478}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
       propertyPath: '_backgrounds.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1949293073}
+    - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
+      propertyPath: '_backgrounds.Array.data[2]'
       value: 
       objectReference: {fileID: 5541369142737569408}
     - target: {fileID: 9128298764244138195, guid: 98fe7672eae17a74fa0a93f0791b77a2, type: 3}
