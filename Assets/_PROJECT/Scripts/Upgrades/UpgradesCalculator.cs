@@ -78,7 +78,7 @@ public class UpgradesCalculator {
     public long GetWinMoney() {
         double result = (double)GetUpgradeMultiplierByLevel() 
                         * _zoneManager.BetMultiplier 
-                        + _playerStateManager.CurrentPlayerDistance();
+                        * _playerStateManager.CurrentPlayerDistance();
     
         if (result > long.MaxValue) return long.MaxValue;
         if (result < long.MinValue) return long.MinValue; // хотя минус вряд ли
