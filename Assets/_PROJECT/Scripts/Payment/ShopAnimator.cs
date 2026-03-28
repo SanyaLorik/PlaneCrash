@@ -10,7 +10,7 @@ public class ShopAnimator : MonoBehaviour {
     [SerializeField] private GameObject _shopCanvas;
     
     [Inject] private IInputActivity _inputActivity;
-    [Inject] private IInterstitialDelaying  _interstitialDelaying;
+    [Inject] private AdvTimerStarter  _advTimerStarter;
     [Inject] private TutorialCompiller  _tutorialCompiller;
 
 
@@ -26,7 +26,7 @@ public class ShopAnimator : MonoBehaviour {
     }
 
     private void OpenShop() {
-        _interstitialDelaying.DisableTimer();
+        _advTimerStarter.DisableTimer();
         _inputActivity.Disable();
         _shopCanvas.ActiveSelf();
     }
@@ -34,7 +34,7 @@ public class ShopAnimator : MonoBehaviour {
     
     private void CloseShop() {
         if (_tutorialCompiller.TutorialPassed) {
-            _interstitialDelaying.EnableTimer();
+            _advTimerStarter.EnableTimer();
         }
         _inputActivity.Enable();
         _shopCanvas.DisactiveSelf();

@@ -43,7 +43,7 @@ public class PetOpenView : MonoBehaviour {
     private PetStatus _newPetStatus;
     
     
-    [Inject] private IInterstitialDelaying  _interstitialDelaying;
+    [Inject] private AdvTimerStarter  _advTimerStarter;
     [Inject] private LocalizationDataPC _localization;
     [Inject] private PetStatusColorConfig _petStatusColorConfig;
     [Inject] private IInputActivity _inputActivity;
@@ -63,7 +63,7 @@ public class PetOpenView : MonoBehaviour {
     }
     
     public void ShowOpenPetView(PetChance pet, Sprite eggSprite) {
-        _interstitialDelaying.DisableTimer();
+        _advTimerStarter.DisableTimer();
         _inputActivity.Disable();
         _eggIcon.sprite = eggSprite;
         OpenCanvasAnimation();
@@ -123,12 +123,11 @@ public class PetOpenView : MonoBehaviour {
     private IEnumerator WaitToHideRoutine() {
         yield return new WaitForSeconds(_showNewPetDuration);
         HideCanvasAnimation();
-        if (_tutorialManager.TutorialPassed) {
-            _interstitialDelaying.EnableTimer();
-        }
+        _advTimerStarter.EnableTimer();
         ClosePetOpen?.Invoke();
         _inputActivity.Enable();
     } 
+    
     
     
     private void HideCanvasAnimation() {

@@ -13,7 +13,7 @@ public class PlayerStateManager : MonoBehaviour{
     [SerializeField] private Transform _startFlightPoint;
 
     
-    [Inject] private IInterstitialDelaying  _interstitialDelaying;
+    [Inject] private AdvTimerStarter  _advTimerStarter;
     [Inject] private IInterstitialActivity  _interstitialActivity;
     [Inject] private ZoneManager _zoneManager;
     [Inject] private TutorialCompiller _tutorialCompiller;
@@ -78,16 +78,14 @@ public class PlayerStateManager : MonoBehaviour{
         CurrentState = newState;
         
         if (newState == PlayerState.Walking) {
-            if (_tutorialCompiller.TutorialPassed) {
-                _interstitialDelaying.EnableTimer();
-            }
+            _advTimerStarter.EnableTimer();
             SetWalkingCanvas();
             HideFlightMobileView(false);
         }
         else if (newState == PlayerState.Flight) {
             HideFlightMobileView(true);
             SetFlightCanvas();
-            _interstitialDelaying.DisableTimer();
+            _advTimerStarter.DisableTimer();
             if (StartFlightPositionZ == 0) {
                 StartFlightPositionZ = transform.position.z;
             }

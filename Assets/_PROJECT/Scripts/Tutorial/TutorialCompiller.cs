@@ -46,7 +46,7 @@ public class TutorialCompiller : MonoBehaviour {
     [Inject] private IGameSave<GameSavePC> _gameSave;
     [Inject] private DiContainer _diContainer;
     [Inject] private PlayerStateManager _stateManager;
-    [Inject] private IInterstitialDelaying  _interstitialDelaying;
+    [Inject] private AdvTimerStarter  _advTimerStarter;
     [Inject] private IInterstitialActivity  _interstitialActivity;
     [Inject] private PetOpenView _petOpenView;
 
@@ -74,13 +74,13 @@ public class TutorialCompiller : MonoBehaviour {
         _multiplierBlock.SetActive(tutorialStarting);
         SetCanvasesState(!tutorialStarting);
         if (tutorialStarting) {
-            _interstitialDelaying.DisableTimer();
+            _advTimerStarter.DisableTimer();
         }
     }
 
     private void InitCloseTutorial() {
-        _interstitialDelaying.EnableTimer();
         _gameSave.GetSave.TutorialPassed = true;
+        _advTimerStarter.EnableTimer();
         _gameSave.Save();
         _petOpenView.ClosePetOpen -= OnClosePetManager;
 
@@ -121,7 +121,7 @@ public class TutorialCompiller : MonoBehaviour {
         Debug.Log("StartTutorial");
         for (int i = index; i < _missions.Count; i++) {
             TutorialStepChanged?.Invoke(i);
-            _interstitialDelaying.DisableTimer();
+            _advTimerStarter.DisableTimer();
             index = i;
             FlightAllow(i);
 

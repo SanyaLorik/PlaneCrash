@@ -20038,50 +20038,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!1 &493170709
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 493170710}
-  - component: {fileID: 493170711}
-  m_Layer: 0
-  m_Name: AdvTimerManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &493170710
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 493170709}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2048660191}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &493170711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 493170709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ade2c84311f24075b8dac717fdf69cf5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AdvTimerStarter
 --- !u!1 &494714777
 GameObject:
   m_ObjectHideFlags: 0
@@ -23202,7 +23158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &586550832
 Transform:
   m_ObjectHideFlags: 0
@@ -38788,6 +38744,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51d672129a9bce74caf945aba0a258f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BetAccumulation
+  _moneyCurve:
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _accumulateDuration: 3
+  _elapsedTime: 0
+  _zoneManager: {fileID: 0}
 --- !u!65 &953718875
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -61660,7 +61640,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1494441665
 Transform:
   m_ObjectHideFlags: 0
@@ -79813,7 +79793,7 @@ MonoBehaviour:
   _rb: {fileID: 1902151402}
   _spawnPointTransform: {fileID: 1251262963}
   _maxSeriesCount: 20
-  _basketRangPercentage: 0.0005000000237487257
+  _basketRangPercentage: 0.004999999888241291
   _rewardForScoreMultiplier: 1.1
   _rewardForScore: 200
   _chanceToGoal: 0.6
@@ -85078,7 +85058,7 @@ MonoBehaviour:
   _rewardForDistance: 25
   _scoreText: {fileID: 1504727071}
   _maxTrampolineDistance: 69
-  _trampolineRangPercentage: 0.00009999999747378752
+  _trampolineRangPercentage: 0.0010000000474974513
 --- !u!1001 &2022483126
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -86034,7 +86014,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 715291366}
-  - {fileID: 493170710}
   - {fileID: 217896889}
   - {fileID: 1824247753}
   - {fileID: 2046009003}
@@ -92203,7 +92182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6284089983246685059, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6458389982763666192, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_Enabled
