@@ -1,4 +1,3 @@
-using System;
 using Architecture_M;
 using SanyaBeerExtension;
 using UnityEngine;
@@ -11,6 +10,9 @@ public class ShopAnimator : MonoBehaviour {
     [SerializeField] private GameObject _shopCanvas;
     
     [Inject] private IInputActivity _inputActivity;
+    [Inject] private IInterstitialDelaying  _interstitialDelaying;
+    [Inject] private TutorialCompiller  _tutorialCompiller;
+
 
     private void Awake() {
         foreach (var button in _shopButtons) {
@@ -24,12 +26,16 @@ public class ShopAnimator : MonoBehaviour {
     }
 
     private void OpenShop() {
+        _interstitialDelaying.DisableTimer();
         _inputActivity.Disable();
         _shopCanvas.ActiveSelf();
     }
     
     
     private void CloseShop() {
+        if (_tutorialCompiller.TutorialPassed) {
+            _interstitialDelaying.EnableTimer();
+        }
         _inputActivity.Enable();
         _shopCanvas.DisactiveSelf();
     }

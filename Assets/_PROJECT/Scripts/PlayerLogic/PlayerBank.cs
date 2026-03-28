@@ -1,11 +1,13 @@
 using System;
 using Architecture_M;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
 public class PlayerBank : MonoBehaviour {
     [SerializeField] private MoneyCube _cube;
     [SerializeField] private long _maxTutorialAmount;
+    [SerializeField] private TextMeshProUGUI _playerCapitalText;
     
     
     public event Action<long> BankChanged;
@@ -16,18 +18,24 @@ public class PlayerBank : MonoBehaviour {
     [Inject] IGameSave<GameSavePC> _gameSave;
     [Inject] TutorialCompiller _tutorialCompiller;
     [Inject] PlayerConfig _playerConfig;
+    [Inject] NumberFormatter _formatter;
 
 
     private void Start() {
         if (PlayerCapital < _playerConfig.StartMoneyAmount) {
             AddMoney(_playerConfig.StartMoneyAmount);
         }
+        // Просто чтоб в визуале отобразить
+        PlayerCapital = _gameSave.GetSave.Money;
     }
 
 
     public long PlayerCapital {
         get => _gameSave.GetSave.Money;
-        private set => _gameSave.GetSave.Money = value;
+        private set {
+            _playerCapitalText.text = _formatter.ValuteFormatter(value); 
+            _gameSave.GetSave.Money = value;
+        } 
     }
     public long PlayerRecord {
         get => _gameSave.GetSave.RecordMoney; 
@@ -113,29 +121,6 @@ public class PlayerBank : MonoBehaviour {
         ChangeMoney(-longAmount);
     }
     
-    
-    public void GetSilentBetFallMoney(double amount) {
-        if(!_tutorialCompiller.TutorialPassed) return;
-    
-        // Защита от переполнения double -> long
-        long longAmount;
-        try {
-            longAmount = (long)amount;
-        }
-        catch (OverflowException) {
-            longAmount = long.MaxValue;
-        }
-    
-        if (PlayerCapital - longAmount < 0) {
-            PlayerCapital = 0;
-        }
-        else {
-            PlayerCapital -= longAmount;
-        }
-    
-        BankChanged?.Invoke(PlayerCapital);
-    }
-
     public void AddMoney(double amount) {
         if (amount <= 0) return;
     

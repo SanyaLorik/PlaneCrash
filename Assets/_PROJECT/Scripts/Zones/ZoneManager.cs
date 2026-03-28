@@ -8,14 +8,11 @@ public class ZoneManager : MonoBehaviour {
     [SerializeField] private Transform _cruiser;
     [SerializeField] private float _cruiserBaseSpawnDistance; // условно 500 или 1к за 1х
     [SerializeField] private PairedValue<float> _cruiserSpawnDistanceX;
-    [SerializeField] private MoneyCube _moneyCube;
 
     
     public event Action<float> ChooseMultiplier;
-    public event Action<float> ChooseBet;
 
     public float BetMultiplier { get; private set; } = 1f;
-    public long BetAmount { get; private set; }
     
     public float CruiserSpawnDistance { get; private set; } 
     public float DistanceToCruise { get; private set; } 
@@ -23,18 +20,6 @@ public class ZoneManager : MonoBehaviour {
     [Inject] private LevelBounds _levelBounds;
     [Inject] private BoostSpawner _boostSpawner;
     [Inject] private PlayerStateManager _playerStateManager;
-
-    private void Start() {
-        _moneyCube.SetMoneyAmountForBet(0);
-    }
-
-
-
-    public void ChangeBet(long newBet) {
-        BetAmount = newBet;
-        ChooseBet?.Invoke(BetAmount);
-        _moneyCube.SetMoneyAmountForBet(BetAmount);
-    }
 
 
     public void ChangeMultiplier(float newMultiplier) {
@@ -58,7 +43,6 @@ public class ZoneManager : MonoBehaviour {
 
         
         newCruiserSpawnPos = _levelBounds.RecalculateCruiserY();
-        _moneyCube.SetMoneyAmountForBet(BetAmount * (int)BetMultiplier);
         _boostSpawner.SpawnBoosts(newCruiserSpawnPos);
         ChooseMultiplier?.Invoke(BetMultiplier);
     }

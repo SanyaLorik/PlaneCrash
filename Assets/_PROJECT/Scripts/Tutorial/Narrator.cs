@@ -46,6 +46,9 @@ public class Narrator : MonoBehaviour {
     private Vector2 _startPos;
     private Vector2 _hidePos;
     
+    
+    public bool NarratorIsActive { get; private set; }
+    
     [Inject] private LocalizationDataPC _localization;
     [Inject] private SoundManager _soundManager;
     [Inject] private TutorialCompiller _tutorialCompiller;
@@ -121,6 +124,7 @@ public class Narrator : MonoBehaviour {
 
     private Coroutine _timerCoroutine;
     private void ShowNarrator(float speakTime) {
+        NarratorIsActive = true;
         Debug.Log("ShowNarrator");
         if (_timerCoroutine!=null) {
             StopCoroutine(_timerCoroutine);
@@ -160,8 +164,6 @@ public class Narrator : MonoBehaviour {
         // Только появление текста (без scale)
 
         _stopSpeaking = false;
-
-        
     }
 
 
@@ -191,6 +193,7 @@ public class Narrator : MonoBehaviour {
         seq.Append(
             _girlImage.DOAnchorPos(_hidePos, 0.4f)
                 .SetEase(Ease.InCubic)
+                .OnComplete(() => NarratorIsActive = false)
         );
 
         seq.Join(
@@ -203,6 +206,7 @@ public class Narrator : MonoBehaviour {
                 background.DOFade(0f, _durationTextShow)
             );
         }
+        
     }
 
     

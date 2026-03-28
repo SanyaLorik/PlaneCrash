@@ -74,14 +74,17 @@ public class PlayerStateManager : MonoBehaviour{
         if (CurrentState == newState) {
             return;
         }
-        
-        if (newState != PlayerState.Flight && _tutorialCompiller.TutorialPassed) {
-            _interstitialDelaying.EnableTimer();
-        }
-        
         BeforeState = CurrentState;
         CurrentState = newState;
-        if (newState == PlayerState.Flight) {
+        
+        if (newState == PlayerState.Walking) {
+            if (_tutorialCompiller.TutorialPassed) {
+                _interstitialDelaying.EnableTimer();
+            }
+            SetWalkingCanvas();
+            HideFlightMobileView(false);
+        }
+        else if (newState == PlayerState.Flight) {
             HideFlightMobileView(true);
             SetFlightCanvas();
             _interstitialDelaying.DisableTimer();
@@ -89,16 +92,6 @@ public class PlayerStateManager : MonoBehaviour{
                 StartFlightPositionZ = transform.position.z;
             }
             Debug.Log("StartFlightPositionZ : " + StartFlightPositionZ );
-        }
-        else if (_tutorialCompiller.TutorialPassed) {
-            _interstitialDelaying.EnableTimer();
-        }
-        
-        
-        if (newState == PlayerState.Walking) {
-            SetWalkingCanvas();
-            HideFlightMobileView(false);
-            
         }
         else if (newState == PlayerState.Cruisered || newState == PlayerState.Grounded) {
             SetGroundedCanvas();

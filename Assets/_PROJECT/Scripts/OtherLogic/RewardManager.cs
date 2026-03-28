@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using _PROJECT.Scripts.Helpers;
 using Cysharp.Threading.Tasks;
@@ -33,7 +34,8 @@ public class RewardManager : MonoBehaviour {
     
     private float _yInScreenPosition; 
     private float _yOutScreenPosition; 
-
+    private double _reward;
+    private bool _isCruisered;
 
     private bool _inAnimation => _animation != null && _animation.active;
     private Sequence _animation;
@@ -49,6 +51,7 @@ public class RewardManager : MonoBehaviour {
     [Inject] private LocalizationDataPC _localization;
     [Inject] private NumberFormatter _formatter;
     [Inject] private AdvertisingMonetizationMirra _advertisingMonetizationMirra;
+    [Inject] private Narrator _narrator;
     
     
     
@@ -69,15 +72,15 @@ public class RewardManager : MonoBehaviour {
 
     private void OnStateChange(PlayerState state) {
         if (state == PlayerState.Cruisered) {
-            ShowReward(true);
+            WaitWhileNarratorIsActive(()  => ShowReward(true)).Forget();
         }
         else if (state == PlayerState.Grounded) {
-            ShowReward(false);
+            WaitWhileNarratorIsActive(()  => ShowReward(false)).Forget();
+            
         }
     }
 
-    private double _reward;
-    private bool _isCruisered;
+
     private void ShowReward(bool cruisered) {
         if (_playerStateManager.BeforeState == PlayerState.Walking) {
             _playerMovement.TpPlayerInBetZone();
@@ -96,6 +99,11 @@ public class RewardManager : MonoBehaviour {
         ShowBaseRewardVisual(_reward);
     }
 
+
+    private async UniTask WaitWhileNarratorIsActive(Action action) {
+        await UniTask.WaitWhile(() => _narrator.NarratorIsActive);
+        action?.Invoke();
+    }
     
 
     
@@ -110,9 +118,6 @@ public class RewardManager : MonoBehaviour {
 
     private void Reward(bool doubleReward) {
         int multiplier = doubleReward ? 2 : 1;
-        if (!_isCruisered) {
-            _playerBank.GetSilentBetFallMoney(_zoneManager.BetAmount);
-        }
         _playerBank.AddMoney(_reward * multiplier);
         
         

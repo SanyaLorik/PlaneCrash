@@ -1,20 +1,10 @@
-using System;
 using Architecture_M;
-using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
-[Serializable]
-public enum MoneyCubeType {
-    PlayerBank,
-    Bet
-}
-
-
 public class MoneyCube : MonoBehaviour {
-    [SerializeField] private MoneyCubeType _moneyCubeType;
-    [SerializeField, HideIf(nameof(IsBetCube))] private TMP_Text _cubeText;
+    [SerializeField] private TMP_Text _cubeText;
 
     [Header("Настройка размеров ")]
     [SerializeField] private float _scaleDivider = 2f; 
@@ -43,7 +33,6 @@ public class MoneyCube : MonoBehaviour {
     [SerializeField] private Transform _bottomPoint; // точка низа куба
     
     
-    private bool IsBetCube => _moneyCubeType == MoneyCubeType.Bet;
     private float _maxYScale;
     private float _distanceBetween2Rangs;
 
@@ -130,9 +119,7 @@ public class MoneyCube : MonoBehaviour {
     
 
     private void SetCubeHeighVisual() {
-        if (!IsBetCube) {
-            _cubeText.text = _formatter.ValuteFormatter(transform.localScale.y / _scaleDivider);
-        }
+        _cubeText.text = _formatter.ValuteFormatter(transform.localScale.y / _scaleDivider);
     }
 
     

@@ -85,6 +85,7 @@ MonoBehaviour:
   _backgrounds:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   _hidePoint: {fileID: 0}
   _durationNarratorShow: 1
   _durationTextShow: 2
@@ -101,12 +102,9 @@ MonoBehaviour:
   - PhraseId: flyExplain
     RusClip: {fileID: 8300000, guid: 86eda4595f76df740af3f6ae32e9a177, type: 3}
     EngClip: {fileID: 8300000, guid: db7254d0713462b4fa5b6cbfecbf8650, type: 3}
-  - PhraseId: betZone
-    RusClip: {fileID: 8300000, guid: e199860c4d3d83c4797af8c591749482, type: 3}
-    EngClip: {fileID: 8300000, guid: a138247e53b9bc64cb35809d3a51f82e, type: 3}
-  - PhraseId: x2Flight
-    RusClip: {fileID: 8300000, guid: 0094fc3e24021964c84cf1c5553070c2, type: 3}
-    EngClip: {fileID: 8300000, guid: 9224c9910ae88fc468f4a0207b27bbe7, type: 3}
+  - PhraseId: x2Zone
+    RusClip: {fileID: 8300000, guid: cab2db6dca19d7841989652b4dadca2e, type: 3}
+    EngClip: {fileID: 8300000, guid: a7c25ecaf7374a04eb9d8439693697b2, type: 3}
   - PhraseId: startZone
     RusClip: {fileID: 8300000, guid: d4c7314e8f1d5644f95bc985ba82d254, type: 3}
     EngClip: {fileID: 8300000, guid: fa0f35b03c7e29f4f9111d06d7c79eb0, type: 3}
@@ -134,7 +132,38 @@ MonoBehaviour:
   - PhraseId: goodLuck
     RusClip: {fileID: 8300000, guid: 69c3ce482dbfca1459a895a09c98cb1b, type: 3}
     EngClip: {fileID: 8300000, guid: 6f9b2a455eb44174ea4804e9a449b1db, type: 3}
-  _pitchValue: 1.25
+  _pitchValue: 1.1
+--- !u!1 &1468349189847248521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7424570200499218757}
+  m_Layer: 0
+  m_Name: PointForUpgrade
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7424570200499218757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468349189847248521}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.816, y: 3.401, z: 122.453}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8784413498414956099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2236252194221478307
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +345,8 @@ Transform:
   - {fileID: 7416404658054229095}
   - {fileID: 8067489310631171756}
   - {fileID: 7917425710544873562}
+  - {fileID: 973376210210513444}
+  - {fileID: 7424570200499218757}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3159276835114270060
@@ -335,7 +366,6 @@ MonoBehaviour:
   - rid: 4016510736668295242
   - rid: 8231486178666217547
   - rid: 8231486178666217549
-  - rid: 4016510599091716167
   - rid: 4016510599091716169
   - rid: 8231486178666217556
   - rid: 8231486178666217555
@@ -346,12 +376,12 @@ MonoBehaviour:
   - rid: 8231486178666217560
   - rid: 8231486178666217561
   index: 0
-  _idMissionToAllowFlight: 5
+  _idMissionToAllowFlight: 4
   _idMissionToStartCycle: 3
-  _idMissionIfFall: 6
-  _idMissionIfCruisered: 7
-  _idMissionPetOpen: 9
-  _idMissionShowCanvases: 11
+  _idMissionIfFall: 5
+  _idMissionIfCruisered: 6
+  _idMissionPetOpen: 8
+  _idMissionShowCanvases: 10
   _canvasesToHide:
   - {fileID: 0}
   - {fileID: 0}
@@ -366,16 +396,6 @@ MonoBehaviour:
       type: {class: TextMission, ns: , asm: Assembly-CSharp}
       data:
         _phraseId: hello
-        _allowHideNarrator: 0
-    - rid: 4016510599091716167
-      type: {class: TargetMission, ns: , asm: Assembly-CSharp}
-      data:
-        _phraseId: x2Flight
-        _targets:
-        - {fileID: 0}
-        _delta: 3
-        _secToStay: 1
-        _showArrow: 1
         _allowHideNarrator: 0
     - rid: 4016510599091716169
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
@@ -400,10 +420,10 @@ MonoBehaviour:
     - rid: 8231486178666217549
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
-        _phraseId: betZone
+        _phraseId: x2Zone
         _targets:
         - {fileID: 0}
-        _delta: 6
+        _delta: 2
         _secToStay: 1
         _showArrow: 1
         _allowHideNarrator: 0
@@ -412,7 +432,7 @@ MonoBehaviour:
       data:
         _phraseId: shield
         _targets:
-        - {fileID: 7917425710544873562}
+        - {fileID: 7424570200499218757}
         _delta: 3
         _secToStay: 0.7
         _showArrow: 1
@@ -422,11 +442,11 @@ MonoBehaviour:
       data:
         _phraseId: petOpening
         _targets:
-        - {fileID: 8067489310631171756}
+        - {fileID: 973376210210513444}
         _delta: 2
         _secToStay: 0.7
         _showArrow: 1
-        _allowHideNarrator: 0
+        _allowHideNarrator: 1
     - rid: 8231486178666217555
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
@@ -436,7 +456,7 @@ MonoBehaviour:
         _delta: 3
         _secToStay: 0.7
         _showArrow: 1
-        _allowHideNarrator: 0
+        _allowHideNarrator: 1
     - rid: 8231486178666217556
       type: {class: TargetMission, ns: , asm: Assembly-CSharp}
       data:
@@ -591,6 +611,37 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5952304309289865776}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.134, y: 3.179, z: 126.738}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8784413498414956099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5965470552266235828
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 973376210210513444}
+  m_Layer: 0
+  m_Name: EggPointForTutor
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &973376210210513444
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5965470552266235828}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.134, y: 3.179, z: 126.738}

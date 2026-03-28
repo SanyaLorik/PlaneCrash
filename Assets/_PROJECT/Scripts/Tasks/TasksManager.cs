@@ -12,7 +12,6 @@ public enum TaskType {
     Distance,
     BoostCollect,
     MoneyCollect,
-    MoneyBet,
 }
 
 [Serializable]
@@ -51,7 +50,6 @@ public class TasksManager : MonoBehaviour {
     private float _playerDistance;
     private int _playerBoostsCollect;
     private float _playerMoneyCollect;
-    private float _playerMoneyBet;
     
     private CancellationTokenSource _tokenSource;
     
@@ -131,7 +129,6 @@ public class TasksManager : MonoBehaviour {
 
     private void PlayerStateManagerOnChangeState(PlayerState state) {
         if (state == PlayerState.Flight) {
-            UpdateMoneyBet(_zoneManager.BetAmount);
             _tokenSource = new CancellationTokenSource();
             PlayerFlightAsync(_tokenSource.Token, _playerMovement.Transform).Forget();
         }
@@ -186,11 +183,6 @@ public class TasksManager : MonoBehaviour {
         UpdateTaskProgress(TaskType.MoneyCollect, _playerMoneyCollect);
     }
     
-
-    private void UpdateMoneyBet(float bet) {
-        _playerMoneyBet += bet;
-        UpdateTaskProgress(TaskType.MoneyBet, _playerMoneyBet);
-    }
 
     private void UpdateBoostsCount() {
         _playerBoostsCollect += 1;
@@ -303,8 +295,6 @@ public class TasksManager : MonoBehaviour {
                 return _playerBoostsCollect;
             case TaskType.MoneyCollect:
                 return _playerMoneyCollect;
-            case TaskType.MoneyBet:
-                return _playerMoneyBet;
             default: return -1;
         }
     }

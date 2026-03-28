@@ -203,11 +203,8 @@ MonoBehaviour:
   - <Id>k__BackingField: flyExplain
     name: Your main task is to fly as far as possible, avoid traps, and set a new
       record every time!
-  - <Id>k__BackingField: betZone
-    name: See this glowing zone? The longer you stand on it, the more coins you'll
-      get as a reward. Shall we check it out?
-  - <Id>k__BackingField: x2Flight
-    name: Now run to the x2 zone - it doubles your winnings.
+  - <Id>k__BackingField: x2Zone
+    name: See this glowing x2 zone? It doubles your winnings. Let's try it!
   - <Id>k__BackingField: startZone
     name: Let's run to the start zone, the real adventure begins!
   - <Id>k__BackingField: fall

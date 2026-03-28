@@ -77,7 +77,6 @@ public class UpgradesCalculator {
     
     public long GetWinMoney() {
         double result = (double)GetUpgradeMultiplierByLevel() 
-                        * _zoneManager.BetAmount 
                         * _zoneManager.BetMultiplier 
                         + _playerStateManager.CurrentPlayerDistance();
     
