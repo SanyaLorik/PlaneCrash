@@ -59093,6 +59093,17 @@ Transform:
   - {fileID: 1441285355}
   m_Father: {fileID: 1441848926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1460245487 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 611650713400183001, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1461355082
 GameObject:
   m_ObjectHideFlags: 0
@@ -73593,6 +73604,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1471720505805362266, guid: 6ebdf43d29d5666429ace4582df0053e, type: 3}
   m_PrefabInstance: {fileID: 1765064401}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1767582143 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5207637928291380454, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &1767582144 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2570943662579453920, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &1767582145 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4959600242391051307, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+  m_PrefabInstance: {fileID: 158810032041061672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1768523819
 GameObject:
   m_ObjectHideFlags: 0
@@ -76047,6 +76091,14 @@ MonoBehaviour:
     <Data>k__BackingField: {fileID: 1803459878}
   - <Id>k__BackingField: levels
     <Data>k__BackingField: {fileID: 2005294605}
+  - <Id>k__BackingField: levels
+    <Data>k__BackingField: {fileID: 1767582145}
+  - <Id>k__BackingField: levels
+    <Data>k__BackingField: {fileID: 1767582144}
+  - <Id>k__BackingField: money
+    <Data>k__BackingField: {fileID: 1767582143}
+  - <Id>k__BackingField: UPGRADE BOOST
+    <Data>k__BackingField: {fileID: 1460245487}
 --- !u!114 &1827842180 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4279458141402522439, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
@@ -77993,6 +78045,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1020612845}
+  - {fileID: 1918060939}
   - {fileID: 2081103152}
   - {fileID: 1848186798}
   - {fileID: 1011359424}
@@ -78031,6 +78084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.PurchaseInstaller
   _purchasesBase: {fileID: 5363244089110065937, guid: b5754cfbfe07e164587b56f1b506eeb5, type: 3}
   _purchaseSlots:
+  - {fileID: 1918060940}
   - {fileID: 1848186799}
   - {fileID: 1011359425}
   - {fileID: 98301545}
@@ -80433,6 +80487,78 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6044792546013254691, guid: 04fac0b718ffb8040891cbac3e0ea1f5, type: 3}
+--- !u!1 &1918060938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1918060939}
+  - component: {fileID: 1918060940}
+  m_Layer: 0
+  m_Name: 303
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1918060939
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918060938}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875372351}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1918060940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918060938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce23280783e9c78418d49a6b3768126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PurchaseSlotPC
+  <Id>k__BackingField: 303
+  <PurchaseInfo>k__BackingField:
+    <Id>k__BackingField: 
+    <PriceInteger>k__BackingField: 0
+    <PriceFloat>k__BackingField: 0
+    <Currency>k__BackingField: 
+  <HasPurchaseInfo>k__BackingField: 0
+  _purshaseItems:
+  - rid: 1210044515376955392
+  - rid: 1210044515376955393
+  - rid: 1210044515376955394
+  references:
+    version: 2
+    RefIds:
+    - rid: 1210044515376955392
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 0
+        _newLevels: 10
+    - rid: 1210044515376955393
+      type: {class: UpgradePurshaseItem, ns: , asm: Assembly-CSharp}
+      data:
+        _upgradeType: 4
+        _newLevels: 5
+    - rid: 1210044515376955394
+      type: {class: MoneyAmountItem, ns: , asm: Assembly-CSharp}
+      data:
+        _moneyAmount: 20000000
 --- !u!1 &1918872810
 GameObject:
   m_ObjectHideFlags: 0
@@ -91396,6 +91522,10 @@ PrefabInstance:
       propertyPath: _purchaseSlot
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1817865725443953569, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: _purchaseSlot
+      value: 
+      objectReference: {fileID: 1918060940}
     - target: {fileID: 1837482645807362204, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: _purchaseSlot
       value: 
@@ -91891,6 +92021,10 @@ PrefabInstance:
     - target: {fileID: 4494259384213505094, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4708790692390815882, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
+      propertyPath: m_Name
+      value: Money Name_1
       objectReference: {fileID: 0}
     - target: {fileID: 4830733866387600064, guid: 5346e07c905e3b6488eafb4a6ba49cec, type: 3}
       propertyPath: _purchaseSlot
