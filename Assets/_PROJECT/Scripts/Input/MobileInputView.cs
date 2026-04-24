@@ -9,7 +9,24 @@ public class MobileInputView : MobileInputViewBase
 
     [SerializeField] private Joystick _orbitalMovement;
 
-    public Vector2 OrbitalDirection => _orbitalMovement.Direction;
+    public Vector2 OrbitalDirection
+    {
+        get
+        {
+            if (_orbitalMovement.Direction == _orbitalDirectionPrevious)
+            {
+                _orbitalDirectionPrevious = _orbitalMovement.Direction;
+                return Vector2.zero;
+            }
+
+            _orbitalDirectionPrevious = _orbitalMovement.Direction;
+            return _orbitalMovement.Direction;
+        }
+    }
+
+    private Vector2 _orbitalDirectionPrevious = Vector2.zero;
+
+    //public Vector2 OrbitalDirection => _orbitalMovement.Direction;
 
     public override void Enable()
     {
