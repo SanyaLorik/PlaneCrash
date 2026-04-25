@@ -121,29 +121,37 @@ public class CameraOrbitalController : MonoBehaviour {
         _rotationHandler.Invoke();
     }
 
-    private void HandleMouseOrbit() {
+    private void HandleMouseOrbit()
+    {
         // Проверяем нажатие правой кнопки мыши
-        if (_mouse.rightButton.wasPressedThisFrame) {
+        if (_mouse.rightButton.wasPressedThisFrame || _mouse.leftButton.wasPressedThisFrame)
+        {
             StartOrbiting();
         }
-        else if (_mouse.rightButton.wasReleasedThisFrame) {
+        else if (_mouse.rightButton.wasReleasedThisFrame || _mouse.leftButton.wasReleasedThisFrame)
+        {
             StopOrbiting();
         }
-        
+
         // Вращение
-        if (_isOrbiting && _allowRotation) {
+        if (_isOrbiting && _allowRotation)
+        {
             OrbitCamera();
         }
-        
+
         HandleZoom();
     }
 
-    private void StartOrbiting() {
+    private void StartOrbiting()
+    {
         _isOrbiting = true;
-        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        if (_mouse.rightButton.wasPressedThisFrame)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
-    
+
     private void StopOrbiting()
     {
         _isOrbiting = false;
